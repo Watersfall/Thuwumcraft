@@ -4,7 +4,6 @@
 	"package": "com.watersfall.poisonedweapons.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"ApplyEffectMixin",
 		"SwordMixin"
 	],
 	"client": [
