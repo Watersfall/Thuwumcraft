@@ -28,9 +28,6 @@
 	"depends": {
 		"fabricloader": ">=0.9.3+build.207",
 		"fabric": "*",
-		"minecraft": "1.16.2"
-	},
-	"suggests": {
-		"plantable_pots": ">=0.0.1"
+		"minecraft": "^1.16.2"
 	}
 }
