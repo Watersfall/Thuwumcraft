@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "poisonedweapons",
+	"version": "${version}",
+	"name": "Poisoned Weapons",
+	"description": "",
+	"authors": [
+		"Watersfall"
+	],
+	"contact": {
+		"website": "https://github.com/Watersfall/",
+		"repo": "https://github.com/Watersfall/"
+	},
+	"license": "GPL-3.0",
+	"icon": "assets/poisonedweapons/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.watersfall.poisonedweapons.client.PoisonedWeaponsClient"
+		],
+		"main": [
+			"com.watersfall.poisonedweapons.PoisonedWeapons"
+		]
+	},
+	"mixins": [
+		"poisonedweapons.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.9.3+build.207",
+		"fabric": "*",
+		"minecraft": "1.16.2"
+	},
+	"suggests": {
+		"plantable_pots": ">=0.0.1"
+	}
+}

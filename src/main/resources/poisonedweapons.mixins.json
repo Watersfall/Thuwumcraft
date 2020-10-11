@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.watersfall.poisonedweapons.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"ApplyEffectMixin",
+		"SwordMixin"
+	],
+	"client": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
