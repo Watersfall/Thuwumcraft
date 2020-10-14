@@ -28,24 +28,6 @@ public abstract class SwordMixin extends ToolItem implements Poisonable
 	}
 
 	@Override
-	public ActionResult useOnBlock(ItemUsageContext context)
-	{
-		PlayerEntity user = context.getPlayer();
-		if(user != null)
-		{
-			if(!(user.getMainHandStack().getTag() != null && user.getMainHandStack().getTag().contains("effect")))
-			{
-				if(user.getMainHandStack().getTag() == null)
-				{
-					user.getMainHandStack().setTag(new CompoundTag());
-				}
-				StatusEffectHelper.set(user.getMainHandStack(), StatusEffects.INVISIBILITY, 50, 3);
-			}
-		}
-		return super.useOnBlock(context);
-	}
-
-	@Override
 	public StatusEffect getEffect(ItemStack stack)
 	{
 		if(stack.getTag() != null && stack.getTag().contains("effect"))
