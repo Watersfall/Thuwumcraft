@@ -196,7 +196,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 						{
 							player.setStackInHand(hand, potion);
 						}
-						else if(!player.inventory.insertStack(new ItemStack(Items.WATER_BUCKET)))
+						else if(!player.inventory.insertStack(potion))
 						{
 							player.dropItem(potion, false);
 						}
