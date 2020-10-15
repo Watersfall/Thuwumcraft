@@ -206,6 +206,22 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				}
 				return ActionResult.success(world.isClient);
 			}
+			else if(item == AlchemyModItems.LADLE_ITEM)
+			{
+				if(!world.isClient && entity.getIngredientCount() > 1)
+				{
+					Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
+					Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
+					Ingredient i3 = null;
+					if(entity.getIngredientCount() > 2)
+					{
+						i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
+					}
+					Set<StatusEffectInstance> instance = Ingredient.getEffectsFromIngredients(i1, i2, i3);
+					StatusEffectHelper.createLadle(itemStack, instance);
+				}
+				return ActionResult.success(world.isClient);
+			}
 		}
 		if(entity.getWaterLevel() <= 5)
 		{
