@@ -1,9 +1,12 @@
 package com.watersfall.poisonedweapons.client;
 
 import com.watersfall.poisonedweapons.block.AlchemyModBlocks;
+import com.watersfall.poisonedweapons.blockentity.AlchemyModBlockEntities;
+import com.watersfall.poisonedweapons.client.renderer.BrewingCauldronEntityRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.color.world.BiomeColors;
 
@@ -16,5 +19,6 @@ public class PoisonedWeaponsClient implements ClientModInitializer
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
 				AlchemyModBlocks.BREWING_CAULDRON_BLOCK
 		);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 	}
 }

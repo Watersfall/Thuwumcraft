@@ -105,17 +105,4 @@ public interface BrewingCauldronInventory extends Inventory
         }
         return false;
     }
-
-    default int getCurrentIngredients()
-    {
-        int total = 0;
-        for(int i = 0; i < getContents().size(); i++)
-        {
-            if(getContents().get(i) != ItemStack.EMPTY)
-            {
-                total++;
-            }
-        }
-        return total;
-    }
 }

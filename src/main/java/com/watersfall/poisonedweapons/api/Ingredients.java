@@ -47,5 +47,18 @@ public class Ingredients
                         )
                 )
         );
+        ingredients.put(
+                Items.INK_SAC,
+                new Ingredient(
+                        Items.INK_SAC,
+                        Lists.newArrayList(
+                                new StatusEffectInstance(
+                                        StatusEffects.BLINDNESS,
+                                        200,
+                                        1
+                                )
+                        )
+                )
+        );
     }
 }
