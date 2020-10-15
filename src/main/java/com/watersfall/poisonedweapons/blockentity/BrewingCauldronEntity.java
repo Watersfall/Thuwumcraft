@@ -18,6 +18,8 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	private short waterLevel;
 	private byte ingredientCount;
 	public float lastWaterLevel = 0;
+	public boolean needsColorUpdate = true;
+	public int color = 0;
 
 	public BrewingCauldronEntity()
 	{
@@ -81,6 +83,8 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	{
 		this.waterLevel = compoundTag.getShort("water_level");
 		this.ingredientCount = compoundTag.getByte("ingredient_count");
+		this.needsColorUpdate = compoundTag.getBoolean("needs_color_update");
+		Inventories.fromTag(compoundTag, contents);
 	}
 
 	@Override
@@ -88,7 +92,16 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	{
 		compoundTag.putShort("water_level", waterLevel);
 		compoundTag.putByte("ingredient_count", ingredientCount);
+		compoundTag.putBoolean("needs_color_update", needsColorUpdate);
+		Inventories.toTag(compoundTag, contents);
 		return compoundTag;
+	}
+
+	@Override
+	public void sync()
+	{
+		BlockEntityClientSerializable.super.sync();
+		this.needsColorUpdate = true;
 	}
 
 	@Environment(EnvType.CLIENT)

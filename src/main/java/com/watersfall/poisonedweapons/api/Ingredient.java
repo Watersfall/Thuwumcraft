@@ -13,11 +13,21 @@ public class Ingredient
 {
 	public final Item item;
 	public final List<StatusEffectInstance> effects;
+	public final int color;
 
 	public Ingredient(Item item, List<StatusEffectInstance> effects)
 	{
 		this.item = item;
 		this.effects = effects;
+		color = -1;
+	}
+
+	public Ingredient(Item item, List<StatusEffectInstance> effects, int color)
+	{
+
+		this.item = item;
+		this.effects = effects;
+		this.color = color;
 	}
 
 	public static StatusEffectInstance getSingleEffectFromIngredients(Ingredient i1, Ingredient i2, Ingredient i3)

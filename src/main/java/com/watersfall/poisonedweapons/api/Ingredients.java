@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,8 @@ public class Ingredients
 										1,
 										5
 								)
-						)
+						),
+						new Color(255, 0, 0, 0).hashCode()
 				)
 		);
 		ingredients.put(
@@ -44,7 +46,8 @@ public class Ingredients
 										400,
 										1
 								)
-						)
+						),
+						new Color(0, 255, 0, 0).hashCode()
 				)
 		);
 		ingredients.put(
@@ -57,7 +60,8 @@ public class Ingredients
 										200,
 										1
 								)
-						)
+						),
+						new Color(0, 0, 255, 0).hashCode()
 				)
 		);
 	}
