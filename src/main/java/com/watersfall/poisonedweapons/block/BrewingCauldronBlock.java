@@ -91,7 +91,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				{
 					player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 				}
-				entity.getContents().clear();
+				entity.clear();
 				entity.setWaterLevel((short) 1000);
 				entity.sync();
 				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);

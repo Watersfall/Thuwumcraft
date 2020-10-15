@@ -97,6 +97,15 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 		return compoundTag;
 	}
 
+	public void clear()
+	{
+		this.ingredientCount = 0;
+		this.waterLevel = 0;
+		this.needsColorUpdate = true;
+		this.contents.clear();
+		markDirty();
+	}
+
 	@Override
 	public void sync()
 	{
