@@ -50,7 +50,7 @@ public class Ingredient
         return new StatusEffectInstance(effect, length, strength);
     }
 
-    public static Set<StatusEffectInstance> getEffectFromIngredients(Ingredient i1, Ingredient i2, Ingredient i3)
+    public static Set<StatusEffectInstance> getEffectsFromIngredients(Ingredient i1, Ingredient i2, Ingredient i3)
     {
         StatusEffect effect = null;
         StatusEffect effect2 = null;
