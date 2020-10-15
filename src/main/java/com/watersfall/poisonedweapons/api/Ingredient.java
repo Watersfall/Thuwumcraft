@@ -35,7 +35,8 @@ public class Ingredient
 		StatusEffect effect = null;
 		int length = 0;
 		int strength = 0;
-		for(int i = 0; i < i1.effects.size(); i++)
+		boolean found = false;
+		for(int i = 0; i < i1.effects.size() && !found; i++)
 		{
 			for(int o = 0; o < i2.effects.size(); o++)
 			{
@@ -44,6 +45,8 @@ public class Ingredient
 					effect = i1.effects.get(i).getEffectType();
 					length = i1.effects.get(i).getDuration() + i2.effects.get(o).getDuration();
 					strength = (int) ((double) i1.effects.get(i).getAmplifier() / (double) i2.effects.get(o).getAmplifier());
+					found = true;
+					break;
 				}
 			}
 		}
@@ -67,7 +70,8 @@ public class Ingredient
 		int length = 0;
 		int length2 = 0;
 		int strength = 0;
-		for(int i = 0; i < i1.effects.size(); i++)
+		boolean found = false;
+		for(int i = 0; i < i1.effects.size() && !found; i++)
 		{
 			for(int o = 0; o < i2.effects.size(); o++)
 			{
@@ -76,12 +80,14 @@ public class Ingredient
 					effect = i1.effects.get(i).getEffectType();
 					length = i1.effects.get(i).getDuration() + i2.effects.get(o).getDuration();
 					strength = (int) ((double) i1.effects.get(i).getAmplifier() / (double) i2.effects.get(o).getAmplifier());
+					found = true;
+					break;
 				}
 			}
 		}
 		if(i3 != null)
 		{
-			boolean found = false;
+			found = false;
 			for(int i = 0; i < i3.effects.size(); i++)
 			{
 				if(i3.effects.get(i).getEffectType() == effect)
