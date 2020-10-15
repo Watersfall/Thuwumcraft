@@ -15,6 +15,8 @@ import net.minecraft.util.Identifier;
 
 public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCauldronEntity>
 {
+    private static final Sprite sprite = ((SpriteAtlasTexture)MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
+
     public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
     {
         super(dispatcher);
@@ -35,12 +37,11 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
         if(entity.getWaterLevel() > 0)
         {
             matrices.push();
-            matrices.translate((2F / 16F), (4F / 16F), (2F / 16F));
+            matrices.translate(0.125F, 0.25F, 0.125F);
             float newLevel = entity.getAnimationProgress(tickDelta);
-            float scale = (newLevel / 1000F) * (9F / 16F);
-            matrices.scale(1F - (4F / 16F), scale, 1F - (4F / 16F));
-            Sprite sprite = ((SpriteAtlasTexture)MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
-            entity.lastWaterLevel = (short)newLevel;
+            float scale =  newLevel / 1000F * 0.5625F;
+            matrices.scale(0.75F, scale, 0.75F);
+            entity.lastWaterLevel = (short)(newLevel);
             int color = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
             VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
             add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);

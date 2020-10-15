@@ -99,6 +99,6 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
     @Environment(EnvType.CLIENT)
     public float getAnimationProgress(float tickDelta)
     {
-        return MathHelper.lerp(tickDelta, this.lastWaterLevel, ((float)this.waterLevel + ((float)this.ingredientCount * (1000F / 16F))));
+        return MathHelper.lerp(tickDelta, this.lastWaterLevel, (float)this.waterLevel + ((float)this.ingredientCount * 62.5F));
     }
 }
