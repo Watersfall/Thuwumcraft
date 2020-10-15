@@ -60,6 +60,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
         {
             entity.extinguish();
             cauldron.setWaterLevel((short) (cauldron.getWaterLevel() - 333));
+            cauldron.sync();
         }
     }
 
