@@ -13,16 +13,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class ApplyAffectEvent implements AttackEntityCallback
 {
-    @Override
-    public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult)
-    {
-        if(player.getMainHandStack() != null && player.getMainHandStack().getItem() instanceof Poisonable)
-        {
-            if(entity instanceof LivingEntity)
-            {
-                ((Poisonable)player.getMainHandStack().getItem()).applyEffect(player, entity);
-            }
-        }
-        return ActionResult.PASS;
-    }
+	@Override
+	public ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult)
+	{
+		if(player.getMainHandStack() != null && player.getMainHandStack().getItem() instanceof Poisonable)
+		{
+			if(entity instanceof LivingEntity)
+			{
+				((Poisonable) player.getMainHandStack().getItem()).applyEffect(player, entity);
+			}
+		}
+		return ActionResult.PASS;
+	}
 }

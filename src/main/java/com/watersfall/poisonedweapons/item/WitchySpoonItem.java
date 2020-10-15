@@ -12,23 +12,23 @@ import net.minecraft.util.ActionResult;
 public class WitchySpoonItem extends Item
 {
 
-    public WitchySpoonItem()
-    {
-        super(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1));
-    }
+	public WitchySpoonItem()
+	{
+		super(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1));
+	}
 
-    @Override
-    public ActionResult useOnBlock(ItemUsageContext context)
-    {
-        BlockState state = context.getWorld().getBlockState(context.getBlockPos());
-        if(state.getBlock() == Blocks.CAULDRON)
-        {
-            context.getWorld().setBlockState(context.getBlockPos(), AlchemyModBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
-            return ActionResult.success(context.getWorld().isClient);
-        }
-        else
-        {
-            return super.useOnBlock(context);
-        }
-    }
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext context)
+	{
+		BlockState state = context.getWorld().getBlockState(context.getBlockPos());
+		if(state.getBlock() == Blocks.CAULDRON)
+		{
+			context.getWorld().setBlockState(context.getBlockPos(), AlchemyModBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
+			return ActionResult.success(context.getWorld().isClient);
+		}
+		else
+		{
+			return super.useOnBlock(context);
+		}
+	}
 }

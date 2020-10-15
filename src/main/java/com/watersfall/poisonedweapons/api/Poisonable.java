@@ -49,7 +49,7 @@ public interface Poisonable
 				{
 					if(attacker instanceof PlayerEntity)
 					{
-						PlayerEntity player = (PlayerEntity)attacker;
+						PlayerEntity player = (PlayerEntity) attacker;
 						if(this.getUses(((PlayerEntity) attacker).getMainHandStack()) > 0)
 						{
 							ItemStack stack = player.getMainHandStack();

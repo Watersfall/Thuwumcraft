@@ -15,45 +15,46 @@ import net.minecraft.util.Identifier;
 
 public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCauldronEntity>
 {
-    private static final Sprite sprite = ((SpriteAtlasTexture)MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
+	private static final Sprite sprite = ((SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
 
-    public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
-    {
-        super(dispatcher);
-    }
+	public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
+	{
+		super(dispatcher);
+	}
 
-    private void add(VertexConsumer renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color) {
-        renderer.vertex(stack.peek().getModel(), x, y, z)
-                .color((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), (color & 0xFF) / 255F, 1.0f)
-                .texture(u, v)
-                .light(0, 240)
-                .normal(1, 0, 0)
-                .next();
-    }
+	private void add(VertexConsumer renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color)
+	{
+		renderer.vertex(stack.peek().getModel(), x, y, z)
+				.color((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), (color & 0xFF) / 255F, 1.0f)
+				.texture(u, v)
+				.light(0, 240)
+				.normal(1, 0, 0)
+				.next();
+	}
 
-    @Override
-    public void render(BrewingCauldronEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
-    {
-        if(entity.getWaterLevel() > 0)
-        {
-            matrices.push();
-            matrices.translate(0.125F, 0.25F, 0.125F);
-            float newLevel = entity.getAnimationProgress(tickDelta);
-            float scale =  newLevel / 1000F * 0.5625F;
-            matrices.scale(0.75F, scale, 0.75F);
-            entity.lastWaterLevel = (short)(newLevel);
-            int color = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
-            VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
-            add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
-            add(builder, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
-            add(builder, matrices, 1, 1,  1, sprite.getMaxU(), sprite.getMaxV(), color);
-            add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
+	@Override
+	public void render(BrewingCauldronEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
+	{
+		if(entity.getWaterLevel() > 0)
+		{
+			matrices.push();
+			matrices.translate(0.125F, 0.25F, 0.125F);
+			float newLevel = entity.getAnimationProgress(tickDelta);
+			float scale = newLevel / 1000F * 0.5625F;
+			matrices.scale(0.75F, scale, 0.75F);
+			entity.lastWaterLevel = (short) (newLevel);
+			int color = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
+			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+			add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+			add(builder, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
+			add(builder, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
+			add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
 
-            add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
-            add(builder, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
-            add(builder, matrices, 1, 1,  0, sprite.getMaxU(), sprite.getMinV(), color);
-            add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
-            matrices.pop();
-        }
-    }
+			add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
+			add(builder, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
+			add(builder, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
+			add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+			matrices.pop();
+		}
+	}
 }
