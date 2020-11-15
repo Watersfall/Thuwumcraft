@@ -2,5 +2,7 @@
 	"item.waters_alchemy_mod.witchy_spoon": "Witchy Spoon",
 	"item.waters_alchemy_mod.throw_bottle": "Empty Splash Bottle",
 	"item.waters_alchemy_mod.ladle": "Ladle",
-	"item.waters_alchemy_mod.apothecary_guide_book": "Apothecary's Guide Book"
+	"item.waters_alchemy_mod.apothecary_guide_book": "Apothecary's Guide Book",
+	"effect.waters_alchemy_mod.projectile_attraction": "Attraction",
+	"effect.waters_alchemy_mod.projectile_shield": "Repulsion"
 }
