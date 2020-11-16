@@ -35,6 +35,8 @@ public class PoisonedWeapons implements ModInitializer
 		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
+		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
 		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
 	}

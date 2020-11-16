@@ -4,6 +4,7 @@ import com.watersfall.poisonedweapons.effect.AlchemyModStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
@@ -25,18 +26,19 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
 {
-	private boolean hasRepulsion = false;
-	private boolean hasAttraction = false;
-
 	@Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
+
+	@Shadow public abstract boolean damage(DamageSource source, float amount);
 
 	public LivingEntityMixin(EntityType<?> type, World world)
 	{
@@ -98,5 +100,29 @@ public abstract class LivingEntityMixin extends Entity
 			ServerChunkManager manager = serverWorld.getChunkManager();
 			manager.sendToNearbyPlayers(this, new RemoveEntityStatusEffectS2CPacket(this.getEntityId(), effect.getEffectType()));
 		}
+	}
+
+	@ModifyVariable(
+			method = "applyDamage",
+			at = @At(
+					value = "INVOKE",
+					target = "net/minecraft/entity/LivingEntity.applyEnchantmentsToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
+					shift = At.Shift.BEFORE
+			)
+	)
+	public float modifyDamage(float amount, DamageSource source)
+	{
+		if(source.isProjectile())
+		{
+			if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_RESISTANCE))
+			{
+				amount = amount * 0.5F;
+			}
+			if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_WEAKNESS))
+			{
+				amount = amount * 2.0F;
+			}
+		}
+		return amount;
 	}
 }

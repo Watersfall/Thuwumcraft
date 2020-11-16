@@ -326,7 +326,7 @@ public class Ingredients
 						Items.ORANGE_TULIP,
 						Lists.newArrayList(
 								new StatusEffectInstance(
-										AlchemyModStatusEffects.PROJECTILE_ATTRACTION,
+										AlchemyModStatusEffects.PROJECTILE_RESISTANCE,
 										1000,
 										1
 								)
@@ -339,7 +339,7 @@ public class Ingredients
 						Items.WHITE_TULIP,
 						Lists.newArrayList(
 								new StatusEffectInstance(
-										AlchemyModStatusEffects.PROJECTILE_ATTRACTION,
+										AlchemyModStatusEffects.PROJECTILE_RESISTANCE,
 										1000,
 										1
 								)
