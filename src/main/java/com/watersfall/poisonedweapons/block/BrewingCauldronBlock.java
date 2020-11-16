@@ -222,6 +222,30 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				}
 				return ActionResult.success(world.isClient);
 			}
+			else if(item == Items.ARROW)
+			{
+				if(!world.isClient && entity.getIngredientCount() > 1)
+				{
+					Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
+					Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
+					Ingredient i3 = null;
+					if(entity.getIngredientCount() > 2)
+					{
+						i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
+					}
+					Set<StatusEffectInstance> instance = Ingredient.getEffectsFromIngredients(i1, i2, i3);
+					itemStack.decrement(1);
+					ItemStack newStack = new ItemStack(Items.TIPPED_ARROW, 1);
+					PotionUtil.setCustomPotionEffects(newStack, instance);
+					if(!player.inventory.insertStack(newStack))
+					{
+						player.dropItem(newStack, false);
+					}
+					entity.setWaterLevel((short)(entity.getWaterLevel() - 100));
+					entity.sync();
+				}
+				return ActionResult.success(world.isClient);
+			}
 		}
 		if(entity.getWaterLevel() <= 5)
 		{
