@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 {
@@ -51,24 +52,29 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 
 	public ItemStack craft(BrewingCauldronInventory inventory, CauldronTypeRecipe recipe)
 	{
-		ItemStack stack = inventory.getInput().get(0);
-		if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_LADLE)
+		ItemStack stack = inventory.getInput().get(0).copy();
+		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory);
+		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
-			StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inventory));
-		}
-		else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM)
-		{
-			stack = recipe.getOutput().copy();
-			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+			if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_LADLE)
+			{
+				StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inventory));
+			}
+			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM)
+			{
+				stack = recipe.getOutput().copy();
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+				return stack;
+			}
+			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_WEAPON)
+			{
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+
+				stack.getTag().putInt("uses", recipe.uses);
+			}
 			return stack;
 		}
-		else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_WEAPON)
-		{
-			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
-
-			stack.getTag().putInt("uses", recipe.uses);
-		}
-		return stack;
+		return inventory.getInput().get(0);
 	}
 
 	@Override

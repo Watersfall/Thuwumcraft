@@ -11,10 +11,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.registry.Registry;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class StatusEffectHelper
 {
+	public static final Set<StatusEffectInstance> INVALID_RECIPE = new HashSet<>();
+
 	public static void use(ItemStack stack)
 	{
 		if(stack.getTag() != null)
@@ -78,13 +81,20 @@ public class StatusEffectHelper
 				length2 = i3.effects.get(0).getDuration() / 2;
 			}
 		}
-		if(effect2 == null)
+		if(effect != null)
 		{
-			return Collections.singleton(new StatusEffectInstance(effect, length, strength));
+			if(effect2 == null)
+			{
+				return Collections.singleton(new StatusEffectInstance(effect, length, strength));
+			}
+			else
+			{
+				return ImmutableSet.of(new StatusEffectInstance(effect, length, strength), new StatusEffectInstance(effect2, length2, 1));
+			}
 		}
 		else
 		{
-			return ImmutableSet.of(new StatusEffectInstance(effect, length, strength), new StatusEffectInstance(effect2, length2, 1));
+			return INVALID_RECIPE;
 		}
 	}
 

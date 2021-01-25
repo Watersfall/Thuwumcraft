@@ -15,12 +15,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
@@ -150,7 +153,8 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			}
 			else if(entity.getIngredientCount() > 1)
 			{
-				entity.setInput(new ItemStack(item));
+				ItemStack inputStack = new ItemStack(item);
+				entity.setInput(inputStack);
 				Optional<CauldronTypeRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE, entity, world);
 				if(typeOptional.isPresent())
 				{
@@ -159,18 +163,26 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 						CauldronTypeRecipe typeRecipe = typeOptional.get();
 						CauldronRecipe recipe = INGREDIENTS.get(entity.getContents().get(0).getItem());
 						ItemStack stack = recipe.craft(entity, typeRecipe);
-						itemStack.decrement(1);
-						if(itemStack.isEmpty())
+						if(inputStack == stack)
 						{
-							player.setStackInHand(hand, stack);
+							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							return ActionResult.FAIL;
 						}
-						else if(!player.inventory.insertStack(stack))
+						else
 						{
-							player.dropItem(stack, true);
+							itemStack.decrement(1);
+							if(itemStack.isEmpty())
+							{
+								player.setStackInHand(hand, stack);
+							}
+							else if(!player.inventory.insertStack(stack))
+							{
+								player.dropItem(stack, true);
+							}
+							entity.setInput(ItemStack.EMPTY);
+							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.waterUse));
+							entity.sync();
 						}
-						entity.setInput(ItemStack.EMPTY);
-						entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.waterUse));
-						entity.sync();
 					}
 					return ActionResult.success(world.isClient);
 				}
