@@ -1,0 +1,9 @@
+{
+	"type": "waters_alchemy_mod:cauldron_type",
+	"items": [
+		{
+			"tag": "fabric:swords"
+		}
+	],
+	"water_use": 333
+}

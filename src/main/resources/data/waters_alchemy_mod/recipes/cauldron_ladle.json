@@ -1,0 +1,9 @@
+{
+	"type": "waters_alchemy_mod:cauldron_type",
+	"items": [
+		{
+			"item": "waters_alchemy_mod:ladle"
+		}
+	],
+	"water_use": 0
+}

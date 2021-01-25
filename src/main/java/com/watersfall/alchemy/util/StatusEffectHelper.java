@@ -16,13 +16,14 @@ import java.util.Set;
 
 public class StatusEffectHelper
 {
-	public static void set(ItemStack item, StatusEffect effect, int duration, int uses)
+	public static void set(ItemStack item, StatusEffectInstance effect, int uses)
 	{
 		if(item.getItem() instanceof Poisonable)
 		{
 			CompoundTag tag = new CompoundTag();
-			tag.putString("id", String.valueOf(Registry.STATUS_EFFECT.getId(effect)));
-			tag.putInt("duration", duration);
+			tag.putString("id", String.valueOf(Registry.STATUS_EFFECT.getId(effect.getEffectType())));
+			tag.putInt("duration", effect.getDuration());
+			tag.putInt("amplifier", effect.getAmplifier());
 			tag.putInt("uses", uses);
 			item.putSubTag("effect", tag);
 		}

@@ -46,15 +46,20 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public ItemStack craft(BrewingCauldronInventory inv)
 	{
-		ItemStack stack = inv.getInput().get(0);
+		return inv.getInput().get(0);
+	}
+
+	public ItemStack craft(BrewingCauldronInventory inventory, CauldronTypeRecipe recipe)
+	{
+		ItemStack stack = inventory.getInput().get(0);
 		if(stack.getItem() instanceof LadleItem)
 		{
-			StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inv));
+			StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inventory));
 			return stack;
 		}
 		else if(stack.getItem() == AlchemyModItems.THROW_BOTTLE || stack.getItem() == Items.GLASS_BOTTLE)
 		{
-			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inv));
+			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
 		}
 		return null;
 	}

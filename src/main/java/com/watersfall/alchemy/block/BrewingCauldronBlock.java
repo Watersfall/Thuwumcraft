@@ -3,6 +3,7 @@ package com.watersfall.alchemy.block;
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import com.watersfall.alchemy.recipe.CauldronRecipe;
+import com.watersfall.alchemy.recipe.CauldronTypeRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -14,6 +15,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -38,22 +41,19 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 
 	public static final HashMap<Item, CauldronRecipe> INGREDIENTS = new HashMap<>();
 
+	public static void loadIngredients(RecipeManager recipeManager)
+	{
+		INGREDIENTS.clear();
+		List<CauldronRecipe> list = recipeManager.listAllOfType(AlchemyMod.CAULDRON_RECIPE_TYPE);
+		for(int i = 0; i < list.size(); i++)
+		{
+			INGREDIENTS.put(list.get(i).input.getItem(), list.get(i));
+		}
+	}
+
 	public static boolean checkIfIngredient(Item item, World world)
 	{
-		if(!INGREDIENTS.containsKey(item))
-		{
-			List<CauldronRecipe> list = world.getServer().getRecipeManager().listAllOfType(AlchemyMod.CAULDRON_RECIPE_TYPE);
-			for(int i = 0; i < list.size(); i++)
-			{
-				if(list.get(i).input.getItem() == item)
-				{
-					INGREDIENTS.put(item, list.get(i));
-					return true;
-				}
-			}
-			return false;
-		}
-		return true;
+		return INGREDIENTS.containsKey(item);
 	}
 
 	public BrewingCauldronBlock(Settings settings)
@@ -154,19 +154,24 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			{
 				if(!world.isClient)
 				{
-					Optional<CauldronRecipe> recipeOptional = world.getServer().getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_RECIPE_TYPE, entity, world);
-					if(recipeOptional.isPresent())
+					entity.setInput(itemStack);
+					Optional<CauldronTypeRecipe> typeRecipeOptional = world.getServer().getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE, entity, world);
+					if(typeRecipeOptional.isPresent())
 					{
-						entity.setInput(itemStack);
-						CauldronRecipe recipe = recipeOptional.get();
-						ItemStack stack = recipe.craft(entity);
-						if(stack != null)
+						Optional<CauldronRecipe> recipeOptional = world.getServer().getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_RECIPE_TYPE, entity, world);
+						if(recipeOptional.isPresent())
 						{
-							player.setStackInHand(hand, recipe.craft(entity));
-							entity.setWaterLevel((short) (entity.getWaterLevel() - 333));
-							entity.sync();
+							CauldronRecipe recipe = recipeOptional.get();
+							ItemStack stack = recipe.craft(entity, typeRecipeOptional.get());
+							if(stack != null)
+							{
+								player.setStackInHand(hand, recipe.craft(entity));
+								entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipeOptional.get().waterUse));
+								entity.sync();
+							}
 						}
 					}
+					entity.setInput(ItemStack.EMPTY);
 				}
 				return ActionResult.success(world.isClient);
 			}

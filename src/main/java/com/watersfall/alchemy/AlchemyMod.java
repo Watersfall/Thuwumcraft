@@ -1,6 +1,7 @@
 package com.watersfall.alchemy;
 
 import com.watersfall.alchemy.block.AlchemyModBlocks;
+import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import com.watersfall.alchemy.effect.AlchemyModStatusEffects;
@@ -8,7 +9,9 @@ import com.watersfall.alchemy.event.ApplyAffectEvent;
 import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import com.watersfall.alchemy.item.AlchemyModItems;
 import com.watersfall.alchemy.recipe.CauldronRecipe;
+import com.watersfall.alchemy.recipe.CauldronTypeRecipe;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.entity.BlockEntityType;
@@ -23,7 +26,9 @@ public class AlchemyMod implements ModInitializer
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final RecipeType<CauldronRecipe> CAULDRON_RECIPE_TYPE;
+	public static final RecipeType<CauldronTypeRecipe> CAULDRON_TYPE_RECIPE_TYPE;
 	public static final RecipeSerializer<CauldronRecipe> CAULDRON_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<CauldronTypeRecipe> CAULDRON_TYPE_RECIPE_SERIALIZER;
 
 	static
 	{
@@ -35,7 +40,20 @@ public class AlchemyMod implements ModInitializer
 				return "cauldron";
 			}
 		});
+		CAULDRON_TYPE_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_type"), new RecipeType<CauldronTypeRecipe>() {
+			@Override
+			public String toString()
+			{
+				return "cauldron_type";
+			}
+		});
 		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "cauldron_recipe"), new CauldronRecipe.Serializer(CauldronRecipe::new));
+		CAULDRON_TYPE_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_type"), new CauldronTypeRecipe.Serializer(CauldronTypeRecipe::new));
+	}
+
+	public static Identifier getId(String id)
+	{
+		return new Identifier(MOD_ID, id);
 	}
 
 	@Override
@@ -51,6 +69,13 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
 		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
 		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
+		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
+			if(success)
+			{
+				BrewingCauldronBlock.loadIngredients(manager.getRecipeManager());
+			}
+		});
+		ServerLifecycleEvents.SERVER_STARTED.register((server -> BrewingCauldronBlock.loadIngredients(server.getRecipeManager())));
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
 	}
 }
