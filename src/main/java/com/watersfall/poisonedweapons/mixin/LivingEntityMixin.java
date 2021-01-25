@@ -106,7 +106,7 @@ public abstract class LivingEntityMixin extends Entity
 			method = "applyDamage",
 			at = @At(
 					value = "INVOKE",
-					target = "net/minecraft/entity/LivingEntity.applyEnchantmentsToDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
+					target = "net/minecraft/entity/LivingEntity.isInvulnerableTo(Lnet/minecraft/entity/damage/DamageSource;)Z",
 					shift = At.Shift.BEFORE
 			)
 	)

@@ -1,6 +1,5 @@
 package com.watersfall.poisonedweapons.inventory;
 
-import com.watersfall.poisonedweapons.api.Ingredients;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -98,7 +97,7 @@ public class ApothecaryGuideInventory implements Inventory
 	@Override
 	public boolean isValid(int slot, ItemStack stack)
 	{
-		return Ingredients.ingredients.containsKey(stack.getItem());
+		return false;//Ingredients.ingredients.containsKey(stack.getItem());
 	}
 
 	@Override

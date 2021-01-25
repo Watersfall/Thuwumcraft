@@ -7,10 +7,13 @@ import com.watersfall.poisonedweapons.effect.AlchemyModStatusEffects;
 import com.watersfall.poisonedweapons.event.ApplyAffectEvent;
 import com.watersfall.poisonedweapons.inventory.handler.ApothecaryGuideHandler;
 import com.watersfall.poisonedweapons.item.AlchemyModItems;
+import com.watersfall.poisonedweapons.recipe.CauldronRecipe;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -19,10 +22,20 @@ public class PoisonedWeapons implements ModInitializer
 {
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
+	public static final RecipeType<CauldronRecipe> CAULDRON_RECIPE_TYPE;
+	public static final RecipeSerializer<CauldronRecipe> CAULDRON_RECIPE_SERIALIZER;
 
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MOD_ID, "apothecary_guide_handler"), ApothecaryGuideHandler::new);
+		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, "cauldron"), new RecipeType<CauldronRecipe>() {
+			@Override
+			public String toString()
+			{
+				return "cauldron";
+			}
+		});
+		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "cauldron_recipe"), new CauldronRecipe.Serializer(CauldronRecipe::new));
 	}
 
 	@Override

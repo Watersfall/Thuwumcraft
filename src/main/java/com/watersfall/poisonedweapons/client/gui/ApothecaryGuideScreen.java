@@ -2,8 +2,6 @@ package com.watersfall.poisonedweapons.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.watersfall.poisonedweapons.PoisonedWeapons;
-import com.watersfall.poisonedweapons.api.Ingredient;
-import com.watersfall.poisonedweapons.api.Ingredients;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -38,11 +36,11 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 		super.render(matrices, mouseX, mouseY, delta);
 		if(handler.getStacks().get(0) != ItemStack.EMPTY)
 		{
-			Ingredient ingredient = Ingredients.ingredients.get(handler.getStacks().get(0).getItem());
+			/*Ingredient ingredient = Ingredients.ingredients.get(handler.getStacks().get(0).getItem());
 			for(int i = 0; i < ingredient.effects.size(); i++)
 			{
 				textRenderer.draw(matrices, ingredient.effects.get(i).getEffectType().getName(), this.x + 56, this.y + 24 + (i * 10), 4210752);
-			}
+			}*/
 		}
 		drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}

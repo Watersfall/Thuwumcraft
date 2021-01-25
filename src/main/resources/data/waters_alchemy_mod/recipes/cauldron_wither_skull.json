@@ -1,0 +1,16 @@
+{
+	"type": "waters_alchemy_mod:cauldron_recipe",
+	"item": "minecraft:wither_skeleton_skull",
+	"color": {
+		"r": 0,
+		"g": 0,
+		"b": 0
+	},
+	"effects": [
+		{
+			"effect": "minecraft:wither",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

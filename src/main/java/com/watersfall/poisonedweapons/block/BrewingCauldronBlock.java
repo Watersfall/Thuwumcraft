@@ -1,11 +1,9 @@
 package com.watersfall.poisonedweapons.block;
 
-import com.watersfall.poisonedweapons.api.Ingredient;
-import com.watersfall.poisonedweapons.api.Ingredients;
-import com.watersfall.poisonedweapons.api.Poisonable;
+import com.watersfall.poisonedweapons.PoisonedWeapons;
 import com.watersfall.poisonedweapons.blockentity.BrewingCauldronEntity;
 import com.watersfall.poisonedweapons.item.AlchemyModItems;
-import com.watersfall.poisonedweapons.util.StatusEffectHelper;
+import com.watersfall.poisonedweapons.recipe.CauldronRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -13,13 +11,10 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -33,12 +28,34 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 {
 	private static final VoxelShape RAY_TRACE_SHAPE = createCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.union(createCuboidShape(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), createCuboidShape(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), RAY_TRACE_SHAPE), BooleanBiFunction.ONLY_FIRST);
+
+	public static final HashMap<Item, CauldronRecipe> INGREDIENTS = new HashMap<>();
+
+	public static boolean checkIfIngredient(Item item, World world)
+	{
+		if(!INGREDIENTS.containsKey(item))
+		{
+			List<CauldronRecipe> list = world.getServer().getRecipeManager().listAllOfType(PoisonedWeapons.CAULDRON_RECIPE_TYPE);
+			for(int i = 0; i < list.size(); i++)
+			{
+				if(list.get(i).input.getItem() == item)
+				{
+					INGREDIENTS.put(item, list.get(i));
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
+	}
 
 	public BrewingCauldronBlock(Settings settings)
 	{
@@ -119,47 +136,34 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		}
 		else if(entity.getWaterLevel() > 0)
 		{
-			if(Ingredients.ingredients.containsKey(item))
+			if(!world.isClient && checkIfIngredient(item, world))
+			{
+				if(entity.count(item) <= 0)
+				{
+					if(entity.addStack(new ItemStack(itemStack.getItem())))
+					{
+						if(!player.abilities.creativeMode)
+						{
+							itemStack.decrement(1);
+						}
+						entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
+						entity.sync();
+					}
+				}
+			}
+			else if(entity.getIngredientCount() > 1)
 			{
 				if(!world.isClient)
 				{
-					if(entity.count(item) <= 0)
+					Optional<CauldronRecipe> recipeOptional = world.getServer().getRecipeManager().getFirstMatch(PoisonedWeapons.CAULDRON_RECIPE_TYPE, entity, world);
+					if(recipeOptional.isPresent())
 					{
-						if(entity.addStack(new ItemStack(itemStack.getItem())))
+						entity.setInput(itemStack);
+						CauldronRecipe recipe = recipeOptional.get();
+						ItemStack stack = recipe.craft(entity);
+						if(stack != null)
 						{
-							if(!player.abilities.creativeMode)
-							{
-								itemStack.decrement(1);
-							}
-							entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
-							entity.sync();
-						}
-					}
-				}
-				return ActionResult.success(world.isClient);
-			}
-			else if(item instanceof Poisonable)
-			{
-				if(entity.getIngredientCount() > 1)
-				{
-					Poisonable poisonable = (Poisonable) item;
-					if(poisonable.getEffect(itemStack) == null || poisonable.getUses(itemStack) <= 0)
-					{
-						if(!world.isClient)
-						{
-							Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
-							Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
-							Ingredient i3 = null;
-							if(entity.getIngredientCount() > 2)
-							{
-								i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
-							}
-							StatusEffectInstance instance = Ingredient.getSingleEffectFromIngredients(i1, i2, i3);
-							if(itemStack.getTag() == null)
-							{
-								itemStack.setTag(new CompoundTag());
-							}
-							StatusEffectHelper.set(itemStack, instance.getEffectType(), instance.getDuration(), instance.getAmplifier());
+							player.setStackInHand(hand, recipe.craft(entity));
 							entity.setWaterLevel((short) (entity.getWaterLevel() - 333));
 							entity.sync();
 						}
@@ -167,85 +171,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				}
 				return ActionResult.success(world.isClient);
 			}
-			else if(item == Items.GLASS_BOTTLE || item == AlchemyModItems.THROW_BOTTLE)
-			{
-				if(!world.isClient)
-				{
-					if(entity.getIngredientCount() > 1 && entity.getWaterLevel() >= 333)
-					{
-						Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
-						Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
-						Ingredient i3 = null;
-						if(entity.getIngredientCount() > 2)
-						{
-							i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
-						}
-						Set<StatusEffectInstance> instance = Ingredient.getEffectsFromIngredients(i1, i2, i3);
-						itemStack.decrement(1);
-						ItemStack potion;
-						if(item == Items.GLASS_BOTTLE)
-						{
-							potion = new ItemStack(Items.POTION);
-						}
-						else
-						{
-							potion = new ItemStack(Items.SPLASH_POTION);
-						}
-						PotionUtil.setCustomPotionEffects(potion, instance);
-						if(itemStack.isEmpty())
-						{
-							player.setStackInHand(hand, potion);
-						}
-						else if(!player.inventory.insertStack(potion))
-						{
-							player.dropItem(potion, false);
-						}
-						entity.setWaterLevel((short) (entity.getWaterLevel() - 333));
-						entity.sync();
-					}
-				}
-				return ActionResult.success(world.isClient);
-			}
-			else if(item == AlchemyModItems.LADLE_ITEM)
-			{
-				if(!world.isClient && entity.getIngredientCount() > 1)
-				{
-					Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
-					Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
-					Ingredient i3 = null;
-					if(entity.getIngredientCount() > 2)
-					{
-						i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
-					}
-					Set<StatusEffectInstance> instance = Ingredient.getEffectsFromIngredients(i1, i2, i3);
-					StatusEffectHelper.createLadle(itemStack, instance);
-				}
-				return ActionResult.success(world.isClient);
-			}
-			else if(item == Items.ARROW)
-			{
-				if(!world.isClient && entity.getIngredientCount() > 1)
-				{
-					Ingredient i1 = Ingredients.ingredients.get(entity.getStack(0).getItem());
-					Ingredient i2 = Ingredients.ingredients.get(entity.getStack(1).getItem());
-					Ingredient i3 = null;
-					if(entity.getIngredientCount() > 2)
-					{
-						i3 = Ingredients.ingredients.get(entity.getStack(2).getItem());
-					}
-					Set<StatusEffectInstance> instance = Ingredient.getEffectsFromIngredients(i1, i2, i3);
-					itemStack.decrement(1);
-					ItemStack newStack = new ItemStack(Items.TIPPED_ARROW, 1);
-					PotionUtil.setCustomPotionEffects(newStack, instance);
-					if(!player.inventory.insertStack(newStack))
-					{
-						player.dropItem(newStack, false);
-					}
-					entity.setWaterLevel((short)(entity.getWaterLevel() - 100));
-					entity.sync();
-				}
-				return ActionResult.success(world.isClient);
-			}
+			return ActionResult.success(world.isClient);
 		}
 		if(entity.getWaterLevel() <= 5)
 		{

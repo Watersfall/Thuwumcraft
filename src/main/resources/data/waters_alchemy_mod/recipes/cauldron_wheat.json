@@ -1,0 +1,21 @@
+{
+	"type": "waters_alchemy_mod:cauldron_recipe",
+	"item": "minecraft:wheat",
+	"color": {
+		"r": 255,
+		"g": 255,
+		"b": 32
+	},
+	"effects": [
+		{
+			"effect": "minecraft:instant_health",
+			"duration": 1,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:absorption",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

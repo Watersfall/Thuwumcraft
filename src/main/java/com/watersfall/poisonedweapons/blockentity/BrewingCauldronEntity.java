@@ -15,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldronInventory, BlockEntityClientSerializable
 {
 	private final DefaultedList<ItemStack> contents = DefaultedList.ofSize(3, ItemStack.EMPTY);
+	private final DefaultedList<ItemStack> input = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	private short waterLevel;
 	private byte ingredientCount;
 	public float lastWaterLevel = 0;
@@ -30,6 +31,12 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	public DefaultedList<ItemStack> getContents()
 	{
 		return contents;
+	}
+
+	@Override
+	public DefaultedList<ItemStack> getInput()
+	{
+		return input;
 	}
 
 	@Override

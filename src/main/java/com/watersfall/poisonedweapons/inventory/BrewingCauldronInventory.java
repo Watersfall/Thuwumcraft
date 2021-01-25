@@ -8,6 +8,7 @@ import net.minecraft.util.collection.DefaultedList;
 public interface BrewingCauldronInventory extends Inventory
 {
 	DefaultedList<ItemStack> getContents();
+	DefaultedList<ItemStack> getInput();
 
 	@Override
 	default int size()
@@ -95,6 +96,11 @@ public interface BrewingCauldronInventory extends Inventory
 		}
 	}
 
+	default void setInput(ItemStack stack)
+	{
+		getInput().set(0, stack);
+	}
+
 	default boolean addStack(ItemStack stack)
 	{
 		for(int i = 0; i < getContents().size(); i++)
@@ -106,5 +112,18 @@ public interface BrewingCauldronInventory extends Inventory
 			}
 		}
 		return false;
+	}
+
+	default byte getIngredientCount()
+	{
+		byte count = 0;
+		for(int i = 0; i < this.size(); i++)
+		{
+			if(!getStack(i).isEmpty())
+			{
+				count++;
+			}
+		}
+		return count;
 	}
 }
