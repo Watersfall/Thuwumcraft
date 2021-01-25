@@ -1,5 +1,6 @@
 package com.watersfall.alchemy.client.renderer;
 
+import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -87,7 +88,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 				colors[0] = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
 				for(int i = 1; i <= entity.getIngredientCount(); i++)
 				{
-					colors[i] = 0;//Ingredients.ingredients.get(entity.getStack(i - 1).getItem()).color;
+					colors[i] = BrewingCauldronBlock.INGREDIENTS.get(entity.getStack(i - 1).getItem()).color;
 				}
 				entity.color = getColor(colors);
 				entity.needsColorUpdate = false;

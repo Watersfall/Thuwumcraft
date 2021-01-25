@@ -126,7 +126,7 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 		{
 			ItemStack stack = new ItemStack(Registry.ITEM.get(new Identifier(json.get("item").getAsString())));
 			JsonObject jsonColor = json.getAsJsonObject("color");
-			int color = new Color(jsonColor.get("r").getAsInt(), jsonColor.get("g").getAsInt(), jsonColor.get("b").getAsInt()).hashCode();
+			int color = new Color(jsonColor.get("r").getAsInt(), jsonColor.get("g").getAsInt(), jsonColor.get("b").getAsInt(), 0).hashCode();
 			JsonArray array = json.getAsJsonArray("effects");
 			ArrayList<StatusEffectInstance> effects = new ArrayList<>(array.size());
 			array.forEach((object) -> {
