@@ -43,6 +43,5 @@ public class LadleItem extends Item
 				}
 			}
 		}
-
 	}
 }
