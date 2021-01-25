@@ -52,16 +52,23 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	public ItemStack craft(BrewingCauldronInventory inventory, CauldronTypeRecipe recipe)
 	{
 		ItemStack stack = inventory.getInput().get(0);
-		if(stack.getItem() instanceof LadleItem)
+		if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_LADLE)
 		{
 			StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inventory));
+		}
+		else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM)
+		{
+			stack = recipe.getOutput().copy();
+			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
 			return stack;
 		}
-		else if(stack.getItem() == AlchemyModItems.THROW_BOTTLE || stack.getItem() == Items.GLASS_BOTTLE)
+		else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_WEAPON)
 		{
 			PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+
+			stack.getTag().putInt("uses", recipe.uses);
 		}
-		return null;
+		return stack;
 	}
 
 	@Override

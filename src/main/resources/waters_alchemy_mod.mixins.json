@@ -4,8 +4,7 @@
 	"package": "com.watersfall.alchemy.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"LivingEntityMixin",
-		"SwordMixin"
+		"LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

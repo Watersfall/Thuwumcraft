@@ -5,5 +5,7 @@
 			"tag": "fabric:swords"
 		}
 	],
-	"water_use": 333
+	"water_use": 333,
+	"uses": 3,
+	"action": "create_weapon"
 }

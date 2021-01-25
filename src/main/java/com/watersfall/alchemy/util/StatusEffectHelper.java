@@ -1,7 +1,6 @@
 package com.watersfall.alchemy.util;
 
 import com.google.common.collect.ImmutableSet;
-import com.watersfall.alchemy.api.Poisonable;
 import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import com.watersfall.alchemy.recipe.CauldronRecipe;
@@ -16,19 +15,6 @@ import java.util.Set;
 
 public class StatusEffectHelper
 {
-	public static void set(ItemStack item, StatusEffectInstance effect, int uses)
-	{
-		if(item.getItem() instanceof Poisonable)
-		{
-			CompoundTag tag = new CompoundTag();
-			tag.putString("id", String.valueOf(Registry.STATUS_EFFECT.getId(effect.getEffectType())));
-			tag.putInt("duration", effect.getDuration());
-			tag.putInt("amplifier", effect.getAmplifier());
-			tag.putInt("uses", uses);
-			item.putSubTag("effect", tag);
-		}
-	}
-
 	public static void use(ItemStack stack)
 	{
 		if(stack.getTag() != null)

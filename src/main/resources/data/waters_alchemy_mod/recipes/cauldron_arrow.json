@@ -1,0 +1,11 @@
+{
+	"type": "waters_alchemy_mod:cauldron_type",
+	"items": [
+		{
+			"item": "minecraft:arrow"
+		}
+	],
+	"water_use": 100,
+	"action": "create_item",
+	"output": "minecraft:tipped_arrow"
+}

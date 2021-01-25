@@ -2,11 +2,10 @@
 	"type": "waters_alchemy_mod:cauldron_type",
 	"items": [
 		{
-			"item": "minecraft:glass_bottle"
-		},
-		{
 			"item": "waters_alchemy_mod:throw_bottle"
 		}
 	],
-	"water_use": 333
+	"water_use": 333,
+	"action": "create_item",
+	"output": "minecraft:splash_potion"
 }

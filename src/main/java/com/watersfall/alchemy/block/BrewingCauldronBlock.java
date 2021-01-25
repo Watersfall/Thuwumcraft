@@ -51,11 +51,6 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		}
 	}
 
-	public static boolean checkIfIngredient(Item item, World world)
-	{
-		return INGREDIENTS.containsKey(item);
-	}
-
 	public BrewingCauldronBlock(Settings settings)
 	{
 		super(settings);
@@ -135,12 +130,13 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		}
 		else if(entity.getWaterLevel() > 0)
 		{
-			if(!world.isClient && checkIfIngredient(item, world))
+			if(INGREDIENTS.containsKey(item))
 			{
-				if(entity.count(item) <= 0)
+				if(entity.getIngredientCount() < 3 && entity.count(item) <= 0)
 				{
-					if(entity.addStack(new ItemStack(itemStack.getItem())))
+					if(!world.isClient)
 					{
+						entity.addStack(new ItemStack(item));
 						if(!player.abilities.creativeMode)
 						{
 							itemStack.decrement(1);
@@ -148,34 +144,39 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 						entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
 						entity.sync();
 					}
+					return ActionResult.success(world.isClient);
 				}
+				return ActionResult.FAIL;
 			}
 			else if(entity.getIngredientCount() > 1)
 			{
-				if(!world.isClient)
+				entity.setInput(new ItemStack(item));
+				Optional<CauldronTypeRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE, entity, world);
+				if(typeOptional.isPresent())
 				{
-					entity.setInput(itemStack);
-					Optional<CauldronTypeRecipe> typeRecipeOptional = world.getServer().getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE, entity, world);
-					if(typeRecipeOptional.isPresent())
+					if(!world.isClient)
 					{
-						Optional<CauldronRecipe> recipeOptional = world.getServer().getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_RECIPE_TYPE, entity, world);
-						if(recipeOptional.isPresent())
+						CauldronTypeRecipe typeRecipe = typeOptional.get();
+						CauldronRecipe recipe = INGREDIENTS.get(entity.getContents().get(0).getItem());
+						ItemStack stack = recipe.craft(entity, typeRecipe);
+						itemStack.decrement(1);
+						if(itemStack.isEmpty())
 						{
-							CauldronRecipe recipe = recipeOptional.get();
-							ItemStack stack = recipe.craft(entity, typeRecipeOptional.get());
-							if(stack != null)
-							{
-								player.setStackInHand(hand, recipe.craft(entity));
-								entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipeOptional.get().waterUse));
-								entity.sync();
-							}
+							player.setStackInHand(hand, stack);
 						}
+						else if(!player.inventory.insertStack(stack))
+						{
+							player.dropItem(stack, true);
+						}
+						entity.setInput(ItemStack.EMPTY);
+						entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.waterUse));
+						entity.sync();
 					}
-					entity.setInput(ItemStack.EMPTY);
+					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.success(world.isClient);
+				entity.setInput(ItemStack.EMPTY);
+				return ActionResult.FAIL;
 			}
-			return ActionResult.success(world.isClient);
 		}
 		if(entity.getWaterLevel() <= 5)
 		{
