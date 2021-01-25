@@ -24,12 +24,14 @@ import java.util.ArrayList;
 
 public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 {
+	public final Identifier id;
 	public final ItemStack input;
 	public final ArrayList<StatusEffectInstance> effects;
 	public final int color;
 
 	public CauldronRecipe(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
 	{
+		this.id = id;
 		this.input = input;
 		this.effects = effects;
 		this.color = color;
@@ -84,7 +86,7 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public Identifier getId()
 	{
-		return new Identifier(AlchemyMod.MOD_ID, "cauldron_recipe");
+		return this.id;
 	}
 
 	@Override
