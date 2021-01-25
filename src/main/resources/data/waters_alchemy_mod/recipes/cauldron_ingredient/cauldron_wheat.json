@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_recipe",
+	"type": "waters_alchemy_mod:cauldron_ingredient",
 	"item": "minecraft:wheat",
 	"color": {
 		"r": 255,

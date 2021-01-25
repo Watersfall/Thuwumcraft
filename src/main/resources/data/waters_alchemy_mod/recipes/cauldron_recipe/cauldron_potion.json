@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_type",
+	"type": "waters_alchemy_mod:cauldron_recipe",
 	"items": [
 		{
 			"item": "minecraft:glass_bottle"

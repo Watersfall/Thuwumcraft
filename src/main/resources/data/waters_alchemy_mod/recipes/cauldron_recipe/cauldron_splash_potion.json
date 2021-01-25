@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_type",
+	"type": "waters_alchemy_mod:cauldron_recipe",
 	"items": [
 		{
 			"item": "waters_alchemy_mod:throw_bottle"

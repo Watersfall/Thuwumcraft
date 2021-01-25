@@ -33,22 +33,22 @@ public class AlchemyMod implements ModInitializer
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MOD_ID, "apothecary_guide_handler"), ApothecaryGuideHandler::new);
-		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, "cauldron"), new RecipeType<CauldronRecipe>() {
+		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, "cauldron_ingredient"), new RecipeType<CauldronRecipe>() {
 			@Override
 			public String toString()
 			{
-				return "cauldron";
+				return "cauldron_ingredient";
 			}
 		});
-		CAULDRON_TYPE_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_type"), new RecipeType<CauldronTypeRecipe>() {
+		CAULDRON_TYPE_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), new RecipeType<CauldronTypeRecipe>() {
 			@Override
 			public String toString()
 			{
-				return "cauldron_type";
+				return "cauldron_recipe";
 			}
 		});
-		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "cauldron_recipe"), new CauldronRecipe.Serializer(CauldronRecipe::new));
-		CAULDRON_TYPE_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_type"), new CauldronTypeRecipe.Serializer(CauldronTypeRecipe::new));
+		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "cauldron_ingredient"), new CauldronRecipe.Serializer(CauldronRecipe::new));
+		CAULDRON_TYPE_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronTypeRecipe.Serializer(CauldronTypeRecipe::new));
 	}
 
 	public static Identifier getId(String id)
