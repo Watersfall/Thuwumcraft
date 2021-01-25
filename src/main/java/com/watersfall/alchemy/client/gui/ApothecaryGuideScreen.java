@@ -2,13 +2,17 @@ package com.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.watersfall.alchemy.AlchemyMod;
+import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 {
@@ -36,11 +40,11 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 		super.render(matrices, mouseX, mouseY, delta);
 		if(handler.getStacks().get(0) != ItemStack.EMPTY)
 		{
-			/*Ingredient ingredient = Ingredients.ingredients.get(handler.getStacks().get(0).getItem());
-			for(int i = 0; i < ingredient.effects.size(); i++)
+			List<StatusEffectInstance> list = BrewingCauldronBlock.INGREDIENTS.get(handler.getStacks().get(0).getItem()).effects;
+			for(int i = 0; i < list.size(); i++)
 			{
-				textRenderer.draw(matrices, ingredient.effects.get(i).getEffectType().getName(), this.x + 56, this.y + 24 + (i * 10), 4210752);
-			}*/
+				textRenderer.draw(matrices, list.get(i).getEffectType().getName(), this.x + 56, this.y + 24 + (i * 10), 4210752);
+			}
 		}
 		drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
