@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.watersfall.alchemy.client.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"client": [
+		"LivingEntityRenderMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
