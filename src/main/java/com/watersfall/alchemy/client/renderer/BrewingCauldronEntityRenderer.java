@@ -93,7 +93,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 		renderer.vertex(stack.peek().getModel(), x, y, z)
 				.color((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), (color & 0xFF) / 255F, 1.0f)
 				.texture(u, v)
-				.light(light, overlay)
+				.light(light)
 				.normal(1, 0, 0)
 				.next();
 	}
