@@ -16,6 +16,16 @@
 			"effect": "minecraft:absorption",
 			"duration": 200,
 			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:regeneration",
+			"duration": 50,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:unluck",
+			"duration": 500,
+			"amplifier": 1
 		}
 	]
 }

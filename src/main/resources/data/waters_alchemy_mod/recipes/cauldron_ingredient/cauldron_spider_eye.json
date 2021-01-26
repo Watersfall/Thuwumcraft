@@ -1,20 +1,20 @@
 {
 	"type": "waters_alchemy_mod:cauldron_ingredient",
-	"item": "minecraft:wither_rose",
+	"item": "minecraft:spider_eye",
 	"color": {
-		"r": 16,
-		"g": 48,
+		"r": 96,
+		"g": 16,
 		"b": 16
 	},
 	"effects": [
 		{
-			"effect": "minecraft:wither",
-			"duration": 100,
+			"effect": "minecraft:instant_damage",
+			"duration": 1,
 			"amplifier": 1
 		},
 		{
-			"effect": "minecraft:instant_damage",
-			"duration": 1,
+			"effect": "minecraft:weakness",
+			"duration": 200,
 			"amplifier": 1
 		},
 		{
@@ -23,7 +23,7 @@
 			"amplifier": 1
 		},
 		{
-			"effect": "minecraft:nausea",
+			"effect": "minecraft:regeneration",
 			"duration": 200,
 			"amplifier": 1
 		}

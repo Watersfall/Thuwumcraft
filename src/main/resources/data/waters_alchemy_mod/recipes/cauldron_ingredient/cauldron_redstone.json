@@ -1,15 +1,15 @@
 {
 	"type": "waters_alchemy_mod:cauldron_ingredient",
-	"item": "minecraft:wither_rose",
+	"item": "minecraft:redstone",
 	"color": {
-		"r": 16,
-		"g": 48,
-		"b": 16
+		"r": 136,
+		"g": 32,
+		"b": 32
 	},
 	"effects": [
 		{
-			"effect": "minecraft:wither",
-			"duration": 100,
+			"effect": "minecraft:night_vision",
+			"duration": 600,
 			"amplifier": 1
 		},
 		{
@@ -18,13 +18,13 @@
 			"amplifier": 1
 		},
 		{
-			"effect": "minecraft:poison",
+			"effect": "minecraft:luck",
 			"duration": 200,
 			"amplifier": 1
 		},
 		{
-			"effect": "minecraft:nausea",
-			"duration": 200,
+			"effect": "minecraft:unluck",
+			"duration": 400,
 			"amplifier": 1
 		}
 	]

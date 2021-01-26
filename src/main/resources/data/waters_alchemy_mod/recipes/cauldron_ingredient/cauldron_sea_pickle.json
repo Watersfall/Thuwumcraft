@@ -1,0 +1,21 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:sea_pickle",
+	"color": {
+		"r": 64,
+		"g": 128,
+		"b": 32
+	},
+	"effects": [
+		{
+			"effect": "minecraft:water_breathing",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:glowing",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

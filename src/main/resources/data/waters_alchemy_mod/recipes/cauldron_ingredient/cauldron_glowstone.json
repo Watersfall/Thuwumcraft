@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:glowstone_dust",
+	"color": {
+		"r": 255,
+		"g": 255,
+		"b": 0
+	},
+	"effects": [
+		{
+			"effect": "minecraft:glowing",
+			"duration": 600,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:night_vision",
+			"duration": 600,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:haste",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:fire_resistance",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}
