@@ -3,6 +3,7 @@
 	"item.waters_alchemy_mod.throw_bottle": "Empty Splash Bottle",
 	"item.waters_alchemy_mod.ladle": "Ladle",
 	"item.waters_alchemy_mod.apothecary_guide_book": "Apothecary's Guide Book",
+	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
 	"effect.waters_alchemy_mod.projectile_attraction": "Attraction",
 	"effect.waters_alchemy_mod.projectile_shield": "Repulsion",
 	"block.waters_alchemy_mod.cauldron.invalid_recipe": "This recipe doesn't seem to be working..."

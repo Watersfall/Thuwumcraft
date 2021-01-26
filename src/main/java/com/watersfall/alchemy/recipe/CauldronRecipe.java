@@ -64,20 +64,26 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory);
 		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
-			if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_LADLE)
+			if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.ADD_EFFECTS)
 			{
-				StatusEffectHelper.createLadle(stack, StatusEffectHelper.getEffects(inventory));
+				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory));
+				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
 			}
-			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM)
+			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_POTION)
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
 				return stack;
 			}
-			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_WEAPON)
+			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
 			{
+				stack = recipe.getOutput().copy();
+			}
+			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM_EFFECT)
+			{
+				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
-				stack.getTag().putInt(USES, recipe.uses);
+				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
 			}
 			return stack;
 		}

@@ -6,6 +6,6 @@
 		}
 	],
 	"water_use": 100,
-	"action": "create_item",
+	"action": "create_potion",
 	"output": "minecraft:tipped_arrow"
 }

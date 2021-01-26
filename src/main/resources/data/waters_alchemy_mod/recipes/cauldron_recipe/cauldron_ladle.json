@@ -6,5 +6,5 @@
 		}
 	],
 	"water_use": 0,
-	"action": "create_ladle"
+	"action": "add_effects"
 }

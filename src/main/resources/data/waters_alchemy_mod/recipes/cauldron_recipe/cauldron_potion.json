@@ -6,6 +6,6 @@
 		}
 	],
 	"water_use": 333,
-	"action": "create_item",
+	"action": "create_potion",
 	"output": "minecraft:potion"
 }

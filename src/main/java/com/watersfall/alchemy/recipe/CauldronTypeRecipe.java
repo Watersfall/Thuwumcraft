@@ -145,8 +145,9 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 
 	public enum CraftingAction
 	{
-		CREATE_LADLE,
-		CREATE_WEAPON,
-		CREATE_ITEM
+		ADD_EFFECTS,
+		CREATE_ITEM_EFFECT,
+		CREATE_ITEM_NO_EFFECT,
+		CREATE_POTION
 	}
 }

@@ -7,5 +7,5 @@
 	],
 	"water_use": 333,
 	"uses": 3,
-	"action": "create_weapon"
+	"action": "add_effects"
 }
