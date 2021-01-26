@@ -90,12 +90,22 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
 	{
 		ItemStack itemStack = player.getStackInHand(hand);
-		if(itemStack.isEmpty())
-		{
-			return ActionResult.PASS;
-		}
 		BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
 		assert entity != null;
+		if(itemStack.isEmpty())
+		{
+			if(player.isSneaking())
+			{
+				if(!world.isClient)
+				{
+					entity.clear();
+					entity.sync();
+					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				}
+				return ActionResult.success(world.isClient);
+			}
+			return ActionResult.PASS;
+		}
 		Item item = itemStack.getItem();
 		if(item == Items.WATER_BUCKET)
 		{
