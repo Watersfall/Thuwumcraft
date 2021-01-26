@@ -10,6 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -71,11 +73,35 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
 	{
 		BrewingCauldronEntity cauldron = (BrewingCauldronEntity) world.getBlockEntity(pos);
-		if(!world.isClient && entity.isOnFire() && cauldron.getWaterLevel() > 333)
+		if(cauldron != null)
 		{
-			entity.extinguish();
-			cauldron.setWaterLevel((short) (cauldron.getWaterLevel() - 333));
-			cauldron.sync();
+			if(entity instanceof LivingEntity)
+			{
+				if(!world.isClient && entity.isOnFire() && cauldron.getWaterLevel() > 333)
+				{
+					entity.extinguish();
+					cauldron.setWaterLevel((short) (cauldron.getWaterLevel() - 333));
+					cauldron.sync();
+				}
+			}
+			else if(entity instanceof ItemEntity)
+			{
+				if(!world.isClient)
+				{
+					if(cauldron.getIngredientCount() < 3)
+					{
+						ItemEntity itemEntity = (ItemEntity)entity;
+						Item item = itemEntity.getStack().getItem();
+						if(cauldron.count(item) <= 0)
+						{
+							itemEntity.getStack().decrement(1);
+							cauldron.addStack(new ItemStack(item));
+							cauldron.setIngredientCount((byte) (cauldron.getIngredientCount() + 1));
+							cauldron.sync();
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -157,7 +183,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					}
 					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.FAIL;
+				return ActionResult.CONSUME;
 			}
 			else if(entity.getIngredientCount() > 1)
 			{
