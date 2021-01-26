@@ -51,6 +51,10 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+loom {
+    accessWidener "src/main/resources/waters_alchemy_mod.accesswidener"
+}
+
 jar {
     from "LICENSE"
 }

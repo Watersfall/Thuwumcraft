@@ -1,26 +1,60 @@
 package com.watersfall.alchemy.client.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import net.minecraft.block.AbstractSkullBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.SkullBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.texture.*;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3d;
+
+import java.util.HashMap;
 
 public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCauldronEntity>
 {
 	private static final Sprite sprite = ((SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
+	private static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
+	private static final HashMap<SkullBlock.SkullType, ResourceTexture> SPECIAL_SKULL_CACHE = new HashMap<>();
 
 	public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
 	{
 		super(dispatcher);
+	}
+
+	private Sprite getSprite(Item item)
+	{
+		if(SPRITE_CACHE.containsKey(item))
+		{
+			return SPRITE_CACHE.get(item);
+		}
+		else
+		{
+			SPRITE_CACHE.put(item, MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getSprite());
+		}
+		return SPRITE_CACHE.get(item);
+	}
+
+	private Identifier getSkullTexture(SkullBlock.SkullType type)
+	{
+		return SkullBlockEntityRenderer.TEXTURES.get(type);
 	}
 
 	private int getColor(int... colors)
@@ -70,6 +104,52 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 				.next();
 	}
 
+	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, int color)
+	{
+		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
+		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
+		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
+
+		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
+		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
+		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
+		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+	}
+
+	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color)
+	{
+		this.dispatcher.textureManager.bindTexture(sprite);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder builder = tessellator.getBuffer();
+		builder.begin(7, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color);
+		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color);
+		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color);
+		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color);
+
+		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color);
+		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color);
+		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color);
+		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color);
+		tessellator.draw();
+	}
+
+	private void drawItem(Item item, VertexConsumer renderer, MatrixStack matrices)
+	{
+		if(item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AbstractSkullBlock)
+		{
+			Block block = ((BlockItem)item).getBlock();
+			Identifier texture = getSkullTexture(((AbstractSkullBlock)block).getSkullType());
+			drawTexture(renderer, matrices, texture, -1);
+		}
+		else
+		{
+			Sprite sprite = getSprite(item);
+			drawTexture(renderer, matrices, sprite, -1);
+		}
+	}
+
 	@Override
 	public void render(BrewingCauldronEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
 	{
@@ -95,16 +175,49 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 			}
 			color = entity.color;
 			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
-			add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
-			add(builder, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
-			add(builder, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
-			add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
-
-			add(builder, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
-			add(builder, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
-			add(builder, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
-			add(builder, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+			drawTexture(builder, matrices, sprite, color);
 			matrices.pop();
+
+			if(entity.getIngredientCount() > 0)
+			{
+				HitResult result = MinecraftClient.getInstance().crosshairTarget;
+				if(result != null && result.getType() == HitResult.Type.BLOCK)
+				{
+					Vec3d blockPos = new Vec3d(entity.getPos().getX() + 0.5D, entity.getPos().getY() + 0.5D, entity.getPos().getZ() + 0.5D);
+					if(result.getPos().distanceTo(blockPos) <= 1D)
+					{
+						matrices.push();
+						builder = vertexConsumers.getBuffer(RenderLayer.getCutout());;
+						matrices.translate(0.5D, 1.75D, 0.5D);
+						Quaternion quaternion = dispatcher.camera.getRotation().copy();
+						quaternion.hamiltonProduct(Vector3f.NEGATIVE_X.getDegreesQuaternion(270));
+						matrices.scale(0.25F, 0.25F, 0.25F);
+						matrices.multiply(quaternion);
+						matrices.translate(0.5D, 0D, 0.5D);
+						if(entity.getIngredientCount() == 1)
+						{
+							matrices.translate(-1D, 0, 0);
+							drawItem(entity.getContents().get(0).getItem(), builder, matrices);
+						}
+						else if(entity.getIngredientCount() == 2)
+						{
+							matrices.translate(-0.5D, 0, 0);
+							drawItem(entity.getContents().get(0).getItem(), builder, matrices);
+							matrices.translate(-1D, 0, 0);
+							drawItem(entity.getContents().get(1).getItem(), builder, matrices);
+						}
+						else
+						{
+							for(int i = 0; i < entity.getIngredientCount(); i++)
+							{
+								drawItem(entity.getContents().get(i).getItem(), builder, matrices);
+								matrices.translate(-1D, 0, 0);
+							}
+						}
+						matrices.pop();
+					}
+				}
+			}
 		}
 	}
 }

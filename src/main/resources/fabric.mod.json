@@ -26,6 +26,7 @@
 		"waters_alchemy_mod.mixins.json",
 		"waters_alchemy_mod.client.mixins.json"
 	],
+	"accessWidener" : "waters_alchemy_mod.accesswidener",
 	"depends": {
 		"fabricloader": ">=0.9.3+build.207",
 		"fabric": "*",
