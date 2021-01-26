@@ -32,8 +32,8 @@ public class AlchemyMod implements ModInitializer
 
 	static
 	{
-		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier(MOD_ID, "apothecary_guide_handler"), ApothecaryGuideHandler::new);
-		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, "cauldron_ingredient"), new RecipeType<CauldronRecipe>() {
+		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
+		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_ingredient"), new RecipeType<CauldronRecipe>() {
 			@Override
 			public String toString()
 			{
@@ -47,7 +47,7 @@ public class AlchemyMod implements ModInitializer
 				return "cauldron_recipe";
 			}
 		});
-		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "cauldron_ingredient"), new CauldronRecipe.Serializer(CauldronRecipe::new));
+		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronRecipe.Serializer(CauldronRecipe::new));
 		CAULDRON_TYPE_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronTypeRecipe.Serializer(CauldronTypeRecipe::new));
 	}
 
@@ -59,16 +59,16 @@ public class AlchemyMod implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "witchy_spoon"), AlchemyModItems.WITCHY_SPOON_ITEM);
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "throw_bottle"), AlchemyModItems.THROW_BOTTLE);
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "ladle"), AlchemyModItems.LADLE_ITEM);
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "apothecary_guide_book"), AlchemyModItems.APOTHECARY_GUIDE);
-		Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
-		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
-		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
-		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
-		Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
-		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MOD_ID, "brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
+		Registry.register(Registry.ITEM, getId("witchy_spoon"), AlchemyModItems.WITCHY_SPOON_ITEM);
+		Registry.register(Registry.ITEM, getId("throw_bottle"), AlchemyModItems.THROW_BOTTLE);
+		Registry.register(Registry.ITEM, getId("ladle"), AlchemyModItems.LADLE_ITEM);
+		Registry.register(Registry.ITEM, getId("apothecary_guide_book"), AlchemyModItems.APOTHECARY_GUIDE);
+		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
+		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
 			if(success)
 			{
