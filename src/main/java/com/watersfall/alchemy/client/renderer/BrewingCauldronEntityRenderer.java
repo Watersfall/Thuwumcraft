@@ -6,18 +6,13 @@ import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SkullBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
-import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.texture.*;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.*;
@@ -94,59 +89,61 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 		return color;
 	}
 
-	private void add(VertexConsumer renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color)
+	private void add(VertexConsumer renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color, int light, int overlay)
 	{
 		renderer.vertex(stack.peek().getModel(), x, y, z)
 				.color((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), (color & 0xFF) / 255F, 1.0f)
 				.texture(u, v)
-				.light(0, 240)
+				.light(light, overlay)
 				.normal(1, 0, 0)
 				.next();
 	}
 
-	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, int color)
+	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, int color, int light, int overlay)
 	{
-		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
-		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
-		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
-		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
-
-		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color);
-		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color);
-		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color);
-		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color);
+		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
+		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color, light, overlay);
+		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color, light, overlay);
+		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color, light, overlay);
+		add(renderer, matrices, 0, 1, 1, sprite.getMinU(), sprite.getMaxV(), color, light, overlay);
+		add(renderer, matrices, 1, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color, light, overlay);
+		add(renderer, matrices, 1, 1, 0, sprite.getMaxU(), sprite.getMinV(), color, light, overlay);
+		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
 	}
 
-	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color)
+	private void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color, int light, int overlay)
 	{
+		RenderSystem.pushMatrix();
+		RenderSystem.enableDepthTest();
 		this.dispatcher.textureManager.bindTexture(sprite);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
 		builder.begin(7, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
-		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color);
-		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color);
-		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color);
-		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color);
+		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color, light, overlay);
+		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color, light, overlay);
+		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color, light, overlay);
+		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color, light, overlay);
 
-		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color);
-		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color);
-		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color);
-		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color);
+		add(builder, matrices, 0, 1, 1, 0.125F, 0.5F, color, light, overlay);
+		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color, light, overlay);
+		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color, light, overlay);
+		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color, light, overlay);
 		tessellator.draw();
+		RenderSystem.popMatrix();
 	}
 
-	private void drawItem(Item item, VertexConsumer renderer, MatrixStack matrices)
+	private void drawItem(Item item, VertexConsumer renderer, MatrixStack matrices, int light, int overlay)
 	{
 		if(item instanceof BlockItem && ((BlockItem)item).getBlock() instanceof AbstractSkullBlock)
 		{
 			Block block = ((BlockItem)item).getBlock();
 			Identifier texture = getSkullTexture(((AbstractSkullBlock)block).getSkullType());
-			drawTexture(renderer, matrices, texture, -1);
+			drawTexture(renderer, matrices, texture, -1, light, overlay);
 		}
 		else
 		{
 			Sprite sprite = getSprite(item);
-			drawTexture(renderer, matrices, sprite, -1);
+			drawTexture(renderer, matrices, sprite, -1, light, overlay);
 		}
 	}
 
@@ -175,7 +172,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 			}
 			color = entity.color;
 			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
-			drawTexture(builder, matrices, sprite, color);
+			drawTexture(builder, matrices, sprite, color, light, overlay);
 			matrices.pop();
 
 			if(entity.getIngredientCount() > 0)
@@ -197,20 +194,20 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 						if(entity.getIngredientCount() == 1)
 						{
 							matrices.translate(-1D, 0, 0);
-							drawItem(entity.getContents().get(0).getItem(), builder, matrices);
+							drawItem(entity.getContents().get(0).getItem(), builder, matrices, 9437408, 655360);
 						}
 						else if(entity.getIngredientCount() == 2)
 						{
 							matrices.translate(-0.5D, 0, 0);
-							drawItem(entity.getContents().get(0).getItem(), builder, matrices);
+							drawItem(entity.getContents().get(0).getItem(), builder, matrices, 9437408, 655360);
 							matrices.translate(-1D, 0, 0);
-							drawItem(entity.getContents().get(1).getItem(), builder, matrices);
+							drawItem(entity.getContents().get(1).getItem(), builder, matrices, 9437408, 655360);
 						}
 						else
 						{
 							for(int i = 0; i < entity.getIngredientCount(); i++)
 							{
-								drawItem(entity.getContents().get(i).getItem(), builder, matrices);
+								drawItem(entity.getContents().get(i).getItem(), builder, matrices, 9437408, 655360);
 								matrices.translate(-1D, 0, 0);
 							}
 						}
