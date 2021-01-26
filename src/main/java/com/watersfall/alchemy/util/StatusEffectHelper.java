@@ -16,24 +16,7 @@ import java.util.Set;
 
 public class StatusEffectHelper
 {
-	public static final Set<StatusEffectInstance> INVALID_RECIPE = new HashSet<>();
-
-	public static void use(ItemStack stack)
-	{
-		if(stack.getTag() != null)
-		{
-			CompoundTag tag = stack.getTag().getCompound("effect");
-			int uses = tag.getInt("uses");
-			if(uses <= 1)
-			{
-				stack.getTag().remove("effect");
-			}
-			else
-			{
-				tag.putInt("uses", uses - 1);
-			}
-		}
-	}
+	public static final Set<StatusEffectInstance> INVALID_RECIPE = new HashSet<>(0);
 
 	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory)
 	{

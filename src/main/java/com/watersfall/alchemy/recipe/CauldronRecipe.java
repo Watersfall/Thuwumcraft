@@ -4,13 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
-import com.watersfall.alchemy.item.AlchemyModItems;
-import com.watersfall.alchemy.item.LadleItem;
 import com.watersfall.alchemy.util.StatusEffectHelper;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.PotionUtil;
@@ -29,6 +26,17 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	public final ItemStack input;
 	public final ArrayList<StatusEffectInstance> effects;
 	public final int color;
+
+	public static final String ITEM = "item";
+	public static final String COLOR = "color";
+	public static final String R = "r";
+	public static final String G = "g";
+	public static final String B = "b";
+	public static final String EFFECTS = "effects";
+	public static final String EFFECT = "effect";
+	public static final String DURATION = "duration";
+	public static final String AMPLIFIER = "amplifier";
+	public static final String USES = "uses";
 
 	public CauldronRecipe(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
 	{
@@ -69,8 +77,7 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_WEAPON)
 			{
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
-
-				stack.getTag().putInt("uses", recipe.uses);
+				stack.getTag().putInt(USES, recipe.uses);
 			}
 			return stack;
 		}
@@ -130,16 +137,15 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 		@Override
 		public CauldronRecipe read(Identifier id, JsonObject json)
 		{
-			ItemStack stack = new ItemStack(Registry.ITEM.get(new Identifier(json.get("item").getAsString())));
-			JsonObject jsonColor = json.getAsJsonObject("color");
-			int color = new Color(jsonColor.get("r").getAsInt(), jsonColor.get("g").getAsInt(), jsonColor.get("b").getAsInt(), 0).hashCode();
-			JsonArray array = json.getAsJsonArray("effects");
+			ItemStack stack = new ItemStack(Registry.ITEM.get(new Identifier(json.get(ITEM).getAsString())));
+			JsonObject jsonColor = json.getAsJsonObject(COLOR);
+			int color = new Color(jsonColor.get(R).getAsInt(), jsonColor.get(G).getAsInt(), jsonColor.get(B).getAsInt(), 0).hashCode();
+			JsonArray array = json.getAsJsonArray(EFFECTS);
 			ArrayList<StatusEffectInstance> effects = new ArrayList<>(array.size());
 			array.forEach((object) -> {
-
-				StatusEffect effect = Registry.STATUS_EFFECT.get(Identifier.tryParse(object.getAsJsonObject().get("effect").getAsString()));
-				int duration = object.getAsJsonObject().get("duration").getAsInt();
-				int amplifier = object.getAsJsonObject().get("amplifier").getAsInt();
+				StatusEffect effect = Registry.STATUS_EFFECT.get(Identifier.tryParse(object.getAsJsonObject().get(EFFECT).getAsString()));
+				int duration = object.getAsJsonObject().get(DURATION).getAsInt();
+				int amplifier = object.getAsJsonObject().get(AMPLIFIER).getAsInt();
 				effects.add(new StatusEffectInstance(effect, duration, amplifier));
 			});
 			return new CauldronRecipe(id, stack, effects, color);

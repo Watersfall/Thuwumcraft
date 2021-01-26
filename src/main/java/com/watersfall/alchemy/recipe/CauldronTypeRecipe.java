@@ -3,7 +3,6 @@ package com.watersfall.alchemy.recipe;
 import com.google.gson.JsonObject;
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -18,6 +17,12 @@ import java.util.Locale;
 
 public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 {
+	public static final String ITEMS = "items";
+	public static final String ACTION = "action";
+	public static final String WATER_USE = "water_use";
+	public static final String USES = "uses";
+	public static final String OUTPUT = "output";
+
 	public final Identifier id;
 	public final Ingredient input;
 	public final int waterUse;
@@ -94,18 +99,18 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 		@Override
 		public CauldronTypeRecipe read(Identifier id, JsonObject json)
 		{
-			Ingredient input = Ingredient.fromJson(json.get("items").getAsJsonArray());
-			CraftingAction action = CraftingAction.valueOf(json.get("action").getAsString().toUpperCase(Locale.ROOT));
-			int waterUse = json.get("water_use").getAsInt();
+			Ingredient input = Ingredient.fromJson(json.get(ITEMS).getAsJsonArray());
+			CraftingAction action = CraftingAction.valueOf(json.get(ACTION).getAsString().toUpperCase(Locale.ROOT));
+			int waterUse = json.get(WATER_USE).getAsInt();
 			int uses = 0;
 			ItemStack output = ItemStack.EMPTY;
-			if(json.get("uses") != null)
+			if(json.get(USES) != null)
 			{
-				uses = json.get("uses").getAsInt();
+				uses = json.get(USES).getAsInt();
 			}
-			if(json.get("output") != null)
+			if(json.get(OUTPUT) != null)
 			{
-				output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString())));
+				output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
 			}
 			return new CauldronTypeRecipe(id, input, waterUse, action, uses, output);
 		}

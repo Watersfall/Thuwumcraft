@@ -14,6 +14,10 @@ import net.minecraft.util.math.MathHelper;
 
 public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldronInventory, BlockEntityClientSerializable
 {
+	public static final String WATER_LEVEL = "water_level";
+	public static final String INGREDIENT_COUNT = "ingredient_count";
+	public static final String NEEDS_COLOR_UPDATE = "needs_color_update";
+
 	private final DefaultedList<ItemStack> contents = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	private final DefaultedList<ItemStack> input = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	private short waterLevel;
@@ -43,8 +47,8 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	public void fromTag(BlockState state, CompoundTag tag)
 	{
 		super.fromTag(state, tag);
-		this.waterLevel = tag.getShort("water_level");
-		this.ingredientCount = tag.getByte("ingredient_count");
+		this.waterLevel = tag.getShort(WATER_LEVEL);
+		this.ingredientCount = tag.getByte(INGREDIENT_COUNT);
 		this.lastWaterLevel = waterLevel + ((float) this.ingredientCount * (1F / 32F));
 		Inventories.fromTag(tag, this.contents);
 	}
@@ -53,8 +57,8 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	public CompoundTag toTag(CompoundTag tag)
 	{
 		super.toTag(tag);
-		tag.putShort("water_level", waterLevel);
-		tag.putByte("ingredient_count", ingredientCount);
+		tag.putShort(WATER_LEVEL, waterLevel);
+		tag.putByte(INGREDIENT_COUNT, ingredientCount);
 		Inventories.toTag(tag, this.contents);
 		return tag;
 	}
@@ -88,18 +92,18 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
-		this.waterLevel = compoundTag.getShort("water_level");
-		this.ingredientCount = compoundTag.getByte("ingredient_count");
-		this.needsColorUpdate = compoundTag.getBoolean("needs_color_update");
+		this.waterLevel = compoundTag.getShort(WATER_LEVEL);
+		this.ingredientCount = compoundTag.getByte(INGREDIENT_COUNT);
+		this.needsColorUpdate = compoundTag.getBoolean(NEEDS_COLOR_UPDATE);
 		Inventories.fromTag(compoundTag, contents);
 	}
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag compoundTag)
 	{
-		compoundTag.putShort("water_level", waterLevel);
-		compoundTag.putByte("ingredient_count", ingredientCount);
-		compoundTag.putBoolean("needs_color_update", needsColorUpdate);
+		compoundTag.putShort(WATER_LEVEL, waterLevel);
+		compoundTag.putByte(INGREDIENT_COUNT, ingredientCount);
+		compoundTag.putBoolean(NEEDS_COLOR_UPDATE, needsColorUpdate);
 		Inventories.toTag(compoundTag, contents);
 		return compoundTag;
 	}

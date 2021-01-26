@@ -27,7 +27,6 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 {
 	private static final Sprite sprite = ((SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
 	private static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
-	private static final HashMap<SkullBlock.SkullType, ResourceTexture> SPECIAL_SKULL_CACHE = new HashMap<>();
 
 	public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
 	{
@@ -184,7 +183,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 					if(result.getPos().distanceTo(blockPos) <= 1D)
 					{
 						matrices.push();
-						builder = vertexConsumers.getBuffer(RenderLayer.getCutout());;
+						builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
 						matrices.translate(0.5D, 1.75D, 0.5D);
 						Quaternion quaternion = dispatcher.camera.getRotation().copy();
 						quaternion.hamiltonProduct(Vector3f.NEGATIVE_X.getDegreesQuaternion(270));
