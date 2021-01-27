@@ -20,7 +20,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
+public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 {
 	public final Identifier id;
 	public final ItemStack input;
@@ -38,7 +38,7 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	public static final String AMPLIFIER = "amplifier";
 	public static final String USES = "uses";
 
-	public CauldronRecipe(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
+	public CauldronIngredients(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
 	{
 		this.id = id;
 		this.input = input;
@@ -58,28 +58,28 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 		return inv.getInput().get(0);
 	}
 
-	public ItemStack craft(BrewingCauldronInventory inventory, CauldronTypeRecipe recipe)
+	public ItemStack craft(BrewingCauldronInventory inventory, CauldronIngredientRecipe recipe)
 	{
 		ItemStack stack = inventory.getInput().get(0).copy();
 		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory);
 		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
-			if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.ADD_EFFECTS)
+			if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
 			{
 				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
 			}
-			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_POTION)
+			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
 				return stack;
 			}
-			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
+			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
 			}
-			else if(recipe.craftingAction == CauldronTypeRecipe.CraftingAction.CREATE_ITEM_EFFECT)
+			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
@@ -123,25 +123,25 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyMod.CAULDRON_RECIPE_SERIALIZER;
+		return AlchemyMod.CAULDRON_INGREDIENTS_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyMod.CAULDRON_RECIPE_TYPE;
+		return AlchemyMod.CAULDRON_INGREDIENTS;
 	}
 
-	public static class Serializer implements RecipeSerializer<CauldronRecipe>
+	public static class Serializer implements RecipeSerializer<CauldronIngredients>
 	{
-		private final CauldronRecipe.Serializer.RecipeFactory<CauldronRecipe> recipeFactory;
-		public Serializer(CauldronRecipe.Serializer.RecipeFactory<CauldronRecipe> recipeFactory)
+		private final CauldronIngredients.Serializer.RecipeFactory<CauldronIngredients> recipeFactory;
+		public Serializer(CauldronIngredients.Serializer.RecipeFactory<CauldronIngredients> recipeFactory)
 		{
 			this.recipeFactory = recipeFactory;
 		}
 
 		@Override
-		public CauldronRecipe read(Identifier id, JsonObject json)
+		public CauldronIngredients read(Identifier id, JsonObject json)
 		{
 			ItemStack stack = new ItemStack(Registry.ITEM.get(new Identifier(json.get(ITEM).getAsString())));
 			JsonObject jsonColor = json.getAsJsonObject(COLOR);
@@ -154,11 +154,11 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 				int amplifier = object.getAsJsonObject().get(AMPLIFIER).getAsInt();
 				effects.add(new StatusEffectInstance(effect, duration, amplifier));
 			});
-			return new CauldronRecipe(id, stack, effects, color);
+			return new CauldronIngredients(id, stack, effects, color);
 		}
 
 		@Override
-		public CauldronRecipe read(Identifier id, PacketByteBuf buf)
+		public CauldronIngredients read(Identifier id, PacketByteBuf buf)
 		{
 			ItemStack stack = buf.readItemStack();
 			int size = buf.readByte();
@@ -167,11 +167,11 @@ public class CauldronRecipe implements Recipe<BrewingCauldronInventory>
 			{
 				list.add(StatusEffectInstance.fromTag(buf.readCompoundTag()));
 			}
-			return new CauldronRecipe(id, stack, list, 0);
+			return new CauldronIngredients(id, stack, list, 0);
 		}
 
 		@Override
-		public void write(PacketByteBuf buf, CauldronRecipe recipe)
+		public void write(PacketByteBuf buf, CauldronIngredients recipe)
 		{
 			buf.writeItemStack(recipe.input);
 			buf.writeByte(recipe.effects.size());

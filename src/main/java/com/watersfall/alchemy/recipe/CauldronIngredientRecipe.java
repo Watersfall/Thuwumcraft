@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.Locale;
 
-public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
+public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory>
 {
 	public static final String ITEMS = "items";
 	public static final String ACTION = "action";
@@ -30,7 +30,7 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 	public final CraftingAction craftingAction;
 	public final ItemStack output;
 
-	public CauldronTypeRecipe(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output)
+	public CauldronIngredientRecipe(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output)
 	{
 		this.id = id;
 		this.input = input;
@@ -73,7 +73,7 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyMod.CAULDRON_TYPE_RECIPE_SERIALIZER;
+		return AlchemyMod.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	}
 
 	@Override
@@ -85,19 +85,19 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE;
+		return AlchemyMod.CAULDRON_INGREDIENT_RECIPE;
 	}
 
-	public static class Serializer implements RecipeSerializer<CauldronTypeRecipe>
+	public static class Serializer implements RecipeSerializer<CauldronIngredientRecipe>
 	{
-		private final CauldronTypeRecipe.Serializer.RecipeFactory<CauldronTypeRecipe> recipeFactory;
-		public Serializer(CauldronTypeRecipe.Serializer.RecipeFactory<CauldronTypeRecipe> recipeFactory)
+		private final CauldronIngredientRecipe.Serializer.RecipeFactory<CauldronIngredientRecipe> recipeFactory;
+		public Serializer(CauldronIngredientRecipe.Serializer.RecipeFactory<CauldronIngredientRecipe> recipeFactory)
 		{
 			this.recipeFactory = recipeFactory;
 		}
 
 		@Override
-		public CauldronTypeRecipe read(Identifier id, JsonObject json)
+		public CauldronIngredientRecipe read(Identifier id, JsonObject json)
 		{
 			Ingredient input = Ingredient.fromJson(json.get(ITEMS).getAsJsonArray());
 			CraftingAction action = CraftingAction.valueOf(json.get(ACTION).getAsString().toUpperCase(Locale.ROOT));
@@ -112,22 +112,22 @@ public class CauldronTypeRecipe implements Recipe<BrewingCauldronInventory>
 			{
 				output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
 			}
-			return new CauldronTypeRecipe(id, input, waterUse, action, uses, output);
+			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output);
 		}
 
 		@Override
-		public CauldronTypeRecipe read(Identifier id, PacketByteBuf buf)
+		public CauldronIngredientRecipe read(Identifier id, PacketByteBuf buf)
 		{
 			int waterUse = buf.readInt();
 			CraftingAction action = buf.readEnumConstant(CraftingAction.class);
 			int uses = buf.readInt();
 			Ingredient input = Ingredient.fromPacket(buf);
 			ItemStack output = buf.readItemStack();
-			return new CauldronTypeRecipe(id, input, waterUse, action, uses, output);
+			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output);
 		}
 
 		@Override
-		public void write(PacketByteBuf buf, CauldronTypeRecipe recipe)
+		public void write(PacketByteBuf buf, CauldronIngredientRecipe recipe)
 		{
 			buf.writeInt(recipe.waterUse);
 			buf.writeEnumConstant(recipe.craftingAction);

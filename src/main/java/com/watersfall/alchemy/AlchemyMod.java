@@ -8,8 +8,8 @@ import com.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import com.watersfall.alchemy.event.ApplyAffectEvent;
 import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import com.watersfall.alchemy.item.AlchemyModItems;
-import com.watersfall.alchemy.recipe.CauldronRecipe;
-import com.watersfall.alchemy.recipe.CauldronTypeRecipe;
+import com.watersfall.alchemy.recipe.CauldronIngredients;
+import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import com.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -18,16 +18,11 @@ import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.PotionItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -35,30 +30,30 @@ public class AlchemyMod implements ModInitializer
 {
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
-	public static final RecipeType<CauldronRecipe> CAULDRON_RECIPE_TYPE;
-	public static final RecipeType<CauldronTypeRecipe> CAULDRON_TYPE_RECIPE_TYPE;
-	public static final RecipeSerializer<CauldronRecipe> CAULDRON_RECIPE_SERIALIZER;
-	public static final RecipeSerializer<CauldronTypeRecipe> CAULDRON_TYPE_RECIPE_SERIALIZER;
+	public static final RecipeType<CauldronIngredients> CAULDRON_INGREDIENTS;
+	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;
+	public static final RecipeSerializer<CauldronIngredients> CAULDRON_INGREDIENTS_SERIALIZER;
+	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
-		CAULDRON_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_ingredient"), new RecipeType<CauldronRecipe>() {
+		CAULDRON_INGREDIENTS = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_ingredient"), new RecipeType<CauldronIngredients>() {
 			@Override
 			public String toString()
 			{
 				return "cauldron_ingredient";
 			}
 		});
-		CAULDRON_TYPE_RECIPE_TYPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), new RecipeType<CauldronTypeRecipe>() {
+		CAULDRON_INGREDIENT_RECIPE = Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), new RecipeType<CauldronIngredientRecipe>() {
 			@Override
 			public String toString()
 			{
 				return "cauldron_recipe";
 			}
 		});
-		CAULDRON_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronRecipe.Serializer(CauldronRecipe::new));
-		CAULDRON_TYPE_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronTypeRecipe.Serializer(CauldronTypeRecipe::new));
+		CAULDRON_INGREDIENTS_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronIngredients.Serializer(CauldronIngredients::new));
+		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new));
 	}
 
 	public static Identifier getId(String id)

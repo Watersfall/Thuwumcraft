@@ -2,8 +2,8 @@ package com.watersfall.alchemy.block;
 
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
-import com.watersfall.alchemy.recipe.CauldronRecipe;
-import com.watersfall.alchemy.recipe.CauldronTypeRecipe;
+import com.watersfall.alchemy.recipe.CauldronIngredients;
+import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -42,12 +42,12 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	private static final VoxelShape RAY_TRACE_SHAPE = createCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.union(createCuboidShape(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), createCuboidShape(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), RAY_TRACE_SHAPE), BooleanBiFunction.ONLY_FIRST);
 
-	public static final HashMap<Item, CauldronRecipe> INGREDIENTS = new HashMap<>();
+	public static final HashMap<Item, CauldronIngredients> INGREDIENTS = new HashMap<>();
 
 	public static void loadIngredients(RecipeManager recipeManager)
 	{
 		INGREDIENTS.clear();
-		List<CauldronRecipe> list = recipeManager.listAllOfType(AlchemyMod.CAULDRON_RECIPE_TYPE);
+		List<CauldronIngredients> list = recipeManager.listAllOfType(AlchemyMod.CAULDRON_INGREDIENTS);
 		for(int i = 0; i < list.size(); i++)
 		{
 			INGREDIENTS.put(list.get(i).input.getItem(), list.get(i));
@@ -189,13 +189,13 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			{
 				ItemStack inputStack = new ItemStack(item);
 				entity.setInput(inputStack);
-				Optional<CauldronTypeRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_TYPE_RECIPE_TYPE, entity, world);
+				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_INGREDIENT_RECIPE, entity, world);
 				if(typeOptional.isPresent())
 				{
 					if(!world.isClient)
 					{
-						CauldronTypeRecipe typeRecipe = typeOptional.get();
-						CauldronRecipe recipe = INGREDIENTS.get(entity.getContents().get(0).getItem());
+						CauldronIngredientRecipe typeRecipe = typeOptional.get();
+						CauldronIngredients recipe = INGREDIENTS.get(entity.getContents().get(0).getItem());
 						ItemStack stack = recipe.craft(entity, typeRecipe);
 						if(inputStack == stack)
 						{

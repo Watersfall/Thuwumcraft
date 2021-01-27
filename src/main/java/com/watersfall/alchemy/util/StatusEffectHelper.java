@@ -3,7 +3,7 @@ package com.watersfall.alchemy.util;
 import com.google.common.collect.ImmutableSet;
 import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
-import com.watersfall.alchemy.recipe.CauldronRecipe;
+import com.watersfall.alchemy.recipe.CauldronIngredients;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -17,7 +17,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.registry.Registry;
 
 import java.util.*;
 
@@ -36,9 +35,9 @@ public class StatusEffectHelper
 
 	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory)
 	{
-		CauldronRecipe i1 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(0).getItem());
-		CauldronRecipe i2 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(1).getItem());
-		CauldronRecipe i3 = null;
+		CauldronIngredients i1 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(0).getItem());
+		CauldronIngredients i2 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(1).getItem());
+		CauldronIngredients i3 = null;
 		if(inventory.getIngredientCount() == 3)
 		{
 			i3 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(2).getItem());
