@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:rabbits_foot",
+	"color": {
+		"r": 199,
+		"g": 158,
+		"b": 103
+	},
+	"effects": [
+		{
+			"effect": "minecraft:jump_boost",
+			"duration": 500,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:speed",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:slowness",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:luck",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

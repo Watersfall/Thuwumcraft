@@ -1,0 +1,21 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:ghast_tear",
+	"color": {
+		"r": 207,
+		"g": 241,
+		"b": 241
+	},
+	"effects": [
+		{
+			"effect": "minecraft:regeneration",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:instant_health",
+			"duration": 1,
+			"amplifier": 1
+		}
+	]
+}

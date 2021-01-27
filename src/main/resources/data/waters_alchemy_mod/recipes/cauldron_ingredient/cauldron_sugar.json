@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:sugar",
+	"color": {
+		"r": 255,
+		"g": 255,
+		"b": 255
+	},
+	"effects": [
+		{
+			"effect": "minecraft:swiftness",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:regeneration",
+			"duration": 50,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:nausea",
+			"duration": 100,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:slowness",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

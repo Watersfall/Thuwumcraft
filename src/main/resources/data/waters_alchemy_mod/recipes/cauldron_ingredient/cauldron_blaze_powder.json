@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:blaze_powder",
+	"color": {
+		"r": 255,
+		"g": 203,
+		"b": 0
+	},
+	"effects": [
+		{
+			"effect": "minecraft:strength",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:fire_resistance",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:glowing",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:night_vision",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

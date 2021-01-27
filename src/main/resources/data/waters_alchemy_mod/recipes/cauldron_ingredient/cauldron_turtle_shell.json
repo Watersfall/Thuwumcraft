@@ -1,0 +1,21 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:turtle_shell",
+	"color": {
+		"r": 71,
+		"g": 191,
+		"b": 74
+	},
+	"effects": [
+		{
+			"effect": "minecraft:slowness",
+			"duration": 200,
+			"amplifier": 2
+		},
+		{
+			"effect": "minecraft:resistance",
+			"duration": 200,
+			"amplifier": 2
+		}
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:pufferfish",
+	"color": {
+		"r": 251,
+		"g": 168,
+		"b": 4
+	},
+	"effects": [
+		{
+			"effect": "minecraft:water_breathing",
+			"duration": 500,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:poison",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:instant_damage",
+			"duration": 1,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:weakness",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

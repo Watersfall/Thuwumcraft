@@ -1,0 +1,16 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:magma_cream",
+	"color": {
+		"r": 217,
+		"g": 113,
+		"b": 44
+	},
+	"effects": [
+		{
+			"effect": "minecraft:fire_resistance",
+			"duration": 500,
+			"amplifier": 1
+		}
+	]
+}

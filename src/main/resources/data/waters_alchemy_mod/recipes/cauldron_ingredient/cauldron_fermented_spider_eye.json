@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:fermented_spider_eye",
+	"color": {
+		"r": 96,
+		"g": 16,
+		"b": 16
+	},
+	"effects": [
+		{
+			"effect": "minecraft:weakness",
+			"duration": 500,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:invisibility",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:instant_damage",
+			"duration": 1,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:slowness",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

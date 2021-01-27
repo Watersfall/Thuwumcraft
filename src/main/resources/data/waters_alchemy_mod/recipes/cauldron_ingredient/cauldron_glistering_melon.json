@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:glistering_melon",
+	"color": {
+		"r": 255,
+		"g": 255,
+		"b": 0
+	},
+	"effects": [
+		{
+			"effect": "minecraft:instant_health",
+			"duration": 1,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:instant_damage",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:regeneration",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:absorption",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}

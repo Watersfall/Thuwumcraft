@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"item": "minecraft:phantom_membrane",
+	"color": {
+		"r": 195,
+		"g": 185,
+		"b": 161
+	},
+	"effects": [
+		{
+			"effect": "minecraft:slow_falling",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:slowness",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:levitation",
+			"duration": 200,
+			"amplifier": 1
+		},
+		{
+			"effect": "minecraft:luck",
+			"duration": 200,
+			"amplifier": 1
+		}
+	]
+}
