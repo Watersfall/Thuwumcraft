@@ -26,13 +26,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		super(AlchemyMod.APOTHECARY_GUIDE_HANDLER, syncId);
 		checkSize(inventory, 1);
 		this.inventory = inventory;
-		this.addSlot(new Slot(inventory, 0, 26, 35)
-		{
-			public int getMaxItemCount()
-			{
-				return 1;
-			}
-		});
+		this.addSlot(new IngredientSlot(inventory, 0, 26, 35));
 
 		//Player Inventory
 		int m;
@@ -65,22 +59,87 @@ public class ApothecaryGuideHandler extends ScreenHandler
 	public void close(PlayerEntity player)
 	{
 		super.close(player);
-		this.inventory.onClose(player);
-		this.dropInventory(player, player.getEntityWorld(), this.inventory);
+		this.inventory.clear();
 		this.inventory.markDirty();
+		this.inventory.onClose(player);
 	}
 
 	@Override
-	public ItemStack onSlotClick(int slotId, int clickData, SlotActionType actionType, PlayerEntity playerEntity)
+	public ItemStack onSlotClick(int i, int j, SlotActionType actionType, PlayerEntity playerEntity)
 	{
-		if(slotId >= 0)
+		if(i == 0)
 		{
-			ItemStack stack = getSlot(slotId).getStack();
-			if (stack.getItem() instanceof ApothecaryGuideItem)
-			{
-				return stack;
-			}
+			Slot slot = this.slots.get(i);
+			slot.setStack(playerEntity.inventory.getCursorStack());
+			return ItemStack.EMPTY;
 		}
-		return super.onSlotClick(slotId, clickData, actionType, playerEntity);
+		else
+		{
+			return super.onSlotClick(i, j, actionType, playerEntity);
+		}
+	}
+
+	public static class IngredientSlot extends Slot
+	{
+		private int index;
+
+		public IngredientSlot(Inventory inventory, int index, int x, int y)
+		{
+			super(inventory, index, x, y);
+			this.index = index;
+		}
+
+		@Override
+		public boolean canInsert(ItemStack stack)
+		{
+			return super.canInsert(stack) && stack.getItem().isIn(AlchemyMod.INGREDIENT_TAG);
+		}
+
+		@Override
+		public int getMaxItemCount()
+		{
+			return 1;
+		}
+
+		@Override
+		public ItemStack takeStack(int amount)
+		{
+			this.inventory.clear();
+			return ItemStack.EMPTY;
+		}
+
+		@Override
+		public void onStackChanged(ItemStack originalItem, ItemStack itemStack)
+		{
+
+		}
+
+		@Override
+		public ItemStack onTakeItem(PlayerEntity player, ItemStack stack)
+		{
+			return super.onTakeItem(player, stack);
+		}
+
+		@Override
+		public void setStack(ItemStack stack)
+		{
+			if(stack == ItemStack.EMPTY)
+			{
+				this.inventory.clear();
+			}
+			else
+			{
+				if(this.inventory.getStack(this.index).getItem() == stack.getItem())
+				{
+					this.inventory.clear();
+				}
+				else
+				{
+					this.inventory.setStack(this.index, new ItemStack(stack.getItem()));
+				}
+			}
+			this.markDirty();
+			this.inventory.markDirty();
+		}
 	}
 }

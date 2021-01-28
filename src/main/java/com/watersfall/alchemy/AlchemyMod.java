@@ -10,6 +10,7 @@ import com.watersfall.alchemy.item.AlchemyModItems;
 import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.tag.TagRegistry;
@@ -18,9 +19,13 @@ import net.minecraft.item.Item;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class AlchemyMod implements ModInitializer
 {
@@ -30,7 +35,7 @@ public class AlchemyMod implements ModInitializer
 	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;
 	public static final RecipeSerializer<CauldronIngredient> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
-	public static final Tag<Item> INGREDIENT_TAG;
+	public static Tag<Item> INGREDIENT_TAG;
 
 	static
 	{
@@ -51,7 +56,13 @@ public class AlchemyMod implements ModInitializer
 		});
 		CAULDRON_INGREDIENTS_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronIngredient.Serializer(CauldronIngredient::new));
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new));
-		INGREDIENT_TAG = TagRegistry.item(getId("ingredients"));
+	}
+
+	private static Set<Item> getAllIngredients(MinecraftServer server)
+	{
+		Set<Item> set = new HashSet<>();
+		server.getRecipeManager().listAllOfType(CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.input.getItem()));
+		return set;
 	}
 
 	public static Identifier getId(String id)
@@ -73,5 +84,12 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
 		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
+		ServerLifecycleEvents.SERVER_STARTED.register((server -> INGREDIENT_TAG = Tag.of(getAllIngredients(server))));
+		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
+			if(success)
+			{
+				INGREDIENT_TAG = Tag.of(getAllIngredients(server));
+			}
+		});
 	}
 }
