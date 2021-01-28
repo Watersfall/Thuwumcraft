@@ -8,7 +8,7 @@
 	},
 	"effects": [
 		{
-			"effect": "minecraft:swiftness",
+			"effect": "minecraft:speed",
 			"duration": 200,
 			"amplifier": 1
 		},
