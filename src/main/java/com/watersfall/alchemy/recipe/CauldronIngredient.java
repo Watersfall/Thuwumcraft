@@ -12,9 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.*;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -22,7 +20,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
+public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 {
 	public final Identifier id;
 	public final ItemStack input;
@@ -40,7 +38,7 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 	public static final String AMPLIFIER = "amplifier";
 	public static final String USES = "uses";
 
-	public CauldronIngredients(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
+	public CauldronIngredient(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
 	{
 		this.id = id;
 		this.input = input;
@@ -134,16 +132,16 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 		return AlchemyMod.CAULDRON_INGREDIENTS;
 	}
 
-	public static class Serializer implements RecipeSerializer<CauldronIngredients>
+	public static class Serializer implements RecipeSerializer<CauldronIngredient>
 	{
-		private final CauldronIngredients.Serializer.RecipeFactory<CauldronIngredients> recipeFactory;
-		public Serializer(CauldronIngredients.Serializer.RecipeFactory<CauldronIngredients> recipeFactory)
+		private final CauldronIngredient.Serializer.RecipeFactory<CauldronIngredient> recipeFactory;
+		public Serializer(CauldronIngredient.Serializer.RecipeFactory<CauldronIngredient> recipeFactory)
 		{
 			this.recipeFactory = recipeFactory;
 		}
 
 		@Override
-		public CauldronIngredients read(Identifier id, JsonObject json)
+		public CauldronIngredient read(Identifier id, JsonObject json)
 		{
 			ItemStack stack = new ItemStack(Registry.ITEM.get(new Identifier(json.get(ITEM).getAsString())));
 			JsonObject jsonColor = json.getAsJsonObject(COLOR);
@@ -156,11 +154,11 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 				int amplifier = object.getAsJsonObject().get(AMPLIFIER).getAsInt();
 				effects.add(new StatusEffectInstance(effect, duration, amplifier));
 			});
-			return new CauldronIngredients(id, stack, effects, color);
+			return new CauldronIngredient(id, stack, effects, color);
 		}
 
 		@Override
-		public CauldronIngredients read(Identifier id, PacketByteBuf buf)
+		public CauldronIngredient read(Identifier id, PacketByteBuf buf)
 		{
 			ItemStack stack = buf.readItemStack();
 			int size = buf.readByte();
@@ -170,11 +168,11 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 			{
 				list.add(StatusEffectInstance.fromTag(buf.readCompoundTag()));
 			}
-			return new CauldronIngredients(id, stack, list, color);
+			return new CauldronIngredient(id, stack, list, color);
 		}
 
 		@Override
-		public void write(PacketByteBuf buf, CauldronIngredients recipe)
+		public void write(PacketByteBuf buf, CauldronIngredient recipe)
 		{
 			buf.writeItemStack(recipe.input);
 			buf.writeByte(recipe.effects.size());

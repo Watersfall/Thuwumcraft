@@ -3,7 +3,7 @@ package com.watersfall.alchemy.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.block.BrewingCauldronBlock;
-import com.watersfall.alchemy.recipe.CauldronIngredients;
+import com.watersfall.alchemy.recipe.CauldronIngredient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -41,7 +41,7 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 		super.render(matrices, mouseX, mouseY, delta);
 		if(handler.getStacks().get(0) != ItemStack.EMPTY)
 		{
-			CauldronIngredients ingredient = BrewingCauldronBlock.getIngredient(handler.getStacks().get(0).getItem(), this.client.getNetworkHandler().getRecipeManager());
+			CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(handler.getStacks().get(0).getItem(), this.client.getNetworkHandler().getRecipeManager());
 			if(ingredient != null)
 			{
 				List<StatusEffectInstance> list = ingredient.effects;

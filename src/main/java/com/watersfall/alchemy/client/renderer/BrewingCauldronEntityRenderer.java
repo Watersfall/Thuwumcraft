@@ -3,7 +3,7 @@ package com.watersfall.alchemy.client.renderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.watersfall.alchemy.block.BrewingCauldronBlock;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
-import com.watersfall.alchemy.recipe.CauldronIngredients;
+import com.watersfall.alchemy.recipe.CauldronIngredient;
 import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SkullBlock;
@@ -17,7 +17,6 @@ import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.*;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Quaternion;
@@ -166,7 +165,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 				colors[0] = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
 				for(int i = 1; i <= entity.getIngredientCount(); i++)
 				{
-					CauldronIngredients ingredient = BrewingCauldronBlock.getIngredient(entity.getStack(i - 1).getItem(), this.dispatcher.world.getRecipeManager());
+					CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(entity.getStack(i - 1).getItem(), this.dispatcher.world.getRecipeManager());
 					colors[i] = ingredient == null ? -1 : ingredient.color;
 				}
 				entity.color = getColor(colors);

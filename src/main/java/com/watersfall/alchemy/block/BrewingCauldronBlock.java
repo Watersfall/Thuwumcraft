@@ -2,7 +2,7 @@ package com.watersfall.alchemy.block;
 
 import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
-import com.watersfall.alchemy.recipe.CauldronIngredients;
+import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -34,7 +34,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 public class BrewingCauldronBlock extends Block implements BlockEntityProvider
@@ -42,9 +41,9 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	private static final VoxelShape RAY_TRACE_SHAPE = createCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.union(createCuboidShape(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), createCuboidShape(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), RAY_TRACE_SHAPE), BooleanBiFunction.ONLY_FIRST);
 
-	public static final HashMap<Item, CauldronIngredients> INGREDIENTS = new HashMap<>();
+	public static final HashMap<Item, CauldronIngredient> INGREDIENTS = new HashMap<>();
 
-	public static CauldronIngredients getIngredient(Item item, RecipeManager manager)
+	public static CauldronIngredient getIngredient(Item item, RecipeManager manager)
 	{
 		if(!INGREDIENTS.containsKey(item))
 		{
@@ -172,7 +171,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		}
 		else if(entity.getWaterLevel() > 0)
 		{
-			CauldronIngredients ingredient = getIngredient(item, world.getRecipeManager());
+			CauldronIngredient ingredient = getIngredient(item, world.getRecipeManager());
 			if(ingredient != null)
 			{
 				if(entity.getIngredientCount() < 3 && entity.count(item) <= 0)
@@ -201,7 +200,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					if(!world.isClient)
 					{
 						CauldronIngredientRecipe typeRecipe = typeOptional.get();
-						CauldronIngredients recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
+						CauldronIngredient recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
 						if(recipe == null)
 						{
 							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
