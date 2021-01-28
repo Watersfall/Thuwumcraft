@@ -150,7 +150,11 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 	@Override
 	public void render(BrewingCauldronEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
 	{
-		if(entity.getWaterLevel() > 0)
+		if(entity.getWaterLevel() == 0)
+		{
+			entity.lastWaterLevel = 0;
+		}
+		else if(entity.getWaterLevel() > 0)
 		{
 			matrices.push();
 			matrices.translate(0.125F, 0.25F, 0.125F);
