@@ -97,7 +97,7 @@ public class ApothecaryGuideInventory implements Inventory
 	@Override
 	public boolean isValid(int slot, ItemStack stack)
 	{
-		return false;//Ingredients.ingredients.containsKey(stack.getItem());
+		return false;
 	}
 
 	@Override

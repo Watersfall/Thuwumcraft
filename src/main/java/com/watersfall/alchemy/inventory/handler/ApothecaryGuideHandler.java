@@ -66,6 +66,8 @@ public class ApothecaryGuideHandler extends ScreenHandler
 	{
 		super.close(player);
 		this.inventory.onClose(player);
+		this.dropInventory(player, player.getEntityWorld(), this.inventory);
+		this.inventory.markDirty();
 	}
 
 	@Override
