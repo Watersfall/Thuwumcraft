@@ -5,11 +5,16 @@ import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import com.watersfall.alchemy.recipe.CauldronItemRecipe;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.BubblePopParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -18,10 +23,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.Tag;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -29,6 +40,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -36,11 +49,13 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Random;
 
 public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 {
 	private static final VoxelShape RAY_TRACE_SHAPE = createCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.union(createCuboidShape(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), createCuboidShape(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), RAY_TRACE_SHAPE), BooleanBiFunction.ONLY_FIRST);
+	public static final BooleanProperty POWERED = Properties.POWERED;
 
 	public static final HashMap<Item, CauldronIngredient> INGREDIENTS = new HashMap<>();
 
@@ -62,7 +77,18 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	public BrewingCauldronBlock(Settings settings)
 	{
 		super(settings);
-		setDefaultState(getStateManager().getDefaultState());
+		setDefaultState(getStateManager().getDefaultState().with(POWERED, false));
+	}
+
+	public void setPowered(World world, BlockPos pos, BlockState state, boolean powered)
+	{
+		world.setBlockState(pos, state.with(POWERED, powered));
+		world.updateComparators(pos, this);
+	}
+
+	public boolean isPowered(BlockState state)
+	{
+		return state.get(POWERED);
 	}
 
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
@@ -113,6 +139,77 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
 	{
+		builder.add(POWERED);
+	}
+
+	@Override
+	public boolean hasRandomTicks(BlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
+	{
+		if(!world.isClient)
+		{
+			if(!this.isPowered(state))
+			{
+				BlockState below = world.getBlockState(pos.down());
+				if(below.isIn(BlockTags.FIRE) || below.isIn(BlockTags.CAMPFIRES))
+				{
+					this.setPowered(world, pos, state, true);
+				}
+			}
+			else
+			{
+				BlockState below = world.getBlockState(pos.down());
+				if(!(below.isIn(BlockTags.FIRE) || below.isIn(BlockTags.CAMPFIRES)))
+				{
+					this.setPowered(world, pos, state, false);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random)
+	{
+		if(this.isPowered(state))
+		{
+			double x = pos.getX();
+			double y = pos.getY();
+			double z = pos.getZ();
+			int rand = random.nextInt(5);
+			BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
+			if(entity != null)
+			{
+				double yOffset = entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;
+				Particle particle;
+				if(rand == 0)
+				{
+					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP,  x + 0.5, y + yOffset, z + 0.5, 0, 0, 0);
+				}
+				else if(rand == 1)
+				{
+					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.35, y + yOffset, z + 0.4, 0, 0, 0);
+				}
+				else if(rand == 2)
+				{
+					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.75, y + yOffset, z + 0.35, 0, 0, 0);
+				}
+				else if(rand == 3)
+				{
+					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.4, y + yOffset, z + 0.65, 0, 0, 0);
+				}
+				else
+				{
+					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.75, y + yOffset, z + 0.65, 0, 0, 0);
+				}
+				Vec3d color = Vec3d.unpackRgb(entity.getColor());
+				particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+			}
+		}
 	}
 
 	@Override
@@ -170,7 +267,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			}
 			return ActionResult.success(world.isClient);
 		}
-		else if(entity.getWaterLevel() > 0)
+		else if(this.isPowered(state) && entity.getWaterLevel() > 0)
 		{
 			CauldronIngredient ingredient = getIngredient(item, world.getRecipeManager());
 			if(ingredient != null)

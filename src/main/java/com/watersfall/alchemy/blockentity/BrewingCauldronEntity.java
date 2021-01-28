@@ -124,6 +124,11 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 		return this.lastWaterLevel;
 	}
 
+	public int getDisplayWaterLevel()
+	{
+		return this.lastWaterLevel;
+	}
+
 	public boolean needsColorUpdate()
 	{
 		return this.needsColorUpdate;

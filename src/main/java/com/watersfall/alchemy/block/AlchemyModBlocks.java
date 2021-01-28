@@ -5,5 +5,5 @@ import net.minecraft.block.Blocks;
 
 public class AlchemyModBlocks
 {
-	public static final BrewingCauldronBlock BREWING_CAULDRON_BLOCK = new BrewingCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON));
+	public static final BrewingCauldronBlock BREWING_CAULDRON_BLOCK = new BrewingCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).ticksRandomly());
 }
