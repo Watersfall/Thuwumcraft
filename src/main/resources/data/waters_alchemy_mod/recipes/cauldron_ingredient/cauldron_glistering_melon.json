@@ -1,6 +1,6 @@
 {
 	"type": "waters_alchemy_mod:cauldron_ingredient",
-	"item": "minecraft:glistering_melon",
+	"item": "minecraft:glistering_melon_slice",
 	"color": {
 		"r": 255,
 		"g": 255,

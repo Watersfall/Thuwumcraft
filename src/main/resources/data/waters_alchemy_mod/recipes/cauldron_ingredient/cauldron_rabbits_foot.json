@@ -1,6 +1,6 @@
 {
 	"type": "waters_alchemy_mod:cauldron_ingredient",
-	"item": "minecraft:rabbits_foot",
+	"item": "minecraft:rabbit_foot",
 	"color": {
 		"r": 199,
 		"g": 158,

@@ -1,6 +1,6 @@
 {
 	"type": "waters_alchemy_mod:cauldron_ingredient",
-	"item": "minecraft:turtle_shell",
+	"item": "minecraft:turtle_helmet",
 	"color": {
 		"r": 71,
 		"g": 191,
