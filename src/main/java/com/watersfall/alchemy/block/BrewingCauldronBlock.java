@@ -4,6 +4,7 @@ import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
 import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
+import com.watersfall.alchemy.recipe.CauldronItemRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -227,6 +228,28 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.waterUse));
 							entity.sync();
 						}
+					}
+					return ActionResult.success(world.isClient);
+				}
+				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_ITEM_RECIPE, entity, world);
+				if(itemOptional.isPresent())
+				{
+					if(!world.isClient)
+					{
+						CauldronItemRecipe recipe = itemOptional.get();
+						ItemStack stack = recipe.craft(entity);
+						itemStack.decrement(1);
+						if(itemStack.isEmpty())
+						{
+							player.setStackInHand(hand, stack);
+						}
+						else if(!player.inventory.insertStack(stack))
+						{
+							player.dropItem(stack, true);
+						}
+						entity.setInput(ItemStack.EMPTY);
+						entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.waterUse));
+						entity.sync();
 					}
 					return ActionResult.success(world.isClient);
 				}

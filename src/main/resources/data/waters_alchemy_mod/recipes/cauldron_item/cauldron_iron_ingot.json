@@ -1,0 +1,16 @@
+{
+	"type": "waters_alchemy_mod:cauldron_item",
+	"catalyst": {
+		"item": "minecraft:iron_ingot"
+	},
+	"water_use": 50,
+	"inputs": [
+		{
+			"item": "minecraft:blaze_powder"
+		},
+		{
+			"item": "minecraft:ghast_tear"
+		}
+	],
+	"output": "minecraft:gold_ingot"
+}
