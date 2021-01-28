@@ -71,7 +71,7 @@ public class AlchemyMod implements ModInitializer
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
 		Set<Item> set = new HashSet<>();
-		server.getRecipeManager().listAllOfType(CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.input.getItem()));
+		server.getRecipeManager().listAllOfType(CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.getInput().getItem()));
 		return set;
 	}
 

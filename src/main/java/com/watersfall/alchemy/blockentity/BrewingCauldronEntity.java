@@ -22,9 +22,9 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	private final DefaultedList<ItemStack> input = DefaultedList.ofSize(1, ItemStack.EMPTY);
 	private short waterLevel;
 	private byte ingredientCount;
-	public float lastWaterLevel = 0;
-	public boolean needsColorUpdate = true;
-	public int color = 0;
+	private short lastWaterLevel = 0;
+	private boolean needsColorUpdate = true;
+	private int color = 0;
 
 	public BrewingCauldronEntity()
 	{
@@ -49,7 +49,7 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 		super.fromTag(state, tag);
 		this.waterLevel = tag.getShort(WATER_LEVEL);
 		this.ingredientCount = tag.getByte(INGREDIENT_COUNT);
-		this.lastWaterLevel = waterLevel + ((float) this.ingredientCount * (1F / 32F));
+		this.lastWaterLevel = (short)(waterLevel + ((float)this.ingredientCount * (1F / 32F)));
 		Inventories.fromTag(tag, this.contents);
 	}
 
@@ -61,32 +61,6 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 		tag.putByte(INGREDIENT_COUNT, ingredientCount);
 		Inventories.toTag(tag, this.contents);
 		return tag;
-	}
-
-	public short getWaterLevel()
-	{
-		return waterLevel;
-	}
-
-	public void setWaterLevel(short waterLevel)
-	{
-		if(waterLevel < 5)
-		{
-			waterLevel = 0;
-		}
-		this.waterLevel = waterLevel;
-		markDirty();
-	}
-
-	public byte getIngredientCount()
-	{
-		return ingredientCount;
-	}
-
-	public void setIngredientCount(byte ingredientCount)
-	{
-		this.ingredientCount = ingredientCount;
-		markDirty();
 	}
 
 	@Override
@@ -128,5 +102,61 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	public float getAnimationProgress(float tickDelta)
 	{
 		return MathHelper.lerp(tickDelta, this.lastWaterLevel, (float) this.waterLevel + ((float) this.ingredientCount * 62.5F));
+	}
+
+	public short getWaterLevel()
+	{
+		return waterLevel;
+	}
+
+	public byte getIngredientCount()
+	{
+		return ingredientCount;
+	}
+
+	public int getColor()
+	{
+		return this.color;
+	}
+
+	public float getLastWaterLevel()
+	{
+		return this.lastWaterLevel;
+	}
+
+	public boolean needsColorUpdate()
+	{
+		return this.needsColorUpdate;
+	}
+
+	public void setWaterLevel(short waterLevel)
+	{
+		if(waterLevel < 5)
+		{
+			waterLevel = 0;
+		}
+		this.waterLevel = waterLevel;
+		markDirty();
+	}
+
+	public void setIngredientCount(byte ingredientCount)
+	{
+		this.ingredientCount = ingredientCount;
+		markDirty();
+	}
+
+	public void setColor(int color)
+	{
+		this.color = color;
+	}
+
+	public void setLastWaterLevel(short lastWaterLevel)
+	{
+		this.lastWaterLevel = lastWaterLevel;
+	}
+
+	public void setNeedsColorUpdate(boolean needsColorUpdate)
+	{
+		this.needsColorUpdate = needsColorUpdate;
 	}
 }

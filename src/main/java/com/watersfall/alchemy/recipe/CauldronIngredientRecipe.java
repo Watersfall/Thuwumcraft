@@ -23,12 +23,12 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	public static final String USES = "uses";
 	public static final String OUTPUT = "output";
 
-	public final Identifier id;
-	public final Ingredient input;
-	public final int waterUse;
-	public final int uses;
-	public final CraftingAction craftingAction;
-	public final ItemStack output;
+	private final Identifier id;
+	private final Ingredient input;
+	private final int waterUse;
+	private final int uses;
+	private final CraftingAction craftingAction;
+	private final ItemStack output;
 
 	public CauldronIngredientRecipe(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output)
 	{
@@ -43,13 +43,13 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	@Override
 	public boolean matches(BrewingCauldronInventory inv, World world)
 	{
-		return input.test(inv.getInput().get(0));
+		return getInput().test(inv.getInput().get(0));
 	}
 
 	@Override
 	public ItemStack craft(BrewingCauldronInventory inv)
 	{
-		return this.output;
+		return this.getOutput();
 	}
 
 	@Override
@@ -86,6 +86,26 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	public RecipeType<?> getType()
 	{
 		return AlchemyMod.CAULDRON_INGREDIENT_RECIPE;
+	}
+
+	public Ingredient getInput()
+	{
+		return input;
+	}
+
+	public int getWaterUse()
+	{
+		return waterUse;
+	}
+
+	public int getUses()
+	{
+		return uses;
+	}
+
+	public CraftingAction getCraftingAction()
+	{
+		return craftingAction;
 	}
 
 	public static class Serializer implements RecipeSerializer<CauldronIngredientRecipe>
@@ -129,10 +149,10 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 		@Override
 		public void write(PacketByteBuf buf, CauldronIngredientRecipe recipe)
 		{
-			buf.writeInt(recipe.waterUse);
-			buf.writeEnumConstant(recipe.craftingAction);
-			buf.writeInt(recipe.uses);
-			recipe.input.write(buf);
+			buf.writeInt(recipe.getWaterUse());
+			buf.writeEnumConstant(recipe.getCraftingAction());
+			buf.writeInt(recipe.getUses());
+			recipe.getInput().write(buf);
 			buf.writeItemStack(recipe.getOutput());
 		}
 

@@ -1,5 +1,6 @@
 package com.watersfall.alchemy.recipe;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.watersfall.alchemy.AlchemyMod;
@@ -18,14 +19,15 @@ import net.minecraft.world.World;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 {
-	public final Identifier id;
-	public final ItemStack input;
-	public final ArrayList<StatusEffectInstance> effects;
-	public final int color;
+	private final Identifier id;
+	private final ItemStack input;
+	private final List<StatusEffectInstance> effects;
+	private final int color;
 
 	public static final String ITEM = "item";
 	public static final String COLOR = "color";
@@ -36,20 +38,19 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	public static final String EFFECT = "effect";
 	public static final String DURATION = "duration";
 	public static final String AMPLIFIER = "amplifier";
-	public static final String USES = "uses";
 
 	public CauldronIngredient(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color)
 	{
 		this.id = id;
 		this.input = input;
-		this.effects = effects;
+		this.effects = ImmutableList.copyOf(effects);
 		this.color = color;
 	}
 
 	@Override
 	public boolean matches(BrewingCauldronInventory inv, World world)
 	{
-		return inv.getContents().get(0).getItem() == this.input.getItem();
+		return inv.getContents().get(0).getItem() == this.getInput().getItem();
 	}
 
 	@Override
@@ -64,26 +65,26 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory, world.getRecipeManager());
 		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
-			if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
+			if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
 			{
 				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
-				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
+				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
-			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
+			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
 				return stack;
 			}
-			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
+			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
 			}
-			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_EFFECT)
+			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
-				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
+				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
 			return stack;
 		}
@@ -132,6 +133,21 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 		return AlchemyMod.CAULDRON_INGREDIENTS;
 	}
 
+	public ItemStack getInput()
+	{
+		return input;
+	}
+
+	public List<StatusEffectInstance> getEffects()
+	{
+		return effects;
+	}
+
+	public int getColor()
+	{
+		return color;
+	}
+
 	public static class Serializer implements RecipeSerializer<CauldronIngredient>
 	{
 		private final CauldronIngredient.Serializer.RecipeFactory<CauldronIngredient> recipeFactory;
@@ -174,12 +190,12 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 		@Override
 		public void write(PacketByteBuf buf, CauldronIngredient recipe)
 		{
-			buf.writeItemStack(recipe.input);
-			buf.writeByte(recipe.effects.size());
-			buf.writeInt(recipe.color);
-			for(int i = 0; i < recipe.effects.size(); i++)
+			buf.writeItemStack(recipe.getInput());
+			buf.writeByte(recipe.getEffects().size());
+			buf.writeInt(recipe.getColor());
+			for(int i = 0; i < recipe.getEffects().size(); i++)
 			{
-				buf.writeCompoundTag(recipe.effects.get(i).toTag(new CompoundTag()));
+				buf.writeCompoundTag(recipe.getEffects().get(i).toTag(new CompoundTag()));
 			}
 		}
 

@@ -1,5 +1,6 @@
 package com.watersfall.alchemy.recipe;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.watersfall.alchemy.AlchemyMod;
@@ -20,38 +21,38 @@ import java.util.List;
 
 public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 {
-	public final Identifier id;
-	public final Ingredient catalyst;
-	public final int waterUse;
-	public final List<Ingredient> inputs;
-	public final ItemStack output;
+	private final Identifier id;
+	private final Ingredient catalyst;
+	private final int waterUse;
+	private final List<Ingredient> inputs;
+	private final ItemStack output;
 
 	public CauldronItemRecipe(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output)
 	{
 		this.id = id;
 		this.catalyst = catalyst;
 		this.waterUse = waterUse;
-		this.inputs = inputs;
+		this.inputs = ImmutableList.copyOf(inputs);
 		this.output = output;
 	}
 
 	@Override
 	public boolean matches(BrewingCauldronInventory inv, World world)
 	{
-		if(catalyst.test(inv.getInput().get(0)))
+		if(getCatalyst().test(inv.getInput().get(0)))
 		{
-			if(inputs.size() > inv.getIngredientCount())
+			if(getInputs().size() > inv.getIngredientCount())
 			{
 				return false;
 			}
 			else
 			{
-				for(int i = 0; i < inputs.size(); i++)
+				for(int i = 0; i < getInputs().size(); i++)
 				{
 					boolean hasInput = false;
 					for(int o = 0; o < inv.getIngredientCount(); o++)
 					{
-						if(inputs.get(i).test(inv.getStack(o)))
+						if(getInputs().get(i).test(inv.getStack(o)))
 						{
 							hasInput = true;
 						}
@@ -71,11 +72,11 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 	public ItemStack craft(BrewingCauldronInventory inv)
 	{
 		byte delete = 0;
-		for(int i = 0; i < inputs.size(); i++)
+		for(int i = 0; i < getInputs().size(); i++)
 		{
 			for(int o = 0; o < inv.getIngredientCount(); o++)
 			{
-				if(inputs.get(i).test(inv.getStack(o)))
+				if(getInputs().get(i).test(inv.getStack(o)))
 				{
 					inv.removeStack(o);
 					delete++;
@@ -115,6 +116,21 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 	public RecipeType<?> getType()
 	{
 		return AlchemyMod.CAULDRON_ITEM_RECIPE;
+	}
+
+	public Ingredient getCatalyst()
+	{
+		return catalyst;
+	}
+
+	public int getWaterUse()
+	{
+		return waterUse;
+	}
+
+	public List<Ingredient> getInputs()
+	{
+		return inputs;
 	}
 
 	public static class Serializer implements RecipeSerializer<CauldronItemRecipe>
@@ -159,12 +175,12 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 		@Override
 		public void write(PacketByteBuf buf, CauldronItemRecipe recipe)
 		{
-			recipe.catalyst.write(buf);
-			buf.writeInt(recipe.waterUse);
-			buf.writeInt(recipe.inputs.size());
-			for(int i = 0; i < recipe.inputs.size(); i++)
+			recipe.getCatalyst().write(buf);
+			buf.writeInt(recipe.getWaterUse());
+			buf.writeInt(recipe.getInputs().size());
+			for(int i = 0; i < recipe.getInputs().size(); i++)
 			{
-				recipe.inputs.get(i).write(buf);
+				recipe.getInputs().get(i).write(buf);
 			}
 			buf.writeItemStack(recipe.getOutput());
 		}

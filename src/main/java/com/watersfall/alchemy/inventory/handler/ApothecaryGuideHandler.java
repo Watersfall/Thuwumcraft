@@ -81,7 +81,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 
 	public static class IngredientSlot extends Slot
 	{
-		private int index;
+		private final int index;
 
 		public IngredientSlot(Inventory inventory, int index, int x, int y)
 		{

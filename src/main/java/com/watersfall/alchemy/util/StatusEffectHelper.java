@@ -49,15 +49,15 @@ public class StatusEffectHelper
 		int length2 = 0;
 		int strength = 0;
 		boolean found = false;
-		for(int i = 0; i < i1.effects.size() && !found; i++)
+		for(int i = 0; i < i1.getEffects().size() && !found; i++)
 		{
-			for(int o = 0; o < i2.effects.size(); o++)
+			for(int o = 0; o < i2.getEffects().size(); o++)
 			{
-				if(i1.effects.get(i).getEffectType() == i2.effects.get(o).getEffectType())
+				if(i1.getEffects().get(i).getEffectType() == i2.getEffects().get(o).getEffectType())
 				{
-					effect = i1.effects.get(i).getEffectType();
-					length = i1.effects.get(i).getDuration() + i2.effects.get(o).getDuration();
-					strength = (int) ((double) i1.effects.get(i).getAmplifier() / (double) i2.effects.get(o).getAmplifier());
+					effect = i1.getEffects().get(i).getEffectType();
+					length = i1.getEffects().get(i).getDuration() + i2.getEffects().get(o).getDuration();
+					strength = (int) ((double) i1.getEffects().get(i).getAmplifier() / (double) i2.getEffects().get(o).getAmplifier());
 					found = true;
 					break;
 				}
@@ -66,9 +66,9 @@ public class StatusEffectHelper
 		if(i3 != null)
 		{
 			found = false;
-			for(int i = 0; i < i3.effects.size(); i++)
+			for(int i = 0; i < i3.getEffects().size(); i++)
 			{
-				if(i3.effects.get(i).getEffectType() == effect)
+				if(i3.getEffects().get(i).getEffectType() == effect)
 				{
 					strength++;
 					found = true;
@@ -76,8 +76,8 @@ public class StatusEffectHelper
 			}
 			if(!found)
 			{
-				effect2 = i3.effects.get(0).getEffectType();
-				length2 = i3.effects.get(0).getDuration() / 2;
+				effect2 = i3.getEffects().get(0).getEffectType();
+				length2 = i3.getEffects().get(0).getDuration() / 2;
 			}
 		}
 		if(effect != null)

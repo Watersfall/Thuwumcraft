@@ -49,7 +49,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		if(!INGREDIENTS.containsKey(item))
 		{
 			manager.listAllOfType(AlchemyMod.CAULDRON_INGREDIENTS).forEach((recipe) -> {
-				if(recipe.input.getItem() == item)
+				if(recipe.getInput().getItem() == item)
 				{
 					INGREDIENTS.put(item, recipe);
 					return;
@@ -225,7 +225,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 								player.dropItem(stack, true);
 							}
 							entity.setInput(ItemStack.EMPTY);
-							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.waterUse));
+							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.getWaterUse()));
 							entity.sync();
 						}
 					}
@@ -248,7 +248,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 							player.dropItem(stack, true);
 						}
 						entity.setInput(ItemStack.EMPTY);
-						entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.waterUse));
+						entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.getWaterUse()));
 						entity.sync();
 					}
 					return ActionResult.success(world.isClient);

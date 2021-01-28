@@ -44,7 +44,7 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 			CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(handler.getStacks().get(0).getItem(), this.client.getNetworkHandler().getRecipeManager());
 			if(ingredient != null)
 			{
-				List<StatusEffectInstance> list = ingredient.effects;
+				List<StatusEffectInstance> list = ingredient.getEffects();
 				for(int i = 0; i < list.size(); i++)
 				{
 					textRenderer.draw(matrices, list.get(i).getEffectType().getName(), this.x + 56, this.y + 24 + (i * 10), 4210752);

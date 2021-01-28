@@ -152,7 +152,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 	{
 		if(entity.getWaterLevel() == 0)
 		{
-			entity.lastWaterLevel = 0;
+			entity.setLastWaterLevel((short) 0);
 		}
 		else if(entity.getWaterLevel() > 0)
 		{
@@ -161,21 +161,21 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 			float newLevel = entity.getAnimationProgress(tickDelta);
 			float scale = newLevel / 1000F * 0.5625F;
 			matrices.scale(0.75F, scale, 0.75F);
-			entity.lastWaterLevel = (short) (newLevel);
+			entity.setLastWaterLevel((short) (newLevel));
 			int color;
-			if(entity.needsColorUpdate)
+			if(entity.needsColorUpdate())
 			{
 				int[] colors = new int[1 + entity.getIngredientCount()];
 				colors[0] = BiomeColors.getWaterColor(dispatcher.world, entity.getPos());
 				for(int i = 1; i <= entity.getIngredientCount(); i++)
 				{
 					CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(entity.getStack(i - 1).getItem(), this.dispatcher.world.getRecipeManager());
-					colors[i] = ingredient == null ? -1 : ingredient.color;
+					colors[i] = ingredient == null ? -1 : ingredient.getColor();
 				}
-				entity.color = getColor(colors);
-				entity.needsColorUpdate = false;
+				entity.setColor(getColor(colors));
+				entity.setNeedsColorUpdate(false);
 			}
-			color = entity.color;
+			color = entity.getColor();
 			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
 			drawTexture(builder, matrices, sprite, color, light, overlay);
 			matrices.pop();
