@@ -177,35 +177,13 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	{
 		if(this.isPowered(state))
 		{
-			double x = pos.getX();
-			double y = pos.getY();
-			double z = pos.getZ();
-			int rand = random.nextInt(5);
 			BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
 			if(entity != null)
 			{
-				double yOffset = entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;
-				Particle particle;
-				if(rand == 0)
-				{
-					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP,  x + 0.5, y + yOffset, z + 0.5, 0, 0, 0);
-				}
-				else if(rand == 1)
-				{
-					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.35, y + yOffset, z + 0.4, 0, 0, 0);
-				}
-				else if(rand == 2)
-				{
-					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.75, y + yOffset, z + 0.35, 0, 0, 0);
-				}
-				else if(rand == 3)
-				{
-					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.4, y + yOffset, z + 0.65, 0, 0, 0);
-				}
-				else
-				{
-					particle = MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x + 0.75, y + yOffset, z + 0.65, 0, 0, 0);
-				}
+				double x = pos.getX() + 0.25 + random.nextDouble() * 0.5;
+				double y = pos.getY() + entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;;
+				double z = pos.getZ() + 0.25 + random.nextDouble() * 0.5;
+				Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0, 0, 0);
 				Vec3d color = Vec3d.unpackRgb(entity.getColor());
 				particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
 			}
