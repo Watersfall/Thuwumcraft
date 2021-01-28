@@ -44,14 +44,19 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 
 	public static final HashMap<Item, CauldronIngredients> INGREDIENTS = new HashMap<>();
 
-	public static void loadIngredients(RecipeManager recipeManager)
+	public static CauldronIngredients getIngredient(Item item, RecipeManager manager)
 	{
-		INGREDIENTS.clear();
-		List<CauldronIngredients> list = recipeManager.listAllOfType(AlchemyMod.CAULDRON_INGREDIENTS);
-		for(int i = 0; i < list.size(); i++)
+		if(!INGREDIENTS.containsKey(item))
 		{
-			INGREDIENTS.put(list.get(i).input.getItem(), list.get(i));
+			manager.listAllOfType(AlchemyMod.CAULDRON_INGREDIENTS).forEach((recipe) -> {
+				if(recipe.input.getItem() == item)
+				{
+					INGREDIENTS.put(item, recipe);
+					return;
+				}
+			});
 		}
+		return INGREDIENTS.get(item);
 	}
 
 	public BrewingCauldronBlock(Settings settings)
@@ -167,7 +172,8 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		}
 		else if(entity.getWaterLevel() > 0)
 		{
-			if(INGREDIENTS.containsKey(item))
+			CauldronIngredients ingredient = getIngredient(item, world.getRecipeManager());
+			if(ingredient != null)
 			{
 				if(entity.getIngredientCount() < 3 && entity.count(item) <= 0)
 				{
@@ -195,8 +201,13 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					if(!world.isClient)
 					{
 						CauldronIngredientRecipe typeRecipe = typeOptional.get();
-						CauldronIngredients recipe = INGREDIENTS.get(entity.getContents().get(0).getItem());
-						ItemStack stack = recipe.craft(entity, typeRecipe);
+						CauldronIngredients recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
+						if(recipe == null)
+						{
+							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							return ActionResult.FAIL;
+						}
+						ItemStack stack = recipe.craft(entity, typeRecipe, entity.getWorld());
 						if(inputStack == stack)
 						{
 							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);

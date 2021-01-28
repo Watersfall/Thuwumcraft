@@ -10,19 +10,19 @@ import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import com.watersfall.alchemy.item.AlchemyModItems;
 import com.watersfall.alchemy.recipe.CauldronIngredients;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
-import com.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.fabricmc.fabric.api.util.NbtType;
+import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.item.Item;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.resource.ResourceReloadListener;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -34,6 +34,7 @@ public class AlchemyMod implements ModInitializer
 	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;
 	public static final RecipeSerializer<CauldronIngredients> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
+	public static final Tag<Item> INGREDIENT_TAG;
 
 	static
 	{
@@ -54,6 +55,7 @@ public class AlchemyMod implements ModInitializer
 		});
 		CAULDRON_INGREDIENTS_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronIngredients.Serializer(CauldronIngredients::new));
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new));
+		INGREDIENT_TAG = TagRegistry.item(getId("ingredients"));
 	}
 
 	public static Identifier getId(String id)
@@ -74,34 +76,6 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
 		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
-		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
-			if(success)
-			{
-				BrewingCauldronBlock.loadIngredients(manager.getRecipeManager());
-			}
-		});
-		ServerLifecycleEvents.SERVER_STARTED.register((server -> BrewingCauldronBlock.loadIngredients(server.getRecipeManager())));
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
-		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
-			if(stack.getTag() != null && !stack.getTag().isEmpty())
-			{
-				CompoundTag tag = stack.getTag();
-				if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
-				{
-					ListTag list = tag.getList(StatusEffectHelper.EFFECTS_LIST, NbtType.COMPOUND);
-					if(list.size() > 0)
-					{
-						tooltip.add(StatusEffectHelper.APPLIED_EFFECTS);
-						list.forEach((effect) -> {
-							tooltip.add(StatusEffectHelper.getEffectText(StatusEffectHelper.getEffectFromTag((CompoundTag) effect), true));
-						});
-					}
-					else
-					{
-						tooltip.add(StatusEffectHelper.NO_EFFECT);
-					}
-				}
-			}
-		}));
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -33,10 +34,10 @@ public class StatusEffectHelper
 	public static final Text NO_EFFECT = new TranslatableText("text.waters_alchemy_mod.tooltip.no_effect").formatted(Formatting.GRAY);
 	public static final Text APPLIED_EFFECTS = new TranslatableText("potion.whenDrank").append(": ").formatted(Formatting.GRAY);
 
-	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory)
+	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory, RecipeManager manager)
 	{
-		CauldronIngredients i1 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(0).getItem());
-		CauldronIngredients i2 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(1).getItem());
+		CauldronIngredients i1 = BrewingCauldronBlock.getIngredient(inventory.getContents().get(0).getItem(), manager);
+		CauldronIngredients i2 = BrewingCauldronBlock.getIngredient(inventory.getContents().get(1).getItem(), manager);
 		CauldronIngredients i3 = null;
 		if(inventory.getIngredientCount() == 3)
 		{

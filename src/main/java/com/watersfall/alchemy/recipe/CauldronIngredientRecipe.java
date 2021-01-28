@@ -132,9 +132,8 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 			buf.writeInt(recipe.waterUse);
 			buf.writeEnumConstant(recipe.craftingAction);
 			buf.writeInt(recipe.uses);
-			buf.writeItemStack(recipe.getOutput());
 			recipe.input.write(buf);
-			buf.writeItemStack(recipe.output);
+			buf.writeItemStack(recipe.getOutput());
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>

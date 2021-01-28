@@ -12,7 +12,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.*;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -58,21 +60,21 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 		return inv.getInput().get(0);
 	}
 
-	public ItemStack craft(BrewingCauldronInventory inventory, CauldronIngredientRecipe recipe)
+	public ItemStack craft(BrewingCauldronInventory inventory, CauldronIngredientRecipe recipe, World world)
 	{
 		ItemStack stack = inventory.getInput().get(0).copy();
-		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory);
+		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory, world.getRecipeManager());
 		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
 			if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
 			{
-				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory));
+				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
 			}
 			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
 			{
 				stack = recipe.getOutput().copy();
-				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
 				return stack;
 			}
 			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
@@ -82,7 +84,7 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 			else if(recipe.craftingAction == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
-				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory));
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.uses);
 			}
 			return stack;
@@ -162,12 +164,13 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 		{
 			ItemStack stack = buf.readItemStack();
 			int size = buf.readByte();
+			int color = buf.readInt();
 			ArrayList<StatusEffectInstance> list = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
 			{
 				list.add(StatusEffectInstance.fromTag(buf.readCompoundTag()));
 			}
-			return new CauldronIngredients(id, stack, list, 0);
+			return new CauldronIngredients(id, stack, list, color);
 		}
 
 		@Override
@@ -175,6 +178,7 @@ public class CauldronIngredients implements Recipe<BrewingCauldronInventory>
 		{
 			buf.writeItemStack(recipe.input);
 			buf.writeByte(recipe.effects.size());
+			buf.writeInt(recipe.color);
 			for(int i = 0; i < recipe.effects.size(); i++)
 			{
 				buf.writeCompoundTag(recipe.effects.get(i).toTag(new CompoundTag()));
