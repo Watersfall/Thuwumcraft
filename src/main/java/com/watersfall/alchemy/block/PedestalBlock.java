@@ -1,7 +1,9 @@
 package com.watersfall.alchemy.block;
 
+import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.PedestalEntity;
 import com.watersfall.alchemy.item.AlchemyModItems;
+import com.watersfall.alchemy.recipe.PedestalRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -20,12 +22,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PedestalBlock extends Block implements BlockEntityProvider
 {
-	private static final byte HORIZONTAL_RANGE = 5;
-	private static final byte VERTICAL_RANGE = 1;
-
 	public PedestalBlock(Settings settings)
 	{
 		super(settings);
@@ -41,44 +41,17 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 			PedestalEntity entity = (PedestalEntity)entityCheck;
 			if(playerStack.getItem() == AlchemyModItems.WITCHY_SPOON_ITEM)
 			{
-				if(entity.getStack().getItem() == Items.IRON_INGOT)
+				Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.PEDESTAL_RECIPE, entity, world);
+				if(recipeOptional.isPresent())
 				{
 					if(!world.isClient)
 					{
-						BlockPos.Mutable mutablePos = new BlockPos.Mutable();
-						BlockState loopState = null;
-						List<PedestalEntity> entities = new ArrayList<>();
-						for(int x = pos.getX() - HORIZONTAL_RANGE; x < pos.getX() + HORIZONTAL_RANGE; x++)
-						{
-							for(int y = pos.getY() - VERTICAL_RANGE; y < pos.getY() + VERTICAL_RANGE; y++)
-							{
-								for(int z = pos.getZ() - HORIZONTAL_RANGE; z < pos.getZ() + HORIZONTAL_RANGE; z++)
-								{
-									mutablePos.set(x, y, z);
-									if(!mutablePos.equals(pos))
-									{
-										loopState = world.getBlockState(mutablePos);
-										if(loopState.getBlock() == AlchemyModBlocks.PEDESTAL_BLOCK)
-										{
-											entities.add((PedestalEntity)world.getBlockEntity(mutablePos));
-										}
-									}
-								}
-							}
-						}
-						entities.removeIf((test) -> test.getStack().getItem() != Items.IRON_INGOT);
-						if(entities.size() >= 3)
-						{
-							entities.forEach((remove) -> {
-								remove.setStack(ItemStack.EMPTY);
-								remove.sync();
-							});
-							entity.setStack(new ItemStack(Items.GOLD_BLOCK));
-							entity.sync();
-						}
+						PedestalRecipe recipe = recipeOptional.get();
+						recipe.craft(entity);
 					}
+					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.success(world.isClient);
+				return ActionResult.FAIL;
 			}
 			else if(!playerStack.isEmpty())
 			{

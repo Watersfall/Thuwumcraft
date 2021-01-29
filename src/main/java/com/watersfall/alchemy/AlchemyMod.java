@@ -11,6 +11,7 @@ import com.watersfall.alchemy.item.AlchemyModItems;
 import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import com.watersfall.alchemy.recipe.CauldronItemRecipe;
+import com.watersfall.alchemy.recipe.PedestalRecipe;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -35,9 +36,11 @@ public class AlchemyMod implements ModInitializer
 	public static final RecipeType<CauldronIngredient> CAULDRON_INGREDIENTS;
 	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;
 	public static final RecipeType<CauldronItemRecipe> CAULDRON_ITEM_RECIPE;
+	public static final RecipeType<PedestalRecipe> PEDESTAL_RECIPE;
 	public static final RecipeSerializer<CauldronIngredient> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<CauldronItemRecipe> CAULDRON_ITEM_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<PedestalRecipe> PEDESTAL_RECIPE_SERIALIZER;
 	public static Tag<Item> INGREDIENT_TAG;
 
 	static
@@ -64,9 +67,17 @@ public class AlchemyMod implements ModInitializer
 				return "cauldron_item";
 			}
 		});
+		PEDESTAL_RECIPE = Registry.register(Registry.RECIPE_TYPE, getId("pedestal_crafting"), new RecipeType<PedestalRecipe>() {
+			@Override
+			public String toString()
+			{
+				return "pedestal_crafting";
+			}
+		});
 		CAULDRON_INGREDIENTS_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), new CauldronIngredient.Serializer(CauldronIngredient::new));
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new));
 		CAULDRON_ITEM_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_item"), new CauldronItemRecipe.Serializer(CauldronItemRecipe::new));
+		PEDESTAL_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, getId("pedestal_crafting"), new PedestalRecipe.Serializer(PedestalRecipe::new));
 	}
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)

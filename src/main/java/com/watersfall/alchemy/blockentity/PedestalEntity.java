@@ -1,11 +1,12 @@
 package com.watersfall.alchemy.blockentity;
 
+import com.watersfall.alchemy.inventory.PedestalInventory;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 
-public class PedestalEntity extends BlockEntity implements BlockEntityClientSerializable
+public class PedestalEntity extends BlockEntity implements BlockEntityClientSerializable, PedestalInventory
 {
 	private ItemStack stack;
 
