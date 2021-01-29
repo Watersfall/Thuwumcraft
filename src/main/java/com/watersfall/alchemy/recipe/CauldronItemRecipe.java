@@ -95,6 +95,12 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 	}
 
 	@Override
+	public boolean isIgnoredInRecipeBook()
+	{
+		return true;
+	}
+
+	@Override
 	public ItemStack getOutput()
 	{
 		return this.output;
