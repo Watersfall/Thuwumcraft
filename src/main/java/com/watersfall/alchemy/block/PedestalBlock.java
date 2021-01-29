@@ -1,17 +1,15 @@
 package com.watersfall.alchemy.block;
 
-import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.PedestalEntity;
 import com.watersfall.alchemy.item.AlchemyModItems;
+import com.watersfall.alchemy.recipe.AlchemyModRecipes;
 import com.watersfall.alchemy.recipe.PedestalRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -20,8 +18,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class PedestalBlock extends Block implements BlockEntityProvider
@@ -41,7 +37,7 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 			PedestalEntity entity = (PedestalEntity)entityCheck;
 			if(playerStack.getItem() == AlchemyModItems.WITCHY_SPOON_ITEM)
 			{
-				Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.PEDESTAL_RECIPE, entity, world);
+				Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
 				if(recipeOptional.isPresent())
 				{
 					if(!world.isClient)

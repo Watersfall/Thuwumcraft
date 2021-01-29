@@ -1,20 +1,17 @@
 package com.watersfall.alchemy.block;
 
-import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import com.watersfall.alchemy.recipe.AlchemyModRecipes;
 import com.watersfall.alchemy.recipe.CauldronIngredient;
 import com.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import com.watersfall.alchemy.recipe.CauldronItemRecipe;
-import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.BubblePopParticle;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -32,7 +29,6 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.Tag;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -40,7 +36,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -63,7 +58,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	{
 		if(!INGREDIENTS.containsKey(item))
 		{
-			manager.listAllOfType(AlchemyMod.CAULDRON_INGREDIENTS).forEach((recipe) -> {
+			manager.listAllOfType(AlchemyModRecipes.CAULDRON_INGREDIENTS).forEach((recipe) -> {
 				if(recipe.getInput().getItem() == item)
 				{
 					INGREDIENTS.put(item, recipe);
@@ -270,7 +265,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			{
 				ItemStack inputStack = new ItemStack(item);
 				entity.setInput(inputStack);
-				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_INGREDIENT_RECIPE, entity, world);
+				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
 				if(typeOptional.isPresent())
 				{
 					if(!world.isClient)
@@ -306,7 +301,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					}
 					return ActionResult.success(world.isClient);
 				}
-				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyMod.CAULDRON_ITEM_RECIPE, entity, world);
+				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.CAULDRON_ITEM_RECIPE, entity, world);
 				if(itemOptional.isPresent())
 				{
 					if(!world.isClient)

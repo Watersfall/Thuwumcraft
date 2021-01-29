@@ -1,7 +1,6 @@
 package com.watersfall.alchemy.recipe;
 
 import com.google.gson.JsonObject;
-import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -73,7 +72,7 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyMod.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
+		return AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyMod.CAULDRON_INGREDIENT_RECIPE;
+		return AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE;
 	}
 
 	public Ingredient getInput()

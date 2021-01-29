@@ -3,12 +3,10 @@ package com.watersfall.alchemy.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.block.AlchemyModBlocks;
 import com.watersfall.alchemy.blockentity.PedestalEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
@@ -162,13 +160,13 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyMod.PEDESTAL_RECIPE_SERIALIZER;
+		return AlchemyModRecipes.PEDESTAL_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyMod.PEDESTAL_RECIPE;
+		return AlchemyModRecipes.PEDESTAL_RECIPE;
 	}
 
 	public static class Serializer implements RecipeSerializer<PedestalRecipe>

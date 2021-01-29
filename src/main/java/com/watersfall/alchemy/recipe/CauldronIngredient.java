@@ -3,7 +3,6 @@ package com.watersfall.alchemy.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.watersfall.alchemy.AlchemyMod;
 import com.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import com.watersfall.alchemy.util.StatusEffectHelper;
 import net.minecraft.entity.effect.StatusEffect;
@@ -124,13 +123,13 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyMod.CAULDRON_INGREDIENTS_SERIALIZER;
+		return AlchemyModRecipes.CAULDRON_INGREDIENTS_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyMod.CAULDRON_INGREDIENTS;
+		return AlchemyModRecipes.CAULDRON_INGREDIENTS;
 	}
 
 	public ItemStack getInput()

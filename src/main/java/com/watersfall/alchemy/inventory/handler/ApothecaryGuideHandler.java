@@ -1,7 +1,6 @@
 package com.watersfall.alchemy.inventory.handler;
 
 import com.watersfall.alchemy.AlchemyMod;
-import com.watersfall.alchemy.item.ApothecaryGuideItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -92,7 +91,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		@Override
 		public boolean canInsert(ItemStack stack)
 		{
-			return super.canInsert(stack) && stack.getItem().isIn(AlchemyMod.INGREDIENT_TAG);
+			return super.canInsert(stack) && stack.getItem().isIn(AlchemyMod.getIngredientTag());
 		}
 
 		@Override
