@@ -6,4 +6,5 @@ import net.minecraft.block.Blocks;
 public class AlchemyModBlocks
 {
 	public static final BrewingCauldronBlock BREWING_CAULDRON_BLOCK = new BrewingCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).ticksRandomly());
+	public static final PedestalBlock PEDESTAL_BLOCK = new PedestalBlock(FabricBlockSettings.copyOf(Blocks.STONE));
 }

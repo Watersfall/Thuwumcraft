@@ -5,6 +5,7 @@ import com.watersfall.alchemy.block.AlchemyModBlocks;
 import com.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
 import com.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import com.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;
+import com.watersfall.alchemy.client.renderer.PedestalEntityRenderer;
 import com.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -28,6 +29,7 @@ public class AlchemyModClient implements ClientModInitializer
 				AlchemyModBlocks.BREWING_CAULDRON_BLOCK
 		);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getTag() != null && !stack.getTag().isEmpty())

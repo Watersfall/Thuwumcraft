@@ -3,6 +3,7 @@ package com.watersfall.alchemy;
 import com.watersfall.alchemy.block.AlchemyModBlocks;
 import com.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
 import com.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import com.watersfall.alchemy.blockentity.PedestalEntity;
 import com.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import com.watersfall.alchemy.event.ApplyAffectEvent;
 import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
@@ -87,12 +88,15 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.ITEM, getId("throw_bottle"), AlchemyModItems.THROW_BOTTLE);
 		Registry.register(Registry.ITEM, getId("ladle"), AlchemyModItems.LADLE_ITEM);
 		Registry.register(Registry.ITEM, getId("apothecary_guide_book"), AlchemyModItems.APOTHECARY_GUIDE);
+		Registry.register(Registry.ITEM, getId("pedestal"), AlchemyModItems.PEDESTAL_ITEM);
 		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
+		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyModBlocks.PEDESTAL_BLOCK);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
 		AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), BlockEntityType.Builder.create(BrewingCauldronEntity::new, AlchemyModBlocks.BREWING_CAULDRON_BLOCK).build(null));
+		AlchemyModBlockEntities.PEDESTAL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), BlockEntityType.Builder.create(PedestalEntity::new, AlchemyModBlocks.PEDESTAL_BLOCK).build(null));
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
 		ServerLifecycleEvents.SERVER_STARTED.register((server -> INGREDIENT_TAG = Tag.of(getAllIngredients(server))));
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
