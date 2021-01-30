@@ -12,6 +12,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -47,62 +48,85 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 		if(entityCheck instanceof PedestalEntity)
 		{
 			PedestalEntity entity = (PedestalEntity)entityCheck;
-			if(playerStack.getItem() == AlchemyModItems.WITCHY_SPOON_ITEM)
+			if(!entity.isMain() && !entity.isCrafting())
 			{
-				Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
-				if(recipeOptional.isPresent())
+				if(playerStack.getItem() == AlchemyModItems.WITCHY_SPOON_ITEM)
 				{
-					if(!world.isClient)
+					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
+					if(recipeOptional.isPresent())
 					{
-						PedestalRecipe recipe = recipeOptional.get();
-						recipe.craft(entity);
-					}
-					return ActionResult.success(world.isClient);
-				}
-				return ActionResult.FAIL;
-			}
-			else if(!playerStack.isEmpty())
-			{
-				ItemStack entityStack = entity.getStack();
-				if(!entityStack.isItemEqual(playerStack))
-				{
-					if(!world.isClient)
-					{
-						entity.setStack(new ItemStack(playerStack.getItem()));
-						playerStack.decrement(1);
-						if(!entityStack.isEmpty())
+						if(!world.isClient)
 						{
-							if(playerStack.isEmpty())
-							{
-								player.setStackInHand(hand, entityStack);
-							}
-							else if(!player.inventory.insertStack(entityStack))
-							{
-								player.dropItem(entityStack, false, true);
-							}
+							entity.beginCraft(recipeOptional.get());
 						}
-						entity.sync();
+						return ActionResult.success(world.isClient);
 					}
-					return ActionResult.success(world.isClient);
+					return ActionResult.FAIL;
 				}
-				return ActionResult.FAIL;
-			}
-			else
-			{
-				if(!entity.getStack().isEmpty())
+				else if(!playerStack.isEmpty())
 				{
-					if(!world.isClient)
+					ItemStack entityStack = entity.getStack();
+					if(!entityStack.isItemEqual(playerStack))
 					{
-						player.setStackInHand(hand, entity.getStack());
-						entity.setStack(ItemStack.EMPTY);
-						entity.sync();
+						if(!world.isClient)
+						{
+							entity.setStack(new ItemStack(playerStack.getItem()));
+							playerStack.decrement(1);
+							if(!entityStack.isEmpty())
+							{
+								if(playerStack.isEmpty())
+								{
+									player.setStackInHand(hand, entityStack);
+								}
+								else if(!player.inventory.insertStack(entityStack))
+								{
+									player.dropItem(entityStack, false, true);
+								}
+							}
+							entity.sync();
+						}
+						return ActionResult.success(world.isClient);
 					}
-					return ActionResult.success(world.isClient);
+					return ActionResult.FAIL;
 				}
-				return ActionResult.FAIL;
+				else
+				{
+					if(!entity.getStack().isEmpty())
+					{
+						if(!world.isClient)
+						{
+							if(!player.inventory.insertStack(entity.getStack().copy()))
+							{
+								player.dropItem(entity.getStack().copy(), false, true);
+							}
+							entity.setStack(ItemStack.EMPTY);
+							entity.sync();
+						}
+						return ActionResult.success(world.isClient);
+					}
+					return ActionResult.FAIL;
+				}
 			}
 		}
 		return ActionResult.FAIL;
+	}
+
+	@Override
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
+	{
+		BlockEntity entityTest = world.getBlockEntity(pos);
+		if(entityTest instanceof PedestalEntity)
+		{
+			PedestalEntity entity = (PedestalEntity)entityTest;
+			if(entity.isCrafting())
+			{
+				entity.helpCraft();
+			}
+			else if(entity.isMain())
+			{
+				entity.finishCraft();
+			}
+		}
 	}
 
 	@Override
@@ -113,6 +137,25 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 		double z = (double)pos.getZ() + 0.5D;
 		world.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0D, 0.0D, 0.0D);
 		world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
+		BlockEntity testEntity = world.getBlockEntity(pos);
+		if(testEntity instanceof PedestalEntity)
+		{
+			PedestalEntity entity = (PedestalEntity)testEntity;
+			if(entity.isMain())
+			{
+				for(int i = 0; i  < 4; i++)
+				{
+					world.addParticle(ParticleTypes.ENCHANTED_HIT, x, y, z, random.nextDouble() - 0.5D, random.nextDouble() - 0.5D, random.nextDouble() - 0.5D);
+				}
+			}
+			if(entity.isCrafting())
+			{
+				for(int i = 0; i  < 4; i++)
+				{
+					world.addParticle(ParticleTypes.WITCH, x, y, z, random.nextDouble() - 0.5D, random.nextDouble() - 0.5D, random.nextDouble() - 0.5D);
+				}
+			}
+		}
 	}
 
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)

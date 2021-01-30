@@ -32,7 +32,7 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 
 	private static HashMap<BlockPos, List<PedestalEntity>> NEARBY_PEDESTALS_CACHE = new HashMap<>();
 
-	private static List<PedestalEntity> getNearbyPedestals(BlockPos pos, World world)
+	public static List<PedestalEntity> getNearbyPedestals(BlockPos pos, World world)
 	{
 		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
 		BlockState loopState = null;
@@ -73,6 +73,7 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 		{
 			BlockPos pos = inv.getPos();
 			List<PedestalEntity> entities = getNearbyPedestals(pos, world);
+			entities.removeIf((entity) -> entity.isCrafting() || entity.isMain());
 			if(entities.size() >= inputs.size())
 			{
 				for(int i = 0; i < inputs.size(); i++)
@@ -115,6 +116,7 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 				{
 					entities.get(o).setStack(ItemStack.EMPTY);
 					entities.get(o).sync();
+					break;
 				}
 			}
 		}
