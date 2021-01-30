@@ -2,6 +2,7 @@ package com.watersfall.alchemy;
 
 import com.watersfall.alchemy.block.AlchemyModBlocks;
 import com.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
+import com.watersfall.alchemy.blockentity.PedestalEntity;
 import com.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import com.watersfall.alchemy.event.ApplyAffectEvent;
 import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
@@ -11,14 +12,22 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.state.property.Properties;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPointer;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class AlchemyMod implements ModInitializer
@@ -86,5 +95,16 @@ public class AlchemyMod implements ModInitializer
 				setIngredientTag(Tag.of(getAllIngredients(server)));
 			}
 		});
+		DispenserBlock.registerBehavior(AlchemyModItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
+			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
+			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
+			{
+				World world = pointer.getWorld();
+				PedestalEntity entity = (PedestalEntity) world.getBlockEntity(pointer.getBlockPos().offset(direction));
+				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
+				recipeOptional.ifPresent(entity::beginCraft);
+			}
+			return stack;
+		}));
 	}
 }

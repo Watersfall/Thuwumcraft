@@ -83,7 +83,6 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 									player.dropItem(entityStack, false, true);
 								}
 							}
-							entity.sync();
 						}
 						return ActionResult.success(world.isClient);
 					}
@@ -100,7 +99,6 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 								player.dropItem(entity.getStack().copy(), false, true);
 							}
 							entity.setStack(ItemStack.EMPTY);
-							entity.sync();
 						}
 						return ActionResult.success(world.isClient);
 					}

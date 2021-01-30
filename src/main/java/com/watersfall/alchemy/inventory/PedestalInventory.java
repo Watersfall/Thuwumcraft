@@ -2,11 +2,15 @@ package com.watersfall.alchemy.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.Direction;
+import org.jetbrains.annotations.Nullable;
 
-public interface PedestalInventory extends Inventory
+public interface PedestalInventory extends SidedInventory
 {
+	public static final int[] ARRAY = new int[]{0};
+
 	ItemStack getStack();
 
 	void setStack(ItemStack stack);
@@ -75,5 +79,37 @@ public interface PedestalInventory extends Inventory
 	default void clear()
 	{
 		setStack(ItemStack.EMPTY);
+	}
+
+	@Override
+	default boolean isValid(int slot, ItemStack stack)
+	{
+		if(slot != 0)
+		{
+			return false;
+		}
+		else
+		{
+			return this.getStack().isEmpty();
+		}
+	}
+
+	@Override
+	default int[] getAvailableSlots(Direction side)
+	{
+		return ARRAY;
+	}
+
+	@Override
+	default boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir)
+	{
+		if(slot != 0)
+		{
+			return false;
+		}
+		else
+		{
+			return this.getStack().isEmpty();
+		}
 	}
 }
