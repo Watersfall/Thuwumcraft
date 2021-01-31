@@ -1,11 +1,10 @@
 package net.watersfall.alchemy.block;
 
+import net.minecraft.block.*;
+import net.minecraft.util.shape.VoxelSet;
+import net.minecraft.util.shape.VoxelShape;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
 import net.watersfall.alchemy.multiblock.component.ItemComponent;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;
@@ -18,8 +17,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+
 public class ChildBlock extends Block implements BlockEntityProvider, InventoryProvider
 {
+	private static final HashMap<BlockPos, VoxelShape> OUTLINES = new HashMap<>();
+
 	public ChildBlock(Settings settings)
 	{
 		super(settings);
@@ -81,5 +84,26 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
+	{
+		if(OUTLINES.containsKey(pos))
+		{
+			return OUTLINES.get(pos);
+		}
+		else
+		{
+			ChildBlockEntity entity = (ChildBlockEntity) world.getBlockEntity(pos);
+			if(entity != null)
+			{
+				if(entity.getComponent() != null)
+				{
+					return entity.getComponent().getOutline();
+				}
+			}
+			return super.getOutlineShape(state, world, pos, context);
+		}
 	}
 }

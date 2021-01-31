@@ -44,6 +44,11 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 				{
 					component = new AlchemicalFurnaceOutputComponent(world, multiBlock, mutablePos.toImmutable());
 				}
+				else if(index == AlchemicalFurnaceMultiBlock.BOTTOM_LEFT)
+				{
+					component = new AlchemicalFurnaceOutputComponent(world, multiBlock, mutablePos.toImmutable());
+					world.setBlockState(mutablePos.toImmutable(), AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState());
+				}
 				else
 				{
 					component = new AlchemicalFurnaceComponent(world, multiBlock, mutablePos.toImmutable());

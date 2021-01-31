@@ -1,21 +1,17 @@
 package net.watersfall.alchemy.block;
 
-import net.watersfall.alchemy.blockentity.AlchemicalFurnaceEntity;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.watersfall.alchemy.blockentity.ChildBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
-public class AlchemicalFurnaceBlock extends Block implements BlockEntityProvider
+public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityProvider
 {
 	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.cuboid(0D, 0D, 0D, 2D, 2D, 1D);
 
@@ -28,13 +24,7 @@ public class AlchemicalFurnaceBlock extends Block implements BlockEntityProvider
 	@Override
 	public BlockEntity createBlockEntity(BlockView world)
 	{
-		return new AlchemicalFurnaceEntity();
-	}
-
-	@Override
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
-	{
-
+		return new ChildBlockEntity();
 	}
 
 	@Override

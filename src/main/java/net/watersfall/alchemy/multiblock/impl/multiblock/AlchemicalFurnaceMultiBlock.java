@@ -1,5 +1,8 @@
 package net.watersfall.alchemy.multiblock.impl.multiblock;
 
+import net.minecraft.block.Block;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
 import net.watersfall.alchemy.multiblock.MultiBlock;
@@ -27,6 +30,13 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	private AlchemicalFurnaceComponent[] components;
 	private boolean isReady;
 	private long ticks;
+
+	public static final VoxelShape[] SHAPES = new VoxelShape[]{
+			VoxelShapes.cuboid(0D, 0D, 0D, 2D, 2D, 1D),
+			VoxelShapes.cuboid(0D, -1D, 0D, 2D, 1D, 1D),
+			VoxelShapes.cuboid(-1D, 0D, 0D, 1D, 2D, 1D),
+			VoxelShapes.cuboid(-1D, -1D, 0D, 1D, 1D, 1D)
+	};
 
 	public static final int BOTTOM_LEFT = 0;
 	public static final int INPUT = 1;
@@ -65,7 +75,8 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	{
 		for(int i = 0; i < this.components.length; i++)
 		{
-			if(this.world.getBlockState(this.components[i].getPos()).getBlock() == AlchemyModBlocks.CHILD_BLOCK)
+			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
+			if(block == AlchemyModBlocks.CHILD_BLOCK || block == AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK)
 			{
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState());
 			}
