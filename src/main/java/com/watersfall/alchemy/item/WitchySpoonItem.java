@@ -1,6 +1,7 @@
 package com.watersfall.alchemy.item;
 
 import com.watersfall.alchemy.block.AlchemyModBlocks;
+import com.watersfall.alchemy.multiblock.impl.type.AlchemicalFurnaceType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,6 +26,15 @@ public class WitchySpoonItem extends Item
 		{
 			context.getWorld().setBlockState(context.getBlockPos(), AlchemyModBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
+		}
+		else if(state.getBlock() == Blocks.FURNACE)
+		{
+			if(AlchemicalFurnaceType.INSTANCE.matches(context.getWorld(), context.getBlockPos()))
+			{
+				AlchemicalFurnaceType.INSTANCE.create(context.getWorld(), context.getBlockPos());
+				return ActionResult.CONSUME;
+			}
+			return ActionResult.FAIL;
 		}
 		else
 		{

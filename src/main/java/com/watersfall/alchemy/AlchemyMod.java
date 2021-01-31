@@ -7,21 +7,20 @@ import com.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import com.watersfall.alchemy.event.ApplyAffectEvent;
 import com.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import com.watersfall.alchemy.item.AlchemyModItems;
+import com.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import com.watersfall.alchemy.recipe.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.Tag;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -73,6 +72,8 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.ITEM, getId("pedestal"), AlchemyModItems.PEDESTAL_ITEM);
 		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
 		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyModBlocks.PEDESTAL_BLOCK);
+		Registry.register(Registry.BLOCK, getId("alchemical_furnace"), AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK);
+		Registry.register(Registry.BLOCK, getId("child_block"), AlchemyModBlocks.CHILD_BLOCK);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
 		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
@@ -87,6 +88,8 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.RECIPE_SERIALIZER, getId("pedestal_crafting"), AlchemyModRecipes.PEDESTAL_RECIPE_SERIALIZER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), AlchemyModBlockEntities.PEDESTAL_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("alchemical_furnace_entity"), AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("child_block_entity"), AlchemyModBlockEntities.CHILD_BLOCK_ENTITY);
 		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
 		ServerLifecycleEvents.SERVER_STARTED.register((server -> setIngredientTag(Tag.of(getAllIngredients(server)))));
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
@@ -95,6 +98,7 @@ public class AlchemyMod implements ModInitializer
 				setIngredientTag(Tag.of(getAllIngredients(server)));
 			}
 		});
+		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.INSTANCE.tick());
 		DispenserBlock.registerBehavior(AlchemyModItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
 			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
