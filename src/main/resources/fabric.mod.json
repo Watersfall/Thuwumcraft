@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"client": [
-			"com.watersfall.alchemy.client.AlchemyModClient"
+			"net.watersfall.alchemy.client.AlchemyModClient"
 		],
 		"main": [
-			"com.watersfall.alchemy.AlchemyMod"
+			"net.watersfall.alchemy.AlchemyMod"
 		]
 	},
 	"mixins": [
