@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.multiblock.impl.type;
 
+import net.minecraft.block.Blocks;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.multiblock.MultiBlockType;
@@ -19,6 +20,18 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 	@Override
 	public boolean matches(World world, BlockPos pos)
 	{
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		for(int x = 0; x < 2; x++)
+		{
+			for(int y = 0; y < 2; y++)
+			{
+				mutable.set(pos.getX() + x, pos.getY() + y, pos.getZ());
+				if(world.getBlockState(mutable).getBlock() != Blocks.FURNACE)
+				{
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
