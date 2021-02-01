@@ -21,8 +21,6 @@ import java.util.HashMap;
 
 public class ChildBlock extends Block implements BlockEntityProvider, InventoryProvider
 {
-	private static final HashMap<BlockPos, VoxelShape> OUTLINES = new HashMap<>();
-
 	public ChildBlock(Settings settings)
 	{
 		super(settings);
@@ -46,7 +44,7 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 			{
 				if(!world.isClient)
 				{
-					entity.getComponent().getMultiBlock().onUse();
+					entity.getComponent().getMultiBlock().onUse(world, pos, player);
 				}
 			}
 		}
@@ -89,21 +87,15 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
-		if(OUTLINES.containsKey(pos))
+		BlockEntity entityTest = world.getBlockEntity(pos);
+		if(entityTest instanceof ChildBlockEntity)
 		{
-			return OUTLINES.get(pos);
-		}
-		else
-		{
-			ChildBlockEntity entity = (ChildBlockEntity) world.getBlockEntity(pos);
-			if(entity != null)
+			ChildBlockEntity entity = (ChildBlockEntity)entityTest;
+			if(entity.getComponent() != null)
 			{
-				if(entity.getComponent() != null)
-				{
-					return entity.getComponent().getOutline();
-				}
+				return entity.getComponent().getOutline();
 			}
-			return super.getOutlineShape(state, world, pos, context);
 		}
+		return super.getOutlineShape(state, world, pos, context);
 	}
 }

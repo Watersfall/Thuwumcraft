@@ -5,7 +5,8 @@ import java.util.List;
 
 public class MultiBlockRegistry
 {
-	public static final MultiBlockRegistry INSTANCE = new MultiBlockRegistry();
+	public static final MultiBlockRegistry SERVER = new MultiBlockRegistry();
+	public static final MultiBlockRegistry CLIENT = new MultiBlockRegistry();
 
 	private final List<MultiBlock> multiBlocks;
 	private MultiBlockRegistry()
@@ -25,6 +26,6 @@ public class MultiBlockRegistry
 
 	public void tick()
 	{
-		this.multiBlocks.forEach((multiBlock -> multiBlock.tick()));
+		this.multiBlocks.forEach((MultiBlock::tick));
 	}
 }

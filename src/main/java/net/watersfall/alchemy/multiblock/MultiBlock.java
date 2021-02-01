@@ -1,15 +1,19 @@
 package net.watersfall.alchemy.multiblock;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface MultiBlock<T extends MultiBlockComponent>
 {
-	void add();
+	void add(World world, BlockPos pos);
 
 	void remove();
 
-	void onUse();
+	void onUse(World world, BlockPos pos, PlayerEntity player);
 
 	boolean isValid();
 
@@ -26,6 +30,10 @@ public interface MultiBlock<T extends MultiBlockComponent>
 			this.getComponents()[i].tick();
 		}
 	}
+
+	void read(BlockState state, CompoundTag tag);
+
+	CompoundTag write(CompoundTag tag);
 
 	MultiBlockType<? extends MultiBlock<? extends MultiBlockComponent>> getType();
 

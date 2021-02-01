@@ -1,13 +1,16 @@
 package net.watersfall.alchemy.client;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.render.RenderLayer;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
+import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import net.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;
 import net.watersfall.alchemy.client.renderer.PedestalEntityRenderer;
+import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -33,7 +36,9 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
+		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyModBlocks.CHILD_BLOCK, RenderLayer.getCutout());
+		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT.tick());
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getTag() != null && !stack.getTag().isEmpty())
 			{

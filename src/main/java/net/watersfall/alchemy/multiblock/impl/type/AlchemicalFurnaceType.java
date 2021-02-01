@@ -56,7 +56,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 				components[index] = component;
 			}
 		}
-		MultiBlockRegistry.INSTANCE.add(multiBlock);
+		MultiBlockRegistry.SERVER.add(multiBlock);
 		return multiBlock;
 	}
 }

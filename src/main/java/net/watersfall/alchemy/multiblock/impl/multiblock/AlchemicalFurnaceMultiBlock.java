@@ -1,14 +1,25 @@
 package net.watersfall.alchemy.multiblock.impl.multiblock;
 
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import net.watersfall.alchemy.accessor.waters_AbstractCookingRecipeInputAccessor;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.blockentity.AlchemicalFurnaceEntity;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
-import net.watersfall.alchemy.multiblock.MultiBlock;
-import net.watersfall.alchemy.multiblock.MultiBlockComponent;
-import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
-import net.watersfall.alchemy.multiblock.MultiBlockType;
+import net.watersfall.alchemy.inventory.handler.AlchemicalFurnaceHandler;
+import net.watersfall.alchemy.multiblock.*;
+import net.watersfall.alchemy.multiblock.component.ItemComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceInputComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceOutputComponent;
@@ -20,10 +31,12 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.util.InventoryHelper;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
+import java.util.List;
 
-public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnaceComponent>
+public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurnaceComponent>
 {
 	private World world;
 	private BlockPos pos;
@@ -42,6 +55,15 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	public static final int INPUT = 1;
 	public static final int OUTPUT = 2;
 	public static final int TOP_RIGHT = 3;
+
+	public AlchemicalFurnaceMultiBlock()
+	{
+		this.pos = null;
+		this.world = null;
+		this.components = null;
+		this.isReady = false;
+		this.ticks = 0;
+	}
 
 	public AlchemicalFurnaceMultiBlock(World world, BlockPos pos, AlchemicalFurnaceComponent[] components)
 	{
@@ -65,9 +87,19 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	}
 
 	@Override
-	public void add()
+	public void add(World world, BlockPos pos)
 	{
-		MultiBlockRegistry.INSTANCE.add(this);
+		this.world = world;
+		this.pos = pos.toImmutable();
+		for(int i = 0; i < this.components.length; i++)
+		{
+			this.components[i].setWorld(world);
+		}
+		if(!world.isClient)
+		{
+			MultiBlockRegistry.SERVER.add(this);
+		}
+
 	}
 
 	@Override
@@ -81,13 +113,13 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState());
 			}
 		}
-		MultiBlockRegistry.INSTANCE.remove(this);
+		MultiBlockRegistry.SERVER.remove(this);
 	}
 
 	@Override
-	public void onUse()
+	public void onUse(World world, BlockPos pos, PlayerEntity player)
 	{
-		System.out.println("test");
+		this.openScreen(world, pos, player);
 	}
 
 	@Override
@@ -99,18 +131,30 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	@Override
 	public void tick()
 	{
+		GuiMultiBlock.super.tick();
 		if(!isReady)
 		{
-			for(int i = 0; i < this.components.length; i++)
+			if(this.world != null)
 			{
-				BlockEntity testEntity = world.getBlockEntity(this.components[i].getPos());
-				if(testEntity instanceof ChildBlockEntity)
+				if(!world.isClient)
 				{
-					ChildBlockEntity entity = (ChildBlockEntity)testEntity;
-					entity.setComponent(this.components[i]);
+					for(int i = 0; i < this.components.length; i++)
+					{
+						BlockEntity testEntity = world.getBlockEntity(this.components[i].getPos());
+						if(testEntity instanceof ChildBlockEntity)
+						{
+							ChildBlockEntity entity = (ChildBlockEntity)testEntity;
+							this.components[i].setWorld(world);
+							entity.setComponent(this.components[i]);
+							this.isReady = true;
+							if(entity instanceof AlchemicalFurnaceEntity)
+							{
+								((AlchemicalFurnaceEntity) entity).sync();
+							}
+						}
+					}
 				}
 			}
-			this.isReady = true;
 		}
 		else
 		{
@@ -126,14 +170,20 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 						{
 							if(!input.getInventory().getStack(i).isEmpty())
 							{
-								Optional<SmeltingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(RecipeType.SMELTING, input.getInventory(), world);
-								if(recipeOptional.isPresent())
+								List<SmeltingRecipe> recipeList = world.getRecipeManager().listAllOfType(RecipeType.SMELTING);
+								for(int o = 0; o < recipeList.size(); o++)
 								{
-									SmeltingRecipe recipe = recipeOptional.get();
-									ItemStack stack = input.getInventory().removeStack(i, 1);
-									if(!stack.isEmpty())
+									waters_AbstractCookingRecipeInputAccessor accessor = (waters_AbstractCookingRecipeInputAccessor)recipeList.get(o);
+									if(accessor.getInput().test(input.getInventory().getStack(i)))
 									{
-										output.getInventory().setStack(i, recipe.getOutput().copy());
+										ItemStack outputStack = recipeList.get(o).getOutput().copy();
+										boolean fit = InventoryHelper.fit(output.getInventory(), outputStack);
+										if(fit)
+										{
+											input.getInventory().removeStack(i, 1);
+										}
+										output.getInventory().markDirty();
+										input.getInventory().markDirty();
 									}
 								}
 							}
@@ -143,6 +193,43 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 			}
 		}
 		ticks++;
+	}
+
+	@Override
+	public void read(BlockState state, CompoundTag tag)
+	{
+		this.components = new AlchemicalFurnaceComponent[4];
+		ListTag list = tag.getList("components", NbtType.COMPOUND);
+		BlockPos input = new BlockPos(list.getCompound(INPUT).getInt("x"), list.getCompound(INPUT).getInt("y"), list.getCompound(INPUT).getInt("z"));
+		BlockPos output = new BlockPos(list.getCompound(OUTPUT).getInt("x"), list.getCompound(OUTPUT).getInt("y"), list.getCompound(OUTPUT).getInt("z"));
+		BlockPos left = new BlockPos(list.getCompound(BOTTOM_LEFT).getInt("x"), list.getCompound(BOTTOM_LEFT).getInt("y"), list.getCompound(BOTTOM_LEFT).getInt("z"));
+		BlockPos right = new BlockPos(list.getCompound(TOP_RIGHT).getInt("x"), list.getCompound(TOP_RIGHT).getInt("y"), list.getCompound(TOP_RIGHT).getInt("z"));
+		this.components[INPUT] = new AlchemicalFurnaceInputComponent(this.world, this, input);
+		this.components[OUTPUT] = new AlchemicalFurnaceOutputComponent(this.world, this, output);
+		this.components[BOTTOM_LEFT] = new AlchemicalFurnaceComponent(this.world, this, left);
+		this.components[TOP_RIGHT] = new AlchemicalFurnaceComponent(this.world, this, right);
+		for(int i = 0; i < this.components.length; i++)
+		{
+			this.components[i].read(state, tag);
+		}
+		this.isReady = false;
+	}
+
+	@Override
+	public CompoundTag write(CompoundTag tag)
+	{
+		ListTag list = new ListTag();
+		for(int i = 0; i < this.components.length; i++)
+		{
+			CompoundTag pos = new CompoundTag();
+			pos.putInt("x", this.components[i].getPos().getX());
+			pos.putInt("y", this.components[i].getPos().getY());
+			pos.putInt("z", this.components[i].getPos().getZ());
+			list.add(pos);
+			this.components[i].write(tag);
+		}
+		tag.put("components", list);
+		return tag;
 	}
 
 	@Override
@@ -161,5 +248,29 @@ public class AlchemicalFurnaceMultiBlock implements MultiBlock<AlchemicalFurnace
 	public World getWorld()
 	{
 		return this.world;
+	}
+
+	@Override
+	public void openScreen(World world, BlockPos pos, PlayerEntity player)
+	{
+		player.openHandledScreen(this);
+	}
+
+	@Override
+	public Text getDisplayName()
+	{
+		return new TranslatableText("waters_alchemy_mod.test");
+	}
+
+	private Inventory getInventory(int side)
+	{
+		return ((ItemComponent)this.getComponents()[side]).getInventory();
+	}
+
+	@Nullable
+	@Override
+	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
+	{
+		return new AlchemicalFurnaceHandler(syncId, inv, getInventory(INPUT), getInventory(OUTPUT));
 	}
 }

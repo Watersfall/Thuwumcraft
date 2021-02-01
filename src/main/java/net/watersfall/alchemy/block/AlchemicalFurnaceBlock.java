@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.watersfall.alchemy.blockentity.ChildBlockEntity;
+import net.watersfall.alchemy.blockentity.AlchemicalFurnaceEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityProvider
@@ -24,7 +24,7 @@ public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityPro
 	@Override
 	public BlockEntity createBlockEntity(BlockView world)
 	{
-		return new ChildBlockEntity();
+		return new AlchemicalFurnaceEntity();
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.multiblock.impl.component;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.shape.VoxelShape;
 import net.watersfall.alchemy.multiblock.MultiBlock;
 import net.watersfall.alchemy.multiblock.MultiBlockComponent;
@@ -30,7 +32,7 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	@Override
 	public void onUse(PlayerEntity player)
 	{
-		this.multiBlock.onUse();
+		this.multiBlock.onUse(this.world, this.pos, player);
 	}
 
 	@Override
@@ -49,6 +51,12 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	public World getWorld()
 	{
 		return this.world;
+	}
+
+	@Override
+	public void setWorld(World world)
+	{
+		this.world = world;
 	}
 
 	@Override
@@ -76,5 +84,17 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 		{
 			return AlchemicalFurnaceMultiBlock.SHAPES[AlchemicalFurnaceMultiBlock.TOP_RIGHT];
 		}
+	}
+
+	@Override
+	public CompoundTag write(CompoundTag tag)
+	{
+		return tag;
+	}
+
+	@Override
+	public void read(BlockState state, CompoundTag tag)
+	{
+
 	}
 }

@@ -5,6 +5,7 @@ import net.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
 import net.watersfall.alchemy.blockentity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import net.watersfall.alchemy.event.ApplyAffectEvent;
+import net.watersfall.alchemy.inventory.handler.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import net.watersfall.alchemy.item.AlchemyModItems;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
@@ -34,11 +35,13 @@ public class AlchemyMod implements ModInitializer
 {
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
+	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
+		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
 	}
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
@@ -99,7 +102,7 @@ public class AlchemyMod implements ModInitializer
 				setIngredientTag(Tag.of(getAllIngredients(server)));
 			}
 		});
-		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.INSTANCE.tick());
+		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER.tick());
 		DispenserBlock.registerBehavior(AlchemyModItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
 			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)

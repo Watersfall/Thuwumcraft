@@ -31,8 +31,11 @@ public class WitchySpoonItem extends Item
 		{
 			if(AlchemicalFurnaceType.INSTANCE.matches(context.getWorld(), context.getBlockPos()))
 			{
-				AlchemicalFurnaceType.INSTANCE.create(context.getWorld(), context.getBlockPos());
-				return ActionResult.CONSUME;
+				if(!context.getWorld().isClient)
+				{
+					AlchemicalFurnaceType.INSTANCE.create(context.getWorld(), context.getBlockPos());
+				}
+				return ActionResult.success(context.getWorld().isClient);
 			}
 			return ActionResult.FAIL;
 		}
