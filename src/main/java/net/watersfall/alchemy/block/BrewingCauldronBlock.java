@@ -112,18 +112,21 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			}
 			else if(entity instanceof ItemEntity)
 			{
-				if(!world.isClient)
+				if(this.isPowered(state))
 				{
-					if(cauldron.getIngredientCount() < 3)
+					if(!world.isClient)
 					{
-						ItemEntity itemEntity = (ItemEntity)entity;
-						Item item = itemEntity.getStack().getItem();
-						if(cauldron.count(item) <= 0)
+						if(cauldron.getIngredientCount() < 3)
 						{
-							itemEntity.getStack().decrement(1);
-							cauldron.addStack(new ItemStack(item));
-							cauldron.setIngredientCount((byte) (cauldron.getIngredientCount() + 1));
-							cauldron.sync();
+							ItemEntity itemEntity = (ItemEntity)entity;
+							Item item = itemEntity.getStack().getItem();
+							if(cauldron.count(item) <= 0)
+							{
+								itemEntity.getStack().decrement(1);
+								cauldron.addStack(new ItemStack(item));
+								cauldron.setIngredientCount((byte) (cauldron.getIngredientCount() + 1));
+								cauldron.sync();
+							}
 						}
 					}
 				}
