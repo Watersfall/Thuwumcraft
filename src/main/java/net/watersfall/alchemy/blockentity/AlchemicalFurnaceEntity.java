@@ -54,14 +54,14 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 		else
 		{
 			this.multiBlock.read(null, compoundTag);
-			for(int i = 0; i < this.multiBlock.getComponents().length; i++)
+		}
+		for(int i = 0; i < this.multiBlock.getComponents().length; i++)
+		{
+			BlockEntity testEntity = this.world.getBlockEntity(this.multiBlock.getComponents()[i].getPos());
+			if(testEntity instanceof ChildBlockEntity)
 			{
-				BlockEntity testEntity = this.world.getBlockEntity(this.multiBlock.getComponents()[i].getPos());
-				if(testEntity instanceof ChildBlockEntity)
-				{
-					ChildBlockEntity entity = (ChildBlockEntity)testEntity;
-					entity.setComponent(this.multiBlock.getComponents()[i]);
-				}
+				ChildBlockEntity entity = (ChildBlockEntity)testEntity;
+				entity.setComponent(this.multiBlock.getComponents()[i]);
 			}
 		}
 	}
