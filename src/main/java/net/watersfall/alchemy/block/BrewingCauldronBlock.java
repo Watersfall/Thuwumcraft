@@ -178,12 +178,15 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
 			if(entity != null)
 			{
-				double x = pos.getX() + 0.25 + random.nextDouble() * 0.5;
-				double y = pos.getY() + entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;;
-				double z = pos.getZ() + 0.25 + random.nextDouble() * 0.5;
-				Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0, 0, 0);
-				Vec3d color = Vec3d.unpackRgb(entity.getColor());
-				particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+				if(entity.getWaterLevel() > 0)
+				{
+					double x = pos.getX() + 0.25 + random.nextDouble() * 0.5;
+					double y = pos.getY() + entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;;
+					double z = pos.getZ() + 0.25 + random.nextDouble() * 0.5;
+					Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0, 0, 0);
+					Vec3d color = Vec3d.unpackRgb(entity.getColor());
+					particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+				}
 			}
 		}
 	}
