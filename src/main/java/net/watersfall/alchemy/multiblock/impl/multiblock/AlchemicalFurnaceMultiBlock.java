@@ -11,6 +11,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.alchemy.accessor.waters_AbstractCookingRecipeInputAccessor;
@@ -117,6 +118,10 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	@Override
 	public void remove()
 	{
+		ItemComponent input = (ItemComponent)this.components[INPUT];
+		ItemComponent output = (ItemComponent)this.components[OUTPUT];
+		ItemScatterer.spawn(world, this.components[INPUT].getPos(), input.getInventory());
+		ItemScatterer.spawn(world, this.components[OUTPUT].getPos(), output.getInventory());
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
