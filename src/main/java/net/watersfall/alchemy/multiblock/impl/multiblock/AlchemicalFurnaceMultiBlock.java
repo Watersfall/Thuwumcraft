@@ -45,10 +45,22 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	private long ticks;
 
 	public static final VoxelShape[] SHAPES = new VoxelShape[]{
+			VoxelShapes.cuboid(0D, 0D, 0D, 0D, 0D, 0D),
+			VoxelShapes.cuboid(-1D, -1D, 0D, 1D, 1D, 1D),
 			VoxelShapes.cuboid(0D, 0D, 0D, 2D, 2D, 1D),
 			VoxelShapes.cuboid(0D, -1D, 0D, 2D, 1D, 1D),
+			VoxelShapes.cuboid(0D, 0D, 0D, 0D, 0D, 0D),
+			VoxelShapes.cuboid(0D, -1D, 0D, 2D, 1D, 1D),
 			VoxelShapes.cuboid(-1D, 0D, 0D, 1D, 2D, 1D),
-			VoxelShapes.cuboid(-1D, -1D, 0D, 1D, 1D, 1D)
+			VoxelShapes.cuboid(-1D, -1D, 0D, 1D, 1D, 1D),
+			VoxelShapes.cuboid(0D, 0D, 0D, 0D, 0D, 0D),
+			VoxelShapes.cuboid(0D, -1D, 0D, 1D, 1D, 2D),
+			VoxelShapes.cuboid(0D, 0D, -1D, 1D, 2D, 1D),
+			VoxelShapes.cuboid(0D, -1D, -1D, 1D, 1D, 1D),
+			VoxelShapes.cuboid(0D, 0D, 0D, 0D, 0D, 0D),
+			VoxelShapes.cuboid(0D, -1D, -1D, 1D, 1D, 1D),
+			VoxelShapes.cuboid(0D, 0D, 0D, 1D, 2D, 2D),
+			VoxelShapes.cuboid(0D, -1D, 0D, 1D, 1D, 2D)
 	};
 
 	public static final int BOTTOM_LEFT = 0;

@@ -1,6 +1,8 @@
 package net.watersfall.alchemy.item;
 
+import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.multiblock.MultiBlockType;
 import net.watersfall.alchemy.multiblock.impl.type.AlchemicalFurnaceType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
@@ -29,11 +31,12 @@ public class WitchySpoonItem extends Item
 		}
 		else if(state.getBlock() == Blocks.FURNACE)
 		{
-			if(AlchemicalFurnaceType.INSTANCE.matches(context.getWorld(), context.getBlockPos()))
+			BlockPos[] states = AlchemicalFurnaceType.INSTANCE.matches(context.getPlayer(), context.getWorld(), context.getBlockPos());
+			if(states != MultiBlockType.MISSING)
 			{
 				if(!context.getWorld().isClient)
 				{
-					AlchemicalFurnaceType.INSTANCE.create(context.getWorld(), context.getBlockPos());
+					AlchemicalFurnaceType.INSTANCE.create(context.getPlayer(), context.getWorld(), context.getBlockPos(), states);
 				}
 				return ActionResult.success(context.getWorld().isClient);
 			}

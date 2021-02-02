@@ -3,6 +3,7 @@ package net.watersfall.alchemy.multiblock.impl.component;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.shape.VoxelShape;
+import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.multiblock.MultiBlock;
 import net.watersfall.alchemy.multiblock.MultiBlockComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,22 +69,20 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	@Override
 	public VoxelShape getOutline()
 	{
-		if(this.multiBlock.getComponents()[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT] == this)
+		int index = this.multiBlock.getWorld().getBlockState(this.multiBlock.getPos()).get(AlchemicalFurnaceBlock.DIRECTION).getId() - 2;
+		index *= 4;
+		for(int i = 0; i < this.multiBlock.getComponents().length; i++)
 		{
-			return AlchemicalFurnaceMultiBlock.SHAPES[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT];
+			if(this.multiBlock.getComponents()[i] != this)
+			{
+				index++;
+			}
+			else
+			{
+				break;
+			}
 		}
-		else if(this.multiBlock.getComponents()[AlchemicalFurnaceMultiBlock.INPUT] == this)
-		{
-			return AlchemicalFurnaceMultiBlock.SHAPES[AlchemicalFurnaceMultiBlock.INPUT];
-		}
-		else if(this.multiBlock.getComponents()[AlchemicalFurnaceMultiBlock.OUTPUT] == this)
-		{
-			return AlchemicalFurnaceMultiBlock.SHAPES[AlchemicalFurnaceMultiBlock.OUTPUT];
-		}
-		else
-		{
-			return AlchemicalFurnaceMultiBlock.SHAPES[AlchemicalFurnaceMultiBlock.TOP_RIGHT];
-		}
+		return AlchemicalFurnaceMultiBlock.SHAPES[index];
 	}
 
 	@Override

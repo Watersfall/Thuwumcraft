@@ -1,7 +1,6 @@
 package net.watersfall.alchemy.block;
 
 import net.minecraft.block.*;
-import net.minecraft.util.shape.VoxelSet;
 import net.minecraft.util.shape.VoxelShape;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
 import net.watersfall.alchemy.multiblock.component.ItemComponent;
@@ -16,8 +15,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
 
 public class ChildBlock extends Block implements BlockEntityProvider, InventoryProvider
 {
