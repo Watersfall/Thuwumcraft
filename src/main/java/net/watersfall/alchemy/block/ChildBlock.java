@@ -2,6 +2,7 @@ package net.watersfall.alchemy.block;
 
 import net.minecraft.block.*;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
 import net.watersfall.alchemy.multiblock.component.ItemComponent;
 import net.minecraft.block.entity.BlockEntity;
@@ -94,5 +95,21 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 			}
 		}
 		return super.getOutlineShape(state, world, pos, context);
+	}
+
+	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
+	{
+		return VoxelShapes.empty();
+	}
+
+	@Override
+	public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos)
+	{
+		return 1.0F;
+	}
+
+	public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos)
+	{
+		return true;
 	}
 }
