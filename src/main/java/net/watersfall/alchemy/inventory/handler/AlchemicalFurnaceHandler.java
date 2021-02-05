@@ -6,9 +6,12 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerListener;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceInput;
+import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
@@ -61,5 +64,34 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 	public boolean canUse(PlayerEntity player)
 	{
 		return true;
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		ItemStack itemStack = ItemStack.EMPTY;
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasStack())
+		{
+			ItemStack itemStack2 = slot.getStack();
+			itemStack = itemStack2.copy();
+			if (index < 18)
+			{
+				if (!this.insertItem(itemStack2, 18, this.slots.size(), true))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else if (!this.insertItem(itemStack2, 0, 9, false))
+			{
+				return ItemStack.EMPTY;
+			}
+			if (itemStack2.isEmpty())
+			{
+				slot.setStack(ItemStack.EMPTY);
+			}
+			slot.markDirty();
+		}
+		return itemStack;
 	}
 }

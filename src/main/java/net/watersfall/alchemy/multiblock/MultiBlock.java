@@ -35,6 +35,8 @@ public interface MultiBlock<T extends MultiBlockComponent>
 
 	CompoundTag write(CompoundTag tag);
 
+	void markDirty();
+
 	MultiBlockType<? extends MultiBlock<? extends MultiBlockComponent>> getType();
 
 	BlockPos getPos();

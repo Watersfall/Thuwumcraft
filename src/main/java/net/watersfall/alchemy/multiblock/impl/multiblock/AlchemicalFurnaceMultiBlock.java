@@ -199,12 +199,13 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 										{
 											input.getInventory().removeStack(i, 1);
 										}
-										output.getInventory().markDirty();
-										input.getInventory().markDirty();
 									}
 								}
 							}
 						}
+						output.getInventory().markDirty();
+						input.getInventory().markDirty();
+						this.markDirty();
 					}
 				}
 			}
@@ -247,6 +248,16 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		}
 		tag.put("components", list);
 		return tag;
+	}
+
+	@Override
+	public void markDirty()
+	{
+		BlockEntity test = this.world.getBlockEntity(pos);
+		if(test != null)
+		{
+			test.markDirty();
+		}
 	}
 
 	@Override

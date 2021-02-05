@@ -18,7 +18,7 @@ public class AlchemicalFurnaceInputComponent extends AlchemicalFurnaceComponent 
 	public AlchemicalFurnaceInputComponent(World world, MultiBlock<AlchemicalFurnaceComponent> multiBlock, BlockPos pos)
 	{
 		super(world, multiBlock, pos);
-		this.inventory = new AlchemicalFurnaceInput();
+		this.inventory = new AlchemicalFurnaceInput(world, pos);
 	}
 
 	@Override
@@ -40,5 +40,12 @@ public class AlchemicalFurnaceInputComponent extends AlchemicalFurnaceComponent 
 	{
 		super.read(state, tag);
 		Inventories.fromTag(tag.getCompound("input_inventory"), this.inventory.getContents());
+	}
+
+	@Override
+	public void setWorld(World world)
+	{
+		super.setWorld(world);
+		this.inventory.setWorld(world);
 	}
 }

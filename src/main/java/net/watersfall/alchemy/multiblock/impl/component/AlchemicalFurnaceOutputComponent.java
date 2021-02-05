@@ -18,7 +18,7 @@ public class AlchemicalFurnaceOutputComponent extends AlchemicalFurnaceComponent
 	public AlchemicalFurnaceOutputComponent(World world, MultiBlock<AlchemicalFurnaceComponent> multiBlock, BlockPos pos)
 	{
 		super(world, multiBlock, pos);
-		this.inventory = new AlchemicalFurnaceOutput();
+		this.inventory = new AlchemicalFurnaceOutput(world, pos);
 	}
 
 	@Override
@@ -40,5 +40,12 @@ public class AlchemicalFurnaceOutputComponent extends AlchemicalFurnaceComponent
 	{
 		super.read(state, tag);
 		Inventories.fromTag(tag.getCompound("output_inventory"), this.inventory.getContents());
+	}
+
+	@Override
+	public void setWorld(World world)
+	{
+		super.setWorld(world);
+		this.inventory.setWorld(world);
 	}
 }

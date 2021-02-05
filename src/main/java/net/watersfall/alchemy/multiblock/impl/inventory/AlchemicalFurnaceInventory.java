@@ -33,7 +33,7 @@ public interface AlchemicalFurnaceInventory extends SidedInventory
 	@Override
 	default ItemStack getStack(int slot)
 	{
-		return getContents().get(slot).copy();
+		return getContents().get(slot);
 	}
 
 	@Override
@@ -71,4 +71,6 @@ public interface AlchemicalFurnaceInventory extends SidedInventory
 	{
 		this.getContents().clear();
 	}
+
+	void sync();
 }
