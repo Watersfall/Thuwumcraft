@@ -5,9 +5,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.*;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
@@ -19,23 +17,25 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 {
 	private Inventory input;
 	private Inventory output;
+	private PropertyDelegate properties;
 
 	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory)
 	{
-		this(syncId, playerInventory, new SimpleInventory(9), new SimpleInventory(9));
+		this(syncId, playerInventory, new SimpleInventory(9), new SimpleInventory(9), new ArrayPropertyDelegate(4));
 	}
 
-	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output)
+	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output, PropertyDelegate properties)
 	{
 		super(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, syncId);
 		this.input = input;
 		this.output = output;
-
+		this.properties = properties;
+		this.addProperties(properties);
 		for(int y = 0; y < 3; y++)
 		{
-			for(int x = 0; x < 3; x++)
+			for(int x = 2; x < 5; x++)
 			{
-				this.addSlot(new Slot(input, y * 3 + x, 8 + x * 18, 18 + y * 18));
+				this.addSlot(new Slot(input, y * 3 + x - 2, 8 + x * 18, 18 + y * 18));
 			}
 		}
 		for(int y = 0; y < 3; y++)
@@ -94,5 +94,15 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 			slot.markDirty();
 		}
 		return itemStack;
+	}
+
+	public int getSmeltingProgress()
+	{
+		return (int)((float)this.properties.get(0) / (float)this.properties.get(1) * 16F + 0.5F);
+	}
+
+	public int getFuel()
+	{
+		return (int)((float)this.properties.get(2) / (float)this.properties.get(3) * 12F);
 	}
 }

@@ -8,6 +8,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.inventory.handler.AlchemicalFurnaceHandler;
 
 public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 {
@@ -26,5 +27,9 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 		int x = (width - backgroundWidth) / 2;
 		int y = (height - backgroundHeight) / 2;
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+		AlchemicalFurnaceHandler handler = (AlchemicalFurnaceHandler)this.handler;
+		this.drawTexture(matrices, this.x + 97, this.y + 27, 176, 14, handler.getSmeltingProgress() + 1, 16);
+		this.drawTexture(matrices, this.x + 97, this.y + 46, 176, 14, handler.getSmeltingProgress() + 1, 16);
+		this.drawTexture(matrices, this.x + 9, this.y + 38 + 12 - handler.getFuel(), 176, 12 - handler.getFuel(), 14, handler.getFuel());
 	}
 }

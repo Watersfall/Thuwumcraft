@@ -6,15 +6,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmeltingRecipe;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.watersfall.alchemy.accessor.waters_AbstractCookingRecipeInputAccessor;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.blockentity.AlchemicalFurnaceEntity;
 import net.watersfall.alchemy.blockentity.ChildBlockEntity;
@@ -27,15 +31,12 @@ import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceOutputC
 import net.watersfall.alchemy.multiblock.impl.type.AlchemicalFurnaceType;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.util.InventoryHelper;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Optional;
 
 public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurnaceComponent>
 {
@@ -43,7 +44,56 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	private BlockPos pos;
 	private AlchemicalFurnaceComponent[] components;
 	private boolean isReady;
-	private long ticks;
+	private int runningTicks;
+	private int maxRunningTicks;
+	private int fuelAmount;
+	private int maxFuelAmount;
+	private PropertyDelegate propertyDelegate = new PropertyDelegate()
+	{
+		@Override
+		public int get(int index)
+		{
+			switch(index)
+			{
+				case 0:
+					return runningTicks;
+				case 1:
+					return maxRunningTicks;
+				case 2:
+					return fuelAmount;
+				case 3:
+					return maxFuelAmount;
+				default:
+					return 0;
+			}
+		}
+
+		@Override
+		public void set(int index, int value)
+		{
+			switch(index)
+			{
+				case 0:
+					runningTicks = value;
+					break;
+				case 1:
+					maxRunningTicks = value;
+					break;
+				case 2:
+					fuelAmount = value;
+					break;
+				case 3:
+					maxFuelAmount = value;
+					break;
+			}
+		}
+
+		@Override
+		public int size()
+		{
+			return 4;
+		}
+	};
 
 	public static final VoxelShape[] SHAPES = new VoxelShape[]{
 			VoxelShapes.cuboid(0D, 0D, 0D, 0D, 0D, 0D),
@@ -75,7 +125,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		this.world = null;
 		this.components = null;
 		this.isReady = false;
-		this.ticks = 0;
+		runningTicks = 0;
 	}
 
 	public AlchemicalFurnaceMultiBlock(World world, BlockPos pos, AlchemicalFurnaceComponent[] components)
@@ -84,7 +134,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		this.pos = pos;
 		this.components = components;
 		this.isReady = false;
-		ticks = world.getTime();
+		runningTicks = 0;
 	}
 
 	@Override
@@ -112,7 +162,6 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		{
 			MultiBlockRegistry.SERVER.add(this);
 		}
-
 	}
 
 	@Override
@@ -177,23 +226,28 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		{
 			if(!world.isClient)
 			{
-				if(ticks % 20 == 0)
+				AlchemicalFurnaceInputComponent input = (AlchemicalFurnaceInputComponent) this.components[INPUT];
+				AlchemicalFurnaceOutputComponent output = (AlchemicalFurnaceOutputComponent) this.components[OUTPUT];
+				if(!input.getInventory().isEmpty())
 				{
-					AlchemicalFurnaceInputComponent input = (AlchemicalFurnaceInputComponent) this.components[INPUT];
-					AlchemicalFurnaceOutputComponent output = (AlchemicalFurnaceOutputComponent) this.components[OUTPUT];
-					if(!input.getInventory().isEmpty())
+					if(true /*TODO: special recipe type*/)
 					{
-						for(int i = 0; i < input.getInventory().size(); i++)
+						maxRunningTicks = 100;
+						if(runningTicks >= 100)
 						{
-							if(!input.getInventory().getStack(i).isEmpty())
+							for(int i = 0; i < input.getInventory().size(); i++)
 							{
-								List<SmeltingRecipe> recipeList = world.getRecipeManager().listAllOfType(RecipeType.SMELTING);
-								for(int o = 0; o < recipeList.size(); o++)
+								if(!input.getInventory().getStack(i).isEmpty())
 								{
-									waters_AbstractCookingRecipeInputAccessor accessor = (waters_AbstractCookingRecipeInputAccessor)recipeList.get(o);
-									if(accessor.getInput().test(input.getInventory().getStack(i)))
+									Optional<SmeltingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(
+											RecipeType.SMELTING,
+											new SimpleInventory(input.getInventory().getStack(i)),
+											this.world
+									);
+									if(recipeOptional.isPresent())
 									{
-										ItemStack outputStack = recipeList.get(o).getOutput().copy();
+										SmeltingRecipe recipe = recipeOptional.get();
+										ItemStack outputStack = recipe.getOutput().copy();
 										boolean fit = InventoryHelper.fit(output.getInventory(), outputStack);
 										if(fit)
 										{
@@ -202,15 +256,27 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 									}
 								}
 							}
+							output.getInventory().markDirty();
+							input.getInventory().markDirty();
+							this.markDirty();
+							runningTicks = 0;
 						}
-						output.getInventory().markDirty();
-						input.getInventory().markDirty();
-						this.markDirty();
+						else
+						{
+							runningTicks++;
+						}
 					}
+					else
+					{
+						runningTicks = 0;
+					}
+				}
+				else
+				{
+					runningTicks = 0;
 				}
 			}
 		}
-		ticks++;
 	}
 
 	@Override
@@ -299,6 +365,6 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
-		return new AlchemicalFurnaceHandler(syncId, inv, getInventory(INPUT), getInventory(OUTPUT));
+		return new AlchemicalFurnaceHandler(syncId, inv, getInventory(INPUT), getInventory(OUTPUT), propertyDelegate);
 	}
 }

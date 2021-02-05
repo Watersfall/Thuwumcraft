@@ -4,7 +4,6 @@
 	"package": "net.watersfall.alchemy.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"AbstractCookingRecipeMixin",
 		"CampfireBlockMixin",
 		"LivingEntityMixin"
 	],
