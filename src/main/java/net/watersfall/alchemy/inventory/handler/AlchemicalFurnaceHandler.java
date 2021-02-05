@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceInput;
@@ -41,7 +42,7 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 		{
 			for(int x = 6; x < 9; x++)
 			{
-				this.addSlot(new Slot(output, y * 3 + x - 6, 8 + x * 18, 18 + y * 18));
+				this.addSlot(new FurnaceOutputSlot(playerInventory.player, output, y * 3 + x - 6, 8 + x * 18, 18 + y * 18));
 			}
 		}
 
