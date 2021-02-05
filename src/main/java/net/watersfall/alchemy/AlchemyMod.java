@@ -1,10 +1,13 @@
 package net.watersfall.alchemy;
 
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ActionResult;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
 import net.watersfall.alchemy.blockentity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
-import net.watersfall.alchemy.event.ApplyAffectEvent;
 import net.watersfall.alchemy.inventory.handler.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
 import net.watersfall.alchemy.item.AlchemyModItems;
@@ -26,8 +29,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyModRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
+import net.watersfall.alchemy.util.StatusEffectHelper;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -94,7 +99,31 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), AlchemyModBlockEntities.PEDESTAL_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("alchemical_furnace_entity"), AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("child_block_entity"), AlchemyModBlockEntities.CHILD_BLOCK_ENTITY);
-		AttackEntityCallback.EVENT.register(new ApplyAffectEvent());
+		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+			if(!world.isClient)
+			{
+				if(!player.getStackInHand(hand).isEmpty())
+				{
+					if(player.getStackInHand(hand).getTag() != null)
+					{
+						CompoundTag tag = player.getStackInHand(hand).getTag();
+						if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
+						{
+							if(StatusEffectHelper.hasUses(tag))
+							{
+								List<StatusEffectInstance> effects = StatusEffectHelper.getEffectsFromTag(tag);
+								if(effects.size() > 0)
+								{
+									effects.forEach(((LivingEntity)entity)::addStatusEffect);
+								}
+							}
+							StatusEffectHelper.decrementUses(tag);
+						}
+					}
+				}
+			}
+			return ActionResult.PASS;
+		});
 		ServerLifecycleEvents.SERVER_STARTED.register((server -> setIngredientTag(Tag.of(getAllIngredients(server)))));
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
 			if(success)
