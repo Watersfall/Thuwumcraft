@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.item;
 
 import net.watersfall.alchemy.inventory.ApothecaryGuideInventory;
-import net.watersfall.alchemy.inventory.handler.ApothecaryGuideHandler;
+import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.block;
 
-import net.watersfall.alchemy.blockentity.PedestalEntity;
+import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.item.AlchemyModItems;
 import net.watersfall.alchemy.recipe.AlchemyModRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
-import net.watersfall.alchemy.blockentity.PedestalEntity;
+import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;

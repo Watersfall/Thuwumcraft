@@ -3,7 +3,7 @@ package net.watersfall.alchemy.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;

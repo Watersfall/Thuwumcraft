@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.blockentity;
+package net.watersfall.alchemy.block.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;

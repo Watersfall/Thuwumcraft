@@ -7,14 +7,13 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.watersfall.alchemy.blockentity.AlchemicalFurnaceEntity;
+import net.watersfall.alchemy.block.entity.AlchemicalFurnaceEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityProvider

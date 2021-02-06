@@ -8,7 +8,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.inventory.handler.AlchemicalFurnaceHandler;
+import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 
 public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 {

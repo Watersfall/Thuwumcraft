@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.client.renderer;
 
-import net.watersfall.alchemy.blockentity.PedestalEntity;
+import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;

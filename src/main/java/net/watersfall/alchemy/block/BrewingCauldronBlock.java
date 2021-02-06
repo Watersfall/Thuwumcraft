@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.block;
 
-import net.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.AlchemyModRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.watersfall.alchemy.recipe.CauldronIngredientRecipe;

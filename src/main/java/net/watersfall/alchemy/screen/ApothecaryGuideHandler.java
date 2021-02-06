@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.inventory.handler;
+package net.watersfall.alchemy.screen;
 
 import net.watersfall.alchemy.AlchemyMod;
 import net.minecraft.entity.player.PlayerEntity;

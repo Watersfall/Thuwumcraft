@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.blockentity;
+package net.watersfall.alchemy.block.entity;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -6,7 +6,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.block.ChildBlock;
 import net.watersfall.alchemy.multiblock.MultiBlock;
 import net.watersfall.alchemy.multiblock.MultiBlockComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceComponent;

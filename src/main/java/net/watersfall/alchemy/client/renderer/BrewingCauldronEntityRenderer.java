@@ -2,7 +2,7 @@ package net.watersfall.alchemy.client.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
-import net.watersfall.alchemy.blockentity.BrewingCauldronEntity;
+import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.minecraft.block.AbstractSkullBlock;
 import net.minecraft.block.Block;

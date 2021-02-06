@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.inventory.handler;
+package net.watersfall.alchemy.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,9 +9,6 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceInput;
-import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceOutput;
-import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
 {

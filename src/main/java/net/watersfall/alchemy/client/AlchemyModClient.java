@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.render.RenderLayer;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
-import net.watersfall.alchemy.blockentity.AlchemyModBlockEntities;
+import net.watersfall.alchemy.block.entity.AlchemyModBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import net.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;

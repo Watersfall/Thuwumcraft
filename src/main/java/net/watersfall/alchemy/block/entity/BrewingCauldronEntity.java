@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.blockentity;
+package net.watersfall.alchemy.block.entity;
 
 import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.fabricmc.api.EnvType;

@@ -3,7 +3,7 @@ package net.watersfall.alchemy.block;
 import net.minecraft.block.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.watersfall.alchemy.blockentity.ChildBlockEntity;
+import net.watersfall.alchemy.block.entity.ChildBlockEntity;
 import net.watersfall.alchemy.multiblock.component.ItemComponent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
