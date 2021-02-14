@@ -35,4 +35,12 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 		this.drawTexture(matrices, this.x + 97, this.y + 70, 176, 14, handler.getSmeltingProgress() + 1, 16);
 		this.drawTexture(matrices, this.x + 26, this.y + 18, 0, 193, handler.getFuel(), 16);
 	}
+
+	@Override
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
+	{
+		renderBackground(matrices);
+		super.render(matrices, mouseX, mouseY, delta);
+		drawMouseoverTooltip(matrices, mouseX, mouseY);
+	}
 }
