@@ -10,6 +10,7 @@ import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.multiblock.MultiBlockType;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceComponent;
+import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceFuelComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceInputComponent;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceOutputComponent;
 import net.watersfall.alchemy.multiblock.impl.multiblock.AlchemicalFurnaceMultiBlock;
@@ -73,7 +74,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		Direction direction = world.getBlockState(pos).get(AbstractFurnaceBlock.FACING);
 		AlchemicalFurnaceComponent[] components = new AlchemicalFurnaceComponent[4];
 		AlchemicalFurnaceMultiBlock multiBlock = new AlchemicalFurnaceMultiBlock(world, pos, components);
-		components[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT] = new AlchemicalFurnaceComponent(world, multiBlock, pos);
+		components[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT] = new AlchemicalFurnaceFuelComponent(world, multiBlock, pos);
 		components[AlchemicalFurnaceMultiBlock.TOP_RIGHT] = new AlchemicalFurnaceComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.TOP_RIGHT]);
 		components[AlchemicalFurnaceMultiBlock.INPUT] = new AlchemicalFurnaceInputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.INPUT]);
 		components[AlchemicalFurnaceMultiBlock.OUTPUT] = new AlchemicalFurnaceOutputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.OUTPUT]);

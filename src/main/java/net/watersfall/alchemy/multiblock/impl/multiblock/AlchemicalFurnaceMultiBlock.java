@@ -166,8 +166,10 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	{
 		ItemComponent input = (ItemComponent)this.components[INPUT];
 		ItemComponent output = (ItemComponent)this.components[OUTPUT];
+		ItemComponent fuel = (ItemComponent)this.components[BOTTOM_LEFT];
 		ItemScatterer.spawn(world, this.components[INPUT].getPos(), input.getInventory());
 		ItemScatterer.spawn(world, this.components[OUTPUT].getPos(), output.getInventory());
+		ItemScatterer.spawn(world, this.components[BOTTOM_LEFT].getPos(), fuel.getInventory());
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
@@ -298,7 +300,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	}
 
 	@Override
-	public void read(BlockState state, CompoundTag tag)
+	public void read(CompoundTag tag)
 	{
 		this.components = new AlchemicalFurnaceComponent[4];
 		ListTag list = tag.getList("components", NbtType.COMPOUND);
@@ -312,7 +314,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		this.components[TOP_RIGHT] = new AlchemicalFurnaceComponent(this.world, this, right);
 		for(int i = 0; i < this.components.length; i++)
 		{
-			this.components[i].read(state, tag);
+			this.components[i].read(tag);
 		}
 		this.fuelAmount = tag.getInt("fuel_amount");
 		this.runningTicks = tag.getInt("running_ticks");

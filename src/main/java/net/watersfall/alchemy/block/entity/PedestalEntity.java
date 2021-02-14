@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.block.entity;
 
+import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.inventory.PedestalInventory;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -23,9 +24,9 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	private boolean craftingFinished;
 	private PedestalRecipe recipe;
 
-	public PedestalEntity()
+	public PedestalEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.PEDESTAL_ENTITY);
+		super(AlchemyModBlockEntities.PEDESTAL_ENTITY, pos, state);
 		stack = ItemStack.EMPTY;
 		craftingFinished = false;
 	}
@@ -84,9 +85,9 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag)
+	public void fromTag(CompoundTag tag)
 	{
-		super.fromTag(state, tag);
+		super.fromTag(tag);
 		this.setStack(ItemStack.fromTag(tag.getCompound("pedestal_item")));
 		this.main = tag.getBoolean("main");
 		this.crafting = tag.getBoolean("crafting");

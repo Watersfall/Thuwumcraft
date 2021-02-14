@@ -92,7 +92,7 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	}
 
 	@Override
-	public void read(BlockState state, CompoundTag tag)
+	public void read(CompoundTag tag)
 	{
 
 	}

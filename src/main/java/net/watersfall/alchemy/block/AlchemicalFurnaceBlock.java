@@ -41,9 +41,9 @@ public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityPro
 
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world)
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new AlchemicalFurnaceEntity();
+		return new AlchemicalFurnaceEntity(pos, state);
 	}
 
 	@Override

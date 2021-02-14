@@ -24,13 +24,6 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 		super(settings);
 	}
 
-	@Nullable
-	@Override
-	public BlockEntity createBlockEntity(BlockView world)
-	{
-		return new ChildBlockEntity();
-	}
-
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
 	{
@@ -111,5 +104,12 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos)
 	{
 		return true;
+	}
+
+	@Nullable
+	@Override
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
+	{
+		return new ChildBlockEntity(pos, state);
 	}
 }

@@ -35,9 +35,9 @@ public class AlchemicalFurnaceFuelComponent extends AlchemicalFurnaceComponent i
 	}
 
 	@Override
-	public void read(BlockState state, CompoundTag tag)
+	public void read(CompoundTag tag)
 	{
-		super.read(state, tag);
+		super.read(tag);
 		Inventories.fromTag(tag.getCompound("fuel_inventory"), this.inventory.getContents());
 	}
 

@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.block.entity;
 
+import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,9 +27,9 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	private boolean needsColorUpdate = true;
 	private int color = 0;
 
-	public BrewingCauldronEntity()
+	public BrewingCauldronEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY);
+		super(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
 	}
 
 	@Override
@@ -44,9 +45,9 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag)
+	public void fromTag(CompoundTag tag)
 	{
-		super.fromTag(state, tag);
+		super.fromTag(tag);
 		this.waterLevel = tag.getShort(WATER_LEVEL);
 		this.ingredientCount = tag.getByte(INGREDIENT_COUNT);
 		this.lastWaterLevel = (short)(waterLevel + ((float)this.ingredientCount * (1F / 32F)));

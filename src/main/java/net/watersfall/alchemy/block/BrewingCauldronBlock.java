@@ -216,7 +216,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 		{
 			if(!world.isClient)
 			{
-				if(!player.abilities.creativeMode)
+				if(!player.getAbilities().creativeMode)
 				{
 					player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 				}
@@ -236,7 +236,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				{
 					player.setStackInHand(hand, new ItemStack(Items.WATER_BUCKET));
 				}
-				else if(!player.inventory.insertStack(new ItemStack(Items.WATER_BUCKET)))
+				else if(!player.getInventory().insertStack(new ItemStack(Items.WATER_BUCKET)))
 				{
 					player.dropItem(new ItemStack(Items.WATER_BUCKET), false);
 				}
@@ -256,7 +256,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					if(!world.isClient)
 					{
 						entity.addStack(new ItemStack(item));
-						if(!player.abilities.creativeMode)
+						if(!player.getAbilities().creativeMode)
 						{
 							itemStack.decrement(1);
 						}
@@ -296,7 +296,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 							{
 								player.setStackInHand(hand, stack);
 							}
-							else if(!player.inventory.insertStack(stack))
+							else if(!player.getInventory().insertStack(stack))
 							{
 								player.dropItem(stack, true);
 							}
@@ -319,7 +319,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 						{
 							player.setStackInHand(hand, stack);
 						}
-						else if(!player.inventory.insertStack(stack))
+						else if(!player.getInventory().insertStack(stack))
 						{
 							player.dropItem(stack, true);
 						}
@@ -346,8 +346,8 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView world)
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new BrewingCauldronEntity();
+		return new BrewingCauldronEntity(pos, state);
 	}
 }

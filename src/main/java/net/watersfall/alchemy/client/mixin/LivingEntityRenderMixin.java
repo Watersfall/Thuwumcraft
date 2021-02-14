@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.client.mixin;
 
+import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -9,7 +11,6 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,9 +24,9 @@ public abstract class LivingEntityRenderMixin<T extends LivingEntity, M extends 
 {
 	ItemStack stack = new ItemStack(Items.SHIELD, 1);
 
-	protected LivingEntityRenderMixin(EntityRenderDispatcher dispatcher)
+	protected LivingEntityRenderMixin(EntityRendererFactory.Context ctx)
 	{
-		super(dispatcher);
+		super(ctx);
 	}
 
 	@Inject(method = "render", at = @At("TAIL"))
@@ -36,25 +37,25 @@ public abstract class LivingEntityRenderMixin<T extends LivingEntity, M extends 
 			matrices.push();
 			matrices.translate(-1.5f, 1f, -0.4f);
 			matrices.scale(3f, 3f, 3f);
-			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270f));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider);
+			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270f));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider, 0);
 			matrices.pop();
 			matrices.push();
 			matrices.translate(1.5f, 1f, 0.4f);
 			matrices.scale(3f, 3f, 3f);
-			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90f));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider);
+			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90f));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider, 0);
 			matrices.pop();
 			matrices.push();
 			matrices.translate(0.4f, 1f, -1.5f);
 			matrices.scale(3f, 3f, 3f);
-			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180f));
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider);
+			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180f));
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider, 0);
 			matrices.pop();
 			matrices.push();
 			matrices.translate(-0.4f, 1f, 1.5f);
 			matrices.scale(3f, 3f, 3f);
-			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider);
+			MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, 15728640, 655360, matrices, vertexConsumerProvider, 0);
 			matrices.pop();
 		}
 	}

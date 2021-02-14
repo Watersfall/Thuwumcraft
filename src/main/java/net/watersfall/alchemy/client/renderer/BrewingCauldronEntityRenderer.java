@@ -1,6 +1,8 @@
 package net.watersfall.alchemy.client.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
@@ -15,7 +17,6 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.texture.*;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
@@ -24,14 +25,15 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
 
-public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCauldronEntity>
+public class BrewingCauldronEntityRenderer implements BlockEntityRenderer<BrewingCauldronEntity>
 {
 	private static final Sprite sprite = ((SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
 	private static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
+	private final BlockEntityRenderDispatcher dispatcher;
 
-	public BrewingCauldronEntityRenderer(BlockEntityRenderDispatcher dispatcher)
+	public BrewingCauldronEntityRenderer(BlockEntityRendererFactory.Context context)
 	{
-		super(dispatcher);
+		dispatcher = context.getRenderDispatcher();
 	}
 
 	private Sprite getSprite(Item item)
@@ -115,10 +117,10 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 	{
 		RenderSystem.pushMatrix();
 		RenderSystem.enableDepthTest();
-		this.dispatcher.textureManager.bindTexture(sprite);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(sprite);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
-		builder.begin(7, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
+		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
 		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color, light, overlay);
 		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color, light, overlay);
 		add(builder, matrices, 1, 1, 1, 0.25F, 0.5F, color, light, overlay);
@@ -192,7 +194,7 @@ public class BrewingCauldronEntityRenderer extends BlockEntityRenderer<BrewingCa
 						builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
 						matrices.translate(0.5D, 1.75D, 0.5D);
 						Quaternion quaternion = dispatcher.camera.getRotation().copy();
-						quaternion.hamiltonProduct(Vector3f.NEGATIVE_X.getDegreesQuaternion(270));
+						quaternion.hamiltonProduct(Vec3f.NEGATIVE_X.getDegreesQuaternion(270));
 						matrices.scale(0.25F, 0.25F, 0.25F);
 						matrices.multiply(quaternion);
 						matrices.translate(0.5D, 0D, 0.5D);

@@ -69,7 +69,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		if(i == 0)
 		{
 			Slot slot = this.slots.get(i);
-			slot.setStack(playerEntity.inventory.getCursorStack());
+			slot.setStack(playerEntity.getInventory().getCursorStack());
 			return ItemStack.EMPTY;
 		}
 		else
@@ -91,7 +91,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		@Override
 		public boolean canInsert(ItemStack stack)
 		{
-			return super.canInsert(stack) && stack.getItem().isIn(AlchemyMod.getIngredientTag());
+			return super.canInsert(stack) && stack.isIn(AlchemyMod.getIngredientTag());
 		}
 
 		@Override

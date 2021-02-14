@@ -36,9 +36,9 @@ public class AlchemicalFurnaceOutputComponent extends AlchemicalFurnaceComponent
 	}
 
 	@Override
-	public void read(BlockState state, CompoundTag tag)
+	public void read(CompoundTag tag)
 	{
-		super.read(state, tag);
+		super.read(tag);
 		Inventories.fromTag(tag.getCompound("output_inventory"), this.inventory.getContents());
 	}
 

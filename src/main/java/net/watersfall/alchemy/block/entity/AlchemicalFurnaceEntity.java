@@ -17,17 +17,17 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	private MultiBlockComponent component;
 	private MultiBlock<AlchemicalFurnaceComponent> multiBlock;
 
-	public AlchemicalFurnaceEntity()
+	public AlchemicalFurnaceEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
+		super(AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY, pos, state);
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag)
+	public void fromTag(CompoundTag tag)
 	{
-		super.fromTag(state, tag);
+		super.fromTag(tag);
 		this.multiBlock = new AlchemicalFurnaceMultiBlock();
-		multiBlock.read(state, tag);
+		multiBlock.read(tag);
 	}
 
 	@Override
@@ -47,12 +47,12 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 		if(this.multiBlock == null)
 		{
 			this.multiBlock = new AlchemicalFurnaceMultiBlock();
-			this.multiBlock.read(null, compoundTag);
+			this.multiBlock.read(compoundTag);
 			this.multiBlock.add(this.world, this.pos);
 		}
 		else
 		{
-			this.multiBlock.read(null, compoundTag);
+			this.multiBlock.read(compoundTag);
 		}
 		for(int i = 0; i < this.multiBlock.getComponents().length; i++)
 		{
@@ -82,10 +82,8 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 		}
 	}
 
-	@Override
 	public void setLocation(World world, BlockPos pos)
 	{
-		super.setLocation(world, pos);
 		if(this.multiBlock != null)
 		{
 			this.multiBlock.add(world, pos);

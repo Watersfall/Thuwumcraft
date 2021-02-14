@@ -3,6 +3,7 @@ package net.watersfall.alchemy.block.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.multiblock.MultiBlockComponent;
 import net.minecraft.block.entity.BlockEntity;
 
@@ -10,14 +11,14 @@ public class ChildBlockEntity extends BlockEntity
 {
 	private MultiBlockComponent component;
 
-	public ChildBlockEntity(BlockEntityType<? extends ChildBlockEntity> type)
+	public ChildBlockEntity(BlockEntityType<? extends ChildBlockEntity> type, BlockPos pos, BlockState state)
 	{
-		super(type);
+		super(type, pos, state);
 	}
 
-	public ChildBlockEntity()
+	public ChildBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.CHILD_BLOCK_ENTITY);
+		super(AlchemyModBlockEntities.CHILD_BLOCK_ENTITY, pos, state);
 	}
 
 	public MultiBlockComponent getComponent()
@@ -31,9 +32,9 @@ public class ChildBlockEntity extends BlockEntity
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundTag tag)
+	public void fromTag(CompoundTag tag)
 	{
-		super.fromTag(state, tag);
+		super.fromTag(tag);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public abstract class LivingEntityMixin extends Entity
 
 	private boolean test(ArrowEntity entity)
 	{
-		return entity != null && entity.getOwner() != null && this.getEntityId() != entity.getOwner().getEntityId();
+		return entity != null && entity.getOwner() != null && this.getId() != entity.getOwner().getId();
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))
@@ -77,7 +77,7 @@ public abstract class LivingEntityMixin extends Entity
 		{
 			ServerWorld serverWorld = (ServerWorld)world;
 			ServerChunkManager manager = serverWorld.getChunkManager();
-			manager.sendToNearbyPlayers(this, new EntityStatusEffectS2CPacket(this.getEntityId(), effect));
+			manager.sendToNearbyPlayers(this, new EntityStatusEffectS2CPacket(this.getId(), effect));
 		}
 	}
 
@@ -88,7 +88,7 @@ public abstract class LivingEntityMixin extends Entity
 		{
 			ServerWorld serverWorld = (ServerWorld)world;
 			ServerChunkManager manager = serverWorld.getChunkManager();
-			manager.sendToNearbyPlayers(this, new RemoveEntityStatusEffectS2CPacket(this.getEntityId(), effect.getEffectType()));
+			manager.sendToNearbyPlayers(this, new RemoveEntityStatusEffectS2CPacket(this.getId(), effect.getEffectType()));
 		}
 	}
 

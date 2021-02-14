@@ -28,7 +28,7 @@ public interface MultiBlockComponent
 
 	VoxelShape getOutline();
 
-	void read(BlockState state, CompoundTag tag);
+	void read(CompoundTag tag);
 
 	CompoundTag write(CompoundTag tag);
 }

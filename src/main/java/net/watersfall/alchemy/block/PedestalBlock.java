@@ -78,7 +78,7 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 								{
 									player.setStackInHand(hand, entityStack);
 								}
-								else if(!player.inventory.insertStack(entityStack))
+								else if(!player.getInventory().insertStack(entityStack))
 								{
 									player.dropItem(entityStack, false, true);
 								}
@@ -94,7 +94,7 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 					{
 						if(!world.isClient)
 						{
-							if(!player.inventory.insertStack(entity.getStack().copy()))
+							if(!player.getInventory().insertStack(entity.getStack().copy()))
 							{
 								player.dropItem(entity.getStack().copy(), false, true);
 							}
@@ -163,8 +163,8 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 
 	@Nullable
 	@Override
-	public BlockEntity createBlockEntity(BlockView world)
+	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new PedestalEntity();
+		return new PedestalEntity(pos, state);
 	}
 }
