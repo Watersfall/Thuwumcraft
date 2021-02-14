@@ -1,0 +1,18 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:blaze_powder"
+		}
+	],
+	"catalyst": {
+		"item": "minecraft:coal"
+	},
+	"output": "waters_alchemy_mod:magical_coal_0"
+}
