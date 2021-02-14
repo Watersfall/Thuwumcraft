@@ -67,7 +67,7 @@
 			"name": "candle_wick_x",
 			"from": [7.5, 15, 8],
 			"to": [8.5, 16, 8],
-			"rotation": {"angle": 0, "axis": "y", "origin": [15, 8, 8]},
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 16, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 1, 1], "texture": "#0"},
 				"east": {"uv": [0, 0, 0, 1], "texture": "#missing"},
@@ -81,6 +81,7 @@
 			"name": "candle_wick_z",
 			"from": [8, 15, 7.5],
 			"to": [8, 16, 8.5],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 16, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 1], "texture": "#missing"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#0"},
@@ -90,6 +91,5 @@
 				"down": {"uv": [0, 0, 0, 1], "texture": "#missing"}
 			}
 		}
-	],
-	"display": {}
+	]
 }
