@@ -12,7 +12,7 @@
 		}
 	],
 	"catalyst": {
-		"item": "minecraft:magical_coal_1"
+		"item": "waters_alchemy_mod:magical_coal_1"
 	},
 	"output": "waters_alchemy_mod:magical_coal_2"
 }
