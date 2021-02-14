@@ -82,8 +82,10 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 		}
 	}
 
-	public void setLocation(World world, BlockPos pos)
+	@Override
+	public void setWorld(World world)
 	{
+		super.setWorld(world);
 		if(this.multiBlock != null)
 		{
 			this.multiBlock.add(world, pos);
