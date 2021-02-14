@@ -32,7 +32,7 @@ public class GrindingRecipe extends ShapelessRecipe
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return null;
+		return AlchemyModRecipes.GRINDING_RECIPE_SERIALIZER;
 	}
 
 	@Override
