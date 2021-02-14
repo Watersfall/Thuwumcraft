@@ -17,6 +17,9 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 	public AlchemicalFurnaceScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
+		this.backgroundHeight = 192;
+		this.backgroundWidth = 175;
+		this.playerInventoryTitleY = 99;
 	}
 
 	@Override
@@ -28,8 +31,8 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 		int y = (height - backgroundHeight) / 2;
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 		AlchemicalFurnaceHandler handler = (AlchemicalFurnaceHandler)this.handler;
-		this.drawTexture(matrices, this.x + 97, this.y + 27, 176, 14, handler.getSmeltingProgress() + 1, 16);
-		this.drawTexture(matrices, this.x + 97, this.y + 46, 176, 14, handler.getSmeltingProgress() + 1, 16);
-		this.drawTexture(matrices, this.x + 9, this.y + 38 + 12 - handler.getFuel(), 176, 12 - handler.getFuel(), 14, handler.getFuel());
+		this.drawTexture(matrices, this.x + 97, this.y + 51, 176, 14, handler.getSmeltingProgress() + 1, 16);
+		this.drawTexture(matrices, this.x + 97, this.y + 70, 176, 14, handler.getSmeltingProgress() + 1, 16);
+		this.drawTexture(matrices, this.x + 26, this.y + 18, 0, 193, handler.getFuel(), 16);
 	}
 }

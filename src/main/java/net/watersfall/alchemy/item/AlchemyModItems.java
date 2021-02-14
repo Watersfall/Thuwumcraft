@@ -13,6 +13,9 @@ public class AlchemyModItems
 	public static final Item LADLE_ITEM;
 	public static final ApothecaryGuideItem APOTHECARY_GUIDE;
 	public static final Item PEDESTAL_ITEM;
+	public static final MagicalCoalItem MAGICAL_COAL_TIER_0;
+	public static final MagicalCoalItem MAGICAL_COAL_TIER_1;
+	public static final MagicalCoalItem MAGICAL_COAL_TIER_2;
 
 	static
 	{
@@ -21,5 +24,8 @@ public class AlchemyModItems
 		LADLE_ITEM = new LadleItem();
 		APOTHECARY_GUIDE = new ApothecaryGuideItem();
 		PEDESTAL_ITEM = new BlockItem(AlchemyModBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(ItemGroup.BREWING));
+		MAGICAL_COAL_TIER_0 = new MagicalCoalItem(new FabricItemSettings().group(ItemGroup.MATERIALS), 0);
+		MAGICAL_COAL_TIER_1 = new MagicalCoalItem(new FabricItemSettings().group(ItemGroup.MATERIALS), 1);
+		MAGICAL_COAL_TIER_2 = new MagicalCoalItem(new FabricItemSettings().group(ItemGroup.MATERIALS), 2);
 	}
 }

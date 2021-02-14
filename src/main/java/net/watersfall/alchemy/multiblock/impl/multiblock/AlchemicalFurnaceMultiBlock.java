@@ -22,6 +22,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.alchemy.block.entity.ChildBlockEntity;
+import net.watersfall.alchemy.item.MagicalCoalItem;
+import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceFuelComponent;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.multiblock.*;
 import net.watersfall.alchemy.multiblock.component.ItemComponent;
@@ -47,7 +49,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	private int runningTicks;
 	private int maxRunningTicks;
 	private int fuelAmount;
-	private int maxFuelAmount;
+	public static final int MAX_FUEL = 2400;
 	private PropertyDelegate propertyDelegate = new PropertyDelegate()
 	{
 		@Override
@@ -61,8 +63,6 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 					return maxRunningTicks;
 				case 2:
 					return fuelAmount;
-				case 3:
-					return maxFuelAmount;
 				default:
 					return 0;
 			}
@@ -82,16 +82,13 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 				case 2:
 					fuelAmount = value;
 					break;
-				case 3:
-					maxFuelAmount = value;
-					break;
 			}
 		}
 
 		@Override
 		public int size()
 		{
-			return 4;
+			return 3;
 		}
 	};
 
@@ -228,42 +225,63 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 			{
 				AlchemicalFurnaceInputComponent input = (AlchemicalFurnaceInputComponent) this.components[INPUT];
 				AlchemicalFurnaceOutputComponent output = (AlchemicalFurnaceOutputComponent) this.components[OUTPUT];
+				AlchemicalFurnaceFuelComponent fuel = (AlchemicalFurnaceFuelComponent) this.components[BOTTOM_LEFT];
+				if(this.fuelAmount < MAX_FUEL)
+				{
+					if(!fuel.getInventory().isEmpty())
+					{
+						ItemStack stack = fuel.getInventory().getStack(0);
+						if(stack.getItem() instanceof MagicalCoalItem)
+						{
+							MagicalCoalItem item = (MagicalCoalItem) stack.getItem();
+							if(item.getBurnTime() + this.fuelAmount <= MAX_FUEL)
+							{
+								stack.decrement(1);
+								this.fuelAmount += item.getBurnTime();
+							}
+						}
+					}
+				}
 				if(!input.getInventory().isEmpty())
 				{
 					if(true /*TODO: special recipe type*/)
 					{
-						maxRunningTicks = 100;
-						if(runningTicks >= 100)
+						if(fuelAmount > 0)
 						{
-							for(int i = 0; i < input.getInventory().size(); i++)
+							maxRunningTicks = 100;
+							if(runningTicks >= 100)
 							{
-								if(!input.getInventory().getStack(i).isEmpty())
+								for(int i = 0; i < input.getInventory().size(); i++)
 								{
-									Optional<SmeltingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(
-											RecipeType.SMELTING,
-											new SimpleInventory(input.getInventory().getStack(i)),
-											this.world
-									);
-									if(recipeOptional.isPresent())
+									if(!input.getInventory().getStack(i).isEmpty())
 									{
-										SmeltingRecipe recipe = recipeOptional.get();
-										ItemStack outputStack = recipe.getOutput().copy();
-										boolean fit = InventoryHelper.fit(output.getInventory(), outputStack);
-										if(fit)
+										Optional<SmeltingRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(
+												RecipeType.SMELTING,
+												new SimpleInventory(input.getInventory().getStack(i)),
+												this.world
+										);
+										if(recipeOptional.isPresent())
 										{
-											input.getInventory().removeStack(i, 1);
+											SmeltingRecipe recipe = recipeOptional.get();
+											ItemStack outputStack = recipe.getOutput().copy();
+											boolean fit = InventoryHelper.fit(output.getInventory(), outputStack);
+											if(fit)
+											{
+												input.getInventory().removeStack(i, 1);
+											}
 										}
 									}
 								}
+								output.getInventory().markDirty();
+								input.getInventory().markDirty();
+								this.markDirty();
+								runningTicks = 0;
 							}
-							output.getInventory().markDirty();
-							input.getInventory().markDirty();
-							this.markDirty();
-							runningTicks = 0;
-						}
-						else
-						{
-							runningTicks++;
+							else
+							{
+								fuelAmount--;
+								runningTicks++;
+							}
 						}
 					}
 					else
@@ -290,12 +308,15 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		BlockPos right = new BlockPos(list.getCompound(TOP_RIGHT).getInt("x"), list.getCompound(TOP_RIGHT).getInt("y"), list.getCompound(TOP_RIGHT).getInt("z"));
 		this.components[INPUT] = new AlchemicalFurnaceInputComponent(this.world, this, input);
 		this.components[OUTPUT] = new AlchemicalFurnaceOutputComponent(this.world, this, output);
-		this.components[BOTTOM_LEFT] = new AlchemicalFurnaceComponent(this.world, this, left);
+		this.components[BOTTOM_LEFT] = new AlchemicalFurnaceFuelComponent(this.world, this, left);
 		this.components[TOP_RIGHT] = new AlchemicalFurnaceComponent(this.world, this, right);
 		for(int i = 0; i < this.components.length; i++)
 		{
 			this.components[i].read(state, tag);
 		}
+		this.fuelAmount = tag.getInt("fuel_amount");
+		this.runningTicks = tag.getInt("running_ticks");
+		this.maxRunningTicks = tag.getInt("max_running_ticks");
 		this.isReady = false;
 	}
 
@@ -313,6 +334,9 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 			this.components[i].write(tag);
 		}
 		tag.put("components", list);
+		tag.putInt("fuel_amount", fuelAmount);
+		tag.putInt("running_ticks", runningTicks);
+		tag.putInt("max_running_ticks", maxRunningTicks);
 		return tag;
 	}
 
@@ -353,7 +377,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	@Override
 	public Text getDisplayName()
 	{
-		return new TranslatableText("waters_alchemy_mod.test");
+		return new TranslatableText("container.waters_alchemy_mod.alchemical_furnace");
 	}
 
 	private Inventory getInventory(int side)
@@ -365,6 +389,6 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
-		return new AlchemicalFurnaceHandler(syncId, inv, getInventory(INPUT), getInventory(OUTPUT), propertyDelegate);
+		return new AlchemicalFurnaceHandler(syncId, inv, getInventory(INPUT), getInventory(OUTPUT), getInventory(BOTTOM_LEFT), propertyDelegate);
 	}
 }

@@ -6,22 +6,25 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.*;
+import net.minecraft.screen.slot.FurnaceFuelSlot;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.multiblock.impl.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
 {
 	private Inventory input;
 	private Inventory output;
+	private Inventory fuel;
 	private PropertyDelegate properties;
 
 	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory)
 	{
-		this(syncId, playerInventory, new SimpleInventory(9), new SimpleInventory(9), new ArrayPropertyDelegate(4));
+		this(syncId, playerInventory, new SimpleInventory(9), new SimpleInventory(9), new SimpleInventory(1), new ArrayPropertyDelegate(4));
 	}
 
-	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output, PropertyDelegate properties)
+	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output, Inventory fuel, PropertyDelegate properties)
 	{
 		super(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, syncId);
 		this.input = input;
@@ -32,29 +35,31 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 		{
 			for(int x = 2; x < 5; x++)
 			{
-				this.addSlot(new Slot(input, y * 3 + x - 2, 8 + x * 18, 18 + y * 18));
+				this.addSlot(new Slot(input, y * 3 + x - 2, 8 + x * 18, 43 + y * 18));
 			}
 		}
 		for(int y = 0; y < 3; y++)
 		{
 			for(int x = 6; x < 9; x++)
 			{
-				this.addSlot(new FurnaceOutputSlot(playerInventory.player, output, y * 3 + x - 6, 8 + x * 18, 18 + y * 18));
+				this.addSlot(new FurnaceOutputSlot(playerInventory.player, output, y * 3 + x - 6, 8 + x * 18, 43 + y * 18));
 			}
 		}
+		this.addSlot(new Slot(fuel, 0, 8, 79));
 
 		//Player Inventory
 		int m;
 		int l;
 		for (m = 0; m < 3; ++m)
 		{
-			for (l = 0; l < 9; ++l) {
-				this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 86 + m * 18));
+			for (l = 0; l < 9; ++l)
+			{
+				this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 111 + m * 18));
 			}
 		}
 		for (m = 0; m < 9; ++m)
 		{
-			this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 144));
+			this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 169));
 		}
 	}
 
@@ -100,6 +105,6 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 
 	public int getFuel()
 	{
-		return (int)((float)this.properties.get(2) / (float)this.properties.get(3) * 12F);
+		return (int)((float)this.properties.get(2) / (float) AlchemicalFurnaceMultiBlock.MAX_FUEL * 124F);
 	}
 }
