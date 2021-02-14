@@ -8,7 +8,7 @@ public class LadleItem extends Item
 {
 	public LadleItem()
 	{
-		super(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1));
+		super(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
 
 	}
 

@@ -17,7 +17,7 @@ public class WitchySpoonItem extends Item
 
 	public WitchySpoonItem()
 	{
-		super(new FabricItemSettings().group(ItemGroup.BREWING).maxCount(1));
+		super(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
 	}
 
 	@Override

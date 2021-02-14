@@ -6,6 +6,7 @@
 	"item.waters_alchemy_mod.magical_coal_0": "Magical Coal",
 	"item.waters_alchemy_mod.magical_coal_1": "Enchanted Coal",
 	"item.waters_alchemy_mod.magical_coal_2": "Radiant Coal",
+	"itemGroup.waters_alchemy_mod.alchemy_mod_group": "Waters Alchemy Mod",
 	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
 	"effect.waters_alchemy_mod.projectile_attraction": "Attraction",
 	"effect.waters_alchemy_mod.projectile_shield": "Repulsion",
