@@ -82,6 +82,7 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.ITEM, getId("magical_coal_0"), AlchemyModItems.MAGICAL_COAL_TIER_0);
 		Registry.register(Registry.ITEM, getId("magical_coal_1"), AlchemyModItems.MAGICAL_COAL_TIER_1);
 		Registry.register(Registry.ITEM, getId("magical_coal_2"), AlchemyModItems.MAGICAL_COAL_TIER_2);
+		Registry.register(Registry.ITEM, getId("magic_dust"), AlchemyModItems.MAGIC_DUST);
 		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
 		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyModBlocks.PEDESTAL_BLOCK);
 		Registry.register(Registry.BLOCK, getId("alchemical_furnace"), AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK);

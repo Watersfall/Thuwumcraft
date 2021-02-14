@@ -9,7 +9,10 @@
 		},
 		{
 			"item": "minecraft:blaze_powder"
+		},
+		{
+			"item": "minecraft:glass_bottle"
 		}
 	],
-	"output": "waters_alchemy_mod:throw_bottle"
+	"output": "waters_alchemy_mod:magic_dust"
 }
