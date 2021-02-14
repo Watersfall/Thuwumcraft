@@ -94,10 +94,12 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_item"), AlchemyModRecipes.CAULDRON_ITEM_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, getId("pedestal_crafting"), AlchemyModRecipes.PEDESTAL_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, getId("grinding"), AlchemyModRecipes.GRINDING_RECIPE);
 		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), AlchemyModRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_item"), AlchemyModRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, getId("pedestal_crafting"), AlchemyModRecipes.PEDESTAL_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("grinding"), AlchemyModRecipes.GRINDING_RECIPE_SERIALIZER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), AlchemyModBlockEntities.PEDESTAL_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("alchemical_furnace_entity"), AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY);

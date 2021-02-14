@@ -1,0 +1,15 @@
+{
+	"type": "waters_alchemy_mod:grinding",
+	"inputs": [
+		{
+			"item": "minecraft:amethyst_shard"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:blaze_powder"
+		}
+	],
+	"output": "waters_alchemy_mod:throw_bottle"
+}
