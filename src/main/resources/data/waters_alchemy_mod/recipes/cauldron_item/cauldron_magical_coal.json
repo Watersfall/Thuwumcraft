@@ -1,0 +1,13 @@
+{
+	"type": "waters_alchemy_mod:cauldron_item",
+	"catalyst": {
+		"item": "minecraft:coal"
+	},
+	"water_use": 50,
+	"inputs": [
+		{
+			"item": "waters_alchemy_mod:magic_dust"
+		}
+	],
+	"output": "waters_alchemy_mod:magical_coal_0"
+}

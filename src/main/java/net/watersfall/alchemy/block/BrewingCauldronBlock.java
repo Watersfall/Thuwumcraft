@@ -251,7 +251,6 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			ItemStack inputStack = new ItemStack(item);
 			entity.setInput(inputStack);
 			Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
-			CauldronIngredient ingredient = getIngredient(item, world.getRecipeManager());
 			if(typeOptional.isPresent())
 			{
 				if(!world.isClient)
