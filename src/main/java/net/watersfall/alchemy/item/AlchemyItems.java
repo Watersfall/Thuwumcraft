@@ -15,6 +15,7 @@ public class AlchemyItems
 
 	public static final WitchySpoonItem WITCHY_SPOON_ITEM;
 	public static final Item THROW_BOTTLE;
+	public static final Item LINGERING_BOTTLE;
 	public static final Item LADLE_ITEM;
 	public static final ApothecaryGuideItem APOTHECARY_GUIDE;
 	public static final Item PEDESTAL_ITEM;
@@ -30,6 +31,7 @@ public class AlchemyItems
 		ALCHEMY_MOD_ITEM_GROUP = FabricItemGroupBuilder.build(AlchemyMod.getId("alchemy_mod_group"), displayGroupIcon());
 		WITCHY_SPOON_ITEM = new WitchySpoonItem();
 		THROW_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		LINGERING_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP));
 		LADLE_ITEM = new LadleItem();
 		APOTHECARY_GUIDE = new ApothecaryGuideItem();
 		PEDESTAL_ITEM = new BlockItem(AlchemyBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));

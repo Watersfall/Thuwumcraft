@@ -9,6 +9,7 @@
 	"item.waters_alchemy_mod.magic_dust": "Magic Dust",
 	"item.waters_alchemy_mod.magic_pickaxe": "Magic Infused Pickaxe",
 	"item.waters_alchemy_mod.magic_axe": "Magic Infused Axe",
+	"item.waters_alchemy_mod.lingering_bottle": "Lingering Bottle",
 	"itemGroup.waters_alchemy_mod.alchemy_mod_group": "Waters Alchemy Mod",
 	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
 	"effect.waters_alchemy_mod.projectile_attraction": "Attraction",
