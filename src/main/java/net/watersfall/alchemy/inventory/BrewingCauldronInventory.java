@@ -2,6 +2,7 @@ package net.watersfall.alchemy.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 
@@ -109,6 +110,22 @@ public interface BrewingCauldronInventory extends Inventory
 			{
 				setStack(i, stack);
 				return true;
+			}
+		}
+		return false;
+	}
+
+	default boolean addItem(Item item)
+	{
+		for(int i = 0; i < getContents().size(); i++)
+		{
+			if(getStack(i).getItem() == item)
+			{
+				if(getStack(i).getCount() < item.getMaxCount())
+				{
+					getStack(i).increment(1);
+					return true;
+				}
 			}
 		}
 		return false;

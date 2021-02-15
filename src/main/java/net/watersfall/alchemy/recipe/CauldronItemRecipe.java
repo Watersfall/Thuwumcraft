@@ -77,8 +77,12 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 			{
 				if(getInputs().get(i).test(inv.getStack(o)))
 				{
-					inv.removeStack(o);
-					delete++;
+					inv.getStack(o).decrement(1);
+					if(inv.getStack(o).isEmpty())
+					{
+						inv.removeStack(o);
+						delete++;
+					}
 				}
 			}
 		}

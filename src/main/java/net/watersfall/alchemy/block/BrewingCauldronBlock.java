@@ -309,7 +309,22 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 				return ActionResult.success(world.isClient);
 			}
 			entity.setInput(ItemStack.EMPTY);
-			if(entity.getIngredientCount() < 3 && entity.count(item) <= 0)
+			if(entity.count(item) > 0)
+			{
+				if(!world.isClient)
+				{
+					if(entity.addItem(item))
+					{
+						if(!player.getAbilities().creativeMode)
+						{
+							itemStack.decrement(1);
+						}
+						entity.sync();
+					}
+				}
+				return ActionResult.success(world.isClient);
+			}
+			else if(entity.getIngredientCount() < 3)
 			{
 				if(!world.isClient)
 				{

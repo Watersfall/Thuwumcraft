@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.client.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
@@ -30,10 +31,12 @@ public class BrewingCauldronEntityRenderer implements BlockEntityRenderer<Brewin
 	private static final Sprite sprite = ((SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
 	private static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
 	private final BlockEntityRenderDispatcher dispatcher;
+	private final TextRenderer textRenderer;
 
 	public BrewingCauldronEntityRenderer(BlockEntityRendererFactory.Context context)
 	{
 		dispatcher = context.getRenderDispatcher();
+		textRenderer = context.getTextRenderer();
 	}
 
 	private Sprite getSprite(Item item)
@@ -202,19 +205,85 @@ public class BrewingCauldronEntityRenderer implements BlockEntityRenderer<Brewin
 						{
 							matrices.translate(-1D, 0, 0);
 							drawItem(entity.getContents().get(0).getItem(), builder, matrices, 9437408, 655360);
+							if(entity.getContents().get(0).getCount() > 1)
+							{
+								matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+								if(entity.getContents().get(0).getCount() >= 10)
+								{
+									matrices.translate(0.5F, -0.625F, 0.99F);
+								}
+								else
+								{
+									matrices.translate(0.375F, -0.625F, 0.99F);
+								}
+								matrices.scale(0.0625F, 0.0625F, 0.0625F);
+								matrices.scale(-1F, -1F, -1F);
+								textRenderer.draw(matrices, "" + entity.getContents().get(0).getCount(), 0F, 0F, -1);
+							}
 						}
 						else if(entity.getIngredientCount() == 2)
 						{
 							matrices.translate(-0.5D, 0, 0);
 							drawItem(entity.getContents().get(0).getItem(), builder, matrices, 9437408, 655360);
+							if(entity.getContents().get(0).getCount() > 1)
+							{
+								matrices.push();
+								matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+								if(entity.getContents().get(0).getCount() >= 10)
+								{
+									matrices.translate(0.5F, -0.625F, 0.99F);
+								}
+								else
+								{
+									matrices.translate(0.375F, -0.625F, 0.99F);
+								}
+								matrices.scale(0.0625F, 0.0625F, 0.0625F);
+								matrices.scale(-1F, -1F, -1F);
+								textRenderer.draw(matrices, "" + entity.getContents().get(0).getCount(), 0F, 0F, -1);
+								matrices.pop();
+							}
 							matrices.translate(-1D, 0, 0);
 							drawItem(entity.getContents().get(1).getItem(), builder, matrices, 9437408, 655360);
+							if(entity.getContents().get(1).getCount() > 1)
+							{
+								matrices.push();
+								matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+								if(entity.getContents().get(1).getCount() >= 10)
+								{
+									matrices.translate(0.5F, -0.625F, 0.99F);
+								}
+								else
+								{
+									matrices.translate(0.375F, -0.625F, 0.99F);
+								}
+								matrices.scale(0.0625F, 0.0625F, 0.0625F);
+								matrices.scale(-1F, -1F, -1F);
+								textRenderer.draw(matrices, "" + entity.getContents().get(1).getCount(), 0F, 0F, -1);
+								matrices.pop();
+							}
 						}
 						else
 						{
 							for(int i = 0; i < entity.getIngredientCount(); i++)
 							{
 								drawItem(entity.getContents().get(i).getItem(), builder, matrices, 9437408, 655360);
+								if(entity.getContents().get(i).getCount() > 1)
+								{
+									matrices.push();
+									matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+									if(entity.getContents().get(i).getCount() >= 10)
+									{
+										matrices.translate(0.5F, -0.625F, 0.99F);
+									}
+									else
+									{
+										matrices.translate(0.375F, -0.625F, 0.99F);
+									}
+									matrices.scale(0.0625F, 0.0625F, 0.0625F);
+									matrices.scale(-1F, -1F, -1F);
+									textRenderer.draw(matrices, "" + entity.getContents().get(i).getCount(), 0F, 0F, -1);
+									matrices.pop();
+								}
 								matrices.translate(-1D, 0, 0);
 							}
 						}
