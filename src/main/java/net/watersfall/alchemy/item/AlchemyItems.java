@@ -3,6 +3,7 @@ package net.watersfall.alchemy.item;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.*;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -41,6 +42,22 @@ public class AlchemyItems
 		MAGIC_DUST = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.UNCOMMON));
 		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
 		SPECIAL_AXE_ITEM = new SpecialAxeItem();
+	}
+
+	public static void register()
+	{
+		Registry.register(Registry.ITEM, AlchemyMod.getId("pedestal"), AlchemyItems.PEDESTAL_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("witchy_spoon"), AlchemyItems.WITCHY_SPOON_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("ladle"), AlchemyItems.LADLE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("throw_bottle"), AlchemyItems.THROW_BOTTLE);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("lingering_bottle"), AlchemyItems.LINGERING_BOTTLE);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("apothecary_guide_book"), AlchemyItems.APOTHECARY_GUIDE);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magical_coal_0"), AlchemyItems.MAGICAL_COAL_TIER_0);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magical_coal_1"), AlchemyItems.MAGICAL_COAL_TIER_1);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magical_coal_2"), AlchemyItems.MAGICAL_COAL_TIER_2);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_dust"), AlchemyItems.MAGIC_DUST);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()

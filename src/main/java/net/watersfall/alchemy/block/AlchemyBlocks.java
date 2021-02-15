@@ -2,6 +2,8 @@ package net.watersfall.alchemy.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.registry.Registry;
+import net.watersfall.alchemy.AlchemyMod;
 
 public class AlchemyBlocks
 {
@@ -16,5 +18,13 @@ public class AlchemyBlocks
 		PEDESTAL_BLOCK = new PedestalBlock(FabricBlockSettings.copyOf(Blocks.STONE).luminance(7).nonOpaque());
 		ALCHEMICAL_FURNACE_BLOCK = new AlchemicalFurnaceBlock(FabricBlockSettings.copyOf(Blocks.STONE));
 		CHILD_BLOCK = new ChildBlock(FabricBlockSettings.copyOf(Blocks.GLASS));
+	}
+
+	public static void register()
+	{
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_cauldron"), AlchemyBlocks.BREWING_CAULDRON_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("pedestal"), AlchemyBlocks.PEDESTAL_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("alchemical_furnace"), AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("child_block"), AlchemyBlocks.CHILD_BLOCK);
 	}
 }

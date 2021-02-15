@@ -27,18 +27,8 @@ import net.minecraft.nbt.ListTag;
 @Environment(EnvType.CLIENT)
 public class AlchemyModClient implements ClientModInitializer
 {
-	@Override public void onInitializeClient()
+	private static void registerEvents()
 	{
-		ColorProviderRegistry.BLOCK.register(
-				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
-				AlchemyBlocks.BREWING_CAULDRON_BLOCK
-		);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
-		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
-		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
-		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT.tick());
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getTag() != null && !stack.getTag().isEmpty())
 			{
@@ -60,5 +50,21 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			}
 		}));
+	}
+
+	@Override
+	public void onInitializeClient()
+	{
+		ColorProviderRegistry.BLOCK.register(
+				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
+				AlchemyBlocks.BREWING_CAULDRON_BLOCK
+		);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
+		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
+		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
+		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
+		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT.tick());
+		registerEvents();
 	}
 }

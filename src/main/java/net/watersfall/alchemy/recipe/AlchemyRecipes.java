@@ -3,6 +3,8 @@ package net.watersfall.alchemy.recipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.util.registry.Registry;
+import net.watersfall.alchemy.AlchemyMod;
 
 public class AlchemyRecipes
 {
@@ -29,6 +31,20 @@ public class AlchemyRecipes
 		CAULDRON_ITEM_RECIPE_SERIALIZER = new CauldronItemRecipe.Serializer(CauldronItemRecipe::new);
 		PEDESTAL_RECIPE_SERIALIZER = new PedestalRecipe.Serializer(PedestalRecipe::new);
 		GRINDING_RECIPE_SERIALIZER = new GrindingRecipe.Serializer(GrindingRecipe::new);
+	}
+
+	public static void register()
+	{
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS);
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("grinding"), AlchemyRecipes.GRINDING_RECIPE);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("grinding"), AlchemyRecipes.GRINDING_RECIPE_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)
