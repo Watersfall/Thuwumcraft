@@ -22,6 +22,8 @@ public class AlchemyModItems
 	public static final MagicalCoalItem MAGICAL_COAL_TIER_1;
 	public static final MagicalCoalItem MAGICAL_COAL_TIER_2;
 	public static final Item MAGIC_DUST;
+	public static final SpecialPickaxeItem SPECIAL_PICKAXE_ITEM;
+	public static final SpecialAxeItem SPECIAL_AXE_ITEM;
 
 	static
 	{
@@ -35,6 +37,8 @@ public class AlchemyModItems
 		MAGICAL_COAL_TIER_1 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP), 1);
 		MAGICAL_COAL_TIER_2 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP), 2);
 		MAGIC_DUST = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.UNCOMMON));
+		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
+		SPECIAL_AXE_ITEM = new SpecialAxeItem();
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()

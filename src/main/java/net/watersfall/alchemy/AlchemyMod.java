@@ -1,13 +1,20 @@
 package net.watersfall.alchemy;
 
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.block.AlchemyModBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyModBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
+import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
 import net.watersfall.alchemy.item.AlchemyModItems;
@@ -17,7 +24,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.minecraft.block.DispenserBlock;
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
@@ -83,6 +89,8 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.ITEM, getId("magical_coal_1"), AlchemyModItems.MAGICAL_COAL_TIER_1);
 		Registry.register(Registry.ITEM, getId("magical_coal_2"), AlchemyModItems.MAGICAL_COAL_TIER_2);
 		Registry.register(Registry.ITEM, getId("magic_dust"), AlchemyModItems.MAGIC_DUST);
+		Registry.register(Registry.ITEM, getId("magic_pickaxe"), AlchemyModItems.SPECIAL_PICKAXE_ITEM);
+		Registry.register(Registry.ITEM, getId("magic_axe"), AlchemyModItems.SPECIAL_AXE_ITEM);
 		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
 		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyModBlocks.PEDESTAL_BLOCK);
 		Registry.register(Registry.BLOCK, getId("alchemical_furnace"), AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK);
@@ -148,6 +156,27 @@ public class AlchemyMod implements ModInitializer
 				recipeOptional.ifPresent(entity::beginCraft);
 			}
 			return stack;
+		}));
+		PlayerBlockBreakEvents.BEFORE.register(((world, player, pos, state, blockEntity) -> {
+			Block block = state.getBlock();
+			ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
+			Item item = stack.getItem();
+			if((item == AlchemyModItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock || block == Blocks.COPPER_ORE)) ||
+				(item == AlchemyModItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
+			{
+				BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
+				if(breakPos.equals(pos))
+				{
+					return true;
+				}
+				else
+				{
+					world.breakBlock(breakPos, false, player);
+					Block.dropStacks(state, world, pos, blockEntity, player, stack);
+					return false;
+				}
+			}
+			return true;
 		}));
 	}
 }
