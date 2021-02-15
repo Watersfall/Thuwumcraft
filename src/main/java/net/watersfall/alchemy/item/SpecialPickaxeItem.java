@@ -45,6 +45,6 @@ public class SpecialPickaxeItem extends PickaxeItem
 
 	public SpecialPickaxeItem()
 	{
-		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
+		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
 	}
 }

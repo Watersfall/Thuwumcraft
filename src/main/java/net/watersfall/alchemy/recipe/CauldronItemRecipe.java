@@ -114,13 +114,13 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyModRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER;
+		return AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyModRecipes.CAULDRON_ITEM_RECIPE;
+		return AlchemyRecipes.CAULDRON_ITEM_RECIPE;
 	}
 
 	public Ingredient getCatalyst()

@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.block.entity;
 
 import net.minecraft.util.math.BlockPos;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.inventory.PedestalInventory;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -26,7 +26,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 
 	public PedestalEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.PEDESTAL_ENTITY, pos, state);
+		super(AlchemyBlockEntities.PEDESTAL_ENTITY, pos, state);
 		stack = ItemStack.EMPTY;
 		craftingFinished = false;
 	}
@@ -52,10 +52,10 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		}
 		validEntities.forEach((entity) -> {
 			entity.setCrafting(true);
-			this.world.getBlockTickScheduler().schedule(entity.getPos(), AlchemyModBlocks.PEDESTAL_BLOCK, 40 + this.world.getRandom().nextInt(20));
+			this.world.getBlockTickScheduler().schedule(entity.getPos(), AlchemyBlocks.PEDESTAL_BLOCK, 40 + this.world.getRandom().nextInt(20));
 			entity.sync();
 		});
-		this.world.getBlockTickScheduler().schedule(this.getPos(), AlchemyModBlocks.PEDESTAL_BLOCK, 80);
+		this.world.getBlockTickScheduler().schedule(this.getPos(), AlchemyBlocks.PEDESTAL_BLOCK, 80);
 		this.sync();
 	}
 

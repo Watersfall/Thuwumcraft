@@ -4,12 +4,12 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.*;
 import net.minecraft.util.Rarity;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
 import java.util.function.Supplier;
 
-public class AlchemyModItems
+public class AlchemyItems
 {
 	public static final ItemGroup ALCHEMY_MOD_ITEM_GROUP;
 
@@ -29,13 +29,13 @@ public class AlchemyModItems
 	{
 		ALCHEMY_MOD_ITEM_GROUP = FabricItemGroupBuilder.build(AlchemyMod.getId("alchemy_mod_group"), displayGroupIcon());
 		WITCHY_SPOON_ITEM = new WitchySpoonItem();
-		THROW_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP));
+		THROW_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
 		LADLE_ITEM = new LadleItem();
 		APOTHECARY_GUIDE = new ApothecaryGuideItem();
-		PEDESTAL_ITEM = new BlockItem(AlchemyModBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP));
-		MAGICAL_COAL_TIER_0 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP), 0);
-		MAGICAL_COAL_TIER_1 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP), 1);
-		MAGICAL_COAL_TIER_2 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyModItems.ALCHEMY_MOD_ITEM_GROUP), 2);
+		PEDESTAL_ITEM = new BlockItem(AlchemyBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		MAGICAL_COAL_TIER_0 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 0);
+		MAGICAL_COAL_TIER_1 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 1);
+		MAGICAL_COAL_TIER_2 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 2);
 		MAGIC_DUST = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.UNCOMMON));
 		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
 		SPECIAL_AXE_ITEM = new SpecialAxeItem();

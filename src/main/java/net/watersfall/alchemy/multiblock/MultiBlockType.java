@@ -1,6 +1,5 @@
 package net.watersfall.alchemy.multiblock;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

@@ -4,7 +4,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 
-public class AlchemyModRecipes
+public class AlchemyRecipes
 {
 	public static final RecipeType<CauldronIngredient> CAULDRON_INGREDIENTS;
 	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;

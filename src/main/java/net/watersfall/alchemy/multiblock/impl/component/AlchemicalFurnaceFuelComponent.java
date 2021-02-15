@@ -1,6 +1,5 @@
 package net.watersfall.alchemy.multiblock.impl.component;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.nbt.CompoundTag;

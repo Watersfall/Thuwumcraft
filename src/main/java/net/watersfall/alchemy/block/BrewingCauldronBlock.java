@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.block;
 
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
-import net.watersfall.alchemy.recipe.AlchemyModRecipes;
+import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import net.watersfall.alchemy.recipe.CauldronItemRecipe;
@@ -58,7 +58,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	{
 		if(!INGREDIENTS.containsKey(item))
 		{
-			manager.listAllOfType(AlchemyModRecipes.CAULDRON_INGREDIENTS).forEach((recipe) -> {
+			manager.listAllOfType(AlchemyRecipes.CAULDRON_INGREDIENTS).forEach((recipe) -> {
 				if(recipe.getInput().getItem() == item)
 				{
 					INGREDIENTS.put(item, recipe);
@@ -271,7 +271,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			{
 				ItemStack inputStack = new ItemStack(item);
 				entity.setInput(inputStack);
-				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
+				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
 				if(typeOptional.isPresent())
 				{
 					if(!world.isClient)
@@ -307,7 +307,7 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 					}
 					return ActionResult.success(world.isClient);
 				}
-				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.CAULDRON_ITEM_RECIPE, entity, world);
+				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_ITEM_RECIPE, entity, world);
 				if(itemOptional.isPresent())
 				{
 					if(!world.isClient)

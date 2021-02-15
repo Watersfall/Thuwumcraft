@@ -10,14 +10,14 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
-import net.watersfall.alchemy.block.entity.AlchemyModBlockEntities;
+import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
-import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
+import net.watersfall.alchemy.effect.AlchemyStatusEffects;
+import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
-import net.watersfall.alchemy.item.AlchemyModItems;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -33,7 +33,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.recipe.AlchemyModRecipes;
+import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 
@@ -58,7 +58,7 @@ public class AlchemyMod implements ModInitializer
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
 		Set<Item> set = new HashSet<>();
-		server.getRecipeManager().listAllOfType(AlchemyModRecipes.CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.getInput().getItem()));
+		server.getRecipeManager().listAllOfType(AlchemyRecipes.CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.getInput().getItem()));
 		return set;
 	}
 
@@ -80,39 +80,39 @@ public class AlchemyMod implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		Registry.register(Registry.ITEM, getId("witchy_spoon"), AlchemyModItems.WITCHY_SPOON_ITEM);
-		Registry.register(Registry.ITEM, getId("throw_bottle"), AlchemyModItems.THROW_BOTTLE);
-		Registry.register(Registry.ITEM, getId("ladle"), AlchemyModItems.LADLE_ITEM);
-		Registry.register(Registry.ITEM, getId("apothecary_guide_book"), AlchemyModItems.APOTHECARY_GUIDE);
-		Registry.register(Registry.ITEM, getId("pedestal"), AlchemyModItems.PEDESTAL_ITEM);
-		Registry.register(Registry.ITEM, getId("magical_coal_0"), AlchemyModItems.MAGICAL_COAL_TIER_0);
-		Registry.register(Registry.ITEM, getId("magical_coal_1"), AlchemyModItems.MAGICAL_COAL_TIER_1);
-		Registry.register(Registry.ITEM, getId("magical_coal_2"), AlchemyModItems.MAGICAL_COAL_TIER_2);
-		Registry.register(Registry.ITEM, getId("magic_dust"), AlchemyModItems.MAGIC_DUST);
-		Registry.register(Registry.ITEM, getId("magic_pickaxe"), AlchemyModItems.SPECIAL_PICKAXE_ITEM);
-		Registry.register(Registry.ITEM, getId("magic_axe"), AlchemyModItems.SPECIAL_AXE_ITEM);
-		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyModBlocks.BREWING_CAULDRON_BLOCK);
-		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyModBlocks.PEDESTAL_BLOCK);
-		Registry.register(Registry.BLOCK, getId("alchemical_furnace"), AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK);
-		Registry.register(Registry.BLOCK, getId("child_block"), AlchemyModBlocks.CHILD_BLOCK);
-		Registry.register(Registry.STATUS_EFFECT, getId("projectile_shield"), AlchemyModStatusEffects.PROJECTILE_SHIELD);
-		Registry.register(Registry.STATUS_EFFECT, getId("projectile_attraction"), AlchemyModStatusEffects.PROJECTILE_ATTRACTION);
-		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyModStatusEffects.PROJECTILE_WEAKNESS);
-		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyModStatusEffects.PROJECTILE_RESISTANCE);
-		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_ingredient"), AlchemyModRecipes.CAULDRON_INGREDIENTS);
-		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_item"), AlchemyModRecipes.CAULDRON_ITEM_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, getId("pedestal_crafting"), AlchemyModRecipes.PEDESTAL_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, getId("grinding"), AlchemyModRecipes.GRINDING_RECIPE);
-		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), AlchemyModRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_item"), AlchemyModRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, getId("pedestal_crafting"), AlchemyModRecipes.PEDESTAL_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, getId("grinding"), AlchemyModRecipes.GRINDING_RECIPE_SERIALIZER);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), AlchemyModBlockEntities.PEDESTAL_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("alchemical_furnace_entity"), AlchemyModBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("child_block_entity"), AlchemyModBlockEntities.CHILD_BLOCK_ENTITY);
+		Registry.register(Registry.ITEM, getId("witchy_spoon"), AlchemyItems.WITCHY_SPOON_ITEM);
+		Registry.register(Registry.ITEM, getId("throw_bottle"), AlchemyItems.THROW_BOTTLE);
+		Registry.register(Registry.ITEM, getId("ladle"), AlchemyItems.LADLE_ITEM);
+		Registry.register(Registry.ITEM, getId("apothecary_guide_book"), AlchemyItems.APOTHECARY_GUIDE);
+		Registry.register(Registry.ITEM, getId("pedestal"), AlchemyItems.PEDESTAL_ITEM);
+		Registry.register(Registry.ITEM, getId("magical_coal_0"), AlchemyItems.MAGICAL_COAL_TIER_0);
+		Registry.register(Registry.ITEM, getId("magical_coal_1"), AlchemyItems.MAGICAL_COAL_TIER_1);
+		Registry.register(Registry.ITEM, getId("magical_coal_2"), AlchemyItems.MAGICAL_COAL_TIER_2);
+		Registry.register(Registry.ITEM, getId("magic_dust"), AlchemyItems.MAGIC_DUST);
+		Registry.register(Registry.ITEM, getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
+		Registry.register(Registry.ITEM, getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
+		Registry.register(Registry.BLOCK, getId("brewing_cauldron"), AlchemyBlocks.BREWING_CAULDRON_BLOCK);
+		Registry.register(Registry.BLOCK, getId("pedestal"), AlchemyBlocks.PEDESTAL_BLOCK);
+		Registry.register(Registry.BLOCK, getId("alchemical_furnace"), AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK);
+		Registry.register(Registry.BLOCK, getId("child_block"), AlchemyBlocks.CHILD_BLOCK);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_shield"), AlchemyStatusEffects.PROJECTILE_SHIELD);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_attraction"), AlchemyStatusEffects.PROJECTILE_ATTRACTION);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_weakness"), AlchemyStatusEffects.PROJECTILE_WEAKNESS);
+		Registry.register(Registry.STATUS_EFFECT, getId("projectile_resistance"), AlchemyStatusEffects.PROJECTILE_RESISTANCE);
+		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS);
+		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, getId("grinding"), AlchemyRecipes.GRINDING_RECIPE);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, getId("grinding"), AlchemyRecipes.GRINDING_RECIPE_SERIALIZER);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("brewing_cauldron_entity"), AlchemyBlockEntities.BREWING_CAULDRON_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("pedestal_entity"), AlchemyBlockEntities.PEDESTAL_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("alchemical_furnace_entity"), AlchemyBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, getId("child_block_entity"), AlchemyBlockEntities.CHILD_BLOCK_ENTITY);
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if(!world.isClient)
 			{
@@ -146,13 +146,13 @@ public class AlchemyMod implements ModInitializer
 			}
 		});
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER.tick());
-		DispenserBlock.registerBehavior(AlchemyModItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
+		DispenserBlock.registerBehavior(AlchemyItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
 			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
 			{
 				World world = pointer.getWorld();
 				PedestalEntity entity = (PedestalEntity) world.getBlockEntity(pointer.getBlockPos().offset(direction));
-				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
+				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(AlchemyRecipes.PEDESTAL_RECIPE, entity, world);
 				recipeOptional.ifPresent(entity::beginCraft);
 			}
 			return stack;
@@ -161,8 +161,8 @@ public class AlchemyMod implements ModInitializer
 			Block block = state.getBlock();
 			ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
 			Item item = stack.getItem();
-			if((item == AlchemyModItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock || block == Blocks.COPPER_ORE)) ||
-				(item == AlchemyModItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
+			if((item == AlchemyItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock || block == Blocks.COPPER_ORE)) ||
+				(item == AlchemyItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
 			{
 				BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
 				if(breakPos.equals(pos))

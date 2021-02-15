@@ -1,8 +1,8 @@
 package net.watersfall.alchemy.block;
 
 import net.watersfall.alchemy.block.entity.PedestalEntity;
-import net.watersfall.alchemy.item.AlchemyModItems;
-import net.watersfall.alchemy.recipe.AlchemyModRecipes;
+import net.watersfall.alchemy.item.AlchemyItems;
+import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -50,9 +50,9 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 			PedestalEntity entity = (PedestalEntity)entityCheck;
 			if(!entity.isMain() && !entity.isCrafting())
 			{
-				if(playerStack.getItem() == AlchemyModItems.WITCHY_SPOON_ITEM)
+				if(playerStack.getItem() == AlchemyItems.WITCHY_SPOON_ITEM)
 				{
-					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyModRecipes.PEDESTAL_RECIPE, entity, world);
+					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.PEDESTAL_RECIPE, entity, world);
 					if(recipeOptional.isPresent())
 					{
 						if(!world.isClient)

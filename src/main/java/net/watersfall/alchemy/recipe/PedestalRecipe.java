@@ -3,7 +3,7 @@ package net.watersfall.alchemy.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -47,7 +47,7 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 					if(!mutablePos.equals(pos))
 					{
 						loopState = world.getBlockState(mutablePos);
-						if(loopState.getBlock() == AlchemyModBlocks.PEDESTAL_BLOCK)
+						if(loopState.getBlock() == AlchemyBlocks.PEDESTAL_BLOCK)
 						{
 							entities.add((PedestalEntity)world.getBlockEntity(mutablePos));
 						}
@@ -162,13 +162,13 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyModRecipes.PEDESTAL_RECIPE_SERIALIZER;
+		return AlchemyRecipes.PEDESTAL_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyModRecipes.PEDESTAL_RECIPE;
+		return AlchemyRecipes.PEDESTAL_RECIPE;
 	}
 
 	public static class Serializer implements RecipeSerializer<PedestalRecipe>

@@ -4,8 +4,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.render.RenderLayer;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
-import net.watersfall.alchemy.block.entity.AlchemyModBlockEntities;
+import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import net.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;
@@ -31,13 +31,13 @@ public class AlchemyModClient implements ClientModInitializer
 	{
 		ColorProviderRegistry.BLOCK.register(
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
-				AlchemyModBlocks.BREWING_CAULDRON_BLOCK
+				AlchemyBlocks.BREWING_CAULDRON_BLOCK
 		);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyModBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyModBlocks.CHILD_BLOCK, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT.tick());
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getTag() != null && !stack.getTag().isEmpty())

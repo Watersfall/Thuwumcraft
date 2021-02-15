@@ -2,10 +2,9 @@ package net.watersfall.alchemy.client.mixin;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.math.Vec3f;
-import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
+import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -32,7 +31,7 @@ public abstract class LivingEntityRenderMixin<T extends LivingEntity, M extends 
 	@Inject(method = "render", at = @At("TAIL"))
 	public void render(T livingEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info)
 	{
-		if(livingEntity.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_SHIELD))
+		if(livingEntity.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_SHIELD))
 		{
 			matrices.push();
 			matrices.translate(-1.5f, 1f, -0.4f);

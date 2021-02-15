@@ -6,7 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.multiblock.MultiBlockType;
 import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceComponent;
@@ -78,10 +78,10 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		components[AlchemicalFurnaceMultiBlock.TOP_RIGHT] = new AlchemicalFurnaceComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.TOP_RIGHT]);
 		components[AlchemicalFurnaceMultiBlock.INPUT] = new AlchemicalFurnaceInputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.INPUT]);
 		components[AlchemicalFurnaceMultiBlock.OUTPUT] = new AlchemicalFurnaceOutputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.OUTPUT]);
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], AlchemyModBlocks.CHILD_BLOCK.getDefaultState());
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], AlchemyModBlocks.CHILD_BLOCK.getDefaultState());
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], AlchemyModBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
 		MultiBlockRegistry.SERVER.add(multiBlock);
 		return multiBlock;
 	}

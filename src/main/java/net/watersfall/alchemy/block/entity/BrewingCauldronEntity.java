@@ -29,7 +29,7 @@ public class BrewingCauldronEntity extends BlockEntity implements BrewingCauldro
 
 	public BrewingCauldronEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyModBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
+		super(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
 	}
 
 	@Override

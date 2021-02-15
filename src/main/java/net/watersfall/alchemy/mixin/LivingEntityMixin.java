@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.mixin;
 
-import net.watersfall.alchemy.effect.AlchemyModStatusEffects;
+import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		if(!world.isClient)
 		{
-			if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_SHIELD))
+			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_SHIELD))
 			{
 				List<ArrowEntity> entities = world.getEntitiesByType(EntityType.ARROW, this.getBoundingBox().expand(3), this::test);
 				for(int i = 0; i < entities.size(); i++)
@@ -55,7 +55,7 @@ public abstract class LivingEntityMixin extends Entity
 					entities.get(i).setVelocity(velocity.x * -0.1, velocity.y * -0.1, velocity.z * -0.1);
 				}
 			}
-			else if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_ATTRACTION))
+			else if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_ATTRACTION))
 			{
 				List<ArrowEntity> entities = world.getEntitiesByType(EntityType.ARROW, this.getBoundingBox().expand(3), this::test);
 				for(int i = 0; i < entities.size(); i++)
@@ -104,11 +104,11 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		if(source.isProjectile())
 		{
-			if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_RESISTANCE))
+			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_RESISTANCE))
 			{
 				amount = amount * 0.5F;
 			}
-			if(this.hasStatusEffect(AlchemyModStatusEffects.PROJECTILE_WEAKNESS))
+			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_WEAKNESS))
 			{
 				amount = amount * 2.0F;
 			}

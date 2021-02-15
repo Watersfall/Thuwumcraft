@@ -2,7 +2,6 @@ package net.watersfall.alchemy.multiblock.impl.multiblock;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -19,7 +18,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.watersfall.alchemy.block.AlchemyModBlocks;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.alchemy.block.entity.ChildBlockEntity;
 import net.watersfall.alchemy.item.MagicalCoalItem;
@@ -173,7 +172,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
-			if(block == AlchemyModBlocks.CHILD_BLOCK || block == AlchemyModBlocks.ALCHEMICAL_FURNACE_BLOCK)
+			if(block == AlchemyBlocks.CHILD_BLOCK || block == AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK)
 			{
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState());
 			}

@@ -72,7 +72,7 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
+		return AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyModRecipes.CAULDRON_INGREDIENT_RECIPE;
+		return AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE;
 	}
 
 	public Ingredient getInput()
