@@ -4,6 +4,7 @@
 	"package": "net.watersfall.alchemy.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+		"AnvilScreenHandlerMixin",
 		"CampfireBlockMixin",
 		"LivingEntityMixin"
 	],

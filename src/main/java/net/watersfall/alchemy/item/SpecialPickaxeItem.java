@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.item;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -46,5 +47,14 @@ public class SpecialPickaxeItem extends PickaxeItem
 	public SpecialPickaxeItem()
 	{
 		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
+	}
+
+	@Override
+	public void onCraft(ItemStack stack, World world, PlayerEntity player)
+	{
+		if(stack.getTag() != null && stack.getTag().contains("RepairCost"))
+		{
+			stack.getTag().putInt("RepairCost", 0);
+		}
 	}
 }
