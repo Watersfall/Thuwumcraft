@@ -2,6 +2,7 @@ package net.watersfall.alchemy.multiblock.impl.multiblock;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.Block;
+import net.minecraft.block.FurnaceBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -13,12 +14,16 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.watersfall.alchemy.block.ChildBlock;
 import net.watersfall.alchemy.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.alchemy.block.entity.ChildBlockEntity;
 import net.watersfall.alchemy.item.MagicalCoalItem;
@@ -169,12 +174,13 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		ItemScatterer.spawn(world, this.components[INPUT].getPos(), input.getInventory());
 		ItemScatterer.spawn(world, this.components[OUTPUT].getPos(), output.getInventory());
 		ItemScatterer.spawn(world, this.components[BOTTOM_LEFT].getPos(), fuel.getInventory());
+		Direction direction = this.world.getBlockState(pos).get(AlchemicalFurnaceBlock.DIRECTION);
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
 			if(block == AlchemyBlocks.CHILD_BLOCK || block == AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK)
 			{
-				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState());
+				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState().with(FurnaceBlock.FACING, direction));
 			}
 		}
 		MultiBlockRegistry.SERVER.remove(this);
