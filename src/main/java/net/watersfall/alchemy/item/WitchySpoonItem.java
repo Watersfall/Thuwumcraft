@@ -28,6 +28,11 @@ public class WitchySpoonItem extends Item
 			context.getWorld().setBlockState(context.getBlockPos(), AlchemyBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
 		}
+		else if(state.getBlock() == AlchemyBlocks.BREWING_CAULDRON_BLOCK)
+		{
+			context.getWorld().setBlockState(context.getBlockPos(), AlchemyBlocks.BREWING_CRUCIBLE_BLOCK.getDefaultState());
+			return ActionResult.success(context.getWorld().isClient);
+		}
 		else if(state.getBlock() == Blocks.FURNACE)
 		{
 			BlockPos[] states = AlchemicalFurnaceType.INSTANCE.matches(context.getPlayer(), context.getWorld(), context.getBlockPos());

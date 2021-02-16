@@ -10,6 +10,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
@@ -47,6 +48,8 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
+
+	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", -1);
 
 	static
 	{
@@ -154,5 +157,6 @@ public class AlchemyMod implements ModInitializer
 		AlchemyRecipes.register();
 		AlchemyBlockEntities.register();
 		registerEvents();
+		Aspect.register(getId("air"), AIR);
 	}
 }

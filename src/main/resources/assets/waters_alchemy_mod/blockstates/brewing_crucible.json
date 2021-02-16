@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"powered=true": {
+			"model": "waters_alchemy_mod:block/brewing_crucible"
+		},
+		"powered=false": {
+			"model": "waters_alchemy_mod:block/brewing_crucible"
+		}
+	}
+}
