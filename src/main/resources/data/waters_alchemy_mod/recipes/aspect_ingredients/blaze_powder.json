@@ -1,0 +1,10 @@
+{
+	"type": "waters_alchemy_mod:aspect_ingredient",
+	"item": "minecraft:blaze_powder",
+	"aspects": [
+		{
+			"aspect": "waters_alchemy_mod:fire",
+			"count": 5
+		}
+	]
+}

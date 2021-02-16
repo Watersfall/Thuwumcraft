@@ -1,0 +1,10 @@
+{
+	"type": "waters_alchemy_mod:aspect_ingredient",
+	"item": "minecraft:grass_block",
+	"aspects": [
+		{
+			"aspect": "waters_alchemy_mod:water",
+			"count": 5
+		}
+	]
+}

@@ -5,6 +5,7 @@ import net.minecraft.item.*;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.item.AspectItems;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
@@ -58,6 +59,10 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_dust"), AlchemyItems.MAGIC_DUST);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_air"), AspectItems.AIR);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_earth"), AspectItems.EARTH);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_fire"), AspectItems.FIRE);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_water"), AspectItems.WATER);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()

@@ -41,7 +41,6 @@ public class CrucibleEntityRenderer extends AbstractCauldronRenderer<CrucibleEnt
 					Vec3d blockPos = new Vec3d(entity.getPos().getX() + 0.5D, entity.getPos().getY() + 0.5D, entity.getPos().getZ() + 0.5D);
 					if(result.getPos().distanceTo(blockPos) <= 1D)
 					{
-						Sprite diamond = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(Items.DIAMOND).getSprite();
 						matrices.push();
 						VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
 						matrices.translate(0.5D, 1.75D, 0.5D);
@@ -52,7 +51,8 @@ public class CrucibleEntityRenderer extends AbstractCauldronRenderer<CrucibleEnt
 						matrices.translate(0.5D, 0D, 0.5D);
 						matrices.translate(-0.5F * (entity.getAspects().size() + 1), 0F, 0F);
 						entity.getAspects().values().forEach((aspectStack -> {
-							RenderHelper.drawTexture(builder, matrices, diamond, -1, 9437408, 655360);
+							Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getSprite();
+							RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360);
 							if(aspectStack.getCount() > 1)
 							{
 								matrices.push();

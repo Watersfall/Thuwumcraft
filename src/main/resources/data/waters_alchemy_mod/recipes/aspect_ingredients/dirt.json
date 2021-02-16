@@ -1,0 +1,10 @@
+{
+	"type": "waters_alchemy_mod:aspect_ingredient",
+	"item": "minecraft:dirt",
+	"aspects": [
+		{
+			"aspect": "waters_alchemy_mod:earth",
+			"count": 5
+		}
+	]
+}

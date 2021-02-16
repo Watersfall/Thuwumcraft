@@ -1,6 +1,8 @@
 package net.watersfall.alchemy.api.aspect;
 
 import net.minecraft.util.Identifier;
+import net.watersfall.alchemy.api.item.AspectItem;
+import net.watersfall.alchemy.api.item.AspectItems;
 
 import java.util.HashMap;
 
@@ -8,11 +10,13 @@ public class Aspect
 {
 	private final String name;
 	private final int color;
+	private final AspectItem item;
 
-	public Aspect(String name, int color)
+	public Aspect(String name, int color, AspectItem item)
 	{
 		this.name = name;
 		this.color = color;
+		this.item = item;
 	}
 
 	/**
@@ -32,6 +36,11 @@ public class Aspect
 	public int getColor()
 	{
 		return this.color;
+	}
+
+	public AspectItem getItem()
+	{
+		return this.item;
 	}
 
 	public static final HashMap<Identifier, Aspect> ASPECTS = new HashMap<>();

@@ -11,6 +11,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.api.aspect.Aspect;
+import net.watersfall.alchemy.api.item.AspectItems;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
@@ -49,7 +50,10 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
-	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", -1);
+	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", -1, AspectItems.AIR);
+	public static final Aspect EARTH = new Aspect("waters_alchemy_mod:earth", -1, AspectItems.EARTH);
+	public static final Aspect WATER = new Aspect("waters_alchemy_mod:water", -1, AspectItems.WATER);
+	public static final Aspect FIRE = new Aspect("waters_alchemy_mod:fire", -1, AspectItems.FIRE);
 
 	static
 	{
@@ -148,6 +152,14 @@ public class AlchemyMod implements ModInitializer
 		}));
 	}
 
+	private static void registerAspects()
+	{
+		Aspect.register(getId("air"), AIR);
+		Aspect.register(getId("earth"), EARTH);
+		Aspect.register(getId("water"), WATER);
+		Aspect.register(getId("fire"), FIRE);
+	}
+
 	@Override
 	public void onInitialize()
 	{
@@ -157,6 +169,6 @@ public class AlchemyMod implements ModInitializer
 		AlchemyRecipes.register();
 		AlchemyBlockEntities.register();
 		registerEvents();
-		Aspect.register(getId("air"), AIR);
+		registerAspects();
 	}
 }
