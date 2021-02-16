@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.watersfall.alchemy.block.entity.CrucibleEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
+import net.watersfall.alchemy.recipe.CrucibleRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -40,19 +41,36 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 		{
 			if(!stack.isEmpty())
 			{
-				if(!world.isClient)
+				entity.setCurrentInput(stack);
+				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CRUCIBLE_RECIPE, entity, world);
+				if(crucibleOptional.isPresent())
 				{
-					entity.setCurrentInput(stack);
-					Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, entity, world);
-					if(aspectOptional.isPresent())
+					if(!world.isClient)
+					{
+						stack.decrement(1);
+						CrucibleRecipe recipe = crucibleOptional.get();
+						stack = recipe.craft(entity);
+						if(!player.getInventory().insertStack(stack))
+						{
+							player.dropItem(stack, true);
+						}
+						entity.markDirty();
+						entity.sync();
+					}
+					return ActionResult.success(world.isClient);
+				}
+				Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, entity, world);
+				if(aspectOptional.isPresent())
+				{
+					if(!world.isClient)
 					{
 						AspectIngredient ingredient = aspectOptional.get();
 						ingredient.craft(entity);
 						entity.markDirty();
 						entity.sync();
 					}
+					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.success(world.isClient);
 			}
 		}
 		return ActionResult.PASS;

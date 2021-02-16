@@ -1,0 +1,17 @@
+{
+	"type": "waters_alchemy_mod:crucible_recipe",
+	"catalyst": {
+		"item": "minecraft:iron_ingot"
+	},
+	"aspects": [
+		{
+			"aspect": "waters_alchemy_mod:fire",
+			"count": 10
+		},
+		{
+			"aspect": "waters_alchemy_mod:earth",
+			"count": 20
+		}
+	],
+	"output": "minecraft:gold_ingot"
+}
