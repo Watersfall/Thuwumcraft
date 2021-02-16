@@ -59,10 +59,10 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_dust"), AlchemyItems.MAGIC_DUST);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
-		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_air"), AspectItems.AIR);
-		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_earth"), AspectItems.EARTH);
-		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_fire"), AspectItems.FIRE);
-		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_water"), AspectItems.WATER);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/air"), AspectItems.AIR);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/earth"), AspectItems.EARTH);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/fire"), AspectItems.FIRE);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/water"), AspectItems.WATER);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()
