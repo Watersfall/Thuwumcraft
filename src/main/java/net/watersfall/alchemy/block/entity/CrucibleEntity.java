@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.block.entity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
@@ -126,7 +127,39 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	@Override
 	public float getMaxDisplayWaterLevel()
 	{
-		return this.waterLevel;
+		return Math.min(1333, this.waterLevel + this.totalAspectCount());
+	}
+
+	@Override
+	public int getColor()
+	{
+		if(this.needsColorUpdate)
+		{
+			int biomeColor = this.getWorld().getColor(this.pos, BiomeColors.WATER_COLOR);
+			float count = 1;
+			int r = ((biomeColor >> 16) & 0xFF);
+			int g = ((biomeColor >> 8) & 0xFF);
+			int b = ((biomeColor) & 0xFF);
+			for(AspectStack stack : this.getAspects().values())
+			{
+				int color = stack.getAspect().getColor();
+				r += ((color >> 16) & 0xFF) * (stack.getCount() / 20F);
+				g += ((color >> 8) & 0xFF) * (stack.getCount() / 20F);
+				b += ((color) & 0xFF) * (stack.getCount() / 20F);
+				count += stack.getCount() / 20F;
+			}
+			if(count > 0)
+			{
+				r = (int) (r / count);
+				g = (int) (g / count);
+				b = (int) (b / count);
+				color = r;
+				color = (color << 8) + g;
+				color = (color << 8) + b;
+			}
+			this.needsColorUpdate = false;
+		}
+		return this.color;
 	}
 
 	@Override

@@ -50,10 +50,10 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
-	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", -1, AspectItems.AIR);
-	public static final Aspect EARTH = new Aspect("waters_alchemy_mod:earth", -1, AspectItems.EARTH);
-	public static final Aspect WATER = new Aspect("waters_alchemy_mod:water", -1, AspectItems.WATER);
-	public static final Aspect FIRE = new Aspect("waters_alchemy_mod:fire", -1, AspectItems.FIRE);
+	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", 0xffff00, AspectItems.AIR);
+	public static final Aspect EARTH = new Aspect("waters_alchemy_mod:earth", 0x00ff00, AspectItems.EARTH);
+	public static final Aspect WATER = new Aspect("waters_alchemy_mod:water", 0x0000ff, AspectItems.WATER);
+	public static final Aspect FIRE = new Aspect("waters_alchemy_mod:fire", 0xff0000, AspectItems.FIRE);
 
 	static
 	{

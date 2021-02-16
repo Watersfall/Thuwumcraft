@@ -91,6 +91,16 @@ public interface AspectInventory extends SidedInventory
 
 	void setAspect(Aspect aspect, int amount);
 
+	default int totalAspectCount()
+	{
+		int count = 0;
+		for(AspectStack stack : getAspects().values())
+		{
+			count += stack.getCount();
+		}
+		return count;
+	}
+
 	default CompoundTag toInventoryTag(CompoundTag tag)
 	{
 		ListTag list = new ListTag();
