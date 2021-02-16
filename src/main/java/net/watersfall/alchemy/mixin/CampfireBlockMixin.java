@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.mixin;
 
-import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.minecraft.block.Block;
+import net.watersfall.alchemy.block.AbstractCauldronBlock;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,7 +16,8 @@ public class CampfireBlockMixin
 	@Inject(method = "spawnSmokeParticle", at = @At("HEAD"), cancellable = true)
 	private static void waters_cancelSpawnSmokeParticles(World world, BlockPos pos, boolean isSignal, boolean lotsOfSmoke, CallbackInfo info)
 	{
-		if(world.getBlockState(pos.up()).getBlock() == AlchemyBlocks.BREWING_CAULDRON_BLOCK)
+		Block block = world.getBlockState(pos.up()).getBlock();
+		if(block instanceof AbstractCauldronBlock)
 		{
 			info.cancel();
 		}

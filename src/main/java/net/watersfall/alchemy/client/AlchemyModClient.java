@@ -9,6 +9,7 @@ import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import net.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;
+import net.watersfall.alchemy.client.renderer.CrucibleEntityRenderer;
 import net.watersfall.alchemy.client.renderer.PedestalEntityRenderer;
 import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.util.StatusEffectHelper;
@@ -61,6 +62,7 @@ public class AlchemyModClient implements ClientModInitializer
 		);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());

@@ -1,28 +1,23 @@
 package net.watersfall.alchemy.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
-public class BrewingCrucibleEntity extends BlockEntity implements AspectInventory, BlockEntityClientSerializable
+public class CrucibleEntity extends AbstractCauldronEntity implements AspectInventory
 {
 	private ItemStack inputStack;
 	private HashMap<Aspect, AspectStack> aspects;
 
-	public BrewingCrucibleEntity(BlockPos pos, BlockState state)
+	public CrucibleEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.BREWING_CRUCIBLE_ENTITY, pos, state);
+		super(AlchemyBlockEntities.CRUCIBLE_ENTITY, pos, state);
 		this.inputStack = ItemStack.EMPTY;
 		this.aspects = new HashMap<>();
 	}
@@ -95,73 +90,7 @@ public class BrewingCrucibleEntity extends BlockEntity implements AspectInventor
 	@Override
 	public void setAspect(Aspect aspect, int amount)
 	{
-
-	}
-
-	@Override
-	public int[] getAvailableSlots(Direction side)
-	{
-		return new int[0];
-	}
-
-	@Override
-	public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean canExtract(int slot, ItemStack stack, Direction dir)
-	{
-		return false;
-	}
-
-	@Override
-	public int size()
-	{
-		return 0;
-	}
-
-	@Override
-	public boolean isEmpty()
-	{
-		return true;
-	}
-
-	@Override
-	public ItemStack getStack(int slot)
-	{
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public ItemStack removeStack(int slot, int amount)
-	{
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public ItemStack removeStack(int slot)
-	{
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public void setStack(int slot, ItemStack stack)
-	{
-
-	}
-
-	@Override
-	public boolean canPlayerUse(PlayerEntity player)
-	{
-		return false;
-	}
-
-	@Override
-	public void clear()
-	{
-
+		this.aspects.put(aspect, new AspectStack(aspect, amount));
 	}
 
 	@Override
@@ -190,4 +119,11 @@ public class BrewingCrucibleEntity extends BlockEntity implements AspectInventor
 	{
 		return this.toTag(compoundTag);
 	}
+
+	@Override
+	public float getMaxDisplayWaterLevel()
+	{
+		return this.waterLevel;
+	}
+
 }

@@ -1,13 +1,16 @@
 package net.watersfall.alchemy.api.aspect;
 
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -19,15 +22,47 @@ public interface AspectInventory extends SidedInventory
 
 	void setCurrentInput(ItemStack stack);
 
-	AspectStack getAspect(Aspect aspect);
+	default AspectStack getAspect(Aspect aspect)
+	{
+		return getAspects().get(aspect);
+	}
 
-	AspectStack removeAspect(Aspect aspect);
+	default AspectStack removeAspect(Aspect aspect)
+	{
+		return getAspects().remove(aspect);
+	}
 
-	AspectStack removeAspect(Aspect aspect, int amount);
+	default AspectStack removeAspect(Aspect aspect, int amount)
+	{
+		AspectStack stack = getAspects().get(aspect);
+		if(amount >= stack.getCount())
+		{
+			return getAspects().remove(aspect);
+		}
+		else
+		{
+			stack.decrement(amount);
+			return new AspectStack(aspect, amount);
+		}
+	}
 
-	void addAspect(AspectStack aspect);
+	default void addAspect(AspectStack aspect)
+	{
+		if(getAspects().containsKey(aspect.getAspect()))
+		{
+			AspectStack stack = getAspects().get(aspect.getAspect());
+			stack.increment(aspect.getCount());
+		}
+		else
+		{
+			getAspects().put(aspect.getAspect(), aspect);
+		}
+	}
 
-	int aspectSize();
+	default int aspectSize()
+	{
+		return getAspects().size();
+	}
 
 	default int aspectCount(Aspect aspect)
 	{
@@ -91,5 +126,71 @@ public interface AspectInventory extends SidedInventory
 			ItemStack stack = new ItemStack(Registry.ITEM.get(Identifier.tryParse(input.getString("item"))), input.getInt("count"));
 			this.setCurrentInput(stack);
 		}
+	}
+
+	@Override
+	default int[] getAvailableSlots(Direction side)
+	{
+		return new int[]{};
+	}
+
+	@Override
+	default boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir)
+	{
+		return false;
+	}
+
+	@Override
+	default boolean canExtract(int slot, ItemStack stack, Direction dir)
+	{
+		return false;
+	}
+
+	@Override
+	default int size()
+	{
+		return 0;
+	}
+
+	@Override
+	default boolean isEmpty()
+	{
+		return true;
+	}
+
+	@Override
+	default ItemStack getStack(int slot)
+	{
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	default ItemStack removeStack(int slot, int amount)
+	{
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	default ItemStack removeStack(int slot)
+	{
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	default void setStack(int slot, ItemStack stack)
+	{
+
+	}
+
+	@Override
+	default boolean canPlayerUse(PlayerEntity player)
+	{
+		return true;
+	}
+
+	@Override
+	default void clear()
+	{
+		getAspects().clear();
 	}
 }

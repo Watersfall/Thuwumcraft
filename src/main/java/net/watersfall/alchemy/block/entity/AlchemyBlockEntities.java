@@ -12,7 +12,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<PedestalEntity> PEDESTAL_ENTITY;
 	public static final BlockEntityType<AlchemicalFurnaceEntity> ALCHEMICAL_FURNACE_ENTITY;
 	public static final BlockEntityType<ChildBlockEntity> CHILD_BLOCK_ENTITY;
-	public static final BlockEntityType<BrewingCrucibleEntity> BREWING_CRUCIBLE_ENTITY;
+	public static final BlockEntityType<CrucibleEntity> CRUCIBLE_ENTITY;
 
 	static
 	{
@@ -20,7 +20,7 @@ public class AlchemyBlockEntities
 		PEDESTAL_ENTITY = FabricBlockEntityTypeBuilder.create(PedestalEntity::new, AlchemyBlocks.PEDESTAL_BLOCK).build(null);
 		ALCHEMICAL_FURNACE_ENTITY = FabricBlockEntityTypeBuilder.create(AlchemicalFurnaceEntity::new, AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK).build(null);
 		CHILD_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(ChildBlockEntity::new, AlchemyBlocks.CHILD_BLOCK).build(null);
-		BREWING_CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(BrewingCrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
+		CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(CrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
 	}
 
 	public static void register()
@@ -29,6 +29,6 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("pedestal_entity"), AlchemyBlockEntities.PEDESTAL_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("alchemical_furnace_entity"), AlchemyBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("child_block_entity"), AlchemyBlockEntities.CHILD_BLOCK_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("brewing_crucible_entity"), AlchemyBlockEntities.BREWING_CRUCIBLE_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("brewing_crucible_entity"), AlchemyBlockEntities.CRUCIBLE_ENTITY);
 	}
 }

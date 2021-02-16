@@ -46,12 +46,8 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
 
-public class BrewingCauldronBlock extends Block implements BlockEntityProvider
+public class BrewingCauldronBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
-	private static final VoxelShape RAY_TRACE_SHAPE = createCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-	protected static final VoxelShape OUTLINE_SHAPE = VoxelShapes.combineAndSimplify(VoxelShapes.fullCube(), VoxelShapes.union(createCuboidShape(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), createCuboidShape(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), RAY_TRACE_SHAPE), BooleanBiFunction.ONLY_FIRST);
-	public static final BooleanProperty POWERED = Properties.POWERED;
-
 	public static final HashMap<Item, CauldronIngredient> INGREDIENTS = new HashMap<>();
 
 	public static CauldronIngredient getIngredient(Item item, RecipeManager manager)
@@ -72,28 +68,6 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	public BrewingCauldronBlock(Settings settings)
 	{
 		super(settings);
-		setDefaultState(getStateManager().getDefaultState().with(POWERED, false));
-	}
-
-	public void setPowered(World world, BlockPos pos, BlockState state, boolean powered)
-	{
-		world.setBlockState(pos, state.with(POWERED, powered));
-		world.updateComparators(pos, this);
-	}
-
-	public boolean isPowered(BlockState state)
-	{
-		return state.get(POWERED);
-	}
-
-	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
-	{
-		return OUTLINE_SHAPE;
-	}
-
-	public VoxelShape getRaycastShape(BlockState state, BlockView world, BlockPos pos)
-	{
-		return RAY_TRACE_SHAPE;
 	}
 
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
@@ -135,118 +109,17 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 	}
 
 	@Override
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
-	{
-		builder.add(POWERED);
-	}
-
-	@Override
-	public boolean hasRandomTicks(BlockState state)
-	{
-		return true;
-	}
-
-	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
-	{
-		if(!world.isClient)
-		{
-			if(!this.isPowered(state))
-			{
-				BlockState below = world.getBlockState(pos.down());
-				if(below.isIn(BlockTags.FIRE) || below.isIn(BlockTags.CAMPFIRES))
-				{
-					this.setPowered(world, pos, state, true);
-				}
-			}
-			else
-			{
-				BlockState below = world.getBlockState(pos.down());
-				if(!(below.isIn(BlockTags.FIRE) || below.isIn(BlockTags.CAMPFIRES)))
-				{
-					this.setPowered(world, pos, state, false);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random)
-	{
-		if(this.isPowered(state))
-		{
-			BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
-			if(entity != null)
-			{
-				if(entity.getWaterLevel() > 0)
-				{
-					double x = pos.getX() + 0.25 + random.nextDouble() * 0.5;
-					double y = pos.getY() + entity.getDisplayWaterLevel() / 1000F * 0.5625F + 0.25F;;
-					double z = pos.getZ() + 0.25 + random.nextDouble() * 0.5;
-					Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0, 0, 0);
-					Vec3d color = Vec3d.unpackRgb(entity.getColor());
-					particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
-				}
-			}
-		}
-	}
-
-	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
 	{
+		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
+		if(result != ActionResult.PASS)
+		{
+			return result;
+		}
 		ItemStack itemStack = player.getStackInHand(hand);
-		BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
-		assert entity != null;
-		if(itemStack.isEmpty())
-		{
-			if(player.isSneaking())
-			{
-				if(!world.isClient)
-				{
-					entity.clear();
-					entity.sync();
-					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-				}
-				return ActionResult.success(world.isClient);
-			}
-			return ActionResult.PASS;
-		}
 		Item item = itemStack.getItem();
-		if(item == Items.WATER_BUCKET)
-		{
-			if(!world.isClient)
-			{
-				if(!player.getAbilities().creativeMode)
-				{
-					player.setStackInHand(hand, new ItemStack(Items.BUCKET));
-				}
-				entity.clear();
-				entity.setWaterLevel((short) 1000);
-				entity.sync();
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			}
-			return ActionResult.success(world.isClient);
-		}
-		else if(item == Items.BUCKET)
-		{
-			if(entity.getIngredientCount() == 0 && !world.isClient)
-			{
-				itemStack.decrement(1);
-				if(itemStack.isEmpty())
-				{
-					player.setStackInHand(hand, new ItemStack(Items.WATER_BUCKET));
-				}
-				else if(!player.getInventory().insertStack(new ItemStack(Items.WATER_BUCKET)))
-				{
-					player.dropItem(new ItemStack(Items.WATER_BUCKET), false);
-				}
-				entity.setWaterLevel((short) 0);
-				entity.sync();
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			}
-			return ActionResult.success(world.isClient);
-		}
-		else if(this.isPowered(state) && entity.getWaterLevel() > 0)
+		BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
+		if(this.isPowered(state) && entity.getWaterLevel() > 0)
 		{
 			ItemStack inputStack = new ItemStack(item);
 			entity.setInput(inputStack);
@@ -345,11 +218,6 @@ public class BrewingCauldronBlock extends Block implements BlockEntityProvider
 			entity.setWaterLevel((short) 0);
 		}
 		return ActionResult.PASS;
-	}
-
-	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type)
-	{
-		return false;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package net.watersfall.alchemy.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,7 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.block.entity.BrewingCrucibleEntity;
+import net.watersfall.alchemy.block.entity.CrucibleEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.Random;
 
-public class CrucibleBlock extends BrewingCauldronBlock implements BlockEntityProvider
+public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
 	public CrucibleBlock(Settings settings)
 	{
@@ -30,8 +29,13 @@ public class CrucibleBlock extends BrewingCauldronBlock implements BlockEntityPr
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
 	{
+		ActionResult result = super.onUse(state, world, pos, player, hand, hit);
+		if(result != ActionResult.PASS)
+		{
+			return result;
+		}
 		ItemStack stack = player.getStackInHand(hand);
-		BrewingCrucibleEntity entity = (BrewingCrucibleEntity) world.getBlockEntity(pos);
+		CrucibleEntity entity = (CrucibleEntity) world.getBlockEntity(pos);
 		if(entity != null)
 		{
 			if(!stack.isEmpty())
@@ -60,16 +64,10 @@ public class CrucibleBlock extends BrewingCauldronBlock implements BlockEntityPr
 
 	}
 
-	@Override
-	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random)
-	{
-
-	}
-
 	@Nullable
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new BrewingCrucibleEntity(pos, state);
+		return new CrucibleEntity(pos, state);
 	}
 }
