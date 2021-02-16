@@ -20,9 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.Random;
 
-public class BrewingCrucibleBlock extends BrewingCauldronBlock implements BlockEntityProvider
+public class CrucibleBlock extends BrewingCauldronBlock implements BlockEntityProvider
 {
-	public BrewingCrucibleBlock(Settings settings)
+	public CrucibleBlock(Settings settings)
 	{
 		super(settings);
 	}

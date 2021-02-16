@@ -11,7 +11,7 @@ public class AlchemyBlocks
 	public static final PedestalBlock PEDESTAL_BLOCK;
 	public static final AlchemicalFurnaceBlock ALCHEMICAL_FURNACE_BLOCK;
 	public static final ChildBlock CHILD_BLOCK;
-	public static final BrewingCrucibleBlock BREWING_CRUCIBLE_BLOCK;
+	public static final CrucibleBlock CRUCIBLE_BLOCK;
 
 	static
 	{
@@ -19,7 +19,7 @@ public class AlchemyBlocks
 		PEDESTAL_BLOCK = new PedestalBlock(FabricBlockSettings.copyOf(Blocks.STONE).luminance(7).nonOpaque());
 		ALCHEMICAL_FURNACE_BLOCK = new AlchemicalFurnaceBlock(FabricBlockSettings.copyOf(Blocks.STONE));
 		CHILD_BLOCK = new ChildBlock(FabricBlockSettings.copyOf(Blocks.GLASS));
-		BREWING_CRUCIBLE_BLOCK = new BrewingCrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK));
+		CRUCIBLE_BLOCK = new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK));
 	}
 
 	public static void register()
@@ -28,6 +28,6 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("pedestal"), AlchemyBlocks.PEDESTAL_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("alchemical_furnace"), AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("child_block"), AlchemyBlocks.CHILD_BLOCK);
-		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_crucible"), BREWING_CRUCIBLE_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_crucible"), CRUCIBLE_BLOCK);
 	}
 }

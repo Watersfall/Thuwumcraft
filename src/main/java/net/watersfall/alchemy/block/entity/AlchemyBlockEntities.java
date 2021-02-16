@@ -20,7 +20,7 @@ public class AlchemyBlockEntities
 		PEDESTAL_ENTITY = FabricBlockEntityTypeBuilder.create(PedestalEntity::new, AlchemyBlocks.PEDESTAL_BLOCK).build(null);
 		ALCHEMICAL_FURNACE_ENTITY = FabricBlockEntityTypeBuilder.create(AlchemicalFurnaceEntity::new, AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK).build(null);
 		CHILD_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(ChildBlockEntity::new, AlchemyBlocks.CHILD_BLOCK).build(null);
-		BREWING_CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(BrewingCrucibleEntity::new, AlchemyBlocks.BREWING_CRUCIBLE_BLOCK).build(null);
+		BREWING_CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(BrewingCrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
 	}
 
 	public static void register()
