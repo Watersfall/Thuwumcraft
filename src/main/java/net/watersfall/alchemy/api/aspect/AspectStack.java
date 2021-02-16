@@ -43,4 +43,9 @@ public class AspectStack
 	{
 		return this.aspect == null || this.count < 1;
 	}
+
+	public AspectStack copy()
+	{
+		return new AspectStack(this.getAspect(), this.getCount());
+	}
 }

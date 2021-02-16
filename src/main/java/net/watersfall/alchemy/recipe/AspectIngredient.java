@@ -43,7 +43,7 @@ public class AspectIngredient implements Recipe<AspectInventory>
 		inv.setCurrentInput(ItemStack.EMPTY);
 		for(int i = 0; i < aspects.size(); i++)
 		{
-			inv.addAspect(aspects.get(i));
+			inv.addAspect(aspects.get(i).copy());
 		}
 		return ItemStack.EMPTY;
 	}

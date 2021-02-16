@@ -111,13 +111,16 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
-		this.fromTag(compoundTag);
+		super.fromClientTag(compoundTag);
+		this.fromInventoryTag(compoundTag);
 	}
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag compoundTag)
 	{
-		return this.toTag(compoundTag);
+		super.toClientTag(compoundTag);
+		this.toInventoryTag(compoundTag);
+		return compoundTag;
 	}
 
 	@Override
@@ -126,4 +129,10 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 		return this.waterLevel;
 	}
 
+	@Override
+	public void clear()
+	{
+		super.clear();
+		AspectInventory.super.clear();
+	}
 }

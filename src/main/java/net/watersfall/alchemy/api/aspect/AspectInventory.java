@@ -113,12 +113,13 @@ public interface AspectInventory extends SidedInventory
 
 	default void fromInventoryTag(CompoundTag tag)
 	{
+		this.getAspects().clear();
 		ListTag list = tag.getList("aspects", NbtType.COMPOUND);
 		for(int i = 0; i < list.size(); i++)
 		{
 			CompoundTag aspect = (CompoundTag) list.get(i);
 			AspectStack stack = new AspectStack(Aspect.ASPECTS.get(Identifier.tryParse(aspect.getString("aspect"))), aspect.getInt("count"));
-			addAspect(stack);
+			setAspect(stack.getAspect(), stack.getCount());
 		}
 		if(tag.contains("input"))
 		{
