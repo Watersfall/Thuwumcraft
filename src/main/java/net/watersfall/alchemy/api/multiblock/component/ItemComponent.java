@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock.component;
+package net.watersfall.alchemy.api.multiblock.component;
 
 import net.minecraft.inventory.SidedInventory;
 

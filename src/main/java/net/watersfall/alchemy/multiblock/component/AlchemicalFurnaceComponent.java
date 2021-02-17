@@ -1,14 +1,14 @@
-package net.watersfall.alchemy.multiblock.impl.component;
+package net.watersfall.alchemy.multiblock.component;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.shape.VoxelShape;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
-import net.watersfall.alchemy.multiblock.MultiBlock;
-import net.watersfall.alchemy.multiblock.MultiBlockComponent;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
+import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.multiblock.impl.multiblock.AlchemicalFurnaceMultiBlock;
+import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceComponent implements MultiBlockComponent
 {

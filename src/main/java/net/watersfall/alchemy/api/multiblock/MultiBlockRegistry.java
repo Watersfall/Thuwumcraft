@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock;
+package net.watersfall.alchemy.api.multiblock;
 
 import java.util.ArrayList;
 import java.util.List;

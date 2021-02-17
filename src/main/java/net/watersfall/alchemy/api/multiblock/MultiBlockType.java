@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock;
+package net.watersfall.alchemy.api.multiblock;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;

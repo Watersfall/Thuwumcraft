@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
-import net.watersfall.alchemy.multiblock.MultiBlockComponent;
+import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
 import net.minecraft.block.entity.BlockEntity;
 
 public class ChildBlockEntity extends BlockEntity

@@ -20,7 +20,7 @@ import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
-import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
+import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;

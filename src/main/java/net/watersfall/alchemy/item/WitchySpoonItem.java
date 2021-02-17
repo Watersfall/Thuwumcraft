@@ -2,8 +2,8 @@ package net.watersfall.alchemy.item;
 
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.multiblock.MultiBlockType;
-import net.watersfall.alchemy.multiblock.impl.type.AlchemicalFurnaceType;
+import net.watersfall.alchemy.api.multiblock.MultiBlockType;
+import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

@@ -9,7 +9,7 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.multiblock.impl.multiblock.AlchemicalFurnaceMultiBlock;
+import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
 {

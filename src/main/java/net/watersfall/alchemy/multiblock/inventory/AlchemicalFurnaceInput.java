@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock.impl.inventory;
+package net.watersfall.alchemy.multiblock.inventory;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
@@ -9,30 +9,24 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class AlchemicalFurnaceOutput implements AlchemicalFurnaceInventory
+public class AlchemicalFurnaceInput implements AlchemicalFurnaceInventory
 {
 	private static final int[] AVAILABLE_SLOTS = new int[]{0,1,2,3,4,5,6,7,8};
 	private final DefaultedList<ItemStack> contents;
 	private World world;
 	private BlockPos pos;
 
-	public AlchemicalFurnaceOutput(World world, BlockPos pos)
+	public AlchemicalFurnaceInput(World world, BlockPos pos)
 	{
-		this.contents = DefaultedList.ofSize(9, ItemStack.EMPTY);
+		contents = DefaultedList.ofSize(9, ItemStack.EMPTY);
 		this.world = world;
 		this.pos = pos;
 	}
 
 	@Override
-	public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir)
+	public DefaultedList<ItemStack> getContents()
 	{
-		return false;
-	}
-
-	@Override
-	public boolean canExtract(int slot, ItemStack stack, Direction dir)
-	{
-		return true;
+		return this.contents;
 	}
 
 	@Override
@@ -42,9 +36,15 @@ public class AlchemicalFurnaceOutput implements AlchemicalFurnaceInventory
 	}
 
 	@Override
-	public DefaultedList<ItemStack> getContents()
+	public boolean canInsert(int slot, ItemStack stack, @Nullable Direction dir)
 	{
-		return contents;
+		return true;
+	}
+
+	@Override
+	public boolean canExtract(int slot, ItemStack stack, Direction dir)
+	{
+		return false;
 	}
 
 	public void setWorld(World world)

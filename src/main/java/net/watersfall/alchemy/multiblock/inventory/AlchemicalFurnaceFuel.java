@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock.impl.inventory;
+package net.watersfall.alchemy.multiblock.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SidedInventory;

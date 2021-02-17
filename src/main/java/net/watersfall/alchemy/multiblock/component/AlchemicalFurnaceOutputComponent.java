@@ -1,10 +1,10 @@
-package net.watersfall.alchemy.multiblock.impl.component;
+package net.watersfall.alchemy.multiblock.component;
 
 import net.minecraft.inventory.Inventories;
 import net.minecraft.nbt.CompoundTag;
-import net.watersfall.alchemy.multiblock.MultiBlock;
-import net.watersfall.alchemy.multiblock.component.ItemComponent;
-import net.watersfall.alchemy.multiblock.impl.inventory.AlchemicalFurnaceOutput;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
+import net.watersfall.alchemy.api.multiblock.component.ItemComponent;
+import net.watersfall.alchemy.multiblock.inventory.AlchemicalFurnaceOutput;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

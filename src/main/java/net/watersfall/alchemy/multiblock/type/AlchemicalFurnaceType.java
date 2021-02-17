@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.multiblock.impl.type;
+package net.watersfall.alchemy.multiblock.type;
 
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
@@ -7,13 +7,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.multiblock.MultiBlockRegistry;
-import net.watersfall.alchemy.multiblock.MultiBlockType;
-import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceComponent;
-import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceFuelComponent;
-import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceInputComponent;
-import net.watersfall.alchemy.multiblock.impl.component.AlchemicalFurnaceOutputComponent;
-import net.watersfall.alchemy.multiblock.impl.multiblock.AlchemicalFurnaceMultiBlock;
+import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
+import net.watersfall.alchemy.api.multiblock.MultiBlockType;
+import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceComponent;
+import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceFuelComponent;
+import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceInputComponent;
+import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceOutputComponent;
+import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
