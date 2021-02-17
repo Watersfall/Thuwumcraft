@@ -52,10 +52,10 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
-	public static final Aspect AIR = new Aspect("waters_alchemy_mod:air", 0xffff00, AspectItems.AIR);
-	public static final Aspect EARTH = new Aspect("waters_alchemy_mod:earth", 0x00ff00, AspectItems.EARTH);
-	public static final Aspect WATER = new Aspect("waters_alchemy_mod:water", 0x0000ff, AspectItems.WATER);
-	public static final Aspect FIRE = new Aspect("waters_alchemy_mod:fire", 0xff0000, AspectItems.FIRE);
+	public static final Aspect AIR = new Aspect(getId("air"), 0xffff00, AspectItems.AIR);
+	public static final Aspect EARTH = new Aspect(getId("earth"), 0x00ff00, AspectItems.EARTH);
+	public static final Aspect WATER = new Aspect(getId("water"), 0x0000ff, AspectItems.WATER);
+	public static final Aspect FIRE = new Aspect(getId("fire"), 0xff0000, AspectItems.FIRE);
 
 	static
 	{
@@ -156,10 +156,10 @@ public class AlchemyMod implements ModInitializer
 
 	private static void registerAspects()
 	{
-		Aspect.register(getId("air"), AIR);
-		Aspect.register(getId("earth"), EARTH);
-		Aspect.register(getId("water"), WATER);
-		Aspect.register(getId("fire"), FIRE);
+		Aspect.register(AIR.getId(), AIR);
+		Aspect.register(EARTH.getId(), EARTH);
+		Aspect.register(WATER.getId(), WATER);
+		Aspect.register(FIRE.getId(), FIRE);
 	}
 
 	private static void registerSounds()

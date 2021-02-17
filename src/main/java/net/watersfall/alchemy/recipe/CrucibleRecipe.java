@@ -148,7 +148,7 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 			buf.writeInt(recipe.aspects.size());
 			for(int i = 0; i < recipe.aspects.size(); i++)
 			{
-				buf.writeIdentifier(new Identifier(recipe.aspects.get(i).getAspect().getName()));
+				buf.writeIdentifier(recipe.aspects.get(i).getAspect().getId());
 				buf.writeInt(recipe.aspects.get(i).getCount());
 			}
 			buf.writeItemStack(recipe.output);

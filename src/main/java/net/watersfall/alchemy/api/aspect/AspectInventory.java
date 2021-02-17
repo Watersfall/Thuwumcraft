@@ -2,9 +2,7 @@ package net.watersfall.alchemy.api.aspect;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -107,7 +105,7 @@ public interface AspectInventory extends SidedInventory
 		ListTag list = new ListTag();
 		this.getAspects().keySet().forEach((key) -> {
 			CompoundTag aspect = new CompoundTag();
-			aspect.putString("aspect", key.getName());
+			aspect.putString("aspect", key.getId().toString());
 			aspect.putInt("count", this.getAspect(key).getCount());
 			list.add(aspect);
 		});

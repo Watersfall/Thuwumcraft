@@ -8,11 +8,11 @@ import java.util.HashMap;
 
 public class Aspect
 {
-	private final String name;
+	private final Identifier name;
 	private final int color;
 	private final AspectItem item;
 
-	public Aspect(String name, int color, AspectItem item)
+	public Aspect(Identifier name, int color, AspectItem item)
 	{
 		this.name = name;
 		this.color = color;
@@ -24,7 +24,12 @@ public class Aspect
 	 * Formatted as {@code aspect.mod_id.aspect_name}
 	 * @return the translation key
 	 */
-	public String getName()
+	public String getTranslationKey()
+	{
+		return "aspect." + this.getId().getNamespace() + "." + this.getId().getPath();
+	}
+
+	public Identifier getId()
 	{
 		return this.name;
 	}
