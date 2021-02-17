@@ -18,12 +18,12 @@ public class Aspect
 
 	/**
 	 * Gets the translation key for the aspect <br>
-	 * Formatted as {@code aspect.mod_id.aspect_name}
+	 * Formatted as {@code item.mod_id.aspect_id}
 	 * @return the translation key
 	 */
 	public String getTranslationKey()
 	{
-		return "aspect." + this.getId().getNamespace() + "." + this.getId().getPath();
+		return this.item.getTranslationKey();
 	}
 
 	public Identifier getId()

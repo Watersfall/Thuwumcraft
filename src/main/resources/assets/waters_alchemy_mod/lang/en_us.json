@@ -11,9 +11,14 @@
 	"item.waters_alchemy_mod.magic_axe": "Magic Infused Axe",
 	"item.waters_alchemy_mod.lingering_bottle": "Lingering Bottle",
 	"itemGroup.waters_alchemy_mod.alchemy_mod_group": "Waters Alchemy Mod",
+	"itemGroup.waters_alchemy_mod.aspect_group": "Aspects",
 	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
 	"effect.waters_alchemy_mod.projectile_attraction": "Attraction",
 	"effect.waters_alchemy_mod.projectile_shield": "Repulsion",
 	"block.waters_alchemy_mod.cauldron.invalid_recipe": "This recipe doesn't seem to be working...",
-	"container.waters_alchemy_mod.alchemical_furnace": "Alchemical Furnace"
+	"container.waters_alchemy_mod.alchemical_furnace": "Alchemical Furnace",
+	"item.waters_alchemy_mod.aspect.air": "Air",
+	"item.waters_alchemy_mod.aspect.water": "Water",
+	"item.waters_alchemy_mod.aspect.earth": "Earth",
+	"item.waters_alchemy_mod.aspect.fire": "Fire"
 }
