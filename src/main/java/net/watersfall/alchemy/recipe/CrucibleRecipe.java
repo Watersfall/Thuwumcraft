@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
+import net.watersfall.alchemy.api.aspect.Aspects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +119,7 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 			for(int i = 0; i < list.size(); i++)
 			{
 				JsonObject object = list.get(i).getAsJsonObject();
-				Aspect aspect = Aspect.ASPECTS.get(Identifier.tryParse(object.get("aspect").getAsString()));
+				Aspect aspect = Aspects.ASPECTS.get(Identifier.tryParse(object.get("aspect").getAsString()));
 				int amount = object.get("count").getAsInt();
 				aspects.add(new AspectStack(aspect, amount));
 			}
@@ -134,7 +135,7 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 			List<AspectStack> list = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
 			{
-				Aspect aspect = Aspect.ASPECTS.get(buf.readIdentifier());
+				Aspect aspect = Aspects.ASPECTS.get(buf.readIdentifier());
 				list.add(new AspectStack(aspect, buf.readInt()));
 			}
 			ItemStack output = buf.readItemStack();

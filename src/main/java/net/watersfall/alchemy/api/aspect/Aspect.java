@@ -2,9 +2,6 @@ package net.watersfall.alchemy.api.aspect;
 
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.item.AspectItem;
-import net.watersfall.alchemy.api.item.AspectItems;
-
-import java.util.HashMap;
 
 public class Aspect
 {
@@ -46,13 +43,5 @@ public class Aspect
 	public AspectItem getItem()
 	{
 		return this.item;
-	}
-
-	public static final HashMap<Identifier, Aspect> ASPECTS = new HashMap<>();
-
-	public static Aspect register(Identifier id, Aspect aspect)
-	{
-		ASPECTS.put(id, aspect);
-		return aspect;
 	}
 }

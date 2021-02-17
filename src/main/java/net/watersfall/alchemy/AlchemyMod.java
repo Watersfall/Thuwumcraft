@@ -11,8 +11,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.watersfall.alchemy.api.aspect.Aspect;
-import net.watersfall.alchemy.api.item.AspectItems;
+import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
@@ -51,11 +50,6 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
-
-	public static final Aspect AIR = new Aspect(getId("air"), 0xffff00, AspectItems.AIR);
-	public static final Aspect EARTH = new Aspect(getId("earth"), 0x00ff00, AspectItems.EARTH);
-	public static final Aspect WATER = new Aspect(getId("water"), 0x0000ff, AspectItems.WATER);
-	public static final Aspect FIRE = new Aspect(getId("fire"), 0xff0000, AspectItems.FIRE);
 
 	static
 	{
@@ -156,10 +150,10 @@ public class AlchemyMod implements ModInitializer
 
 	private static void registerAspects()
 	{
-		Aspect.register(AIR.getId(), AIR);
-		Aspect.register(EARTH.getId(), EARTH);
-		Aspect.register(WATER.getId(), WATER);
-		Aspect.register(FIRE.getId(), FIRE);
+		Aspects.register(Aspects.AIR.getId(), Aspects.AIR);
+		Aspects.register(Aspects.EARTH.getId(), Aspects.EARTH);
+		Aspects.register(Aspects.WATER.getId(), Aspects.WATER);
+		Aspects.register(Aspects.FIRE.getId(), Aspects.FIRE);
 	}
 
 	private static void registerSounds()
