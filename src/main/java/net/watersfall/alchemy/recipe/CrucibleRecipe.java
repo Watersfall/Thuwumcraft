@@ -129,13 +129,29 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 		@Override
 		public CrucibleRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			return null;
+			Ingredient input = Ingredient.fromPacket(buf);
+			int size = buf.readInt();
+			List<AspectStack> list = new ArrayList<>(size);
+			for(int i = 0; i < size; i++)
+			{
+				Aspect aspect = Aspect.ASPECTS.get(buf.readIdentifier());
+				list.add(new AspectStack(aspect, buf.readInt()));
+			}
+			ItemStack output = buf.readItemStack();
+			return new CrucibleRecipe(id, input, list, output);
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, CrucibleRecipe recipe)
 		{
-
+			recipe.catalyst.write(buf);
+			buf.writeInt(recipe.aspects.size());
+			for(int i = 0; i < recipe.aspects.size(); i++)
+			{
+				buf.writeIdentifier(new Identifier(recipe.aspects.get(i).getAspect().getName()));
+				buf.writeInt(recipe.aspects.get(i).getCount());
+			}
+			buf.writeItemStack(recipe.output);
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>

@@ -117,13 +117,27 @@ public class AspectIngredient implements Recipe<AspectInventory>
 		@Override
 		public AspectIngredient read(Identifier id, PacketByteBuf buf)
 		{
-			return null;
+			Item item = Registry.ITEM.get(buf.readIdentifier());
+			int size = buf.readInt();
+			List<AspectStack> list = new ArrayList<>(size);
+			for(int i = 0; i < size; i++)
+			{
+				Aspect aspect = Aspect.ASPECTS.get(buf.readIdentifier());
+				list.add(new AspectStack(aspect, buf.readInt()));
+			}
+			return new AspectIngredient(id, item, list);
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, AspectIngredient recipe)
 		{
-
+			buf.writeIdentifier(Registry.ITEM.getId(recipe.input));
+			buf.writeInt(recipe.aspects.size());
+			for(int i = 0; i < recipe.aspects.size(); i++)
+			{
+				buf.writeIdentifier(new Identifier(recipe.aspects.get(i).getAspect().getName()));
+				buf.writeInt(recipe.aspects.get(i).getCount());
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>
