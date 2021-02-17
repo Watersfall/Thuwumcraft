@@ -174,7 +174,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						{
 							itemStack.decrement(1);
 						}
-						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 						entity.sync();
 					}
 				}
@@ -190,7 +190,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						itemStack.decrement(1);
 					}
 					entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
-					world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+					world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 					entity.sync();
 				}
 				return ActionResult.success(world.isClient);

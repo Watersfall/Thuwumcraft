@@ -69,7 +69,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 						ingredient.craft(entity);
 						entity.markDirty();
 						entity.sync();
-						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 					}
 					return ActionResult.success(world.isClient);
 				}
