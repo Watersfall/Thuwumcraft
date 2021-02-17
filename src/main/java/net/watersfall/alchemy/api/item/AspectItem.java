@@ -7,6 +7,9 @@ import net.minecraft.item.ItemGroup;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspects;
 
+/**
+ *
+ */
 public class AspectItem extends Item
 {
 	private static final ItemGroup ASPECT_GROUP = FabricItemGroupBuilder.build(AlchemyMod.getId("aspect_group"), () -> Aspects.AIR.getItem().getDefaultStack());

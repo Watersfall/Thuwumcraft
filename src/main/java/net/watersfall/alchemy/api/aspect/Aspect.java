@@ -26,6 +26,10 @@ public class Aspect
 		return this.item.getTranslationKey();
 	}
 
+	/**
+	 * Gets the identifier of the aspect
+	 * @return the identifier
+	 */
 	public Identifier getId()
 	{
 		return this.name;
@@ -40,6 +44,11 @@ public class Aspect
 		return this.color;
 	}
 
+	/**
+	 * Gets the Item that displays this aspect in the creative menu,
+	 * tooltips, and other item menus
+	 * @return this aspect's item
+	 */
 	public AspectItem getItem()
 	{
 		return this.item;

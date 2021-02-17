@@ -13,24 +13,60 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
+/**
+ * A sided inventory that also contains AspectStacks.
+ * The default implementation is an inventory that has
+ * no ItemStacks and only contains AspectStacks
+ */
 public interface AspectInventory extends SidedInventory
 {
+	/**
+	 * Gets the map of all AspectStacks in this inventory
+	 * @return the aspects map
+	 */
 	HashMap<Aspect, AspectStack> getAspects();
 
+	/**
+	 * Gets the currently inputted item into this inventory.
+	 * Used for processing the AspectIngredient recipe and the
+	 * CrucibleRecipe
+	 * @return The currently inputted stack
+	 */
 	ItemStack getCurrentInput();
 
+	/**
+	 * Sets the current input item for recipe processing
+	 * @param stack The stack to process
+	 */
 	void setCurrentInput(ItemStack stack);
 
+	/**
+	 * Gets the AspectStack for the specific Aspect
+	 * @param aspect the Aspect instance
+	 * @return the AspectStack
+	 */
 	default AspectStack getAspect(Aspect aspect)
 	{
 		return getAspects().get(aspect);
 	}
 
+	/**
+	 * Removes the AspectStack of the specific aspect from the inventory
+	 * @param aspect The Aspect instance
+	 * @return the AspectStack that was removed
+	 */
 	default AspectStack removeAspect(Aspect aspect)
 	{
 		return getAspects().remove(aspect);
 	}
 
+	/**
+	 * Removes a specific amount of an Aspect from the inventory
+	 * and returns a new AspectStack with the removed Aspects
+	 * @param aspect the Aspect instance to remove
+	 * @param amount The amount to remove
+	 * @return A new AspectStack with the size of amount
+	 */
 	default AspectStack removeAspect(Aspect aspect, int amount)
 	{
 		AspectStack stack = getAspects().get(aspect);
@@ -45,6 +81,10 @@ public interface AspectInventory extends SidedInventory
 		}
 	}
 
+	/**
+	 * Adds the AspectStack
+	 * @param aspect the AspectStack to add
+	 */
 	default void addAspect(AspectStack aspect)
 	{
 		if(getAspects().containsKey(aspect.getAspect()))
@@ -58,38 +98,29 @@ public interface AspectInventory extends SidedInventory
 		}
 	}
 
+	/**
+	 * Gets the size of the aspects map
+	 * @return the size
+	 */
 	default int aspectSize()
 	{
 		return getAspects().size();
 	}
 
-	default int aspectCount(Aspect aspect)
-	{
-		int count = 0;
-		for(int i = 0; i < aspectSize(); i++)
-		{
-			if(getAspect(aspect).getAspect() == aspect)
-			{
-				count += getAspect(aspect).getCount();
-			}
-		}
-		return count;
-	}
-
 	default boolean containsAspect(Aspect aspect)
 	{
-		for(int i = 0; i < aspectSize(); i++)
-		{
-			if(getAspect(aspect).getAspect() == aspect)
-			{
-				return true;
-			}
-		}
-		return false;
+		return getAspects().containsKey(aspect) && !getAspects().get(aspect).isEmpty();
 	}
 
-	void setAspect(Aspect aspect, int amount);
+	default void setAspect(Aspect aspect, int amount)
+	{
+		getAspects().put(aspect, new AspectStack(aspect, amount));
+	}
 
+	/**
+	 * Gets the total amount of all aspects contained in this inventory
+	 * @return the total aspect count
+	 */
 	default int totalAspectCount()
 	{
 		int count = 0;
@@ -100,6 +131,13 @@ public interface AspectInventory extends SidedInventory
 		return count;
 	}
 
+	/**
+	 * Saves the entire inventory to a CompoundTag and returns the tag. <br>
+	 * This default implementation saves only the aspects and input stack,
+	 * and none of the standard inventory items
+	 * @param tag The CompoundTag to write the inventory to
+	 * @return The CompoundTag written to
+	 */
 	default CompoundTag toInventoryTag(CompoundTag tag)
 	{
 		ListTag list = new ListTag();
@@ -120,6 +158,12 @@ public interface AspectInventory extends SidedInventory
 		return tag;
 	}
 
+	/**
+	 * Reads the entire inventory from the passed in CompoundTag. <br>
+	 * This default implementation only reads AspectStacks and the
+	 * Input ItemStack
+	 * @param tag The CompoundTag to read from
+	 */
 	default void fromInventoryTag(CompoundTag tag)
 	{
 		this.getAspects().clear();
@@ -204,19 +248,25 @@ public interface AspectInventory extends SidedInventory
 		getAspects().clear();
 	}
 
+	/**
+	 * A default implementation of AspectInventory that does nothing special.
+	 * Meant for checking against the recipe type
+	 */
 	public static final class Impl implements AspectInventory
 	{
-		private final ItemStack stack;
+		private ItemStack stack;
+		private final HashMap<Aspect, AspectStack> aspects;
 
 		public Impl(ItemStack stack)
 		{
 			this.stack = stack;
+			this.aspects = new HashMap<>();
 		}
 
 		@Override
 		public HashMap<Aspect, AspectStack> getAspects()
 		{
-			return null;
+			return aspects;
 		}
 
 		@Override
@@ -228,13 +278,7 @@ public interface AspectInventory extends SidedInventory
 		@Override
 		public void setCurrentInput(ItemStack stack)
 		{
-
-		}
-
-		@Override
-		public void setAspect(Aspect aspect, int amount)
-		{
-
+			this.stack = stack;
 		}
 
 		@Override

@@ -89,12 +89,6 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	}
 
 	@Override
-	public void setAspect(Aspect aspect, int amount)
-	{
-		this.aspects.put(aspect, new AspectStack(aspect, amount));
-	}
-
-	@Override
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);

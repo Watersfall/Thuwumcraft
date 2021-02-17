@@ -2,6 +2,9 @@ package net.watersfall.alchemy.api.aspect;
 
 public class AspectStack
 {
+	/**
+	 * An ItemStack with an Aspect instead of an Item
+	 */
 	public static final AspectStack EMPTY = new AspectStack(null, 1);
 
 	private final Aspect aspect;

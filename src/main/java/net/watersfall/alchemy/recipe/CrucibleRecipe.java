@@ -41,7 +41,7 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 		{
 			for(int i = 0; i < this.aspects.size(); i++)
 			{
-				if(inv.aspectCount(aspects.get(i).getAspect()) < aspects.get(i).getCount())
+				if(inv.getAspect(aspects.get(i).getAspect()).getCount() < aspects.get(i).getCount())
 				{
 					return false;
 				}
