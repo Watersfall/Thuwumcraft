@@ -30,6 +30,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.fluid.ColoredWaterContainer;
 import net.watersfall.alchemy.api.fluid.WaterContainer;
 import net.watersfall.alchemy.block.entity.AbstractCauldronEntity;
@@ -110,6 +111,17 @@ public abstract class AbstractCauldronBlock extends Block
 						color = Vec3d.unpackRgb(world.getColor(pos, BiomeColors.WATER_COLOR));
 					}
 					particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+					if(random.nextDouble() > 0.5)
+					{
+						world.playSound(pos.getX(),
+								pos.getY(),
+								pos.getZ(),
+								AlchemyMod.BUBBLE_SOUND,
+								SoundCategory.BLOCKS,
+								0.25F,
+								0.9F + (float)(Math.random() * 0.2F),
+								false);
+					}
 				}
 			}
 		}

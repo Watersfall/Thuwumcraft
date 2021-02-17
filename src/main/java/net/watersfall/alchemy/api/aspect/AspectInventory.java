@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -203,5 +204,45 @@ public interface AspectInventory extends SidedInventory
 	default void clear()
 	{
 		getAspects().clear();
+	}
+
+	public static final class Impl implements AspectInventory
+	{
+		private final ItemStack stack;
+
+		public Impl(ItemStack stack)
+		{
+			this.stack = stack;
+		}
+
+		@Override
+		public HashMap<Aspect, AspectStack> getAspects()
+		{
+			return null;
+		}
+
+		@Override
+		public ItemStack getCurrentInput()
+		{
+			return stack;
+		}
+
+		@Override
+		public void setCurrentInput(ItemStack stack)
+		{
+
+		}
+
+		@Override
+		public void setAspect(Aspect aspect, int amount)
+		{
+
+		}
+
+		@Override
+		public void markDirty()
+		{
+
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.block;
 
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
@@ -192,6 +193,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						{
 							itemStack.decrement(1);
 						}
+						world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 						entity.sync();
 					}
 				}
@@ -207,6 +209,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						itemStack.decrement(1);
 					}
 					entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
+					world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 					entity.sync();
 				}
 				return ActionResult.success(world.isClient);

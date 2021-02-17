@@ -84,6 +84,11 @@ public class AspectIngredient implements Recipe<AspectInventory>
 		return AlchemyRecipes.ASPECT_INGREDIENTS;
 	}
 
+	public List<AspectStack> getAspects()
+	{
+		return this.aspects;
+	}
+
 	public static class Serializer implements RecipeSerializer<AspectIngredient>
 	{
 		private final AspectIngredient.Serializer.RecipeFactory<AspectIngredient> recipeFactory;

@@ -6,11 +6,13 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.entity.CrucibleEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
@@ -68,6 +70,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 						ingredient.craft(entity);
 						entity.markDirty();
 						entity.sync();
+						world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 					}
 					return ActionResult.success(world.isClient);
 				}

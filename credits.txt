@@ -1,0 +1,9 @@
+src/main/resources/assets/waters_alchemy_mod/sounds/swirl.ogg:
+	"Water Swirl, Small, 15.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+	(https://freesound.org/people/InspectorJ/sounds/398704/)
+src/main/resources/assets/waters_alchemy_mod/sounds/magic.ogg:
+	"another magic wand spell tinkle.flac" by Timbre of Freesound.org
+	(https://freesound.org/people/Timbre/sounds/221683/)
+src/main/resources/assets/waters_alchemy_mod/sounds/bubble/*:
+	"Water Bubble" by EminYILDIRIM of Freesound.org
+	(https://freesound.org/people/EminYILDIRIM/sounds/536109/)
