@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -14,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.item.AspectItems;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
@@ -40,7 +40,6 @@ import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 
-import javax.swing.plaf.synth.Region;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -57,9 +56,6 @@ public class AlchemyMod implements ModInitializer
 	public static final Aspect EARTH = new Aspect("waters_alchemy_mod:earth", 0x00ff00, AspectItems.EARTH);
 	public static final Aspect WATER = new Aspect("waters_alchemy_mod:water", 0x0000ff, AspectItems.WATER);
 	public static final Aspect FIRE = new Aspect("waters_alchemy_mod:fire", 0xff0000, AspectItems.FIRE);
-	public static final SoundEvent CAULDRON_SOUND = new SoundEvent(getId("block.cauldron.add_ingredient"));
-	public static final SoundEvent MAGIC_SOUND = new SoundEvent(getId("block.crucible.create"));
-	public static final SoundEvent BUBBLE_SOUND = new SoundEvent(getId("block.cauldron.bubble"));
 
 	static
 	{
@@ -166,6 +162,13 @@ public class AlchemyMod implements ModInitializer
 		Aspect.register(getId("fire"), FIRE);
 	}
 
+	private static void registerSounds()
+	{
+		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), AlchemySounds.CAULDRON_ADD_INGREDIENT);
+		Registry.register(Registry.SOUND_EVENT, getId("block.crucible.create"), AlchemySounds.USE_DUST_SOUND);
+		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), AlchemySounds.BUBBLE_SOUND);
+	}
+
 	@Override
 	public void onInitialize()
 	{
@@ -176,8 +179,6 @@ public class AlchemyMod implements ModInitializer
 		AlchemyBlockEntities.register();
 		registerEvents();
 		registerAspects();
-		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), CAULDRON_SOUND);
-		Registry.register(Registry.SOUND_EVENT, getId("block.crucible.create"), MAGIC_SOUND);
-		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), BUBBLE_SOUND);
+		registerSounds();
 	}
 }

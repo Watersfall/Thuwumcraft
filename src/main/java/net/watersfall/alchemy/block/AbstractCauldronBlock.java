@@ -30,12 +30,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.fluid.ColoredWaterContainer;
 import net.watersfall.alchemy.api.fluid.WaterContainer;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.entity.AbstractCauldronEntity;
 
-import java.util.Optional;
 import java.util.Random;
 
 public abstract class AbstractCauldronBlock extends Block
@@ -116,7 +115,7 @@ public abstract class AbstractCauldronBlock extends Block
 						world.playSound(pos.getX(),
 								pos.getY(),
 								pos.getZ(),
-								AlchemyMod.BUBBLE_SOUND,
+								AlchemySounds.BUBBLE_SOUND,
 								SoundCategory.BLOCKS,
 								0.25F,
 								0.9F + (float)(Math.random() * 0.2F),

@@ -4,7 +4,7 @@
 			"waters_alchemy_mod:swirl"
 		]
 	},
-	"block.crucible.create": {
+	"item.magic_dust.use": {
 		"sounds": [
 			"waters_alchemy_mod:magic"
 		]

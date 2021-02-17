@@ -8,7 +8,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Rarity;
-import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 
 public class MagicDustItem extends Item
@@ -26,7 +26,7 @@ public class MagicDustItem extends Item
 		{
 			if(!context.getWorld().isClient)
 			{
-				context.getWorld().playSound(null, context.getBlockPos(), AlchemyMod.MAGIC_SOUND, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
+				context.getWorld().playSound(null, context.getBlockPos(), AlchemySounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 				context.getWorld().setBlockState(context.getBlockPos(), AlchemyBlocks.CRUCIBLE_BLOCK.getDefaultState());
 			}
 			return ActionResult.success(context.getWorld().isClient);

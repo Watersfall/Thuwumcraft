@@ -12,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.entity.CrucibleEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
@@ -20,7 +20,6 @@ import net.watersfall.alchemy.recipe.CrucibleRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.Random;
 
 public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
@@ -70,7 +69,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 						ingredient.craft(entity);
 						entity.markDirty();
 						entity.sync();
-						world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 					}
 					return ActionResult.success(world.isClient);
 				}

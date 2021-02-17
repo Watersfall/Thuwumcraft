@@ -1,51 +1,32 @@
 package net.watersfall.alchemy.block;
 
-import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.watersfall.alchemy.recipe.CauldronIngredientRecipe;
 import net.watersfall.alchemy.recipe.CauldronItemRecipe;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.RecipeManager;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.Random;
 
 public class BrewingCauldronBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
@@ -193,7 +174,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						{
 							itemStack.decrement(1);
 						}
-						world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 						entity.sync();
 					}
 				}
@@ -209,7 +190,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						itemStack.decrement(1);
 					}
 					entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
-					world.playSound(null, pos, AlchemyMod.CAULDRON_SOUND, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
+					world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.25F, 0.8F + ((float)Math.random() * 0.4F));
 					entity.sync();
 				}
 				return ActionResult.success(world.isClient);
