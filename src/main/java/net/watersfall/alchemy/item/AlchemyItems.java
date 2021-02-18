@@ -27,6 +27,7 @@ public class AlchemyItems
 	public static final MagicDustItem MAGIC_DUST;
 	public static final SpecialPickaxeItem SPECIAL_PICKAXE_ITEM;
 	public static final SpecialAxeItem SPECIAL_AXE_ITEM;
+	public static final Item JAR_ITEM;
 
 	static
 	{
@@ -43,6 +44,7 @@ public class AlchemyItems
 		MAGIC_DUST = new MagicDustItem();
 		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
 		SPECIAL_AXE_ITEM = new SpecialAxeItem();
+		JAR_ITEM = new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	public static void register()
@@ -59,6 +61,7 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_dust"), AlchemyItems.MAGIC_DUST);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("jar"), AlchemyItems.JAR_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/air"), AspectItems.AIR);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/earth"), AspectItems.EARTH);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/fire"), AspectItems.FIRE);

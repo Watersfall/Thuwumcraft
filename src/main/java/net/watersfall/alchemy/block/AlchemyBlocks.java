@@ -2,6 +2,7 @@ package net.watersfall.alchemy.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 
@@ -12,6 +13,7 @@ public class AlchemyBlocks
 	public static final AlchemicalFurnaceBlock ALCHEMICAL_FURNACE_BLOCK;
 	public static final ChildBlock CHILD_BLOCK;
 	public static final CrucibleBlock CRUCIBLE_BLOCK;
+	public static final JarBlock JAR_BLOCK;
 
 	static
 	{
@@ -20,6 +22,7 @@ public class AlchemyBlocks
 		ALCHEMICAL_FURNACE_BLOCK = new AlchemicalFurnaceBlock(FabricBlockSettings.copyOf(Blocks.STONE));
 		CHILD_BLOCK = new ChildBlock(FabricBlockSettings.copyOf(Blocks.GLASS));
 		CRUCIBLE_BLOCK = new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK));
+		JAR_BLOCK = new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true));
 	}
 
 	public static void register()
@@ -29,5 +32,6 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("alchemical_furnace"), AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("child_block"), AlchemyBlocks.CHILD_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_crucible"), CRUCIBLE_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("jar"), JAR_BLOCK);
 	}
 }
