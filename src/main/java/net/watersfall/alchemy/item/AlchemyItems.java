@@ -28,6 +28,7 @@ public class AlchemyItems
 	public static final SpecialPickaxeItem SPECIAL_PICKAXE_ITEM;
 	public static final SpecialAxeItem SPECIAL_AXE_ITEM;
 	public static final Item JAR_ITEM;
+	public static final GlassPhialItem EMPTY_PHIAL_ITEM;
 
 	static
 	{
@@ -45,6 +46,7 @@ public class AlchemyItems
 		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
 		SPECIAL_AXE_ITEM = new SpecialAxeItem();
 		JAR_ITEM = new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		EMPTY_PHIAL_ITEM = new GlassPhialItem(null);
 	}
 
 	public static void register()
@@ -66,6 +68,7 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/earth"), AspectItems.EARTH);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/fire"), AspectItems.FIRE);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/water"), AspectItems.WATER);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("phial/empty"), EMPTY_PHIAL_ITEM);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()
