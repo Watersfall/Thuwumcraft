@@ -79,26 +79,26 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
-		this.setStack(ItemStack.fromTag(compoundTag.getCompound("pedestal_item")));
+		this.setStack(ItemStack.fromNbt(compoundTag.getCompound("pedestal_item")));
 		this.main = compoundTag.getBoolean("main");
 		this.crafting = compoundTag.getBoolean("crafting");
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void readNbt(CompoundTag tag)
 	{
-		super.fromTag(tag);
-		this.setStack(ItemStack.fromTag(tag.getCompound("pedestal_item")));
+		super.readNbt(tag);
+		this.setStack(ItemStack.fromNbt(tag.getCompound("pedestal_item")));
 		this.main = tag.getBoolean("main");
 		this.crafting = tag.getBoolean("crafting");
 		this.craftingFinished = tag.getBoolean("crafting_finished");
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public CompoundTag writeNbt(CompoundTag tag)
 	{
-		super.toTag(tag);
-		tag.put("pedestal_item", this.stack.toTag(new CompoundTag()));
+		super.writeNbt(tag);
+		tag.put("pedestal_item", this.stack.writeNbt(new CompoundTag()));
 		tag.putBoolean("main", main);
 		tag.putBoolean("crafting", crafting);
 		tag.putBoolean("crafting_finished", craftingFinished);
@@ -108,7 +108,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	@Override
 	public CompoundTag toClientTag(CompoundTag compoundTag)
 	{
-		compoundTag.put("pedestal_item", this.stack.toTag(new CompoundTag()));
+		compoundTag.put("pedestal_item", this.stack.writeNbt(new CompoundTag()));
 		compoundTag.putBoolean("main", main);
 		compoundTag.putBoolean("crafting", crafting);
 		return compoundTag;

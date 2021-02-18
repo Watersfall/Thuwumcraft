@@ -28,16 +28,16 @@ public abstract class AbstractCauldronEntity extends BlockEntity implements Bloc
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void readNbt(CompoundTag tag)
 	{
-		super.fromTag(tag);
+		super.readNbt(tag);
 		this.waterLevel = tag.getShort(WATER_LEVEL);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public CompoundTag writeNbt(CompoundTag tag)
 	{
-		super.toTag(tag);
+		super.writeNbt(tag);
 		tag.putShort(WATER_LEVEL, waterLevel);
 		return tag;
 	}

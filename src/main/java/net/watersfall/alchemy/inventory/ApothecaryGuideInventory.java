@@ -18,7 +18,7 @@ public class ApothecaryGuideInventory implements Inventory
 		CompoundTag tag = stack.getSubTag("Items");
 
 		if (tag != null) {
-			Inventories.fromTag(tag, contents);
+			Inventories.readNbt(tag, contents);
 		}
 	}
 
@@ -110,6 +110,6 @@ public class ApothecaryGuideInventory implements Inventory
 	public void markDirty()
 	{
 		CompoundTag tag = stack.getOrCreateSubTag("Items");
-		Inventories.toTag(tag, contents);
+		Inventories.writeNbt(tag, contents);
 	}
 }

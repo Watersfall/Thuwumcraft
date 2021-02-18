@@ -32,15 +32,15 @@ public class ChildBlockEntity extends BlockEntity
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void readNbt(CompoundTag tag)
 	{
-		super.fromTag(tag);
+		super.readNbt(tag);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public CompoundTag writeNbt(CompoundTag tag)
 	{
-		super.toTag(tag);
+		super.writeNbt(tag);
 		return tag;
 	}
 }

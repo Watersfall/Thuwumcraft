@@ -23,17 +23,17 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void readNbt(CompoundTag tag)
 	{
-		super.fromTag(tag);
+		super.readNbt(tag);
 		this.multiBlock = new AlchemicalFurnaceMultiBlock();
 		multiBlock.read(tag);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public CompoundTag writeNbt(CompoundTag tag)
 	{
-		super.toTag(tag);
+		super.writeNbt(tag);
 		if(this.component != null && this.component.getMultiBlock() != null)
 		{
 			this.component.getMultiBlock().write(tag);

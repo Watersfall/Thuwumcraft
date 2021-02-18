@@ -44,20 +44,20 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public void fromTag(CompoundTag tag)
+	public void readNbt(CompoundTag tag)
 	{
-		super.fromTag(tag);
+		super.readNbt(tag);
 		this.ingredientCount = tag.getByte(INGREDIENT_COUNT);
 		this.lastWaterLevel = (short)(waterLevel + ((float)this.ingredientCount * (1F / 32F)));
-		Inventories.fromTag(tag, this.contents);
+		Inventories.readNbt(tag, this.contents);
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public CompoundTag writeNbt(CompoundTag tag)
 	{
-		super.toTag(tag);
+		super.writeNbt(tag);
 		tag.putByte(INGREDIENT_COUNT, ingredientCount);
-		Inventories.toTag(tag, this.contents);
+		Inventories.writeNbt(tag, this.contents);
 		return tag;
 	}
 
@@ -66,7 +66,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	{
 		super.fromClientTag(compoundTag);
 		this.ingredientCount = compoundTag.getByte(INGREDIENT_COUNT);
-		Inventories.fromTag(compoundTag, contents);
+		Inventories.readNbt(compoundTag, contents);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	{
 		super.toClientTag(compoundTag);
 		compoundTag.putByte(INGREDIENT_COUNT, this.ingredientCount);
-		Inventories.toTag(compoundTag, contents);
+		Inventories.writeNbt(compoundTag, contents);
 		return compoundTag;
 	}
 

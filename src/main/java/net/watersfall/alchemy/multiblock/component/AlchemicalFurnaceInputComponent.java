@@ -29,7 +29,7 @@ public class AlchemicalFurnaceInputComponent extends AlchemicalFurnaceComponent 
 	public CompoundTag write(CompoundTag tag)
 	{
 		super.write(tag);
-		tag.put("input_inventory", Inventories.toTag(new CompoundTag(), this.inventory.getContents()));
+		tag.put("input_inventory", Inventories.writeNbt(new CompoundTag(), this.inventory.getContents()));
 		return tag;
 	}
 
@@ -37,7 +37,7 @@ public class AlchemicalFurnaceInputComponent extends AlchemicalFurnaceComponent 
 	public void read(CompoundTag tag)
 	{
 		super.read(tag);
-		Inventories.fromTag(tag.getCompound("input_inventory"), this.inventory.getContents());
+		Inventories.readNbt(tag.getCompound("input_inventory"), this.inventory.getContents());
 	}
 
 	@Override
