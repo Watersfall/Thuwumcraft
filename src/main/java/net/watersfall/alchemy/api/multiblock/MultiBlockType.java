@@ -1,8 +1,11 @@
 package net.watersfall.alchemy.api.multiblock;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 /**
  * The type of a MultiBlock.
@@ -16,6 +19,12 @@ public interface MultiBlockType<T extends MultiBlock<? extends MultiBlockCompone
 	 * An empty BlockPos array representing an invalid match
 	 */
 	BlockPos[] MISSING = new BlockPos[0];
+
+	/**
+	 * @return A List of all valid BlockStates that can be
+	 * interacted with to create this MultiBlock
+	 */
+	List<BlockState> getStartingPoints();
 
 	/**
 	 * Checks if the position is the start of a valid MultiBlock of this type

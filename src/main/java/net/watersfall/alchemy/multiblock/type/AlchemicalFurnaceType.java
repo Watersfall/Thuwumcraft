@@ -5,9 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
+import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.multiblock.MultiBlockType;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceFuelComponent;
@@ -17,9 +17,12 @@ import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMultiBlock>
 {
 	public static final AlchemicalFurnaceType INSTANCE = new AlchemicalFurnaceType();
+	private static final List<BlockState> VALID_STARTING_POINTS = Blocks.FURNACE.getStateManager().getStates();
 
 	private AlchemicalFurnaceType(){}
 
@@ -33,6 +36,12 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public List<BlockState> getStartingPoints()
+	{
+		return VALID_STARTING_POINTS;
 	}
 
 	@Override
@@ -82,7 +91,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
-		MultiBlockRegistry.SERVER.add(multiBlock);
+		MultiBlockRegistry.SERVER_TICKER.add(multiBlock);
 		return multiBlock;
 	}
 }

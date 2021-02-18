@@ -12,6 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
@@ -19,9 +20,9 @@ import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.SpecialPickaxeItem;
+import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
-import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -113,7 +114,7 @@ public class AlchemyMod implements ModInitializer
 				setIngredientTag(Tag.of(getAllIngredients(server)));
 			}
 		});
-		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER.tick());
+		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
 		DispenserBlock.registerBehavior(AlchemyItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
 			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
@@ -163,6 +164,11 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), AlchemySounds.BUBBLE_SOUND);
 	}
 
+	private static void registerMultiBlocks()
+	{
+		MultiBlockRegistry.TYPES.add(AlchemicalFurnaceType.INSTANCE);
+	}
+
 	@Override
 	public void onInitialize()
 	{
@@ -174,5 +180,6 @@ public class AlchemyMod implements ModInitializer
 		registerEvents();
 		registerAspects();
 		registerSounds();
+		registerMultiBlocks();
 	}
 }

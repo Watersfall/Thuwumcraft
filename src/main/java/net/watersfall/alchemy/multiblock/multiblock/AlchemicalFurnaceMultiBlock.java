@@ -159,7 +159,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		}
 		if(!world.isClient)
 		{
-			MultiBlockRegistry.SERVER.add(this);
+			MultiBlockRegistry.SERVER_TICKER.add(this);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState().with(FurnaceBlock.FACING, direction));
 			}
 		}
-		MultiBlockRegistry.SERVER.remove(this);
+		MultiBlockRegistry.SERVER_TICKER.remove(this);
 	}
 
 	@Override
