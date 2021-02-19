@@ -13,6 +13,8 @@ import net.watersfall.alchemy.client.renderer.BrewingCauldronEntityRenderer;
 import net.watersfall.alchemy.client.renderer.CrucibleEntityRenderer;
 import net.watersfall.alchemy.client.renderer.JarEntityRenderer;
 import net.watersfall.alchemy.client.renderer.PedestalEntityRenderer;
+import net.watersfall.alchemy.item.AlchemyItems;
+import net.watersfall.alchemy.item.GlassPhialItem;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

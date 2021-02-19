@@ -131,6 +131,16 @@ public interface AspectInventory extends SidedInventory
 		return count;
 	}
 
+	default boolean canInsert(AspectStack stack, Direction direction)
+	{
+		return false;
+	}
+
+	default boolean canExtract(Direction direction)
+	{
+		return false;
+	}
+
 	/**
 	 * Saves the entire inventory to a CompoundTag and returns the tag. <br>
 	 * This default implementation saves only the aspects and input stack,

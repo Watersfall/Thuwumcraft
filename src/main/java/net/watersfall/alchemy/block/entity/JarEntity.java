@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
@@ -46,6 +47,18 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	public boolean canAddAspect(Aspect aspect)
 	{
 		return this.aspects.size() == 0 || this.aspects.containsKey(aspect);
+	}
+
+	@Override
+	public boolean canInsert(AspectStack stack, Direction direction)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canExtract(Direction direction)
+	{
+		return true;
 	}
 
 	@Override

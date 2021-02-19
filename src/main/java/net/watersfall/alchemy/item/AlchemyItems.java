@@ -2,9 +2,9 @@ package net.watersfall.alchemy.item;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.*;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.item.AspectItems;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -46,7 +46,7 @@ public class AlchemyItems
 		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
 		SPECIAL_AXE_ITEM = new SpecialAxeItem();
 		JAR_ITEM = new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		EMPTY_PHIAL_ITEM = new GlassPhialItem(null);
+		EMPTY_PHIAL_ITEM = new GlassPhialItem(Aspect.EMPTY);
 	}
 
 	public static void register()

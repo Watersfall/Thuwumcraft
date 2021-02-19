@@ -43,4 +43,9 @@ public class Aspects
 		}
 		return aspect;
 	}
+
+	public static Aspect getAspectById(Identifier id)
+	{
+		return ASPECTS.getOrDefault(id, Aspect.EMPTY);
+	}
 }

@@ -1,10 +1,13 @@
 package net.watersfall.alchemy.api.aspect;
 
 import net.minecraft.util.Identifier;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.item.AspectItem;
 
 public class Aspect
 {
+	public static final Aspect EMPTY = new Aspect(null, -1, null);
+
 	private final Identifier name;
 	private final int color;
 	private final AspectItem item;
