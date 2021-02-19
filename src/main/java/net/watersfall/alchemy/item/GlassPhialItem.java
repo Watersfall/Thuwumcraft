@@ -78,21 +78,17 @@ public class GlassPhialItem extends Item
 					if(!world.isClient)
 					{
 						inventory.addAspect(aspectStack);
-						if(!this.setAspectCount(stack, 0))
+						stack.decrement(1);
+						if(stack.isEmpty())
 						{
-							stack.decrement(1);
-							if(stack.isEmpty())
+							context.getPlayer().setStackInHand(context.getHand(), new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM));
+						}
+						else
+						{
+							if(!context.getPlayer().getInventory().insertStack(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM)))
 							{
-								context.getPlayer().setStackInHand(context.getHand(), new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM));
+								context.getPlayer().dropItem(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM), true);
 							}
-							else
-							{
-								if(!context.getPlayer().getInventory().insertStack(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM)))
-								{
-									context.getPlayer().dropItem(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM), true);
-								}
-							}
-
 						}
 						if(test instanceof BlockEntityClientSerializable)
 						{
