@@ -126,7 +126,7 @@ public class JarEntityRenderer implements BlockEntityRenderer<JarEntity>
 			matrices.pop();
 			matrices.pop();
 			HitResult result = MinecraftClient.getInstance().crosshairTarget;
-			if(result != null && result.getType() == HitResult.Type.BLOCK)
+			if(!MinecraftClient.getInstance().options.hudHidden && result != null && result.getType() == HitResult.Type.BLOCK)
 			{
 				BlockPos pos = new BlockPos(result.getPos());
 				if(pos.equals(entity.getPos()))
