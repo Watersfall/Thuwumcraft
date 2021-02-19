@@ -78,7 +78,7 @@ public class GlassPhialItem extends Item
 					if(!world.isClient)
 					{
 						inventory.addAspect(aspectStack);
-						if(this.setAspectCount(stack, aspectStack.getCount()))
+						if(!this.setAspectCount(stack, 0))
 						{
 							stack.decrement(1);
 							if(stack.isEmpty())
@@ -114,10 +114,6 @@ public class GlassPhialItem extends Item
 
 	public int getAspectCount(ItemStack stack)
 	{
-		if(stack.getTag() == null || !stack.getTag().contains("waters_aspect_count"))
-		{
-			setAspectCount(stack, MAX_COUNT);
-		}
 		return stack.getOrCreateTag().getInt("waters_aspect_count");
 	}
 
