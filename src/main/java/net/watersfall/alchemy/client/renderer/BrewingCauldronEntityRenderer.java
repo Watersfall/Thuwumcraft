@@ -2,6 +2,7 @@ package net.watersfall.alchemy.client.renderer;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
@@ -83,8 +84,8 @@ public class BrewingCauldronEntityRenderer extends AbstractCauldronRenderer<Brew
 				HitResult result = MinecraftClient.getInstance().crosshairTarget;
 				if(result != null && result.getType() == HitResult.Type.BLOCK)
 				{
-					Vec3d blockPos = new Vec3d(entity.getPos().getX() + 0.5D, entity.getPos().getY() + 0.5D, entity.getPos().getZ() + 0.5D);
-					if(result.getPos().distanceTo(blockPos) <= 1D)
+					BlockPos pos = new BlockPos(result.getPos());
+					if(pos.equals(entity.getPos()))
 					{
 						matrices.push();
 						VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());

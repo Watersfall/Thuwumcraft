@@ -10,6 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
@@ -38,8 +39,8 @@ public class CrucibleEntityRenderer extends AbstractCauldronRenderer<CrucibleEnt
 				HitResult result = MinecraftClient.getInstance().crosshairTarget;
 				if(result != null && result.getType() == HitResult.Type.BLOCK)
 				{
-					Vec3d blockPos = new Vec3d(entity.getPos().getX() + 0.5D, entity.getPos().getY() + 0.5D, entity.getPos().getZ() + 0.5D);
-					if(result.getPos().distanceTo(blockPos) <= 1D)
+					BlockPos pos = new BlockPos(result.getPos());
+					if(pos.equals(entity.getPos()))
 					{
 						matrices.push();
 						VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
