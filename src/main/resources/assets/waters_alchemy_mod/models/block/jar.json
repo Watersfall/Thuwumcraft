@@ -7,6 +7,7 @@
 	},
 	"elements": [
 		{
+			"name": "jar",
 			"from": [3, 0, 3],
 			"to": [13, 12, 13],
 			"rotation": {"angle": 0, "axis": "y", "origin": [11, 8, 11]},
@@ -20,6 +21,7 @@
 			}
 		},
 		{
+			"name": "lid",
 			"from": [5, 12, 5],
 			"to": [11, 14, 11],
 			"faces": {

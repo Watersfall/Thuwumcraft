@@ -68,6 +68,18 @@ public class RenderHelper
 		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
 	}
 
+	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, float minU, float minV, float maxU, float maxV, int color, int light, int overlay)
+	{
+		add(renderer, matrices, 0, 1, 0, minU, minV, color, light, overlay);
+		add(renderer, matrices, 1, 1, 0, maxU, minV, color, light, overlay);
+		add(renderer, matrices, 1, 1, 1, maxU, maxV, color, light, overlay);
+		add(renderer, matrices, 0, 1, 1, minU, maxV, color, light, overlay);
+		add(renderer, matrices, 0, 1, 1, minU, maxV, color, light, overlay);
+		add(renderer, matrices, 1, 1, 1, maxU, maxV, color, light, overlay);
+		add(renderer, matrices, 1, 1, 0, maxU, minV, color, light, overlay);
+		add(renderer, matrices, 0, 1, 0, minU, minV, color, light, overlay);
+	}
+
 	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color, int light, int overlay)
 	{
 		RenderSystem.pushMatrix();

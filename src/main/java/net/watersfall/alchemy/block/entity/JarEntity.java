@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 public class JarEntity extends BlockEntity implements AspectInventory, BlockEntityClientSerializable
 {
+	private static final int MAX_COUNT = 256;
 	private final HashMap<Aspect, AspectStack> aspects;
 	private ItemStack input;
 
@@ -79,6 +80,11 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 				});
 			}
 		}
+	}
+
+	public int getMaxAspectCount()
+	{
+		return MAX_COUNT;
 	}
 
 	@Override
