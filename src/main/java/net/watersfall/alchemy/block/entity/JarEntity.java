@@ -82,6 +82,12 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 		}
 	}
 
+	@Override
+	public boolean isEmpty()
+	{
+		return this.aspects.size() == 0;
+	}
+
 	public int getMaxAspectCount()
 	{
 		return MAX_COUNT;

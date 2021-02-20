@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.block;
 
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
@@ -110,24 +112,6 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 	}
 
 	@Override
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
-	{
-		BlockEntity entityTest = world.getBlockEntity(pos);
-		if(entityTest instanceof PedestalEntity)
-		{
-			PedestalEntity entity = (PedestalEntity)entityTest;
-			if(entity.isCrafting())
-			{
-				entity.helpCraft();
-			}
-			else if(entity.isMain())
-			{
-				entity.finishCraft();
-			}
-		}
-	}
-
-	@Override
 	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random)
 	{
 		double x = (double)pos.getX() + 0.5D;
@@ -166,5 +150,12 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
 		return new PedestalEntity(pos, state);
+	}
+
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
+	{
+		return PedestalEntity::tick;
 	}
 }

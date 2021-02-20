@@ -1,6 +1,8 @@
 package net.watersfall.alchemy.block.entity;
 
+import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.inventory.PedestalInventory;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -22,7 +24,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	private boolean main;
 	private boolean crafting;
 	private boolean craftingFinished;
-	private PedestalRecipe recipe;
+	private PedestalRecipe.StageTracker recipe;
 
 	public PedestalEntity(BlockPos pos, BlockState state)
 	{
@@ -34,46 +36,8 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	public void beginCraft(PedestalRecipe recipe)
 	{
 		this.setMain(true);
-		this.recipe = recipe;
-		List<PedestalEntity> entities = PedestalRecipe.getNearbyPedestals(this.getPos(), this.getWorld());
-		List<PedestalEntity> validEntities = new ArrayList<>(recipe.getInputs().size());
-		entities.removeIf(entity -> entity.isMain() || entity.isCrafting());
-		for(int i = 0; i < recipe.getInputs().size(); i++)
-		{
-			for(int o = 0; o < entities.size(); o++)
-			{
-				if(recipe.getInputs().get(i).test(entities.get(o).getStack()))
-				{
-					validEntities.add(entities.get(o));
-					entities.remove(o--);
-					break;
-				}
-			}
-		}
-		validEntities.forEach((entity) -> {
-			entity.setCrafting(true);
-			this.world.getBlockTickScheduler().schedule(entity.getPos(), AlchemyBlocks.PEDESTAL_BLOCK, 40 + this.world.getRandom().nextInt(20));
-			entity.sync();
-		});
-		this.world.getBlockTickScheduler().schedule(this.getPos(), AlchemyBlocks.PEDESTAL_BLOCK, 80);
+		this.recipe = new PedestalRecipe.StageTracker(this, world, pos, recipe);
 		this.sync();
-	}
-
-	public void finishCraft()
-	{
-		if(this.recipe != null)
-		{
-			this.setMain(false);
-			this.setStack(this.recipe.getOutput());
-			world.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.AMBIENT, 10000.0F, 1.5F);
-			this.craftingFinished = true;
-		}
-	}
-
-	public void helpCraft()
-	{
-		this.setCrafting(false);
-		this.setStack(ItemStack.EMPTY);
 	}
 
 	@Override
@@ -92,6 +56,11 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		this.main = tag.getBoolean("main");
 		this.crafting = tag.getBoolean("crafting");
 		this.craftingFinished = tag.getBoolean("crafting_finished");
+		if(tag.contains("recipe"))
+		{
+			CompoundTag recipeTag = tag.getCompound("recipe");
+			this.recipe = new PedestalRecipe.StageTracker(this, this.world, this.pos, recipeTag);
+		}
 	}
 
 	@Override
@@ -102,6 +71,12 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		tag.putBoolean("main", main);
 		tag.putBoolean("crafting", crafting);
 		tag.putBoolean("crafting_finished", craftingFinished);
+		if(this.recipe != null)
+		{
+			CompoundTag recipeTag = new CompoundTag();
+			this.recipe.toTag(recipeTag);
+			tag.put("recipe", recipeTag);
+		}
 		return tag;
 	}
 
@@ -112,6 +87,17 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		compoundTag.putBoolean("main", main);
 		compoundTag.putBoolean("crafting", crafting);
 		return compoundTag;
+	}
+
+	@Override
+	public void setWorld(World world)
+	{
+		super.setWorld(world);
+		if(this.recipe != null)
+		{
+			this.recipe.setWorld(world);
+			this.recipe.fromTag();
+		}
 	}
 
 	@Override
@@ -155,6 +141,11 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		this.crafting = crafting;
 	}
 
+	public void setCraftingFinished(boolean finished)
+	{
+		this.craftingFinished = finished;
+	}
+
 	@Override
 	public boolean canExtract(int slot, ItemStack stack, Direction dir)
 	{
@@ -168,5 +159,21 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 			return true;
 		}
 		return false;
+	}
+
+	public static <T> void tick(World world, BlockPos pos, BlockState state, T blockEntity)
+	{
+		PedestalEntity entity = (PedestalEntity)blockEntity;
+		if(entity.recipe != null)
+		{
+			if(entity.recipe.getStage() != PedestalRecipe.StageTracker.Stage.END)
+			{
+				entity.recipe.tick();
+			}
+			else
+			{
+				entity.recipe = null;
+			}
+		}
 	}
 }
