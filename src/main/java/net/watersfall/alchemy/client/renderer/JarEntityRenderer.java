@@ -43,9 +43,9 @@ public class JarEntityRenderer implements BlockEntityRenderer<JarEntity>
 		{
 			matrices.push();
 			AspectStack stack = entity.getAspects().values().stream().findFirst().get();
-			float scale = ((float)stack.getCount() / (float)entity.getMaxAspectCount() + 0.0625F) / 1.5F;
+			float scale = ((float)stack.getCount() / (float)entity.getMaxAspectCount()) / 1.5F;
 			matrices.scale(0.5F, scale, 0.5F);
-			matrices.translate(0.5F, 0, 0.5F);
+			matrices.translate(0.5F, 0.0625F, 0.5F);
 			RenderHelper.drawTexture(
 					vertexConsumers.getBuffer(RenderLayer.getSolid()),
 					matrices,
