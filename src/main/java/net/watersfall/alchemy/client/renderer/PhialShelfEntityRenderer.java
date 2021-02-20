@@ -9,6 +9,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.PhialShelfBlock;
@@ -27,13 +28,17 @@ public class PhialShelfEntityRenderer implements BlockEntityRenderer<PhialShelfE
 		switch(direction)
 		{
 			case NORTH:
-				matrices.translate(-0.8275, 0, 0);
+				matrices.translate(-0.9, 0, 0);
+				break;
 			case EAST:
-				matrices.translate(0, 0, -0.8275);
+				matrices.translate(0, 0, -0.9);
+				break;
 			case SOUTH:
-				matrices.translate(0.8275, 0, 0);
+				matrices.translate(0.9, 0, 0);
+				break;
 			case WEST:
-				matrices.translate(0, 0, 0.8275);
+				matrices.translate(0, 0, 0.9);
+				break;
 		}
 	}
 
@@ -46,16 +51,16 @@ public class PhialShelfEntityRenderer implements BlockEntityRenderer<PhialShelfE
 		switch(direction)
 		{
 			case NORTH:
-				matrices.translate(2F - 0.1825F, 1.5F, 2F - 0.375F);
+				matrices.translate(2F + 0.4F, 2F, 2F);
 				break;
 			case SOUTH:
-				matrices.translate(0.1825F, 1.5F, 0.375F);
+				matrices.translate(0.625F, 2F, 1F);
 				break;
 			case EAST:
-				matrices.translate(0.375F, 1.5F, 2F - 0.1825F);
+				matrices.translate(1F, 2F, 2F + 0.4F);
 				break;
 			case WEST:
-				matrices.translate(2F - 0.375F, 1.5F, 0.1825F);
+				matrices.translate(2F, 2F, 0.625F);
 				break;
 		}
 		matrices.push();
@@ -63,23 +68,25 @@ public class PhialShelfEntityRenderer implements BlockEntityRenderer<PhialShelfE
 		{
 			if(!entity.getStack(i).isEmpty())
 			{
-				manager.renderBlock(
-						AlchemyBlocks.JAR_BLOCK.getDefaultState(),
-						entity.getPos(),
-						entity.getWorld(),
-						matrices,
-						vertexConsumers.getBuffer(RenderLayer.getTranslucent()),
-						false,
-						entity.getWorld().getRandom());
-				/*MinecraftClient.getInstance().getItemRenderer().renderItem(
+				matrices.push();
+				if(direction == Direction.EAST || direction == Direction.WEST)
+				{
+					matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+				}
+				if(direction == Direction.SOUTH)
+				{
+					matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180F));
+				}
+				MinecraftClient.getInstance().getItemRenderer().renderItem(
 						entity.getStack(i),
-						ModelTransformation.Mode.GROUND,
+						ModelTransformation.Mode.FIXED,
 						light,
 						overlay,
 						matrices,
 						vertexConsumers,
 						0
-				);*/
+				);
+				matrices.pop();
 			}
 			translateForDirection(matrices, direction);
 			if(i == 2)
