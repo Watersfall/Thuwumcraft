@@ -14,6 +14,7 @@ public class AlchemyBlocks
 	public static final ChildBlock CHILD_BLOCK;
 	public static final CrucibleBlock CRUCIBLE_BLOCK;
 	public static final JarBlock JAR_BLOCK;
+	public static final PhialShelfBlock PHIAL_SHELF_BLOCK;
 
 	static
 	{
@@ -23,6 +24,7 @@ public class AlchemyBlocks
 		CHILD_BLOCK = new ChildBlock(FabricBlockSettings.copyOf(Blocks.GLASS));
 		CRUCIBLE_BLOCK = new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK));
 		JAR_BLOCK = new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true));
+		PHIAL_SHELF_BLOCK = new PhialShelfBlock(FabricBlockSettings.copyOf(Blocks.BIRCH_PLANKS).nonOpaque());
 	}
 
 	public static void register()
@@ -33,5 +35,6 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("child_block"), AlchemyBlocks.CHILD_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_crucible"), CRUCIBLE_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("jar"), JAR_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_BLOCK);
 	}
 }

@@ -14,6 +14,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<ChildBlockEntity> CHILD_BLOCK_ENTITY;
 	public static final BlockEntityType<CrucibleEntity> CRUCIBLE_ENTITY;
 	public static final BlockEntityType<JarEntity> JAR_ENTITY;
+	public static final BlockEntityType<PhialShelfEntity> PHIAL_SHELF_ENTITY;
 
 	static
 	{
@@ -23,6 +24,7 @@ public class AlchemyBlockEntities
 		CHILD_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(ChildBlockEntity::new, AlchemyBlocks.CHILD_BLOCK).build(null);
 		CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(CrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
 		JAR_ENTITY = FabricBlockEntityTypeBuilder.create(JarEntity::new, AlchemyBlocks.JAR_BLOCK).build(null);
+		PHIAL_SHELF_ENTITY = FabricBlockEntityTypeBuilder.create(PhialShelfEntity::new, AlchemyBlocks.PHIAL_SHELF_BLOCK).build(null);
 	}
 
 	public static void register()
@@ -33,5 +35,6 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("child_block_entity"), AlchemyBlockEntities.CHILD_BLOCK_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("brewing_crucible_entity"), AlchemyBlockEntities.CRUCIBLE_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("jar_entity"), AlchemyBlockEntities.JAR_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("phial_shelf_entity"), PHIAL_SHELF_ENTITY);
 	}
 }
