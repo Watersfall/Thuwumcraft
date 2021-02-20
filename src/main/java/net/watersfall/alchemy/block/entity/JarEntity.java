@@ -94,6 +94,21 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	}
 
 	@Override
+	public void readNbt(CompoundTag tag)
+	{
+		super.readNbt(tag);
+		fromInventoryTag(tag);
+	}
+
+	@Override
+	public CompoundTag writeNbt(CompoundTag tag)
+	{
+		super.writeNbt(tag);
+		toInventoryTag(tag);
+		return tag;
+	}
+
+	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
 		fromInventoryTag(compoundTag);
