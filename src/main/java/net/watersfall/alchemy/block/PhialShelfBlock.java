@@ -79,6 +79,7 @@ public class PhialShelfBlock extends Block implements BlockEntityProvider
 					{
 						invStack = entity.removeStack(slot);
 						player.setStackInHand(hand, invStack);
+						entity.markDirty();
 						entity.sync();
 					}
 				}
@@ -94,12 +95,15 @@ public class PhialShelfBlock extends Block implements BlockEntityProvider
 						{
 							player.setStackInHand(hand, ItemStack.EMPTY);
 							entity.setStack(slot, stack);
+							entity.markDirty();
 							entity.sync();
 						}
 						else
 						{
 							entity.setStack(slot, stack);
 							player.setStackInHand(hand, invStack);
+							entity.markDirty();
+							entity.sync();
 						}
 					}
 					return ActionResult.success(world.isClient);
@@ -115,21 +119,6 @@ public class PhialShelfBlock extends Block implements BlockEntityProvider
 		{
 			if(position.x < 0.33)
 			{
-				return 0;
-			}
-			else if(position.x > 0.66)
-			{
-				return 2;
-			}
-			else
-			{
-				return 1;
-			}
-		}
-		else
-		{
-			if(position.x < 0.33)
-			{
 				return 3;
 			}
 			else if(position.x > 0.66)
@@ -139,6 +128,21 @@ public class PhialShelfBlock extends Block implements BlockEntityProvider
 			else
 			{
 				return 4;
+			}
+		}
+		else
+		{
+			if(position.x < 0.33)
+			{
+				return 0;
+			}
+			else if(position.x > 0.66)
+			{
+				return 2;
+			}
+			else
+			{
+				return 1;
 			}
 		}
 	}

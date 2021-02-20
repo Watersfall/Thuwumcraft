@@ -47,12 +47,13 @@ public class PhialShelfEntity extends BlockEntity implements BasicInventory, Blo
 	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
-		readNbt(compoundTag);
+		this.contents.clear();
+		Inventories.readNbt(compoundTag, this.contents);
 	}
 
 	@Override
 	public CompoundTag toClientTag(CompoundTag compoundTag)
 	{
-		return writeNbt(compoundTag);
+		return Inventories.writeNbt(compoundTag, this.contents);
 	}
 }
