@@ -100,10 +100,22 @@ public class PhialShelfBlock extends Block implements BlockEntityProvider
 						}
 						else
 						{
-							entity.setStack(slot, stack);
-							player.setStackInHand(hand, invStack);
-							entity.markDirty();
-							entity.sync();
+							if(invStack.getCount() < 64 && ItemStack.canCombine(stack, invStack))
+							{
+								int increment = Math.min(64 - invStack.getCount(), stack.getCount());
+								invStack.increment(increment);
+								stack.decrement(increment);
+								entity.markDirty();
+								entity.sync();
+							}
+							else
+							{
+								entity.setStack(slot, stack);
+								player.setStackInHand(hand, invStack);
+								entity.markDirty();
+								entity.sync();
+							}
+
 						}
 					}
 					return ActionResult.success(world.isClient);
