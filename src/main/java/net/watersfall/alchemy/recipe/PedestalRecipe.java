@@ -383,11 +383,11 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 								if(!jars.get(i).isEmpty())
 								{
 									AspectStack stack = jars.get(i).getAspects().values().stream().findFirst().get();
-									if(stack.getAspect() == neededAspects.get(i).getAspect())
+									if(stack.getAspect() == neededAspects.get(o).getAspect())
 									{
 										this.currentJarEntity = jars.get(i);
-										this.currentAspect = neededAspects.get(i).copy();
-										neededAspects.set(i, this.currentAspect);
+										this.currentAspect = neededAspects.get(o).copy();
+										neededAspects.set(o, this.currentAspect);
 										found = true;
 										break;
 									}
@@ -413,7 +413,19 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 								this.primaryEntity.markDirty();
 								this.primaryEntity.sync();
 								this.currentJarEntity.sync();
+								if(currentAspect.isEmpty())
+								{
+									this.currentJarEntity = null;
+								}
 							}
+						}
+						else
+						{
+							this.currentJarEntity.markDirty();
+							this.primaryEntity.markDirty();
+							this.primaryEntity.sync();
+							this.currentJarEntity.sync();
+							this.currentJarEntity = null;
 						}
 					}
 				}

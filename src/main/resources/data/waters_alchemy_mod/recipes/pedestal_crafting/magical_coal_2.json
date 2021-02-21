@@ -15,6 +15,10 @@
 		{
 			"aspect": "waters_alchemy_mod:air",
 			"count": 10
+		},
+		{
+			"aspect": "waters_alchemy_mod:fire",
+			"count": 20
 		}
 	],
 	"catalyst": {
