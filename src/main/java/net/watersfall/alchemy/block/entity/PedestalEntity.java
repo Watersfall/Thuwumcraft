@@ -1,8 +1,14 @@
 package net.watersfall.alchemy.block.entity;
 
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.api.aspect.Aspect;
+import net.watersfall.alchemy.api.aspect.AspectStack;
+import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.inventory.PedestalInventory;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -25,12 +31,14 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	private boolean crafting;
 	private boolean craftingFinished;
 	private PedestalRecipe.StageTracker recipe;
+	private List<AspectStack> neededAspects;
 
 	public PedestalEntity(BlockPos pos, BlockState state)
 	{
 		super(AlchemyBlockEntities.PEDESTAL_ENTITY, pos, state);
 		stack = ItemStack.EMPTY;
 		craftingFinished = false;
+		neededAspects = new ArrayList<>();
 	}
 
 	public void beginCraft(PedestalRecipe recipe)
@@ -46,6 +54,17 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		this.setStack(ItemStack.fromNbt(compoundTag.getCompound("pedestal_item")));
 		this.main = compoundTag.getBoolean("main");
 		this.crafting = compoundTag.getBoolean("crafting");
+		this.neededAspects.clear();
+		if(compoundTag.contains("needed_aspects"))
+		{
+			ListTag listTag = compoundTag.getList("needed_aspects", NbtType.COMPOUND);
+			for(int i = 0; i < listTag.size(); i++)
+			{
+				CompoundTag aspect = (CompoundTag) listTag.get(i);
+				AspectStack stack = new AspectStack(Aspects.ASPECTS.get(Identifier.tryParse(aspect.getString("aspect"))), aspect.getInt("count"));
+				this.neededAspects.add(new AspectStack(stack.getAspect(), stack.getCount()));
+			}
+		}
 	}
 
 	@Override
@@ -86,7 +105,23 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		compoundTag.put("pedestal_item", this.stack.writeNbt(new CompoundTag()));
 		compoundTag.putBoolean("main", main);
 		compoundTag.putBoolean("crafting", crafting);
+		if(this.recipe != null && this.recipe.getNeededAspects() != null && !this.recipe.getNeededAspects().isEmpty())
+		{
+			ListTag listTag = new ListTag();
+			this.recipe.getNeededAspects().forEach((key) -> {
+				CompoundTag aspect = new CompoundTag();
+				aspect.putString("aspect", key.getAspect().getId().toString());
+				aspect.putInt("count", key.getCount());
+				listTag.add(aspect);
+			});
+			compoundTag.put("needed_aspects", listTag);
+		}
 		return compoundTag;
+	}
+
+	public List<AspectStack> getNeededAspects()
+	{
+		return this.neededAspects;
 	}
 
 	@Override
@@ -110,6 +145,11 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	public ItemStack getStack()
 	{
 		return stack;
+	}
+
+	public PedestalRecipe.StageTracker getRecipe()
+	{
+		return this.recipe;
 	}
 
 	public boolean isMain()

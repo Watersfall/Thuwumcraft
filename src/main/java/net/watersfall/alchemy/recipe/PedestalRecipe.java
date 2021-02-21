@@ -411,6 +411,7 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 								}
 								this.currentJarEntity.markDirty();
 								this.primaryEntity.markDirty();
+								this.primaryEntity.sync();
 								this.currentJarEntity.sync();
 							}
 						}
@@ -521,6 +522,11 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 		public Stage getStage()
 		{
 			return this.stage;
+		}
+
+		public List<AspectStack> getNeededAspects()
+		{
+			return this.neededAspects;
 		}
 
 		public enum Stage
