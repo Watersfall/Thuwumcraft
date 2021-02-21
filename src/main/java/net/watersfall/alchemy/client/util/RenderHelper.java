@@ -1,11 +1,22 @@
 package net.watersfall.alchemy.client.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
+import net.watersfall.alchemy.api.aspect.AspectStack;
+
+import java.util.Collection;
+import java.util.List;
 
 public class RenderHelper
 {
@@ -68,6 +79,25 @@ public class RenderHelper
 		add(renderer, matrices, 0, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
 	}
 
+	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, int color, int light, int overlay, boolean inverted)
+	{
+		if(inverted)
+		{
+			drawTexture(renderer, matrices, sprite, color, light, overlay, inverted);
+		}
+		else
+		{
+			add(renderer, matrices, 1, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
+			add(renderer, matrices, 0, 1, 0, sprite.getMaxU(), sprite.getMinV(), color, light, overlay);
+			add(renderer, matrices, 0, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color, light, overlay);
+			add(renderer, matrices, 1, 1, 1, sprite.getMinU(), sprite.getMaxV(), color, light, overlay);
+			add(renderer, matrices, 1, 1, 1, sprite.getMinU(), sprite.getMaxV(), color, light, overlay);
+			add(renderer, matrices, 0, 1, 1, sprite.getMaxU(), sprite.getMaxV(), color, light, overlay);
+			add(renderer, matrices, 0, 1, 0, sprite.getMaxU(), sprite.getMinV(), color, light, overlay);
+			add(renderer, matrices, 1, 1, 0, sprite.getMinU(), sprite.getMinV(), color, light, overlay);
+		}
+	}
+
 	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Sprite sprite, float minU, float minV, float maxU, float maxV, int color, int light, int overlay)
 	{
 		add(renderer, matrices, 0, 1, 0, minU, minV, color, light, overlay);
@@ -99,5 +129,57 @@ public class RenderHelper
 		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color, light, overlay);
 		tessellator.draw();
 		RenderSystem.popMatrix();
+	}
+
+	public static void renderAspects(Collection<AspectStack> aspects,
+									 BlockEntity entity,
+									 MatrixStack matrices,
+									 VertexConsumerProvider vertexConsumers,
+									 TextRenderer textRenderer,
+									 BlockEntityRenderDispatcher dispatcher)
+	{
+		if(aspects.size() > 0)
+		{
+			HitResult result = MinecraftClient.getInstance().crosshairTarget;
+			if(!MinecraftClient.getInstance().options.hudHidden && result != null && result.getType() == HitResult.Type.BLOCK)
+			{
+				BlockPos pos = new BlockPos(result.getPos());
+				if(pos.equals(entity.getPos()))
+				{
+					matrices.push();
+					VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
+					matrices.translate(0.5D, 1.75D, 0.5D);
+					Quaternion quaternion = dispatcher.camera.getRotation().copy();
+					quaternion.hamiltonProduct(Vec3f.NEGATIVE_X.getDegreesQuaternion(270));
+					matrices.scale(0.25F, 0.25F, 0.25F);
+					matrices.multiply(quaternion);
+					matrices.translate(0.5D, 0D, 0.5D);
+					matrices.translate(-0.5F * (aspects.size() + 1), 0F, 0F);
+					aspects.forEach((aspectStack -> {
+						Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getSprite();
+						RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360, false);
+						if(aspectStack.getCount() > 1)
+						{
+							matrices.push();
+							matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+							if(aspectStack.getCount() >= 10)
+							{
+								matrices.translate(0.5F, -0.625F, 0.99F);
+							}
+							else
+							{
+								matrices.translate(0.375F, -0.625F, 0.99F);
+							}
+							matrices.scale(0.0625F, 0.0625F, 0.0625F);
+							matrices.scale(-1F, -1F, -1F);
+							textRenderer.draw(matrices, "" + aspectStack.getCount(), 0F, 0F, -1);
+							matrices.pop();
+						}
+						matrices.translate(1F, 0F, 0F);
+					}));
+					matrices.pop();
+				}
+			}
+		}
 	}
 }
