@@ -111,6 +111,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	@Override
 	public void fromClientTag(CompoundTag compoundTag)
 	{
+		this.aspects.clear();
 		fromInventoryTag(compoundTag);
 	}
 

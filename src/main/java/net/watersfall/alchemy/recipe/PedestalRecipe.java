@@ -405,6 +405,10 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 							{
 								jarStack.decrement(1);
 								currentAspect.decrement(1);
+								if(jarStack.isEmpty())
+								{
+									currentJarEntity.clear();
+								}
 								if(currentAspect.isEmpty())
 								{
 									this.neededAspects.removeIf((aspectStack -> aspectStack.getAspect() == currentAspect.getAspect()));
