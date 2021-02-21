@@ -11,12 +11,6 @@
 			"item": "minecraft:blaze_powder"
 		}
 	],
-	"aspects": [
-		{
-			"aspect": "waters_alchemy_mod:air",
-			"count": 10
-		}
-	],
 	"catalyst": {
 		"item": "minecraft:coal"
 	},

@@ -216,12 +216,15 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 				list.add(Ingredient.fromJson(jsonList.get(i)));
 			}
 			JsonArray aspectsJson = json.getAsJsonArray(ASPECTS);
-			List<AspectStack> aspects = new ArrayList<>(aspectsJson.size());
-			for(int i = 0; i < aspectsJson.size(); i++)
+			List<AspectStack> aspects = new ArrayList<>();
+			if(aspectsJson != null)
 			{
-				JsonObject object = aspectsJson.get(i).getAsJsonObject();
-				AspectStack stack = new AspectStack(Aspects.getAspectById(Identifier.tryParse(object.get("aspect").getAsString())), object.get("count").getAsInt());
-				aspects.add(stack);
+				for(int i = 0; i < aspectsJson.size(); i++)
+				{
+					JsonObject object = aspectsJson.get(i).getAsJsonObject();
+					AspectStack stack = new AspectStack(Aspects.getAspectById(Identifier.tryParse(object.get("aspect").getAsString())), object.get("count").getAsInt());
+					aspects.add(stack);
+				}
 			}
 			Ingredient catalyst = Ingredient.fromJson(json.getAsJsonObject(CATALYST));
 			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
