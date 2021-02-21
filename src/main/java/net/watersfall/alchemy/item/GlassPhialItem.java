@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -18,9 +19,11 @@ import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.client.item.GlassPhialTooltipData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GlassPhialItem extends Item
 {
@@ -147,9 +150,15 @@ public class GlassPhialItem extends Item
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context)
 	{
 		super.appendTooltip(stack, world, tooltip, context);
+	}
+
+	@Override
+	public Optional<TooltipData> getTooltipData(ItemStack stack)
+	{
 		if(this.aspect != Aspect.EMPTY)
 		{
-			tooltip.add(new LiteralText(this.getAspectCount(stack) + " ").append(new TranslatableText(this.aspect.getTranslationKey())));
+			return Optional.of(new GlassPhialTooltipData(new AspectStack(this.aspect, this.getAspectCount(stack))));
 		}
+		return super.getTooltipData(stack);
 	}
 }
