@@ -4,7 +4,19 @@
 	"aspects": [
 		{
 			"aspect": "waters_alchemy_mod:fire",
+			"count": 10
+		},
+		{
+			"aspect": "waters_alchemy_mod:water",
 			"count": 5
+		},
+		{
+			"aspect": "waters_alchemy_mod:air",
+			"count": 7
+		},
+		{
+			"aspect": "waters_alchemy_mod:earth",
+			"count": 15
 		}
 	]
 }
