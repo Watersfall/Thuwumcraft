@@ -15,10 +15,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,17 +28,13 @@ public abstract class ScreenMixin
 
 	@Shadow public abstract List<Text> getTooltipFromItem(ItemStack stack);
 
-	@Shadow protected abstract void init();
-
-	private static boolean init = false;
 	private static Method method_32635;
 
 	static
 	{
-		Class<Screen> clazz = Screen.class;
 		try
 		{
-			method_32635 = clazz.getDeclaredMethod("method_32635", List.class, TooltipData.class);
+			method_32635 = Screen.class.getDeclaredMethod("method_32635", List.class, TooltipData.class);
 		}
 		catch(NoSuchMethodException e)
 		{
@@ -48,6 +42,19 @@ public abstract class ScreenMixin
 		}
 	}
 
+	private void invokeMethod32635(List<TooltipComponent> list, TooltipData data)
+	{
+		try
+		{
+			method_32635.invoke(this, list, data);
+		}
+		catch(IllegalAccessException | InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("UnresolvedMixinReference") //It exists, lambda method on line 141
 	@Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info)
 	{
@@ -72,24 +79,11 @@ public abstract class ScreenMixin
 	{
 		List<TooltipComponent> list = lines.stream().map(Text::asOrderedText).map(TooltipComponent::of).collect(Collectors.toList());
 		data.ifPresent((data1) -> {
-			try
-			{
-				method_32635.invoke(this, list, data1);
-			}
-			catch(IllegalAccessException | InvocationTargetException e)
-			{
-				e.printStackTrace();
-			}
+			invokeMethod32635(list, data1);
 		});
 		if(MultiTooltipComponent.REGISTRY.get(stack.getItem()) != null)
 		{
-			MultiTooltipComponent.REGISTRY.get(stack.getItem()).forEach((function) -> {
-				TooltipComponent component = function.apply(stack);
-				if(component != null)
-				{
-					list.add(function.apply(stack));
-				}
-			});
+			((MultiTooltipComponent)stack.getItem()).getTooltipComponents(stack).ifPresent(list::addAll);
 		}
 		this.renderTooltipFromComponents(matrices, list, x, y);
 	}

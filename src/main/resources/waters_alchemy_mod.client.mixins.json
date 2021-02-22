@@ -4,13 +4,11 @@
 	"package": "net.watersfall.alchemy.client.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"LivingEntityRenderMixin"
+		"ItemMixin",
+		"LivingEntityRenderMixin",
+		"ScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"mixins": [
-		"ItemStackMixin",
-		"ScreenMixin"
-	]
+	}
 }

@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@Mixin(ItemStack.class)
-public class ItemStackMixin implements MultiTooltipComponent
+@Mixin(Item.class)
+public class ItemMixin implements MultiTooltipComponent
 {
 	@Override
 	public Optional<List<TooltipComponent>> getTooltipComponents(ItemStack stack)
@@ -23,7 +23,14 @@ public class ItemStackMixin implements MultiTooltipComponent
 			List<TooltipComponent> list2 = new ArrayList<>();
 			for(int i = 0; i < list.size(); i++)
 			{
-				list2.add(list.get(i).apply(stack));
+				if(list.get(i) != null)
+				{
+					TooltipComponent component = list.get(i).apply(stack);
+					if(component != null)
+					{
+						list2.add(list.get(i).apply(stack));
+					}
+				}
 			}
 			return Optional.of(list2);
 		}

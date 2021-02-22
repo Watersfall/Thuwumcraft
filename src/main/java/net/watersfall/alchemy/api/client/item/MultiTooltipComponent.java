@@ -1,6 +1,5 @@
 package net.watersfall.alchemy.api.client.item;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public interface MultiTooltipComponent
 {
