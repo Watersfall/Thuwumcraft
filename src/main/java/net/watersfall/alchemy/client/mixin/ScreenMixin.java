@@ -15,6 +15,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,7 +30,24 @@ public abstract class ScreenMixin
 
 	@Shadow public abstract List<Text> getTooltipFromItem(ItemStack stack);
 
-	//Yeah I can't find it either
+	@Shadow protected abstract void init();
+
+	private static boolean init = false;
+	private static Method method_32635;
+
+	static
+	{
+		Class<Screen> clazz = Screen.class;
+		try
+		{
+			method_32635 = clazz.getDeclaredMethod("method_32635", List.class, TooltipData.class);
+		}
+		catch(NoSuchMethodException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 	@Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info)
 	{
@@ -40,22 +61,24 @@ public abstract class ScreenMixin
 	@Inject(method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"), cancellable = true)
 	public void renderTooltipFix(MatrixStack matrices, ItemStack stack, int x, int y, CallbackInfo info)
 	{
-		this.renderTooltip(matrices, this.getTooltipFromItem(stack), stack.getTooltipData(), stack, x, y);
-		info.cancel();
+		if(MultiTooltipComponent.REGISTRY.get(stack.getItem()) != null)
+		{
+			this.renderTooltip(matrices, this.getTooltipFromItem(stack), stack.getTooltipData(), stack, x, y);
+			info.cancel();
+		}
 	}
 
 	public void renderTooltip(MatrixStack matrices, List<Text> lines, Optional<TooltipData> data, ItemStack stack, int x, int y)
 	{
 		List<TooltipComponent> list = lines.stream().map(Text::asOrderedText).map(TooltipComponent::of).collect(Collectors.toList());
-		data.ifPresent((tooltipData) ->
-		{
-			if (tooltipData instanceof CustomTooltipDataComponent)
+		data.ifPresent((data1) -> {
+			try
 			{
-				list.add(((CustomTooltipDataComponent)tooltipData).getComponent());
+				method_32635.invoke(this, list, data1);
 			}
-			else
+			catch(IllegalAccessException | InvocationTargetException e)
 			{
-				list.add(1, TooltipComponent.of(tooltipData));
+				e.printStackTrace();
 			}
 		});
 		if(MultiTooltipComponent.REGISTRY.get(stack.getItem()) != null)
