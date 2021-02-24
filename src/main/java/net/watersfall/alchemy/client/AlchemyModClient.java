@@ -116,6 +116,7 @@ public class AlchemyModClient implements ClientModInitializer
 			if(entity instanceof AbilityProvider)
 			{
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				provider.clear();
 				provider.fromPacket(buf);
 			}
 		}));

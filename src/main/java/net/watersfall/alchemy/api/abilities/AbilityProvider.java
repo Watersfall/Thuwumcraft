@@ -3,13 +3,14 @@ package net.watersfall.alchemy.api.abilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Clearable;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Set;
 
-public interface AbilityProvider<T>
+public interface AbilityProvider<T> extends Clearable
 {
 	public static final Registry<Entity> ENTITY_REGISTRY = new Registry<>();
 
@@ -31,6 +32,8 @@ public interface AbilityProvider<T>
 	PacketByteBuf toPacket(PacketByteBuf buf);
 
 	void fromPacket(PacketByteBuf buf);
+
+	void sync();
 
 	class Registry<T>
 	{

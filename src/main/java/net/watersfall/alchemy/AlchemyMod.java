@@ -210,7 +210,7 @@ public class AlchemyMod implements ModInitializer
 		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
-		AbilityProvider.ENTITY_REGISTRY.register(getId("test"), RunedShieldAbilityImpl::new);
-		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("test"), RunedShieldAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("runed_shield_ability"), RunedShieldAbilityImpl::new);
 	}
 }

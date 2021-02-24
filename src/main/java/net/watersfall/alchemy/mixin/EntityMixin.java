@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.mixin;
 
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
@@ -88,5 +89,21 @@ public class EntityMixin implements AbilityProvider<Entity>
 			Identifier id = Identifier.tryParse(buf.readString());
 			this.waters_abilities.put(id, AbilityProvider.ENTITY_REGISTRY.create(id, buf));
 		}
+	}
+
+	@Override
+	public void sync()
+	{
+		Entity entity = (Entity)(Object)this;
+		PacketByteBuf buf = PacketByteBufs.create();
+		this.waters_abilities.values().stream().filter((ability) -> ability instanceof AbilityClientSerializable).forEach((ability) -> {
+			((AbilityClientSerializable<Entity>) ability).sync(entity, buf);
+		});
+	}
+
+	@Override
+	public void clear()
+	{
+		this.waters_abilities.clear();
 	}
 }

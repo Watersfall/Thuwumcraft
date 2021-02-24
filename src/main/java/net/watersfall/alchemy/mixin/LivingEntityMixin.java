@@ -12,6 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.RunedShieldAbilityImpl;
+import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.minecraft.entity.Entity;
@@ -38,6 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
@@ -127,35 +129,19 @@ public abstract class LivingEntityMixin extends Entity
 				if(entity instanceof AbilityProvider)
 				{
 					AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-					provider.addAbility(new RunedShieldAbilityImpl());
-					PacketByteBuf buf = PacketByteBufs.create();
-					buf.writeInt(this.getId());
-					provider.toPacket(buf);
-					if(this.getType() == EntityType.PLAYER)
+					Optional<Ability<Entity>> optional = provider.getAbility(RunedShieldAbilityImpl.ID);
+					if(!optional.isPresent())
 					{
-						ServerPlayNetworking.send((ServerPlayerEntity)(Object)this, AlchemyMod.getId("abilities_packet"), buf);
-					}
-					for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
-					{
-						ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+						provider.addAbility(new RunedShieldAbilityImpl());
+						provider.sync();
 					}
 				}
 			}
 			else if(currentStack.getItem() == Items.NETHERITE_CHESTPLATE)
 			{
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-				provider.removeAbility(new Identifier("waters_alchemy_mod", "test"));
-				PacketByteBuf buf = PacketByteBufs.create();
-				buf.writeInt(this.getId());
-				provider.toPacket(buf);
-				if(this.getType() == EntityType.PLAYER)
-				{
-					ServerPlayNetworking.send((ServerPlayerEntity)(Object)this, AlchemyMod.getId("abilities_packet"), buf);
-				}
-				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
-				{
-					ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
-				}
+				provider.removeAbility(RunedShieldAbilityImpl.ID);
+				provider.sync();
 			}
 		}
 	}
