@@ -1,14 +1,21 @@
 package net.watersfall.alchemy.mixin;
 
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,9 +24,14 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Mixin(Entity.class)
-public class EntityMixin implements AbilityProvider<Entity>
+public abstract class EntityMixin implements AbilityProvider<Entity>
 {
+	@Shadow private int entityId;
+
+	@Shadow public abstract int getId();
+
 	private final HashMap<Identifier, Ability<Entity>> waters_abilities = new HashMap<>();
+	private final HashMap<Identifier, Ability<Entity>> temp = new HashMap<>();
 
 	@Override
 	public void addAbility(Ability<Entity> ability)
@@ -69,10 +81,13 @@ public class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
+		buf.writeInt(this.entityId);
 		buf.writeInt(this.waters_abilities.size());
 		waters_abilities.values().forEach((value) -> {
 			if(value instanceof AbilityClientSerializable)
 			{
+				String id = value.getId().toString();
+				buf.writeString(id);
 				((AbilityClientSerializable) value).toPacket(buf);
 			}
 		});
@@ -82,23 +97,33 @@ public class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public void fromPacket(PacketByteBuf buf)
 	{
-		waters_abilities.clear();
+		temp.clear();
 		int size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
 			Identifier id = Identifier.tryParse(buf.readString());
-			this.waters_abilities.put(id, AbilityProvider.ENTITY_REGISTRY.create(id, buf));
+			this.temp.put(id, AbilityProvider.ENTITY_REGISTRY.create(id, buf));
 		}
+		MinecraftClient.getInstance().execute(() -> {
+			this.waters_abilities.clear();
+			this.waters_abilities.putAll(temp);
+		});
 	}
 
+
+
 	@Override
-	public void sync()
+	public void sync(Entity entity)
 	{
-		Entity entity = (Entity)(Object)this;
-		PacketByteBuf buf = PacketByteBufs.create();
-		this.waters_abilities.values().stream().filter((ability) -> ability instanceof AbilityClientSerializable).forEach((ability) -> {
-			((AbilityClientSerializable<Entity>) ability).sync(entity, buf);
-		});
+		PacketByteBuf buf = this.toPacket(PacketByteBufs.create());
+		if(entity.getType() == EntityType.PLAYER)
+		{
+			ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet"), buf);
+		}
+		for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
+		{
+			ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+		}
 	}
 
 	@Override

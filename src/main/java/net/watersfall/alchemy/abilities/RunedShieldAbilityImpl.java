@@ -40,7 +40,7 @@ public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClient
 
 	public RunedShieldAbilityImpl()
 	{
-		this(0, 0, 20);
+		this(1, 1, 20);
 	}
 
 	@Override
@@ -123,7 +123,6 @@ public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClient
 	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
-		buf.writeString(this.getId().toString());
 		buf.writeInt(this.getShieldAmount());
 		buf.writeInt(this.getMaxAmount());
 		buf.writeInt(this.getRechargeRate());
@@ -142,7 +141,6 @@ public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClient
 	public void sync(Entity entity)
 	{
 		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeInt(entity.getId());
 		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 		provider.toPacket(buf);
 		if(entity.getType() == EntityType.PLAYER)
@@ -153,14 +151,5 @@ public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClient
 		{
 			ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
 		}
-	}
-
-	@Override
-	public void sync(Entity entity, PacketByteBuf buf)
-	{
-		buf.writeString(this.getId().toString());
-		buf.writeInt(entity.getId());
-		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-		provider.toPacket(buf);
 	}
 }

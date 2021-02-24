@@ -168,7 +168,6 @@ public class AlchemyMod implements ModInitializer
 			{
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 				PacketByteBuf buf = PacketByteBufs.create();
-				buf.writeInt(entity.getId());
 				provider.toPacket(buf);
 				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 				{

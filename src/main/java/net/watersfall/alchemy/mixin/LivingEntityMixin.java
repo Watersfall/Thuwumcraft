@@ -133,7 +133,7 @@ public abstract class LivingEntityMixin extends Entity
 					if(!optional.isPresent())
 					{
 						provider.addAbility(new RunedShieldAbilityImpl());
-						provider.sync();
+						provider.sync(entity);
 					}
 				}
 			}
@@ -141,7 +141,7 @@ public abstract class LivingEntityMixin extends Entity
 			{
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 				provider.removeAbility(RunedShieldAbilityImpl.ID);
-				provider.sync();
+				provider.sync(entity);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public interface AbilityProvider<T> extends Clearable
 
 	void fromPacket(PacketByteBuf buf);
 
-	void sync();
+	void sync(T t);
 
 	class Registry<T>
 	{

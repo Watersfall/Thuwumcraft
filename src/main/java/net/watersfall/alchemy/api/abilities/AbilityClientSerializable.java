@@ -9,6 +9,4 @@ public interface AbilityClientSerializable<T>
 	void fromPacket(PacketByteBuf buf);
 
 	void sync(T t);
-
-	void sync(T t, PacketByteBuf buf);
 }
