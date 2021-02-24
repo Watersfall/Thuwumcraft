@@ -1,16 +1,32 @@
 package net.watersfall.alchemy;
 
+import io.netty.buffer.UnpooledUnsafeDirectByteBuf;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.impl.networking.ServerSidePacketRegistryImpl;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerChunkManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.event.listener.EntityGameEventHandler;
+import net.watersfall.alchemy.abilities.RunedShieldAbilityImpl;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
@@ -147,6 +163,19 @@ public class AlchemyMod implements ModInitializer
 			}
 			return true;
 		}));
+		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
+			if(entity instanceof AbilityProvider)
+			{
+				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				PacketByteBuf buf = PacketByteBufs.create();
+				buf.writeInt(entity.getId());
+				provider.toPacket(buf);
+				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
+				{
+					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
+				}
+			}
+		});
 	}
 
 	private static void registerAspects()
@@ -181,5 +210,7 @@ public class AlchemyMod implements ModInitializer
 		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
+		AbilityProvider.ENTITY_REGISTRY.register(getId("test"), RunedShieldAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("test"), RunedShieldAbilityImpl::new);
 	}
 }

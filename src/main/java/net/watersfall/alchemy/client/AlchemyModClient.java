@@ -2,13 +2,16 @@ package net.watersfall.alchemy.client;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
@@ -108,5 +111,13 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		}
 		registerEvents();
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
+			Entity entity = handler.getWorld().getEntityById(buf.readInt());
+			if(entity instanceof AbilityProvider)
+			{
+				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				provider.fromPacket(buf);
+			}
+		}));
 	}
 }

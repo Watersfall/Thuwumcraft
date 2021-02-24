@@ -1,5 +1,18 @@
 package net.watersfall.alchemy.mixin;
 
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
+import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.RunedShieldAbilityImpl;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,8 +33,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
+import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
@@ -92,6 +108,58 @@ public abstract class LivingEntityMixin extends Entity
 		}
 	}
 
+	@Inject(method = "method_30129", at = @At(value = "JUMP", opcode = 199), locals = LocalCapture.CAPTURE_FAILHARD)
+	public void checkRunedShield(
+			CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> info,
+			Map<EquipmentSlot, ItemStack> map,
+			EquipmentSlot[] slots,
+			int size,
+			int index,
+			EquipmentSlot slot,
+			ItemStack currentStack,
+			ItemStack newStack)
+	{
+		LivingEntity entity = (LivingEntity)(Object)this;
+		if(slot == EquipmentSlot.CHEST)
+		{
+			if(newStack.getItem() == Items.NETHERITE_CHESTPLATE)
+			{
+				if(entity instanceof AbilityProvider)
+				{
+					AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+					provider.addAbility(new RunedShieldAbilityImpl());
+					PacketByteBuf buf = PacketByteBufs.create();
+					buf.writeInt(this.getId());
+					provider.toPacket(buf);
+					if(this.getType() == EntityType.PLAYER)
+					{
+						ServerPlayNetworking.send((ServerPlayerEntity)(Object)this, AlchemyMod.getId("abilities_packet"), buf);
+					}
+					for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
+					{
+						ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+					}
+				}
+			}
+			else if(currentStack.getItem() == Items.NETHERITE_CHESTPLATE)
+			{
+				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				provider.removeAbility(new Identifier("waters_alchemy_mod", "test"));
+				PacketByteBuf buf = PacketByteBufs.create();
+				buf.writeInt(this.getId());
+				provider.toPacket(buf);
+				if(this.getType() == EntityType.PLAYER)
+				{
+					ServerPlayNetworking.send((ServerPlayerEntity)(Object)this, AlchemyMod.getId("abilities_packet"), buf);
+				}
+				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
+				{
+					ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+				}
+			}
+		}
+	}
+
 	@ModifyVariable(
 			method = "applyDamage",
 			at = @At(
@@ -114,5 +182,19 @@ public abstract class LivingEntityMixin extends Entity
 			}
 		}
 		return amount;
+	}
+
+	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+	public void writeCustomData(CompoundTag tag, CallbackInfo info)
+	{
+		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)(Entity)(Object)this;
+		provider.toNbt(tag);
+	}
+
+	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+	public void readCustomData(CompoundTag tag, CallbackInfo info)
+	{
+		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)(Entity)(Object)this;
+		provider.toNbt(tag);
 	}
 }

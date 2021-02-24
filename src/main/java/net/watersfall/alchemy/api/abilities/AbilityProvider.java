@@ -1,0 +1,71 @@
+package net.watersfall.alchemy.api.abilities;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.util.Identifier;
+
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Set;
+
+public interface AbilityProvider<T>
+{
+	public static final Registry<Entity> ENTITY_REGISTRY = new Registry<>();
+
+	void addAbility(Ability<T> ability);
+
+	default void removeAbility(Ability<T> ability)
+	{
+		removeAbility(ability.getId());
+	}
+
+	void removeAbility(Identifier id);
+
+	Optional<Ability<T>> getAbility(Identifier id);
+
+	CompoundTag toNbt(CompoundTag tag);
+
+	void fromNbt(CompoundTag tag);
+
+	PacketByteBuf toPacket(PacketByteBuf buf);
+
+	void fromPacket(PacketByteBuf buf);
+
+	class Registry<T>
+	{
+		private final HashMap<Identifier, Ability.FactoryTag<T>> registry;
+		private final HashMap<Identifier, Ability.FactoryPacket<T>> packetRegistry;
+
+		private Registry()
+		{
+			registry = new HashMap<>();
+			packetRegistry = new HashMap<>();
+		}
+
+		public void register(Identifier id, Ability.FactoryTag<T> factory)
+		{
+			registry.put(id, factory);
+		}
+
+		public void registerPacket(Identifier id, Ability.FactoryPacket<T> packet)
+		{
+			packetRegistry.put(id, packet);
+		}
+
+		public Ability<T> create(Identifier id, CompoundTag tag)
+		{
+			return registry.get(id).create(tag);
+		}
+
+		public Ability<T> create(Identifier id, PacketByteBuf buf)
+		{
+			return packetRegistry.get(id).create(buf);
+		}
+
+		public Set<Identifier> getIds()
+		{
+			return registry.keySet();
+		}
+	}
+}
