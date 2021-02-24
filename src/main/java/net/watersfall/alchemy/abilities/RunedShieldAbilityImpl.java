@@ -62,7 +62,7 @@ public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClient
 	public void fromNbt(CompoundTag tag)
 	{
 		this.shieldAmount = tag.getInt("shield_amount");
-		this.maxShieldAmount = tag.getInt("max_shield_amount");
+		this.maxShieldAmount = tag.getInt("max_shield_amount") + 1;
 		this.rechargeRate = tag.getInt("recharge_rate");
 	}
 

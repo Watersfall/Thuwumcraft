@@ -8,6 +8,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
@@ -118,6 +119,15 @@ public class AlchemyModClient implements ClientModInitializer
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 				provider.fromPacket(buf);
 			}
+		}));
+
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet_player"), ((client, handler, buf, responseSender) -> {
+			PacketByteBuf buf2 = new PacketByteBuf(buf.copy());
+			client.execute(() -> {
+				buf2.readInt();
+				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)MinecraftClient.getInstance().player;
+				provider.fromPacket(buf2);
+			});
 		}));
 	}
 }

@@ -1,15 +1,14 @@
 package net.watersfall.alchemy;
 
 import io.netty.buffer.UnpooledUnsafeDirectByteBuf;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.fabric.impl.networking.ServerSidePacketRegistryImpl;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
@@ -169,6 +168,10 @@ public class AlchemyMod implements ModInitializer
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 				PacketByteBuf buf = PacketByteBufs.create();
 				provider.toPacket(buf);
+				if(entity.getType() == EntityType.PLAYER)
+				{
+					ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet_player"), buf);
+				}
 				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 				{
 					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);

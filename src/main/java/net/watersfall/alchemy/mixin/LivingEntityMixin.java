@@ -181,6 +181,6 @@ public abstract class LivingEntityMixin extends Entity
 	public void readCustomData(CompoundTag tag, CallbackInfo info)
 	{
 		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)(Entity)(Object)this;
-		provider.toNbt(tag);
+		provider.fromNbt(tag);
 	}
 }

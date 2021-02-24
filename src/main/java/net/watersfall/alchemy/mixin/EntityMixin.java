@@ -74,7 +74,10 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	public void fromNbt(CompoundTag tag)
 	{
 		AbilityProvider.ENTITY_REGISTRY.getIds().forEach((id) -> {
-			this.addAbility(AbilityProvider.ENTITY_REGISTRY.create(id, tag));
+			if(tag.contains(id.toString()))
+			{
+				this.addAbility(AbilityProvider.ENTITY_REGISTRY.create(id, tag.getCompound(id.toString())));
+			}
 		});
 	}
 
