@@ -1,11 +1,8 @@
 package net.watersfall.alchemy;
 
-import io.netty.buffer.UnpooledUnsafeDirectByteBuf;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.networking.v1.*;
-import net.fabricmc.fabric.impl.networking.ServerSidePacketRegistryImpl;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -14,17 +11,14 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerChunkManager;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.event.listener.EntityGameEventHandler;
-import net.watersfall.alchemy.abilities.RunedShieldAbilityImpl;
+import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
+import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -212,7 +206,8 @@ public class AlchemyMod implements ModInitializer
 		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
-		AbilityProvider.ENTITY_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityImpl::new);
-		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("runed_shield_ability"), RunedShieldAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityEntity::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("runed_shield_ability"), RunedShieldAbilityEntity::new);
+		AbilityProvider.ITEM_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityItem::new);
 	}
 }

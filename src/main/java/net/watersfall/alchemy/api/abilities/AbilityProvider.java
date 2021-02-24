@@ -3,6 +3,7 @@ package net.watersfall.alchemy.api.abilities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Clearable;
@@ -15,6 +16,7 @@ import java.util.Set;
 public interface AbilityProvider<T> extends Clearable
 {
 	public static final Registry<Entity> ENTITY_REGISTRY = new Registry<>();
+	public static final Registry<ItemStack> ITEM_REGISTRY = new Registry<>();
 
 	void addAbility(Ability<T> ability);
 

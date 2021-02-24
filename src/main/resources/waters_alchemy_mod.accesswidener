@@ -1,2 +1,3 @@
 accessWidener	v1	named
 accessible field net/minecraft/client/render/block/entity/SkullBlockEntityRenderer TEXTURES Ljava/util/Map;
+extendable class net/minecraft/item/ItemStack

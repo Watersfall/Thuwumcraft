@@ -1,17 +1,10 @@
 package net.watersfall.alchemy.mixin;
 
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.abilities.RunedShieldAbilityImpl;
+import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
@@ -129,10 +122,10 @@ public abstract class LivingEntityMixin extends Entity
 				if(entity instanceof AbilityProvider)
 				{
 					AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-					Optional<Ability<Entity>> optional = provider.getAbility(RunedShieldAbilityImpl.ID);
+					Optional<Ability<Entity>> optional = provider.getAbility(RunedShieldAbilityEntity.ID);
 					if(!optional.isPresent())
 					{
-						provider.addAbility(new RunedShieldAbilityImpl());
+						provider.addAbility(new RunedShieldAbilityEntity());
 						provider.sync(entity);
 					}
 				}
@@ -140,7 +133,7 @@ public abstract class LivingEntityMixin extends Entity
 			else if(currentStack.getItem() == Items.NETHERITE_CHESTPLATE)
 			{
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-				provider.removeAbility(RunedShieldAbilityImpl.ID);
+				provider.removeAbility(RunedShieldAbilityEntity.ID);
 				provider.sync(entity);
 			}
 		}

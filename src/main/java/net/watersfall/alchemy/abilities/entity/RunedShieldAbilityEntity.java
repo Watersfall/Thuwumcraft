@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.abilities;
+package net.watersfall.alchemy.abilities.entity;
 
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -12,33 +12,33 @@ import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.api.abilities.RunedShieldAbility;
+import net.watersfall.alchemy.api.abilities.common.RunedShieldAbility;
 
-public class RunedShieldAbilityImpl implements RunedShieldAbility, AbilityClientSerializable<Entity>
+public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, AbilityClientSerializable<Entity>
 {
 	private int shieldAmount;
 	private int maxShieldAmount;
 	private int rechargeRate;
 	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
 
-	public RunedShieldAbilityImpl(CompoundTag tag)
+	public RunedShieldAbilityEntity(CompoundTag tag)
 	{
 		this.fromNbt(tag);
 	}
 
-	public RunedShieldAbilityImpl(PacketByteBuf buf)
+	public RunedShieldAbilityEntity(PacketByteBuf buf)
 	{
 		this.fromPacket(buf);
 	}
 
-	public RunedShieldAbilityImpl(int shieldAmount, int maxShieldAmount, int rechargeRate)
+	public RunedShieldAbilityEntity(int shieldAmount, int maxShieldAmount, int rechargeRate)
 	{
 		this.shieldAmount = shieldAmount;
 		this.maxShieldAmount = maxShieldAmount;
 		this.rechargeRate = rechargeRate;
 	}
 
-	public RunedShieldAbilityImpl()
+	public RunedShieldAbilityEntity()
 	{
 		this(1, 1, 20);
 	}

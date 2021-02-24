@@ -1,8 +1,8 @@
-package net.watersfall.alchemy.api.abilities;
+package net.watersfall.alchemy.api.abilities.common;
 
-import net.minecraft.entity.Entity;
+import net.watersfall.alchemy.api.abilities.Ability;
 
-public interface RunedShieldAbility extends Ability<Entity>
+public interface RunedShieldAbility<T> extends Ability<T>
 {
 	int getMaxAmount();
 

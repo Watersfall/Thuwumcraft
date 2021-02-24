@@ -7,11 +7,15 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
+import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
@@ -70,6 +74,16 @@ public class AlchemyModClient implements ClientModInitializer
 					else
 					{
 						tooltip.add(StatusEffectHelper.NO_EFFECT);
+					}
+				}
+				else if(stack.getItem() == Items.NETHERITE_CHESTPLATE)
+				{
+					AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)stack;
+					Optional<Ability<ItemStack>> abilityOptional = provider.getAbility(AlchemyMod.getId("runed_shield_ability"));
+					if(abilityOptional.isPresent())
+					{
+						RunedShieldAbilityItem ability = (RunedShieldAbilityItem) abilityOptional.get();
+						tooltip.add(new LiteralText("Amount: " + ability.getShieldAmount() + " Max: " + ability.getMaxAmount()));
 					}
 				}
 			}
