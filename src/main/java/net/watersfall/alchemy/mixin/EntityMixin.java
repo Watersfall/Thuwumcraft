@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.mixin;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -98,6 +100,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public void fromPacket(PacketByteBuf buf)
 	{
 		temp.clear();
@@ -112,8 +115,6 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 			this.waters_abilities.putAll(temp);
 		});
 	}
-
-
 
 	@Override
 	public void sync(Entity entity)

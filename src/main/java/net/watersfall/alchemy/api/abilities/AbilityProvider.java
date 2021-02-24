@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.api.abilities;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
@@ -31,6 +33,7 @@ public interface AbilityProvider<T> extends Clearable
 
 	PacketByteBuf toPacket(PacketByteBuf buf);
 
+	@Environment(EnvType.CLIENT)
 	void fromPacket(PacketByteBuf buf);
 
 	void sync(T t);
