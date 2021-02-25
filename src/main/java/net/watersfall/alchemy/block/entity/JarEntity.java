@@ -53,13 +53,13 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	@Override
 	public boolean canInsert(AspectStack stack, Direction direction)
 	{
-		return true;
+		return this.aspects.size() == 0 || (this.aspects.size() == 1 && this.aspects.containsKey(stack.getAspect()));
 	}
 
 	@Override
 	public boolean canExtract(Direction direction)
 	{
-		return true;
+		return this.aspects.size() > 0;
 	}
 
 	@Override

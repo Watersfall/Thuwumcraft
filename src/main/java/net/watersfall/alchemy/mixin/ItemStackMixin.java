@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -36,7 +37,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		{
 			if(item.asItem() != AlchemyItems.EMPTY_PHIAL_ITEM)
 			{
-				this.getOrCreateTag().putInt("waters_aspect_count", 64);
+				this.addAbility(new PhialStorageAbility(((GlassPhialItem) item.asItem()).getAspect(), 64));
 			}
 		}
 		else if(item != null && item.asItem() == Items.NETHERITE_CHESTPLATE)

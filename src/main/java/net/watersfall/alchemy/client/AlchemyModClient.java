@@ -14,6 +14,7 @@ import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -107,12 +108,6 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
-		MultiTooltipComponent.REGISTRY.register(AlchemyItems.EMPTY_PHIAL_ITEM, (stack) -> {
-			return new GlassPhialTooltipComponent(new GlassPhialTooltipData(new AspectStack(Aspects.AIR, 64)));
-		});
-		MultiTooltipComponent.REGISTRY.register(AlchemyItems.EMPTY_PHIAL_ITEM, (stack) -> {
-			return new GlassPhialTooltipComponent(new GlassPhialTooltipData(new AspectStack(Aspects.FIRE, 64)));
-		});
 		for(Item item : Registry.ITEM)
 		{
 			MultiTooltipComponent.REGISTRY.register(item, (stack) -> {

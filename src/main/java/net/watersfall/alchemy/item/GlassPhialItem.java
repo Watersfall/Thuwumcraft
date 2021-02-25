@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -12,9 +13,15 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
+import net.watersfall.alchemy.api.abilities.Ability;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
@@ -22,6 +29,8 @@ import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.client.item.GlassPhialTooltipData;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.text.html.Option;
+import java.security.Provider;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,72 +52,72 @@ public class GlassPhialItem extends Item
 		BlockPos pos = context.getBlockPos();
 		BlockEntity test = world.getBlockEntity(pos);
 		ItemStack stack = context.getStack();
+		PlayerEntity player = context.getPlayer();
+		Hand hand = context.getHand();
 		if(test instanceof AspectInventory)
 		{
-			Direction dir = context.getSide();
-			AspectInventory inventory = (AspectInventory)test;
-			if(this.aspect == Aspect.EMPTY)
+			Direction direction = context.getSide();
+			AspectInventory inventory = (AspectInventory) test;
+			if(stack.getItem() == AlchemyItems.EMPTY_PHIAL_ITEM)
 			{
-				if(inventory.canExtract(dir))
+				if(inventory.canExtract(direction))
 				{
 					if(!world.isClient)
 					{
-						AspectStack aspectStack = inventory.getAspects().values().stream().findFirst().get();
-						int remove = Math.min(MAX_COUNT, aspectStack.getCount());
-						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(aspectStack.getAspect()));
-						aspectStack = inventory.removeAspect(aspectStack.getAspect(), remove);
-						if(this.setAspectCount(newStack, aspectStack.getCount()))
+						AspectStack invStack = inventory.getAspects().values().stream().findFirst().get();
+						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(invStack.getAspect()));
+						AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)newStack;
+						PhialStorageAbility ability = (PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID).get();
+						int remove = Math.min(invStack.getCount(), MAX_COUNT);
+						invStack = inventory.removeAspect(invStack.getAspect(), remove);
+						ability.setAspect(invStack);
+						stack.decrement(1);
+						if(stack.isEmpty())
 						{
-							stack.decrement(1);
-							if(stack.isEmpty())
+							player.setStackInHand(hand, newStack);
+						}
+						else
+						{
+							if(!player.getInventory().insertStack(newStack))
 							{
-								context.getPlayer().setStackInHand(context.getHand(), newStack);
-							}
-							else
-							{
-								if(!context.getPlayer().getInventory().insertStack(newStack))
-								{
-									context.getPlayer().dropItem(newStack, true);
-								}
+								player.dropItem(newStack, true);
 							}
 						}
-						if(test instanceof BlockEntityClientSerializable)
-						{
-							((BlockEntityClientSerializable) test).sync();
-						}
+						((BlockEntityClientSerializable) test).sync();
 					}
 					return ActionResult.success(world.isClient);
 				}
 			}
 			else
 			{
-				AspectStack aspectStack = new AspectStack(this.getAspect(), this.getAspectCount(stack));
-				if(inventory.canInsert(aspectStack, dir))
+				Optional<Ability<ItemStack>> optional = ((AbilityProvider<ItemStack>)stack).getAbility(AspectStorageAbility.ID);
+				if(optional.isPresent())
 				{
-					if(!world.isClient)
+					AspectStorageAbility<ItemStack> ability = (AspectStorageAbility<ItemStack>) optional.get();
+					if(inventory.canInsert(ability.getAspect(this.aspect), direction))
 					{
-						inventory.addAspect(aspectStack);
-						stack.decrement(1);
-						if(stack.isEmpty())
+						if(!world.isClient)
 						{
-							context.getPlayer().setStackInHand(context.getHand(), new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM));
-						}
-						else
-						{
-							if(!context.getPlayer().getInventory().insertStack(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM)))
+							inventory.addAspect(ability.getAspects().stream().findFirst().get());
+							stack.decrement(1);
+							ItemStack newStack = new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM);
+							if(stack.isEmpty())
 							{
-								context.getPlayer().dropItem(new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM), true);
+								player.setStackInHand(hand, newStack);
 							}
-						}
-						if(test instanceof BlockEntityClientSerializable)
-						{
+							else
+							{
+								if(!player.getInventory().insertStack(newStack))
+								{
+									player.dropItem(newStack, true);
+								}
+							}
 							((BlockEntityClientSerializable) test).sync();
 						}
+						return ActionResult.success(world.isClient);
 					}
-					return ActionResult.success(world.isClient);
 				}
 			}
-			return ActionResult.success(world.isClient);
 		}
 		return ActionResult.PASS;
 	}
@@ -116,21 +125,6 @@ public class GlassPhialItem extends Item
 	public Aspect getAspect()
 	{
 		return this.aspect;
-	}
-
-	public int getAspectCount(ItemStack stack)
-	{
-		return stack.getOrCreateTag().getInt("waters_aspect_count");
-	}
-
-	public boolean setAspectCount(ItemStack stack, int count)
-	{
-		if(count > MAX_COUNT)
-		{
-			count = MAX_COUNT;
-		}
-		stack.getOrCreateTag().putInt("waters_aspect_count", count);
-		return count > 0;
 	}
 
 	@Override
@@ -157,7 +151,8 @@ public class GlassPhialItem extends Item
 	{
 		if(this.aspect != Aspect.EMPTY)
 		{
-			return Optional.of(new GlassPhialTooltipData(new AspectStack(this.aspect, this.getAspectCount(stack))));
+			AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)stack;
+			return Optional.of(new GlassPhialTooltipData((PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID).get()));
 		}
 		return super.getTooltipData(stack);
 	}

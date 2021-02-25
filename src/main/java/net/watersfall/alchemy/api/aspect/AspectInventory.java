@@ -2,11 +2,13 @@ package net.watersfall.alchemy.api.aspect;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +22,30 @@ import java.util.HashMap;
  */
 public interface AspectInventory extends SidedInventory
 {
+	public static void writeNbt(CompoundTag tag, AspectInventory inventory)
+	{
+		Inventories.writeNbt(tag, inventory.getContents());
+		ListTag aspects = new ListTag();
+		inventory.getAspects().values().forEach((aspect) -> {
+			CompoundTag aspectTag = new CompoundTag();
+			aspectTag.putString("aspect", aspect.getAspect().getId().toString());
+			aspectTag.putInt("count", aspect.getCount());
+			aspects.add(aspectTag);
+		});
+		tag.put("aspects", aspects);
+	}
+
+	public static void readNbt(CompoundTag tag, AspectInventory inventory)
+	{
+		Inventories.readNbt(tag, inventory.getContents());
+		ListTag aspects = tag.getList("aspects", NbtType.COMPOUND);
+		aspects.forEach((aspectTag) -> {
+			CompoundTag compound = (CompoundTag)aspectTag;
+			AspectStack stack = new AspectStack(Aspects.getAspectById(Identifier.tryParse(compound.getString("aspect"))), compound.getInt("count"));
+			inventory.addAspect(stack);
+		});
+	}
+
 	/**
 	 * Gets the map of all AspectStacks in this inventory
 	 * @return the aspects map
@@ -47,7 +73,11 @@ public interface AspectInventory extends SidedInventory
 	 */
 	default AspectStack getAspect(Aspect aspect)
 	{
-		return getAspects().get(aspect);
+		if(getAspects().containsKey(aspect))
+		{
+			return getAspects().get(aspect);
+		}
+		return AspectStack.EMPTY;
 	}
 
 	/**
@@ -190,6 +220,11 @@ public interface AspectInventory extends SidedInventory
 			ItemStack stack = new ItemStack(Registry.ITEM.get(Identifier.tryParse(input.getString("item"))), input.getInt("count"));
 			this.setCurrentInput(stack);
 		}
+	}
+
+	default DefaultedList<ItemStack> getContents()
+	{
+		return DefaultedList.of();
 	}
 
 	@Override
