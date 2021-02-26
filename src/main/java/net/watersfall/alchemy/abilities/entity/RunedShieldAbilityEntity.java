@@ -74,13 +74,8 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 			if(entity.getEntityWorld().getTime() % 100 == 0)
 			{
 				this.setShieldAmount(this.getShieldAmount() + 1);
-				System.out.println("ticking server uwu: " + this.getShieldAmount());
 				this.sync(entity);
 			}
-		}
-		else
-		{
-			System.out.println("ticking client uwu: " + this.getShieldAmount());
 		}
 	}
 

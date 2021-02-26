@@ -27,6 +27,7 @@ import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
+import net.watersfall.alchemy.client.gui.GuideScreen;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.gui.item.GlassPhialTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
@@ -105,6 +106,7 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
+		ScreenRegistry.register(AlchemyMod.GUIDE_HANDLER, GuideScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());

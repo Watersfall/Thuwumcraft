@@ -7,3 +7,6 @@ src/main/resources/assets/waters_alchemy_mod/sounds/magic.ogg:
 src/main/resources/assets/waters_alchemy_mod/sounds/bubble/*:
 	"Water Bubble" by EminYILDIRIM of Freesound.org
 	(https://freesound.org/people/EminYILDIRIM/sounds/536109/)
+src/main/resources/assets/waters_alchemy_mod/sounds/research/open_book.ogg
+	"Flipping through a book.wav" by Tats14 of Freesound.org
+	(https://freesound.org/people/Tats14/sounds/408786/)

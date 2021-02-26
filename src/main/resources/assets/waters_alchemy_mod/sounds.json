@@ -18,5 +18,10 @@
 			"waters_alchemy_mod:bubble/5",
 			"waters_alchemy_mod:bubble/6"
 		]
+	},
+	"item.research_book.open": {
+		"sounds": [
+			"waters_alchemy_mod:research/open_book"
+		]
 	}
 }

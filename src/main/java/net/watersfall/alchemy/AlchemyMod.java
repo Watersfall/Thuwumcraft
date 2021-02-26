@@ -49,6 +49,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
+import net.watersfall.alchemy.screen.GuideHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 
 import java.util.HashSet;
@@ -61,12 +62,14 @@ public class AlchemyMod implements ModInitializer
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
+	public static final ScreenHandlerType<GuideHandler> GUIDE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
 		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
+		GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), GuideHandler::new);
 	}
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
@@ -189,6 +192,7 @@ public class AlchemyMod implements ModInitializer
 		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), AlchemySounds.CAULDRON_ADD_INGREDIENT);
 		Registry.register(Registry.SOUND_EVENT, getId("block.crucible.create"), AlchemySounds.USE_DUST_SOUND);
 		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), AlchemySounds.BUBBLE_SOUND);
+		Registry.register(Registry.SOUND_EVENT, getId("item.research_book.open"), AlchemySounds.BOOK_OPEN_SOUND);
 	}
 
 	private static void registerAbilities()
