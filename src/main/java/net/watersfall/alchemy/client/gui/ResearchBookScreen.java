@@ -22,7 +22,7 @@ import net.watersfall.alchemy.api.research.Research;
 
 import java.util.Optional;
 
-public class GuideScreen extends HandledScreen<ScreenHandler>
+public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
 	private static final Identifier TEXTURE = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_background.png");
@@ -33,7 +33,7 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 	private float mapY = 0;
 
 	PlayerEntity player;
-	public GuideScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
+	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
 		player = inventory.player;
@@ -63,9 +63,9 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
-		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)player;
-		Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
-		PlayerResearchAbility ability = (PlayerResearchAbility)optional.get();
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+		PlayerResearchAbility ability = optional.get();
 		this.drawBackground(matrices, delta, mouseX, mouseY);
 		int xOffset = (int)getXOffset();
 		int yOffset = (int)getYOffset();

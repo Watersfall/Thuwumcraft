@@ -32,8 +32,8 @@ public class InGameHudMixin extends DrawableHelper
 	{
 		if(this.client.player != null)
 		{
-			AbilityProvider<Entity> provider = (AbilityProvider<Entity>)this.client.player;
-			Optional<Ability<Entity>> optional = provider.getAbility(RunedShieldAbilityEntity.ID);
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
+			Optional<RunedShieldAbilityEntity> optional = provider.getAbility(RunedShieldAbilityEntity.ID, RunedShieldAbilityEntity.class);
 			int x = this.scaledWidth / 2 - 91;
 			int y = this.scaledHeight / 2 + 91;
 			if(optional.isPresent())

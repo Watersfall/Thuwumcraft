@@ -61,12 +61,17 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		this.getOrCreateTag().remove(id.toString());
 	}
 
-	public Optional<Ability<ItemStack>> getAbility(Identifier id)
+	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
 		if(this.getOrCreateTag().contains(id.toString()))
 		{
 			CompoundTag tag = this.tag.getCompound(id.toString());
-			return Optional.of(AbilityProvider.ITEM_REGISTRY.create(id, tag));
+			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag);
+			if(clazz.isInstance(ability))
+			{
+				return Optional.of(clazz.cast(ability));
+			}
+
 		}
 		return Optional.empty();
 	}

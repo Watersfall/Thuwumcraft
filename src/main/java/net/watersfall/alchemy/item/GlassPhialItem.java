@@ -66,8 +66,8 @@ public class GlassPhialItem extends Item
 					{
 						AspectStack invStack = inventory.getAspects().values().stream().findFirst().get();
 						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(invStack.getAspect()));
-						AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)newStack;
-						PhialStorageAbility ability = (PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID).get();
+						AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(newStack);
+						PhialStorageAbility ability = provider.getAbility(AspectStorageAbility.ID, PhialStorageAbility.class).get();
 						int remove = Math.min(invStack.getCount(), MAX_COUNT);
 						invStack = inventory.removeAspect(invStack.getAspect(), remove);
 						ability.setAspect(invStack);
@@ -90,7 +90,7 @@ public class GlassPhialItem extends Item
 			}
 			else
 			{
-				Optional<Ability<ItemStack>> optional = ((AbilityProvider<ItemStack>)stack).getAbility(AspectStorageAbility.ID);
+				Optional<AspectStorageAbility> optional = AbilityProvider.getProvider(stack).getAbility(AspectStorageAbility.ID, AspectStorageAbility.class);
 				if(optional.isPresent())
 				{
 					AspectStorageAbility<ItemStack> ability = (AspectStorageAbility<ItemStack>) optional.get();
@@ -151,8 +151,8 @@ public class GlassPhialItem extends Item
 	{
 		if(this.aspect != Aspect.EMPTY)
 		{
-			AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)stack;
-			return Optional.of(new GlassPhialTooltipData((PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID).get()));
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			return Optional.of(new GlassPhialTooltipData((PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID, AspectStorageAbility.class).get()));
 		}
 		return super.getTooltipData(stack);
 	}

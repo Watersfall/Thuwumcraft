@@ -10,11 +10,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
-import net.watersfall.alchemy.screen.GuideHandler;
+import net.watersfall.alchemy.screen.ResearchBookHandler;
 
-public class GuideItem extends Item
+public class ResearchBookItem extends Item
 {
-	public GuideItem(Settings settings)
+	public ResearchBookItem(Settings settings)
 	{
 		super(settings);
 	}
@@ -38,6 +38,6 @@ public class GuideItem extends Item
 	private NamedScreenHandlerFactory createScreenHandlerFactory(ItemStack stack)
 	{
 		return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) ->
-				new GuideHandler(syncId, player.getInventory()), stack.getName());
+				new ResearchBookHandler(syncId, player.getInventory()), stack.getName());
 	}
 }

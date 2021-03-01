@@ -15,6 +15,11 @@ import java.util.Set;
 
 public interface AbilityProvider<T> extends Clearable
 {
+	public static <T> AbilityProvider<T> getProvider(T t)
+	{
+		return (AbilityProvider<T>)t;
+	}
+
 	public static final Registry<Entity> ENTITY_REGISTRY = new Registry<>();
 	public static final Registry<ItemStack> ITEM_REGISTRY = new Registry<>();
 
@@ -27,7 +32,7 @@ public interface AbilityProvider<T> extends Clearable
 
 	void removeAbility(Identifier id);
 
-	Optional<Ability<T>> getAbility(Identifier id);
+	<R> Optional<R> getAbility(Identifier id, Class<R> clazz);
 
 	CompoundTag toNbt(CompoundTag tag);
 

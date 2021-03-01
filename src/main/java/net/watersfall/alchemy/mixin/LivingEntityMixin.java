@@ -121,8 +121,8 @@ public abstract class LivingEntityMixin extends Entity
 			{
 				if(entity instanceof AbilityProvider)
 				{
-					AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-					Optional<Ability<Entity>> optional = provider.getAbility(RunedShieldAbilityEntity.ID);
+					AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
+					Optional<RunedShieldAbilityEntity> optional = provider.getAbility(RunedShieldAbilityEntity.ID, RunedShieldAbilityEntity.class);
 					if(!optional.isPresent())
 					{
 						provider.addAbility(new RunedShieldAbilityEntity());
@@ -132,7 +132,7 @@ public abstract class LivingEntityMixin extends Entity
 			}
 			else if(currentStack.getItem() == Items.NETHERITE_CHESTPLATE)
 			{
-				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
 				provider.removeAbility(RunedShieldAbilityEntity.ID);
 				provider.sync(entity);
 			}

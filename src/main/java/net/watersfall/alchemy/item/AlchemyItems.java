@@ -30,7 +30,7 @@ public class AlchemyItems
 	public static final Item JAR_ITEM;
 	public static final GlassPhialItem EMPTY_PHIAL_ITEM;
 	public static final Item PHIAL_SHELF_ITEM;
-	public static final GuideItem GUIDE_ITEM;
+	public static final ResearchBookItem RESEARCH_BOOK_ITEM;
 
 	static
 	{
@@ -50,7 +50,7 @@ public class AlchemyItems
 		JAR_ITEM = new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
 		EMPTY_PHIAL_ITEM = new GlassPhialItem(Aspect.EMPTY);
 		PHIAL_SHELF_ITEM = new BlockItem(AlchemyBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		GUIDE_ITEM = new GuideItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		RESEARCH_BOOK_ITEM = new ResearchBookItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	public static void register()
@@ -74,7 +74,7 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect/water"), AspectItems.WATER);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("phial/empty"), EMPTY_PHIAL_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_ITEM);
-		Registry.register(Registry.ITEM, AlchemyMod.getId("guide_book"), GUIDE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("research_book"), RESEARCH_BOOK_ITEM);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()

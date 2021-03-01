@@ -2,7 +2,6 @@ package net.watersfall.alchemy;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -24,7 +23,6 @@ import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -54,7 +52,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
-import net.watersfall.alchemy.screen.GuideHandler;
+import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 
 import java.util.HashSet;
@@ -67,19 +65,18 @@ public class AlchemyMod implements ModInitializer
 	public static final String MOD_ID = "waters_alchemy_mod";
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
-	public static final ScreenHandlerType<GuideHandler> GUIDE_HANDLER;
+	public static final ScreenHandlerType<ResearchBookHandler> RESEARCH_BOOK_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 
 	static
 	{
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
 		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
-		GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), GuideHandler::new);
+		RESEARCH_BOOK_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), ResearchBookHandler::new);
 		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
-			AbilityProvider<Entity> provider = (AbilityProvider<Entity>)player;
-			Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
-			optional.ifPresent((cast) -> {
-				PlayerResearchAbility ability = (PlayerResearchAbility)cast;
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			optional.ifPresent((ability) -> {
 				Research research = Research.REGISTRY.get(buf.readIdentifier());
 				if(!ability.getResearch().contains(research))
 				{

@@ -51,11 +51,16 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Override
-	public Optional<Ability<Entity>> getAbility(Identifier id)
+	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
 		if(this.waters_abilities.containsKey(id))
 		{
-			return Optional.of(this.waters_abilities.get(id));
+			Ability<Entity> ability = this.waters_abilities.get(id);
+			if(clazz.isInstance(ability))
+			{
+				return Optional.of(clazz.cast(ability));
+			}
+
 		}
 		return Optional.empty();
 	}

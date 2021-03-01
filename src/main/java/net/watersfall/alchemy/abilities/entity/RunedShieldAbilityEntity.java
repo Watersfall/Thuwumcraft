@@ -136,7 +136,7 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 	public void sync(Entity entity)
 	{
 		PacketByteBuf buf = PacketByteBufs.create();
-		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
 		provider.toPacket(buf);
 		if(entity.getType() == EntityType.PLAYER)
 		{

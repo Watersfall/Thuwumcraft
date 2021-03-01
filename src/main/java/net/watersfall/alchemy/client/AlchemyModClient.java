@@ -14,28 +14,21 @@ import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
-import net.watersfall.alchemy.api.aspect.AspectStack;
-import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
-import net.watersfall.alchemy.client.gui.GuideScreen;
+import net.watersfall.alchemy.client.gui.ResearchBookScreen;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
-import net.watersfall.alchemy.client.gui.item.GlassPhialTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
-import net.watersfall.alchemy.client.item.GlassPhialTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
-import net.watersfall.alchemy.item.AlchemyItems;
-import net.watersfall.alchemy.item.GlassPhialItem;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.util.StatusEffectHelper;
@@ -51,8 +44,6 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
@@ -81,11 +72,11 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 				else if(stack.getItem() == Items.NETHERITE_CHESTPLATE)
 				{
-					AbilityProvider<ItemStack> provider = (AbilityProvider<ItemStack>)stack;
-					Optional<Ability<ItemStack>> abilityOptional = provider.getAbility(AlchemyMod.getId("runed_shield_ability"));
+					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+					Optional<RunedShieldAbilityItem> abilityOptional = provider.getAbility(AlchemyMod.getId("runed_shield_ability"), RunedShieldAbilityItem.class);
 					if(abilityOptional.isPresent())
 					{
-						RunedShieldAbilityItem ability = (RunedShieldAbilityItem) abilityOptional.get();
+						RunedShieldAbilityItem ability = abilityOptional.get();
 						tooltip.add(new LiteralText("Amount: " + ability.getShieldAmount() + " Max: " + ability.getMaxAmount()));
 					}
 				}
@@ -107,7 +98,7 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
-		ScreenRegistry.register(AlchemyMod.GUIDE_HANDLER, GuideScreen::new);
+		ScreenRegistry.register(AlchemyMod.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
@@ -128,7 +119,7 @@ public class AlchemyModClient implements ClientModInitializer
 			Entity entity = handler.getWorld().getEntityById(buf.readInt());
 			if(entity instanceof AbilityProvider)
 			{
-				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
+				AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
 				provider.fromPacket(buf);
 			}
 		}));
@@ -137,16 +128,15 @@ public class AlchemyModClient implements ClientModInitializer
 			PacketByteBuf buf2 = new PacketByteBuf(buf.copy());
 			client.execute(() -> {
 				buf2.readInt();
-				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)MinecraftClient.getInstance().player;
+				AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 				provider.fromPacket(buf2);
 			});
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_click"), ((client, handler, buf, responseSender) -> {
-			AbilityProvider<Entity> provider = (AbilityProvider<Entity>) client.player;
-			Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
-			optional.ifPresent((cast) -> {
-				PlayerResearchAbility ability = (PlayerResearchAbility)cast;
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
+			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			optional.ifPresent((ability) -> {
 				ability.fromPacket(buf);
 			});
 		}));
