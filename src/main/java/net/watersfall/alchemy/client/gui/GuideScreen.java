@@ -1,17 +1,26 @@
 package net.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.abilities.Ability;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
+
+import java.util.Optional;
 
 public class GuideScreen extends HandledScreen<ScreenHandler>
 {
@@ -54,6 +63,9 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)player;
+		Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
+		PlayerResearchAbility ability = (PlayerResearchAbility)optional.get();
 		this.drawBackground(matrices, delta, mouseX, mouseY);
 		int xOffset = (int)getXOffset();
 		int yOffset = (int)getYOffset();
@@ -70,6 +82,10 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 			int x = research.getX() + xOffset;
 			int y = research.getY() + yOffset;
 			this.itemRenderer.renderInGui(research.getStack(), x, y);
+			if(ability.getResearch().contains(research))
+			{
+				fill(matrices, x, y, x + 16, y + 16, -2130706433);
+			}
 			if(mouseX > x && mouseX < x + 16)
 			{
 				if(mouseY > y && mouseY < y + 16)
@@ -114,7 +130,9 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 			{
 				if(mouseY > y && mouseY < y + 16)
 				{
-
+					PacketByteBuf buf = PacketByteBufs.create();
+					buf.writeIdentifier(research.getId());
+					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);
 				}
 			}
 		});

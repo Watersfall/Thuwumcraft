@@ -18,6 +18,7 @@ import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
@@ -138,6 +139,15 @@ public class AlchemyModClient implements ClientModInitializer
 				buf2.readInt();
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)MinecraftClient.getInstance().player;
 				provider.fromPacket(buf2);
+			});
+		}));
+
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_click"), ((client, handler, buf, responseSender) -> {
+			AbilityProvider<Entity> provider = (AbilityProvider<Entity>) client.player;
+			Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
+			optional.ifPresent((cast) -> {
+				PlayerResearchAbility ability = (PlayerResearchAbility)cast;
+				ability.fromPacket(buf);
 			});
 		}));
 	}

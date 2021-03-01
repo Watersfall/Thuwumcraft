@@ -2,6 +2,7 @@ package net.watersfall.alchemy;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -21,8 +22,10 @@ import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
+import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
@@ -72,6 +75,19 @@ public class AlchemyMod implements ModInitializer
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
 		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
 		GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), GuideHandler::new);
+		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
+			AbilityProvider<Entity> provider = (AbilityProvider<Entity>)player;
+			Optional<Ability<Entity>> optional = provider.getAbility(PlayerResearchAbility.ID);
+			optional.ifPresent((cast) -> {
+				PlayerResearchAbility ability = (PlayerResearchAbility)cast;
+				Research research = Research.REGISTRY.get(buf.readIdentifier());
+				if(!ability.getResearch().contains(research))
+				{
+					ability.addResearch(research.getId());
+					responseSender.sendPacket(getId("research_click"), ability.toPacket(PacketByteBufs.create()));
+				}
+			});
+		}));
 	}
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
