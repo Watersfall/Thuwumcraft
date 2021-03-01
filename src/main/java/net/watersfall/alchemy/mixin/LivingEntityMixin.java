@@ -162,18 +162,4 @@ public abstract class LivingEntityMixin extends Entity
 		}
 		return amount;
 	}
-
-	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	public void writeCustomData(CompoundTag tag, CallbackInfo info)
-	{
-		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)(Entity)(Object)this;
-		provider.toNbt(tag);
-	}
-
-	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	public void readCustomData(CompoundTag tag, CallbackInfo info)
-	{
-		AbilityProvider<Entity> provider = (AbilityProvider<Entity>)(Entity)(Object)this;
-		provider.fromNbt(tag);
-	}
 }

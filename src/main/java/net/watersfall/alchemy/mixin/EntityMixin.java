@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -148,5 +149,19 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	public void clear()
 	{
 		this.waters_abilities.clear();
+	}
+
+
+
+	@Inject(method = "writeNbt", at = @At("RETURN"))
+	public void writeCustomData(CompoundTag tag, CallbackInfoReturnable<CompoundTag> info)
+	{
+		this.toNbt(tag);
+	}
+
+	@Inject(method = "readNbt", at = @At("TAIL"))
+	public void readCustomData(CompoundTag tag, CallbackInfo info)
+	{
+		this.fromNbt(tag);
 	}
 }
