@@ -9,6 +9,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -60,10 +62,17 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 		int x = (int)getXOffset();
 		int y = (int)getYOffset();
 		client.getTextureManager().bindTexture(ICONS);
-		drawTexture(matrices, Research.TEST_RESEARCH.getX() + x - 2, Research.TEST_RESEARCH.getY() + y - 2, 0, 0, 20, 20, 20, 20);
-		drawTexture(matrices, Research.TEST_RESEARCH_2.getX() + x - 2, Research.TEST_RESEARCH_2.getY() + y - 2, 0, 0, 20, 20, 20, 20);
-		this.itemRenderer.renderInGui(Research.TEST_RESEARCH.getStack(), Research.TEST_RESEARCH.getX() + x, Research.TEST_RESEARCH.getY() + y);
-		this.itemRenderer.renderInGui(Research.TEST_RESEARCH_2.getStack(), Research.TEST_RESEARCH_2.getX() + x, Research.TEST_RESEARCH_2.getY() + y);
+		int finalX = x;
+		int finalY = y;
+		Research.REGISTRY.getAll().forEach(research -> {
+			drawTexture(matrices, research.getX() + finalX, research.getY() + finalY, 0, 0, 16, 16, 256, 256);
+			research.getRequirements().forEach((requirement -> {
+				this.drawArrow(matrices, research.getX() + finalX, research.getY() + finalY, requirement.getX() + finalX, requirement.getY() + finalY);
+			}));
+		});
+		Research.REGISTRY.getAll().forEach(research -> {
+			this.itemRenderer.renderInGui(research.getStack(), research.getX() + finalX, research.getY() + finalY);
+		});
 		client.getTextureManager().bindTexture(TEXTURE);
 		x = (width - backgroundWidth) / 2;
 		y = (height - backgroundHeight) / 2;
@@ -81,6 +90,17 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 		mapX = MathHelper.clamp(mapX, -512, 512);
 		mapY = MathHelper.clamp(mapY, -512, 512);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+	}
+
+	protected void drawArrow(MatrixStack matrices, int startX, int startY, int endX, int endY)
+	{
+
+	}
+
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int button)
+	{
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	public float getXOffset()

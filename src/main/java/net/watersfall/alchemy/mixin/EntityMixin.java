@@ -12,7 +12,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -55,6 +57,18 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 			return Optional.of(this.waters_abilities.get(id));
 		}
 		return Optional.empty();
+	}
+
+	@Inject(method = "<init>", at = @At("TAIL"))
+	public void addToConstructor(EntityType<? extends Entity> type, World world, CallbackInfo info)
+	{
+		if(type == EntityType.PLAYER)
+		{
+			if(!world.isClient)
+			{
+				this.addAbility(new PlayerResearchAbilityImpl());
+			}
+		}
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))

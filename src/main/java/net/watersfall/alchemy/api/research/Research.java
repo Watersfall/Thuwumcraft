@@ -8,10 +8,14 @@ import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Research
 {
+	public static Registry REGISTRY = new Registry();
+
 	public static final Research TEST_RESEARCH = new Research(AlchemyMod.getId("test_research"),
 			new LiteralText("Test Research"),
 			new LiteralText("Test Description"),
@@ -46,6 +50,7 @@ public class Research
 	private Function<PlayerResearchAbility, Boolean> isVisible;
 	private Function<PlayerResearchAbility, Boolean> isReadable;
 	private Function<PlayerResearchAbility, Boolean> isAvailable;
+	private List<Research> requirements;
 
 	public Research(Identifier id,
 					Text name,
@@ -69,6 +74,12 @@ public class Research
 		this.isVisible = isVisible;
 		this.isReadable = isReadable;
 		this.isAvailable = isAvailable;
+		this.requirements = new ArrayList<>();
+	}
+
+	public void setRequirements(Research... requirements)
+	{
+		this.requirements.addAll(Arrays.stream(requirements).collect(Collectors.toList()));
 	}
 
 	public Identifier getId()
@@ -114,5 +125,36 @@ public class Research
 	public ItemStack getStack()
 	{
 		return this.stack;
+	}
+
+	public List<Research> getRequirements()
+	{
+		return this.requirements;
+	}
+
+	public static class Registry
+	{
+		private final HashMap<Identifier, Research> research;
+
+		private Registry()
+		{
+			research = new HashMap<>();
+		}
+
+		public Research get(Identifier id)
+		{
+			return this.research.get(id);
+		}
+
+		public Research register(Identifier id, Research research)
+		{
+			this.research.put(id, research);
+			return research;
+		}
+
+		public Collection<Research> getAll()
+		{
+			return research.values();
+		}
 	}
 }

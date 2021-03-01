@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
@@ -24,6 +25,7 @@ import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
+import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
@@ -201,6 +203,8 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("runed_shield_ability"), RunedShieldAbilityEntity::new);
 		AbilityProvider.ITEM_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityItem::new);
 		AbilityProvider.ITEM_REGISTRY.register(getId("aspect_storage_ability"), PhialStorageAbility::new);
+		AbilityProvider.ENTITY_REGISTRY.register(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 	}
 
 	private static void registerMultiBlocks()
@@ -221,5 +225,8 @@ public class AlchemyMod implements ModInitializer
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
+		Research.REGISTRY.register(Research.TEST_RESEARCH.getId(), Research.TEST_RESEARCH);
+		Research.REGISTRY.register(Research.TEST_RESEARCH_2.getId(), Research.TEST_RESEARCH_2);
+		Research.TEST_RESEARCH_2.setRequirements(Research.TEST_RESEARCH);
 	}
 }
