@@ -3,14 +3,10 @@ package net.watersfall.alchemy.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -59,23 +55,32 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.drawBackground(matrices, delta, mouseX, mouseY);
-		int x = (int)getXOffset();
-		int y = (int)getYOffset();
+		int xOffset = (int)getXOffset();
+		int yOffset = (int)getYOffset();
 		client.getTextureManager().bindTexture(ICONS);
-		int finalX = x;
-		int finalY = y;
 		Research.REGISTRY.getAll().forEach(research -> {
-			drawTexture(matrices, research.getX() + finalX, research.getY() + finalY, 0, 0, 16, 16, 256, 256);
+			int x = research.getX() + xOffset;
+			int y = research.getY() + yOffset;
+			drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
 			research.getRequirements().forEach((requirement -> {
-				this.drawArrow(matrices, research.getX() + finalX, research.getY() + finalY, requirement.getX() + finalX, requirement.getY() + finalY);
+				this.drawArrow(matrices, x, y, x, y);
 			}));
 		});
 		Research.REGISTRY.getAll().forEach(research -> {
-			this.itemRenderer.renderInGui(research.getStack(), research.getX() + finalX, research.getY() + finalY);
+			int x = research.getX() + xOffset;
+			int y = research.getY() + yOffset;
+			this.itemRenderer.renderInGui(research.getStack(), x, y);
+			if(mouseX > x && mouseX < x + 16)
+			{
+				if(mouseY > y && mouseY < y + 16)
+				{
+					fill(matrices, x, y, x + 16, y + 16, -2130706433);
+				}
+			}
 		});
 		client.getTextureManager().bindTexture(TEXTURE);
-		x = (width - backgroundWidth) / 2;
-		y = (height - backgroundHeight) / 2;
+		int x = (width - backgroundWidth) / 2;
+		int y = (height - backgroundHeight) / 2;
 		matrices.push();
 		matrices.translate(0, 0, 1000F);
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
@@ -100,6 +105,19 @@ public class GuideScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
+		int xOffset = (int)getXOffset();
+		int yOffset = (int)getYOffset();
+		Research.REGISTRY.getAll().forEach(research -> {
+			int x = xOffset + research.getX();
+			int y = yOffset + research.getY();
+			if(mouseX > x && mouseX < x + 16)
+			{
+				if(mouseY > y && mouseY < y + 16)
+				{
+
+				}
+			}
+		});
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
