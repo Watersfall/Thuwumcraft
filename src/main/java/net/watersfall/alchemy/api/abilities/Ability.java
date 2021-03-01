@@ -17,6 +17,11 @@ public interface Ability<T>
 
 	}
 
+	default boolean copyable()
+	{
+		return false;
+	}
+
 	interface Factory<K, T>
 	{
 		Ability<T> create(K t);

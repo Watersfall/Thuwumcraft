@@ -32,6 +32,8 @@ public interface AbilityProvider<T> extends Clearable
 
 	void removeAbility(Identifier id);
 
+	void copy(T to);
+
 	<R> Optional<R> getAbility(Identifier id, Class<R> clazz);
 
 	CompoundTag toNbt(CompoundTag tag);

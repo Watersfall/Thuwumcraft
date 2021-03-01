@@ -70,6 +70,12 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	}
 
 	@Override
+	default boolean copyable()
+	{
+		return true;
+	}
+
+	@Override
 	default void sync(Entity entity)
 	{
 

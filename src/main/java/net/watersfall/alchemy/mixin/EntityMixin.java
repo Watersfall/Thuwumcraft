@@ -86,6 +86,18 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Override
+	public void copy(Entity to)
+	{
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(to);
+		this.waters_abilities.values().forEach(ability -> {
+			if(ability.copyable())
+			{
+				provider.addAbility(ability);
+			}
+		});
+	}
+
+	@Override
 	public CompoundTag toNbt(CompoundTag tag)
 	{
 		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new CompoundTag())));

@@ -76,6 +76,22 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		return Optional.empty();
 	}
 
+	@Override
+	public void copy(ItemStack to)
+	{
+		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(to);
+		AbilityProvider.ITEM_REGISTRY.getIds().forEach((key) -> {
+			if(this.tag.contains(key.toString()))
+			{
+				Ability<ItemStack> ability = (AbilityProvider.ITEM_REGISTRY.create(key, this.tag.getCompound(key.toString())));
+				if(ability.copyable())
+				{
+					provider.addAbility(ability);
+				}
+			}
+		});
+	}
+
 	public CompoundTag toNbt(CompoundTag tag)
 	{
 		return tag;
