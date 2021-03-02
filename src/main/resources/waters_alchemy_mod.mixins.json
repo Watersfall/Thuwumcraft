@@ -9,7 +9,8 @@
 		"EntityMixin",
 		"ItemStackMixin",
 		"LivingEntityMixin",
-		"ServerPlayerEntityMixin"
+		"ServerPlayerEntityMixin",
+		"ServerResourceManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

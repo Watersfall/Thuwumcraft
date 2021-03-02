@@ -21,7 +21,6 @@ import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
-import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
@@ -55,10 +54,7 @@ import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class AlchemyMod implements ModInitializer
 {
@@ -184,11 +180,22 @@ public class AlchemyMod implements ModInitializer
 				provider.toPacket(buf);
 				if(entity.getType() == EntityType.PLAYER)
 				{
+					PacketByteBuf research = Research.REGISTRY.toPacket(PacketByteBufs.create());
 					ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet_player"), buf);
+					ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
 				}
 				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 				{
 					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
+				}
+			}
+		});
+		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
+			if(success)
+			{
+				for(ServerPlayerEntity player : PlayerLookup.all(server))
+				{
+					ServerPlayNetworking.send(player, getId("research_packet"), Research.REGISTRY.toPacket(PacketByteBufs.create()));
 				}
 			}
 		});
@@ -238,9 +245,5 @@ public class AlchemyMod implements ModInitializer
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
-		Research.REGISTRY.register(Research.TEST_RESEARCH.getId(), Research.TEST_RESEARCH);
-		Research.REGISTRY.register(Research.TEST_RESEARCH_2.getId(), Research.TEST_RESEARCH_2);
-		Research.REGISTRY.register(Research.TEST_RESEARCH_3.getId(), Research.TEST_RESEARCH_3);
-		Research.TEST_RESEARCH_2.setRequirements(Research.TEST_RESEARCH);
 	}
 }
