@@ -30,7 +30,10 @@ public class Research
 
 	public static final Research TEST_RESEARCH_2 = new Research(AlchemyMod.getId("test_research_2"),
 			new LiteralText("Test Research 2"),
-			new LiteralText("Test Description 2"),
+			new LiteralText("Test Description 2, except this one is very long and will probably require wrapping so " +
+					"I'm going to continue typing and continue typing and this will be very long and need to be wrapped and" +
+					"hopefully that wrapping works or this will really suck and be impossible to read and so this" +
+					"kinda needs to work or things will be bad"),
 			Items.DISPENSER.getDefaultStack(),
 			ResearchCategory.TEST_CATEGORY,
 			64,

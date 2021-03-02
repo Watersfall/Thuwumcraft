@@ -1,21 +1,17 @@
 package net.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
@@ -130,9 +126,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			{
 				if(mouseY > y && mouseY < y + 16)
 				{
-					PacketByteBuf buf = PacketByteBufs.create();
+					this.client.openScreen(new ResearchScreen(this, research));
+					/*PacketByteBuf buf = PacketByteBufs.create();
 					buf.writeIdentifier(research.getId());
-					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);
+					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);*/
 				}
 			}
 		});
