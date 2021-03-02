@@ -8,6 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -16,6 +19,8 @@ import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
@@ -23,6 +28,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Identifier TEXTURE = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_background.png");
 	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier FONT_ID = new Identifier("minecraft", "alt");
+	private static final Style STYLE = Style.EMPTY.withFont(FONT_ID);;
 	private int researchBackgroundWidth;
 	private int researchBackgroundHeight;
 	private float mapX = 0;
@@ -75,18 +82,45 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			}));
 		});
 		Research.REGISTRY.getAll().forEach(research -> {
-			int x = research.getX() + xOffset;
-			int y = research.getY() + yOffset;
-			this.itemRenderer.renderInGui(research.getStack(), x, y);
-			if(ability.getResearch().contains(research))
+			if(research.isVisible(ability))
 			{
-				fill(matrices, x, y, x + 16, y + 16, -2130706433);
-			}
-			if(mouseX > x && mouseX < x + 16)
-			{
-				if(mouseY > y && mouseY < y + 16)
+				int x = research.getX() + xOffset;
+				int y = research.getY() + yOffset;
+				this.itemRenderer.renderInGui(research.getStack(), x, y);
+				if(ability.getResearch().contains(research))
 				{
 					fill(matrices, x, y, x + 16, y + 16, -2130706433);
+				}
+				else if(research.isAvailable(ability))
+				{
+					if(mouseX > x && mouseX < x + 16)
+					{
+						if(mouseY > y && mouseY < y + 16)
+						{
+							fill(matrices, x, y, x + 16, y + 16, -2130706433);
+						}
+					}
+				}
+				else
+				{
+					matrices.push();
+					matrices.translate(0, 0, 398);
+					this.fillGradient(matrices, x, y, x + 16, y + 16, -1072689136, -804253680);
+					matrices.pop();
+				}
+				if(mouseX > x && mouseX < x + 16)
+				{
+					if(mouseY > y && mouseY < y + 16)
+					{
+						if(research.isReadable(ability))
+						{
+							drawMouseoverTooltip(matrices, research.getName().asOrderedText(), mouseX, mouseY);
+						}
+						else
+						{
+							drawMouseoverTooltip(matrices, generateSecretText(research), mouseX, mouseY);
+						}
+					}
 				}
 			}
 		});
@@ -97,6 +131,18 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		matrices.translate(0, 0, 1000F);
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 		matrices.pop();
+	}
+
+	private OrderedText generateSecretText(Research research)
+	{
+		return new LiteralText(research.getName().asString()).setStyle(STYLE).asOrderedText();
+	}
+
+	protected void drawMouseoverTooltip(MatrixStack matrices, OrderedText text, int x, int y)
+	{
+		List<OrderedText> list = new ArrayList<>();
+		list.add(text);
+		this.renderOrderedTooltip(matrices, list, x, y);
 	}
 
 	@Override
@@ -117,19 +163,25 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+		PlayerResearchAbility ability = optional.get();
 		int xOffset = (int)getXOffset();
 		int yOffset = (int)getYOffset();
 		Research.REGISTRY.getAll().forEach(research -> {
-			int x = xOffset + research.getX();
-			int y = yOffset + research.getY();
-			if(mouseX > x && mouseX < x + 16)
+			if(research.isAvailable(ability))
 			{
-				if(mouseY > y && mouseY < y + 16)
+				int x = xOffset + research.getX();
+				int y = yOffset + research.getY();
+				if(mouseX > x && mouseX < x + 16)
 				{
-					this.client.openScreen(new ResearchScreen(this, research));
+					if(mouseY > y && mouseY < y + 16)
+					{
+						this.client.openScreen(new ResearchScreen(this, research));
 					/*PacketByteBuf buf = PacketByteBufs.create();
 					buf.writeIdentifier(research.getId());
 					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);*/
+					}
 				}
 			}
 		});

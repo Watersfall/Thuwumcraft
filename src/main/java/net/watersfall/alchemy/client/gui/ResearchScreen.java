@@ -1,14 +1,12 @@
 package net.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.research.Research;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

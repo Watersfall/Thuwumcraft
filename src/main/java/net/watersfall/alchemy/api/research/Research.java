@@ -43,6 +43,18 @@ public class Research
 			(ability -> true)
 	);
 
+	public static final Research TEST_RESEARCH_3 = new Research(AlchemyMod.getId("test_research_3"),
+			new LiteralText("Test Research 3"),
+			new LiteralText("An unavailable research"),
+			Items.CRACKED_STONE_BRICKS.getDefaultStack(),
+			ResearchCategory.TEST_CATEGORY,
+			64,
+			0,
+			(ability -> true),
+			(ability -> false),
+			(ability -> false)
+	);
+
 	private Identifier id;
 	private Text name;
 	private Text description;

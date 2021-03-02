@@ -240,6 +240,7 @@ public class AlchemyMod implements ModInitializer
 		registerAbilities();
 		Research.REGISTRY.register(Research.TEST_RESEARCH.getId(), Research.TEST_RESEARCH);
 		Research.REGISTRY.register(Research.TEST_RESEARCH_2.getId(), Research.TEST_RESEARCH_2);
+		Research.REGISTRY.register(Research.TEST_RESEARCH_3.getId(), Research.TEST_RESEARCH_3);
 		Research.TEST_RESEARCH_2.setRequirements(Research.TEST_RESEARCH);
 	}
 }
