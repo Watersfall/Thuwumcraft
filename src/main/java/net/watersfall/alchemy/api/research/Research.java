@@ -93,7 +93,7 @@ public class Research
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
 		JsonObject visibleJson = json.getAsJsonObject("visibility_requirements");
-		JsonObject readableJson = json.getAsJsonObject("read_requirements");
+		JsonObject readableJson = json.getAsJsonObject("readable_requirements");
 		JsonObject researchRequirements = json.getAsJsonObject("research_requirements");
 		this.visibilityAdvancements = new ArrayList<>();
 		this.readableAdvancements = new ArrayList<>();
@@ -222,7 +222,7 @@ public class Research
 		readList(buf, researchResearch);
 		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
 		this.isReadable = generateFunction(readableAdvancements, readableResearch);
-		this.isAvailable = generateFunction(researchAdvancements, readableResearch);
+		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
 	}
 
 	public static class Registry
