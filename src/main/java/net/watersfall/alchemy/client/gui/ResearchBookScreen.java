@@ -79,13 +79,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			int y = research.getY() + yOffset;
 			if(research.isVisible(ability))
 			{
-				drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
 				matrices.push();
 				matrices.translate(0, 0, 1D);
+				drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
+				matrices.translate(0, 0, -1D);
 				research.getRequirements().forEach((requirement -> {
 					int x2 = requirement.getX() + xOffset;
 					int y2 = requirement.getY() + yOffset;
-					this.drawArrow(matrices, x, y, x2, y2);
+					this.drawArrow(matrices, x2, y2, x, y);
 				}));
 				matrices.pop();
 			}
@@ -171,34 +172,74 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		int horizontal = (endX - startX) / 16;
 		int vertical = (endY - startY) / 16;
+		boolean positiveHorizontal = horizontal > 0;
 		if(horizontal > 0)
 		{
-			for(int i = 1; i < horizontal; i++)
+			drawTexture(matrices, endX - 16, endY, 16 * 9, 0, 16, 16);
+		}
+		else if(horizontal < 0)
+		{
+			drawTexture(matrices, endX + 16, endY, 16 * 8, 0, 16, 16);
+		}
+		else
+		{
+			if(vertical > 0)
 			{
-				drawTexture(matrices, startX + i * 16, startY, 16, 0, 16, 16);
+				drawTexture(matrices, endX, endY - 16, 16 * 11, 0, 16, 16);
+			}
+			else
+			{
+				drawTexture(matrices, endX, endY + 16, 16 * 10, 0, 16, 16);
+			}
+		}
+		if(horizontal > 0)
+		{
+			for(; horizontal > 0; horizontal--)
+			{
+				drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16);
 			}
 		}
 		else
 		{
-			for(int i = -1; i > horizontal; i--)
+			for(; horizontal < 0; horizontal++)
 			{
-				drawTexture(matrices, startX + i * 16, startY, 16, 0, 16, 16);
+				drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16);
 			}
 		}
 		if(vertical > 0)
 		{
-			for(int i = 1; i < vertical; i++)
+			if(!positiveHorizontal)
 			{
-				drawTexture(matrices, startX, startY + i * 16, 32, 0, 16, 16);
+				drawTexture(matrices, startX, startY + vertical * 16, 112, 0, 16, 16);
+			}
+			else
+			{
+				drawTexture(matrices, startX, startY + vertical * 16, 16 * 6, 0, 16, 16);
+			}
+			vertical--;
+			for(; vertical > 0; vertical--)
+			{
+				drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16);
 			}
 		}
 		else
 		{
-			for(int i = -1; i > vertical; i--)
+			if(!positiveHorizontal)
 			{
-				drawTexture(matrices, startX, startY + i * 16, 32, 0, 16, 16);
+				drawTexture(matrices, startX, startY + vertical * 16, 16 * 5, 0, 16, 16);
+			}
+			else
+			{
+				drawTexture(matrices, startX, startY + vertical * 16, 16 * 4, 0, 16, 16);
+			}
+			vertical++;
+			for(; vertical < 0; vertical++)
+			{
+				drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16);
 			}
 		}
+		int test = 0;
+		test++;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 {
-	"icon": "minecraft:diamond_block",
-	"x": 6,
-	"y": 4,
+	"icon": "minecraft:gold_block",
+	"x": -4,
+	"y": 6,
 	"read_requirements": {
 		"advancements": [
 			"end/dragon_egg",

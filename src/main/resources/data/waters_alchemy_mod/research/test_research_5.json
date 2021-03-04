@@ -1,6 +1,6 @@
 {
-	"icon": "minecraft:diamond_block",
-	"x": 6,
+	"icon": "minecraft:iron_block",
+	"x": -6,
 	"y": 4,
 	"read_requirements": {
 		"advancements": [
