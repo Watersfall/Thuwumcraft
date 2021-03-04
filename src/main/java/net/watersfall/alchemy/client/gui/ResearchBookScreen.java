@@ -19,6 +19,7 @@ import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,16 +104,19 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				}
 				else if(research.isAvailable(ability))
 				{
-					if(mouseX > x && mouseX < x + 16)
+					matrices.push();
+					matrices.translate(0, 0, 2D);
+					if(mouseX > x && mouseX < x + 16 && mouseY > y && mouseY < y + 16)
 					{
-						if(mouseY > y && mouseY < y + 16)
-						{
-							matrices.push();
-							matrices.translate(0, 0, 2D);
-							fill(matrices, x, y, x + 16, y + 16, -2130706433);
-							matrices.pop();
-						}
+						fill(matrices, x, y, x + 16, y + 16, -2130706433);
 					}
+					else
+					{
+						int shift = (int)(Math.sin((client.world.getTime() + delta) / 10F) * 64 + 64);
+						Color color = new Color(255, 255, 255, shift);
+						fill(matrices, x, y, x + 16, y + 16, color.hashCode());
+					}
+					matrices.pop();
 				}
 				else
 				{
