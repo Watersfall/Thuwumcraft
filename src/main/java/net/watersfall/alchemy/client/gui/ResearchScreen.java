@@ -95,16 +95,21 @@ public class ResearchScreen extends Screen
 	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button)
 	{
-		int buttonX = width - (width + screenWidth) / 2 + (screenWidth * 3 / 4) - (buttonWidth / 2);
-		int buttonY = height - 48;
-		if(mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight)
-		{
-			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeIdentifier(research.getId());
-			ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);
-			return true;
-		}
-		return false;
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
+		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
+			if(!ability.getResearch().contains(this.research) && this.research.isAvailable(ability))
+			{
+				int buttonX = width - (width + screenWidth) / 2 + (screenWidth * 3 / 4) - (buttonWidth / 2);
+				int buttonY = height - 48;
+				if(mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight)
+				{
+					PacketByteBuf buf = PacketByteBufs.create();
+					buf.writeIdentifier(research.getId());
+					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);
+				}
+			}
+		}));
+		return true;
 	}
 
 	@Override
