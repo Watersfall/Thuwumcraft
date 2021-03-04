@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
@@ -30,6 +31,7 @@ import net.watersfall.alchemy.client.gui.ResearchBookScreen;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
+import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.util.StatusEffectHelper;
@@ -135,6 +137,8 @@ public class AlchemyModClient implements ClientModInitializer
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_click"), ((client, handler, buf, responseSender) -> {
+			Identifier id = buf.readIdentifier();
+			client.getToastManager().add(new ResearchToast(Research.REGISTRY.get(id)));
 			AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 			optional.ifPresent((ability) -> {

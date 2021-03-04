@@ -77,7 +77,9 @@ public class AlchemyMod implements ModInitializer
 				if(!ability.getResearch().contains(research))
 				{
 					ability.addResearch(research.getId());
-					responseSender.sendPacket(getId("research_click"), ability.toPacket(PacketByteBufs.create()));
+					PacketByteBuf buf2 = PacketByteBufs.create();
+					buf2.writeIdentifier(research.getId());
+					responseSender.sendPacket(getId("research_click"), ability.toPacket(buf2));
 				}
 			});
 		}));

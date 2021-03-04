@@ -26,5 +26,18 @@
 	"item.waters_alchemy_mod.phial": "Filled Phial",
 	"item.waters_alchemy_mod.phial.empty": "Empty Phial",
 	"research.waters_alchemy_mod.test_research.name": "Test Research",
-	"research.waters_alchemy_mod.test_research.desc": "Test research description"
+	"research.waters_alchemy_mod.test_research.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_1.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_1.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_2.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_2.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_3.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_3.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_4.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_4.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_5.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_5.desc": "Test research description",
+	"research.waters_alchemy_mod.test_research_6.name": "Test Research",
+	"research.waters_alchemy_mod.test_research_6.desc": "Test research description",
+	"research.toast.research_complete": "Research Complete!"
 }
