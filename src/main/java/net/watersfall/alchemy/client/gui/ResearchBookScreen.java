@@ -107,7 +107,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					{
 						if(mouseY > y && mouseY < y + 16)
 						{
+							matrices.push();
+							matrices.translate(0, 0, 2D);
 							fill(matrices, x, y, x + 16, y + 16, -2130706433);
+							matrices.pop();
 						}
 					}
 				}
