@@ -45,21 +45,25 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		}
 	}
 
+	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
 		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new CompoundTag(), (ItemStack)(Object)this));
 	}
 
+	@Override
 	public void removeAbility(Ability<ItemStack> ability)
 	{
 		removeAbility(ability.getId());
 	}
 
+	@Override
 	public void removeAbility(Identifier id)
 	{
 		this.getOrCreateTag().remove(id.toString());
 	}
 
+	@Override
 	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
 		if(this.getOrCreateTag().contains(id.toString()))
@@ -91,20 +95,25 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		});
 	}
 
+	@Override
 	public CompoundTag toNbt(CompoundTag tag)
 	{
 		return tag;
 	}
 
+	@Override
 	public void fromNbt(CompoundTag tag)
 	{
 
 	}
 
+	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf) {return buf;}
 
+	@Override
 	@Environment(EnvType.CLIENT)
 	public void fromPacket(PacketByteBuf buf) {}
 
+	@Override
 	public void sync(ItemStack  stack) {}
 }
