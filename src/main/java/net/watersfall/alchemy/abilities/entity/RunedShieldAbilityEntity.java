@@ -21,9 +21,9 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 	private int rechargeRate;
 	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
 
-	public RunedShieldAbilityEntity(CompoundTag tag)
+	public RunedShieldAbilityEntity(CompoundTag tag, Entity entity)
 	{
-		this.fromNbt(tag);
+		this.fromNbt(tag, entity);
 	}
 
 	public RunedShieldAbilityEntity(PacketByteBuf buf)
@@ -50,7 +50,7 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag)
+	public CompoundTag toNbt(CompoundTag tag, Entity t)
 	{
 		tag.putInt("shield_amount", shieldAmount);
 		tag.putInt("max_shield_amount", maxShieldAmount);
@@ -59,7 +59,7 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag)
+	public void fromNbt(CompoundTag tag, Entity t)
 	{
 		this.shieldAmount = tag.getInt("shield_amount");
 		this.maxShieldAmount = tag.getInt("max_shield_amount") + 1;

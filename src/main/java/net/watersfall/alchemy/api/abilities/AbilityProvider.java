@@ -68,9 +68,9 @@ public interface AbilityProvider<T> extends Clearable
 			packetRegistry.put(id, packet);
 		}
 
-		public Ability<T> create(Identifier id, CompoundTag tag)
+		public Ability<T> create(Identifier id, CompoundTag tag, T t)
 		{
-			return registry.get(id).create(tag);
+			return registry.get(id).create(tag, t);
 		}
 
 		public Ability<T> create(Identifier id, PacketByteBuf buf)

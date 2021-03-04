@@ -9,7 +9,6 @@ import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
@@ -32,7 +31,7 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 		this(new AspectStack(aspect, count));
 	}
 
-	public PhialStorageAbility(CompoundTag tag)
+	public PhialStorageAbility(CompoundTag tag, ItemStack stack)
 	{
 		this.tag = tag;
 	}
@@ -101,13 +100,13 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag)
+	public CompoundTag toNbt(CompoundTag tag, ItemStack t)
 	{
 		return this.tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag)
+	public void fromNbt(CompoundTag tag, ItemStack t)
 	{
 		this.tag = tag;
 	}

@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.api.abilities.entity;
 
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.advancement.Advancement;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,15 +20,15 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 
 	List<Research> getResearch();
 
+	List<Identifier> getAdvancements();
+
 	void addResearch(Identifier id);
 
 	void addResearch(Research research);
 
-	void grantCriterion(String id);
+	void addAdvancement(Identifier id);
 
-	boolean hasCriterion(String id);
-
-	List<String> getCriteria();
+	boolean hasAdvancement(Identifier id);
 
 	@Override
 	default Identifier getId()
@@ -36,31 +37,22 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	}
 
 	@Override
-	default CompoundTag toNbt(CompoundTag tag)
+	default CompoundTag toNbt(CompoundTag tag, Entity t)
 	{
 		ListTag list = new ListTag();
 		getResearch().forEach(research -> {
 			list.add(StringTag.of(research.getId().toString()));
 		});
-		ListTag list2 = new ListTag();
-		getCriteria().forEach(criterion -> {
-			list2.add(StringTag.of(criterion));
-		});
 		tag.put("research_list", list);
-		tag.put("criteria", list2);
 		return tag;
 	}
 
 	@Override
-	default void fromNbt(CompoundTag tag)
+	default void fromNbt(CompoundTag tag, Entity t)
 	{
 		ListTag list = tag.getList("research_list", NbtType.STRING);
 		list.forEach(research -> {
 			addResearch(Identifier.tryParse(research.asString()));
-		});
-		list = tag.getList("criteria", NbtType.STRING);
-		list.forEach(criterion -> {
-			grantCriterion(criterion.asString());
 		});
 	}
 
@@ -68,11 +60,9 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	default PacketByteBuf toPacket(PacketByteBuf buf)
 	{
 		buf.writeInt(getResearch().size());
-		getResearch().forEach(research -> {
-			buf.writeIdentifier(research.getId());
-		});
-		buf.writeInt(getCriteria().size());
-		getCriteria().forEach(buf::writeString);
+		getResearch().forEach(research -> buf.writeIdentifier(research.getId()));
+		buf.writeInt(getAdvancements().size());
+		getAdvancements().forEach(buf::writeIdentifier);
 		return buf;
 	}
 
@@ -87,7 +77,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
-			this.grantCriterion(buf.readString());
+			this.addAdvancement(buf.readIdentifier());
 		}
 	}
 

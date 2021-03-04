@@ -1,8 +1,24 @@
 {
-	"id": "waters_alchemy_mod:test_research",
-	"name": "research.waters_alchemy_mod.test_research.name",
-	"desc": "research.waters_alchemy_mod.test_research.desc",
 	"icon": "minecraft:diamond",
 	"x": 0,
-	"y": 0
+	"y": 0,
+	"visibility_requirements": {
+		"advancements": [
+			"nether/return_to_sender"
+		],
+		"research": [
+			"test_research_1"
+		]
+	},
+	"read_requirements": {
+		"advancements": [
+			"end/dragon_egg"
+		]
+	},
+
+	"research_requirements": {
+		"advancements": [
+			"story/lava_bucket"
+		]
+	}
 }

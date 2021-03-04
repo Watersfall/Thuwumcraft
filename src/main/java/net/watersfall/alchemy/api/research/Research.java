@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.api.research;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Research
@@ -29,34 +31,57 @@ public class Research
 	private ResearchCategory category;
 	private int x;
 	private int y;
-	private Function<PlayerResearchAbility, Boolean> isVisible;
-	private Function<PlayerResearchAbility, Boolean> isReadable;
-	private Function<PlayerResearchAbility, Boolean> isAvailable;
+	private List<Identifier> visibilityAdvancements;
+	private List<Identifier> readableAdvancements;
+	private List<Identifier> researchAdvancements;
+	private List<Identifier> visibilityResearch;
+	private List<Identifier> readableResearch;
+	private List<Identifier> researchResearch;
+	private Predicate<PlayerResearchAbility> isVisible;
+	private Predicate<PlayerResearchAbility> isReadable;
+	private Predicate<PlayerResearchAbility> isAvailable;
 	private List<Research> requirements;
 
-	public Research(Identifier id,
-					Text name,
-					Text description,
-					ItemStack stack,
-					ResearchCategory category,
-					int x,
-					int y,
-					Function<PlayerResearchAbility, Boolean> isVisible,
-					Function<PlayerResearchAbility, Boolean> isReadable,
-					Function<PlayerResearchAbility, Boolean> isAvailable
-	)
+	private Predicate<PlayerResearchAbility> generateFunction(List<Identifier> advancements, List<Identifier> research)
 	{
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.stack = stack;
-		this.category = category;
-		this.x = x;
-		this.y = y;
-		this.isVisible = isVisible;
-		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
-		this.isAvailable = isAvailable;
-		this.requirements = new ArrayList<>();
+		return (ability -> {
+			for(int i = 0; i < advancements.size(); i++)
+			{
+				if(!ability.hasAdvancement(Identifier.tryParse(advancements.get(i).toString())))
+				{
+					return false;
+				}
+			}
+			for(int i = 0; i < research.size(); i++)
+			{
+				if(!ability.getResearch().contains(Research.REGISTRY.get(Identifier.tryParse(research.toString()))))
+				{
+					return false;
+				}
+			}
+			return true;
+		});
+	}
+
+	private void fillLists(JsonObject json, List<Identifier> advancements, List<Identifier> research)
+	{
+		if(json != null)
+		{
+			if(json.has("advancements"))
+			{
+				JsonArray array = json.getAsJsonArray("advancements");
+				array.forEach((advancement) -> {
+					advancements.add(Identifier.tryParse(advancement.getAsString()));
+				});
+			}
+			if(json.has("research"))
+			{
+				JsonArray array = json.getAsJsonArray("research");
+				array.forEach((element) -> {
+					research.add(Identifier.tryParse(element.getAsString()));
+				});
+			}
+		}
 	}
 
 	public Research(Identifier id, JsonObject json)
@@ -68,9 +93,21 @@ public class Research
 		this.category = ResearchCategory.TEST_CATEGORY;
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
-		this.isVisible = (ability -> true);
-		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
-		this.isAvailable = (ability -> true);
+		JsonObject visibleJson = json.getAsJsonObject("visibility_requirements");
+		JsonObject readableJson = json.getAsJsonObject("read_requirements");
+		JsonObject researchRequirements = json.getAsJsonObject("research_requirements");
+		this.visibilityAdvancements = new ArrayList<>();
+		this.readableAdvancements = new ArrayList<>();
+		this.researchAdvancements = new ArrayList<>();
+		this.visibilityResearch = new ArrayList<>();
+		this.readableResearch = new ArrayList<>();
+		this.researchResearch = new ArrayList<>();
+		fillLists(visibleJson, visibilityAdvancements, visibilityResearch);
+		fillLists(readableJson, readableAdvancements, readableResearch);
+		fillLists(researchRequirements, researchAdvancements, researchResearch);
+		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
+		this.isReadable = generateFunction(readableAdvancements, readableResearch);
+		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
 		this.requirements = new ArrayList<>();
 	}
 
@@ -111,17 +148,17 @@ public class Research
 
 	public boolean isVisible(PlayerResearchAbility ability)
 	{
-		return this.isVisible.apply(ability);
+		return this.isVisible.test(ability);
 	}
 
 	public boolean isReadable(PlayerResearchAbility ability)
 	{
-		return this.isReadable.apply(ability);
+		return this.isReadable.test(ability);
 	}
 
 	public boolean isAvailable(PlayerResearchAbility ability)
 	{
-		return this.isAvailable.apply(ability);
+		return this.isAvailable.test(ability);
 	}
 
 	public ItemStack getStack()
@@ -134,13 +171,34 @@ public class Research
 		return this.requirements;
 	}
 
+	private void writeList(PacketByteBuf buf, List<Identifier> list)
+	{
+		buf.writeInt(list.size());
+		list.forEach(buf::writeIdentifier);
+	}
+
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
 		buf.writeIdentifier(this.id);
 		buf.writeItemStack(this.stack);
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
+		writeList(buf, visibilityAdvancements);
+		writeList(buf, visibilityResearch);
+		writeList(buf, readableAdvancements);
+		writeList(buf, readableResearch);
+		writeList(buf, researchAdvancements);
+		writeList(buf, researchResearch);
 		return buf;
+	}
+
+	private void readList(PacketByteBuf buf, List<Identifier> list)
+	{
+		int size = buf.readInt();
+		for(int i = 0; i < size; i++)
+		{
+			list.add(buf.readIdentifier());
+		}
 	}
 
 	public void fromPacket(PacketByteBuf buf)
@@ -152,9 +210,21 @@ public class Research
 		this.category = ResearchCategory.TEST_CATEGORY;
 		this.x = buf.readInt();
 		this.y = buf.readInt();
-		this.isVisible = (ability -> true);
-		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
-		this.isAvailable = (ability -> true);
+		this.visibilityAdvancements = new ArrayList<>();
+		this.readableAdvancements = new ArrayList<>();
+		this.researchAdvancements = new ArrayList<>();
+		this.visibilityResearch = new ArrayList<>();
+		this.readableResearch = new ArrayList<>();
+		this.researchResearch = new ArrayList<>();
+		readList(buf, visibilityAdvancements);
+		readList(buf, visibilityResearch);
+		readList(buf, readableAdvancements);
+		readList(buf, readableResearch);
+		readList(buf, researchAdvancements);
+		readList(buf, researchResearch);
+		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
+		this.isReadable = generateFunction(readableAdvancements, readableResearch);
+		this.isAvailable = generateFunction(researchAdvancements, readableResearch);
 		this.requirements = new ArrayList<>();
 	}
 

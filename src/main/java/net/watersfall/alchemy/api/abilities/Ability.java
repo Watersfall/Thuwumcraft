@@ -8,9 +8,9 @@ public interface Ability<T>
 {
 	Identifier getId();
 
-	CompoundTag toNbt(CompoundTag tag);
+	CompoundTag toNbt(CompoundTag tag, T t);
 
-	void fromNbt(CompoundTag tag);
+	void fromNbt(CompoundTag tag, T t);
 
 	default void tick(T t)
 	{
@@ -22,22 +22,15 @@ public interface Ability<T>
 		return false;
 	}
 
-	interface Factory<K, T>
+	@FunctionalInterface
+	interface FactoryTag<T>
 	{
-		Ability<T> create(K t);
+		Ability<T> create(CompoundTag tag, T t);
 	}
 
 	@FunctionalInterface
-	interface FactoryTag<T> extends Factory<CompoundTag, T>
+	interface FactoryPacket<T>
 	{
-		@Override
-		Ability<T> create(CompoundTag tag);
-	}
-
-	@FunctionalInterface
-	interface FactoryPacket<T> extends Factory<PacketByteBuf, T>
-	{
-		@Override
 		Ability<T> create(PacketByteBuf buf);
 	}
 }

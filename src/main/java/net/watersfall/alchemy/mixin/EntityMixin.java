@@ -100,7 +100,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public CompoundTag toNbt(CompoundTag tag)
 	{
-		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new CompoundTag())));
+		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new CompoundTag(), (Entity)(Object)this)));
 		return tag;
 	}
 
@@ -110,7 +110,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 		AbilityProvider.ENTITY_REGISTRY.getIds().forEach((id) -> {
 			if(tag.contains(id.toString()))
 			{
-				this.addAbility(AbilityProvider.ENTITY_REGISTRY.create(id, tag.getCompound(id.toString())));
+				this.addAbility(AbilityProvider.ENTITY_REGISTRY.create(id, tag.getCompound(id.toString()), (Entity)(Object)this));
 			}
 		});
 	}

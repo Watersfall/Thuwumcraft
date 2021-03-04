@@ -11,9 +11,9 @@ public class RunedShieldAbilityItem implements RunedShieldAbility<ItemStack>
 	private CompoundTag tag;
 	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
 
-	public RunedShieldAbilityItem(CompoundTag tag)
+	public RunedShieldAbilityItem(CompoundTag tag, ItemStack stack)
 	{
-		this.fromNbt(tag);
+		this.fromNbt(tag, stack);
 	}
 
 	public RunedShieldAbilityItem(int shield, int max, int recharge)
@@ -31,13 +31,13 @@ public class RunedShieldAbilityItem implements RunedShieldAbility<ItemStack>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag)
+	public CompoundTag toNbt(CompoundTag tag, ItemStack t)
 	{
 		return this.tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag)
+	public void fromNbt(CompoundTag tag, ItemStack t)
 	{
 		this.tag = tag;
 	}

@@ -6,7 +6,6 @@
 	"mixins": [
 		"AnvilScreenHandlerMixin",
 		"CampfireBlockMixin",
-		"ConditionsContainerMixin",
 		"EntityMixin",
 		"ItemStackMixin",
 		"LivingEntityMixin",

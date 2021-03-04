@@ -8,7 +8,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.Ability;
@@ -48,7 +47,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 
 	public void addAbility(Ability<ItemStack> ability)
 	{
-		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new CompoundTag()));
+		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new CompoundTag(), (ItemStack)(Object)this));
 	}
 
 	public void removeAbility(Ability<ItemStack> ability)
@@ -66,7 +65,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		if(this.getOrCreateTag().contains(id.toString()))
 		{
 			CompoundTag tag = this.tag.getCompound(id.toString());
-			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag);
+			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag, (ItemStack)(Object)this);
 			if(clazz.isInstance(ability))
 			{
 				return Optional.of(clazz.cast(ability));
@@ -83,7 +82,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		AbilityProvider.ITEM_REGISTRY.getIds().forEach((key) -> {
 			if(this.tag.contains(key.toString()))
 			{
-				Ability<ItemStack> ability = (AbilityProvider.ITEM_REGISTRY.create(key, this.tag.getCompound(key.toString())));
+				Ability<ItemStack> ability = (AbilityProvider.ITEM_REGISTRY.create(key, this.tag.getCompound(key.toString()), (ItemStack)(Object)this));
 				if(ability.copyable())
 				{
 					provider.addAbility(ability);
