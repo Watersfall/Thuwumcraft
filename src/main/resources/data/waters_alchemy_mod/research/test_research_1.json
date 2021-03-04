@@ -6,6 +6,9 @@
 		"advancements": [
 			"end/dragon_egg",
 			"end/elytra"
+		],
+		"research": [
+			"test_research_2"
 		]
 	}
 }

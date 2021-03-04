@@ -22,6 +22,7 @@ import net.watersfall.alchemy.api.research.Research;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -76,10 +77,13 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		Research.REGISTRY.getAll().forEach(research -> {
 			int x = research.getX() + xOffset;
 			int y = research.getY() + yOffset;
-			drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
-			research.getRequirements().forEach((requirement -> {
-				this.drawArrow(matrices, x, y, x, y);
-			}));
+			if(research.isVisible(ability))
+			{
+				drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
+				research.getRequirements().forEach((requirement -> {
+					this.drawArrow(matrices, x, y, x, y);
+				}));
+			}
 		});
 		Research.REGISTRY.getAll().forEach(research -> {
 			if(research.isVisible(ability))
@@ -135,7 +139,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 
 	private OrderedText generateSecretText(Research research)
 	{
-		return new LiteralText(research.getName().asString()).setStyle(STYLE).asOrderedText();
+		Random random = new Random(research.getName().getString().hashCode());
+		int length = random.nextInt(research.getName().getString().length()) / 2;
+		LiteralText text = new LiteralText(research.getName().getString().substring(0, length));
+		return text.setStyle(STYLE).asOrderedText();
 	}
 
 	protected void drawMouseoverTooltip(MatrixStack matrices, OrderedText text, int x, int y)
