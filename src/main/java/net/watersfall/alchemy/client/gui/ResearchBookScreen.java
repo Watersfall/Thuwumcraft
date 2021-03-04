@@ -202,31 +202,34 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button)
+	public boolean mouseReleased(double mouseX, double mouseY, int button)
 	{
-		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
-		PlayerResearchAbility ability = optional.get();
-		int xOffset = (int)getXOffset();
-		int yOffset = (int)getYOffset();
-		Research.REGISTRY.getAll().forEach(research -> {
-			if(research.isAvailable(ability))
-			{
-				int x = xOffset + research.getX();
-				int y = yOffset + research.getY();
-				if(mouseX > x && mouseX < x + 16)
+		if(button == 0)
+		{
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			PlayerResearchAbility ability = optional.get();
+			int xOffset = (int)getXOffset();
+			int yOffset = (int)getYOffset();
+			Research.REGISTRY.getAll().forEach(research -> {
+				if(research.isAvailable(ability))
 				{
-					if(mouseY > y && mouseY < y + 16)
+					int x = xOffset + research.getX();
+					int y = yOffset + research.getY();
+					if(mouseX > x && mouseX < x + 16)
 					{
-						this.client.openScreen(new ResearchScreen(this, research));
+						if(mouseY > y && mouseY < y + 16)
+						{
+							this.client.openScreen(new ResearchScreen(this, research));
 					/*PacketByteBuf buf = PacketByteBufs.create();
 					buf.writeIdentifier(research.getId());
 					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);*/
+						}
 					}
 				}
-			}
-		});
-		return super.mouseClicked(mouseX, mouseY, button);
+			});
+		}
+		return super.mouseReleased(mouseX, mouseY, button);
 	}
 
 	public float getXOffset()
