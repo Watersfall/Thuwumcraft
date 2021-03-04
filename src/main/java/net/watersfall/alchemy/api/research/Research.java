@@ -54,7 +54,7 @@ public class Research
 		this.x = x;
 		this.y = y;
 		this.isVisible = isVisible;
-		this.isReadable = isReadable;
+		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
 		this.isAvailable = isAvailable;
 		this.requirements = new ArrayList<>();
 	}
@@ -69,7 +69,7 @@ public class Research
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
 		this.isVisible = (ability -> true);
-		this.isReadable = (ability -> true);
+		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
 		this.isAvailable = (ability -> true);
 		this.requirements = new ArrayList<>();
 	}
@@ -153,7 +153,7 @@ public class Research
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.isVisible = (ability -> true);
-		this.isReadable = (ability -> true);
+		this.isReadable = (ability -> ability.hasCriterion("minecraft:zombie"));
 		this.isAvailable = (ability -> true);
 		this.requirements = new ArrayList<>();
 	}

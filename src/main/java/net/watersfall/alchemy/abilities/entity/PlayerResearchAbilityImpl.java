@@ -12,9 +12,11 @@ import java.util.List;
 public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 {
 	private List<Research> research;
+	private List<String> criteria;
 
 	public PlayerResearchAbilityImpl()
 	{
+		this.criteria = new ArrayList<>();
 		this.research = new ArrayList<>();
 	}
 
@@ -37,6 +39,12 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	}
 
 	@Override
+	public List<String> getCriteria()
+	{
+		return criteria;
+	}
+
+	@Override
 	public void addResearch(Identifier id)
 	{
 		this.research.add(Research.REGISTRY.get(id));
@@ -46,5 +54,17 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	public void addResearch(Research research)
 	{
 		this.research.add(research);
+	}
+
+	@Override
+	public void grantCriterion(String id)
+	{
+		this.criteria.add(id);
+	}
+
+	@Override
+	public boolean hasCriterion(String id)
+	{
+		return this.criteria.contains(id);
 	}
 }

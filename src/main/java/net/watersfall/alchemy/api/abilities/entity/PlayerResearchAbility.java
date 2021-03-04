@@ -23,6 +23,12 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 
 	void addResearch(Research research);
 
+	void grantCriterion(String id);
+
+	boolean hasCriterion(String id);
+
+	List<String> getCriteria();
+
 	@Override
 	default Identifier getId()
 	{
@@ -36,7 +42,12 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		getResearch().forEach(research -> {
 			list.add(StringTag.of(research.getId().toString()));
 		});
+		ListTag list2 = new ListTag();
+		getCriteria().forEach(criterion -> {
+			list2.add(StringTag.of(criterion));
+		});
 		tag.put("research_list", list);
+		tag.put("criteria", list2);
 		return tag;
 	}
 
@@ -47,6 +58,10 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		list.forEach(research -> {
 			addResearch(Identifier.tryParse(research.asString()));
 		});
+		list = tag.getList("criteria", NbtType.STRING);
+		list.forEach(criterion -> {
+			grantCriterion(criterion.asString());
+		});
 	}
 
 	@Override
@@ -56,6 +71,8 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		getResearch().forEach(research -> {
 			buf.writeIdentifier(research.getId());
 		});
+		buf.writeInt(getCriteria().size());
+		getCriteria().forEach(buf::writeString);
 		return buf;
 	}
 
@@ -66,6 +83,11 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		for(int i = 0; i < size; i++)
 		{
 			this.addResearch(buf.readIdentifier());
+		}
+		size = buf.readInt();
+		for(int i = 0; i < size; i++)
+		{
+			this.grantCriterion(buf.readString());
 		}
 	}
 
