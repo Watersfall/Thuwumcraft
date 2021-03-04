@@ -68,6 +68,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		matrices.push();
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		PlayerResearchAbility ability = optional.get();
@@ -150,6 +151,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		matrices.push();
 		matrices.translate(0, 0, 1000F);
 		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+		matrices.pop();
 		matrices.pop();
 	}
 
