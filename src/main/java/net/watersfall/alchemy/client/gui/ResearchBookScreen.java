@@ -98,23 +98,26 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				int x = research.getX() + xOffset;
 				int y = research.getY() + yOffset;
 				this.itemRenderer.renderInGui(research.getStack(), x, y);
-				if(ability.getResearch().contains(research))
-				{
-					fill(matrices, x, y, x + 16, y + 16, -2130706433);
-				}
-				else if(research.isAvailable(ability))
+				if(research.isAvailable(ability))
 				{
 					matrices.push();
 					matrices.translate(0, 0, 2D);
-					if(mouseX > x && mouseX < x + 16 && mouseY > y && mouseY < y + 16)
+					if(!ability.getResearch().contains(research))
 					{
-						fill(matrices, x, y, x + 16, y + 16, -2130706433);
+						if(mouseX > x && mouseX < x + 16 && mouseY > y && mouseY < y + 16)
+						{
+							fill(matrices, x, y, x + 16, y + 16, -2130706433);
+						}
+						else
+						{
+							int shift = (int)(Math.sin((client.world.getTime() + delta) / 10F) * 64 + 64);
+							Color color = new Color(255, 255, 255, shift);
+							fill(matrices, x, y, x + 16, y + 16, color.hashCode());
+						}
 					}
 					else
 					{
-						int shift = (int)(Math.sin((client.world.getTime() + delta) / 10F) * 64 + 64);
-						Color color = new Color(255, 255, 255, shift);
-						fill(matrices, x, y, x + 16, y + 16, color.hashCode());
+						fill(matrices, x, y, x + 16, y + 16, -2130706433);
 					}
 					matrices.pop();
 				}
@@ -269,9 +272,6 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 						if(mouseY > y && mouseY < y + 16)
 						{
 							this.client.openScreen(new ResearchScreen(this, research));
-					/*PacketByteBuf buf = PacketByteBufs.create();
-					buf.writeIdentifier(research.getId());
-					ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);*/
 						}
 					}
 				}

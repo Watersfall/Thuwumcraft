@@ -24,5 +24,7 @@
 	"item.waters_alchemy_mod.aspect.earth": "Earth",
 	"item.waters_alchemy_mod.aspect.fire": "Fire",
 	"item.waters_alchemy_mod.phial": "Filled Phial",
-	"item.waters_alchemy_mod.phial.empty": "Empty Phial"
+	"item.waters_alchemy_mod.phial.empty": "Empty Phial",
+	"research.waters_alchemy_mod.test_research.name": "Test Research",
+	"research.waters_alchemy_mod.test_research.desc": "Test research description"
 }

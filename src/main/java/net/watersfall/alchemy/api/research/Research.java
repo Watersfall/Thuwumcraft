@@ -46,14 +46,14 @@ public class Research
 		return (ability -> {
 			for(int i = 0; i < advancements.size(); i++)
 			{
-				if(!ability.hasAdvancement(Identifier.tryParse(advancements.get(i).toString())))
+				if(!ability.hasAdvancement(advancements.get(i)))
 				{
 					return false;
 				}
 			}
 			for(int i = 0; i < research.size(); i++)
 			{
-				if(!ability.getResearch().contains(Research.REGISTRY.get(Identifier.tryParse(research.toString()))))
+				if(!ability.getResearch().contains(Research.REGISTRY.get(research.get(i))))
 				{
 					return false;
 				}
