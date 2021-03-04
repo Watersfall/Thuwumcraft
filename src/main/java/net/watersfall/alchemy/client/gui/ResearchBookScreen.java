@@ -80,9 +80,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			if(research.isVisible(ability))
 			{
 				drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
+				matrices.push();
+				matrices.translate(0, 0, 1D);
 				research.getRequirements().forEach((requirement -> {
-					this.drawArrow(matrices, x, y, x, y);
+					int x2 = requirement.getX() + xOffset;
+					int y2 = requirement.getY() + yOffset;
+					this.drawArrow(matrices, x, y, x2, y2);
 				}));
+				matrices.pop();
 			}
 		});
 		Research.REGISTRY.getAll().forEach(research -> {
@@ -164,7 +169,36 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 
 	protected void drawArrow(MatrixStack matrices, int startX, int startY, int endX, int endY)
 	{
-
+		int horizontal = (endX - startX) / 16;
+		int vertical = (endY - startY) / 16;
+		if(horizontal > 0)
+		{
+			for(int i = 1; i < horizontal; i++)
+			{
+				drawTexture(matrices, startX + i * 16, startY, 16, 0, 16, 16);
+			}
+		}
+		else
+		{
+			for(int i = -1; i > horizontal; i--)
+			{
+				drawTexture(matrices, startX + i * 16, startY, 16, 0, 16, 16);
+			}
+		}
+		if(vertical > 0)
+		{
+			for(int i = 1; i < vertical; i++)
+			{
+				drawTexture(matrices, startX, startY + i * 16, 32, 0, 16, 16);
+			}
+		}
+		else
+		{
+			for(int i = -1; i > vertical; i--)
+			{
+				drawTexture(matrices, startX, startY + i * 16, 32, 0, 16, 16);
+			}
+		}
 	}
 
 	@Override

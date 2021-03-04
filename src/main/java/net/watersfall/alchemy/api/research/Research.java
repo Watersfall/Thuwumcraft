@@ -40,7 +40,6 @@ public class Research
 	private Predicate<PlayerResearchAbility> isVisible;
 	private Predicate<PlayerResearchAbility> isReadable;
 	private Predicate<PlayerResearchAbility> isAvailable;
-	private List<Research> requirements;
 
 	private Predicate<PlayerResearchAbility> generateFunction(List<Identifier> advancements, List<Identifier> research)
 	{
@@ -108,17 +107,11 @@ public class Research
 		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
 		this.isReadable = generateFunction(readableAdvancements, readableResearch);
 		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
-		this.requirements = new ArrayList<>();
 	}
 
 	public Research(PacketByteBuf buf)
 	{
 		this.fromPacket(buf);
-	}
-
-	public void setRequirements(Research... requirements)
-	{
-		this.requirements.addAll(Arrays.stream(requirements).collect(Collectors.toList()));
 	}
 
 	public Identifier getId()
@@ -138,12 +131,12 @@ public class Research
 
 	public int getX()
 	{
-		return this.x;
+		return this.x * 16;
 	}
 
 	public int getY()
 	{
-		return this.y;
+		return this.y * 16;
 	}
 
 	public boolean isVisible(PlayerResearchAbility ability)
@@ -168,7 +161,12 @@ public class Research
 
 	public List<Research> getRequirements()
 	{
-		return this.requirements;
+		List<Research> list = new ArrayList<>();
+		for(int i = 0; i < researchResearch.size(); i++)
+		{
+			list.add(Research.REGISTRY.get(researchResearch.get(i)));
+		}
+		return list;
 	}
 
 	private void writeList(PacketByteBuf buf, List<Identifier> list)
@@ -225,7 +223,6 @@ public class Research
 		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
 		this.isReadable = generateFunction(readableAdvancements, readableResearch);
 		this.isAvailable = generateFunction(researchAdvancements, readableResearch);
-		this.requirements = new ArrayList<>();
 	}
 
 	public static class Registry
