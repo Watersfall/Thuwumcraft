@@ -15,6 +15,6 @@ public class ServerPlayerEntityMixin
 	public void copyAbilities(ServerPlayerEntity player, boolean alive, CallbackInfo info)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-		provider.copy((Entity)(Object)this);
+		provider.copy((Entity)(Object)this, alive);
 	}
 }

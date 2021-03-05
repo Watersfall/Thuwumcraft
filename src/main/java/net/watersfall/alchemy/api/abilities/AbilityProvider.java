@@ -32,7 +32,7 @@ public interface AbilityProvider<T> extends Clearable
 
 	void removeAbility(Identifier id);
 
-	void copy(T to);
+	void copy(T to, boolean alive);
 
 	<R> Optional<R> getAbility(Identifier id, Class<R> clazz);
 

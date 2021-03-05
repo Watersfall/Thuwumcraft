@@ -86,11 +86,11 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Override
-	public void copy(Entity to)
+	public void copy(Entity to, boolean alive)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(to);
 		this.waters_abilities.values().forEach(ability -> {
-			if(ability.copyable())
+			if(ability.copyable() || alive)
 			{
 				provider.addAbility(ability);
 			}

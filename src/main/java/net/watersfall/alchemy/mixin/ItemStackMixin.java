@@ -80,7 +80,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	}
 
 	@Override
-	public void copy(ItemStack to)
+	public void copy(ItemStack to, boolean alive)
 	{
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(to);
 		AbilityProvider.ITEM_REGISTRY.getIds().forEach((key) -> {
