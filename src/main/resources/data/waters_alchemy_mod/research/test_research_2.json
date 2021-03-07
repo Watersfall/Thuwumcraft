@@ -1,5 +1,6 @@
 {
 	"icon": "minecraft:cauldron",
+	"category": "waters_alchemy_mod:basic",
 	"x": 0,
 	"y": 4,
 	"research_requirements": {

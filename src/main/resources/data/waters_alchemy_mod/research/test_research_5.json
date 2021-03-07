@@ -1,5 +1,6 @@
 {
 	"icon": "minecraft:iron_block",
+	"category": "waters_alchemy_mod:basic",
 	"x": -6,
 	"y": 4,
 	"readable_requirements": {

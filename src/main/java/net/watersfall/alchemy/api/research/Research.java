@@ -89,7 +89,7 @@ public class Research
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
 		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
-		this.category = ResearchCategory.TEST_CATEGORY;
+		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
 		JsonObject visibleJson = json.getAsJsonObject("visibility_requirements");
@@ -127,6 +127,11 @@ public class Research
 	public Text getDescription()
 	{
 		return this.description;
+	}
+
+	public ResearchCategory getCategory()
+	{
+		return this.category;
 	}
 
 	public int getX()
@@ -179,6 +184,7 @@ public class Research
 	{
 		buf.writeIdentifier(this.id);
 		buf.writeItemStack(this.stack);
+		buf.writeIdentifier(this.category.getId());
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
 		writeList(buf, visibilityAdvancements);
@@ -205,7 +211,7 @@ public class Research
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
 		this.stack = buf.readItemStack();
-		this.category = ResearchCategory.TEST_CATEGORY;
+		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.visibilityAdvancements = new ArrayList<>();

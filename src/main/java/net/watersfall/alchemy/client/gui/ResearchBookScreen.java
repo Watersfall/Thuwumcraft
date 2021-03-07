@@ -18,12 +18,11 @@ import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.alchemy.api.research.ResearchCategory;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -36,6 +35,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private int researchBackgroundHeight;
 	private float mapX = 0;
 	private float mapY = 0;
+	private ResearchCategory category = ResearchCategory.REGISTRY.getFirst();
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -69,6 +69,12 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		matrices.push();
+		client.getTextureManager().bindTexture(TEXTURE);
+		int x1 = (width - backgroundWidth) / 2;
+		int y1 = (height - backgroundHeight) / 2;
+		matrices.translate(0, 0, 400F);
+		drawTexture(matrices, x1, y1, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+		matrices.pop();
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		PlayerResearchAbility ability = optional.get();
@@ -77,31 +83,42 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		int yOffset = (int)getYOffset();
 		client.getTextureManager().bindTexture(ICONS);
 		Research.REGISTRY.getAll().forEach(research -> {
-			int x = research.getX() + xOffset;
-			int y = research.getY() + yOffset;
-			if(research.isVisible(ability))
+			if(research.getCategory() == this.category)
 			{
-				matrices.push();
-				matrices.translate(0, 0, 1D);
-				drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
-				matrices.translate(0, 0, -1D);
-				research.getRequirements().forEach((requirement -> {
-					int x2 = requirement.getX() + xOffset;
-					int y2 = requirement.getY() + yOffset;
-					this.drawArrow(matrices, x2, y2, x, y);
-				}));
-				matrices.pop();
+				int x = research.getX() + xOffset;
+				int y = research.getY() + yOffset;
+				if(research.isVisible(ability))
+				{
+					matrices.push();
+					matrices.translate(0, 0, 1D);
+					drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
+					matrices.pop();
+					research.getRequirements().forEach((requirement -> {
+						int x2 = requirement.getX() + xOffset;
+						int y2 = requirement.getY() + yOffset;
+						this.drawArrow(matrices, x2, y2, x, y);
+					}));
+				}
 			}
 		});
+		Iterator<ResearchCategory> categories = ResearchCategory.REGISTRY.getAll().iterator();
+		matrices.push();
+		matrices.translate(0, 0, 1000D);
+		for(int i = 0; categories.hasNext(); i++)
+		{
+			ResearchCategory cat = categories.next();
+			drawTexture(matrices, this.x, this.y + 24 +  i * 24, 0, 0, 16, 16, 256, 256);
+		}
+		matrices.pop();
 		Research.REGISTRY.getAll().forEach(research -> {
-			if(research.isVisible(ability))
+			if(research.getCategory() == this.category && research.isVisible(ability))
 			{
 				int x = research.getX() + xOffset;
 				int y = research.getY() + yOffset;
 				this.itemRenderer.renderInGui(research.getStack(), x, y);
+				matrices.push();
 				if(research.isAvailable(ability))
 				{
-					matrices.push();
 					matrices.translate(0, 0, 2D);
 					if(!ability.getResearch().contains(research))
 					{
@@ -120,15 +137,13 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					{
 						fill(matrices, x, y, x + 16, y + 16, -2130706433);
 					}
-					matrices.pop();
 				}
 				else
 				{
-					matrices.push();
 					matrices.translate(0, 0, 398);
 					this.fillGradient(matrices, x, y, x + 16, y + 16, -1072689136, -804253680);
-					matrices.pop();
 				}
+				matrices.pop();
 				if(mouseX > x && mouseX < x + 16)
 				{
 					if(mouseY > y && mouseY < y + 16)
@@ -145,14 +160,20 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				}
 			}
 		});
-		client.getTextureManager().bindTexture(TEXTURE);
-		int x = (width - backgroundWidth) / 2;
-		int y = (height - backgroundHeight) / 2;
-		matrices.push();
-		matrices.translate(0, 0, 1000F);
-		drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
-		matrices.pop();
-		matrices.pop();
+		categories = ResearchCategory.REGISTRY.getAll().iterator();
+		for(int i = 0; categories.hasNext(); i++)
+		{
+			ResearchCategory cat = categories.next();
+			if(mouseX > x && mouseX < x + 16)
+			{
+				if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
+				{
+					matrices.push();
+					drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);
+					matrices.pop();
+				}
+			}
+		}
 	}
 
 	private OrderedText generateSecretText(Research research)
@@ -265,7 +286,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			int xOffset = (int)getXOffset();
 			int yOffset = (int)getYOffset();
 			Research.REGISTRY.getAll().forEach(research -> {
-				if(research.isAvailable(ability))
+				if(research.getCategory() == this.category && research.isAvailable(ability))
 				{
 					int x = xOffset + research.getX();
 					int y = yOffset + research.getY();
@@ -278,6 +299,19 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					}
 				}
 			});
+			Iterator<ResearchCategory> categories = ResearchCategory.REGISTRY.getAll().iterator();
+			for(int i = 0; categories.hasNext(); i++)
+			{
+				ResearchCategory cat = categories.next();
+				if(mouseX > x && mouseX < x + 16)
+				{
+					if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
+					{
+						this.category = cat;
+						break;
+					}
+				}
+			}
 		}
 		return super.mouseReleased(mouseX, mouseY, button);
 	}

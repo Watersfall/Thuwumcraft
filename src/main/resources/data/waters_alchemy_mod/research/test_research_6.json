@@ -1,10 +1,6 @@
 {
 	"icon": "minecraft:coal_block",
+	"category": "waters_alchemy_mod:advanced",
 	"x": 0,
-	"y": -4,
-	"research_requirements": {
-		"research": [
-			"waters_alchemy_mod:test_research"
-		]
-	}
+	"y": -4
 }

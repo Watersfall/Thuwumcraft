@@ -1,5 +1,6 @@
 {
 	"icon": "minecraft:netherite_block",
+	"category": "waters_alchemy_mod:basic",
 	"x": 4,
 	"y": 6,
 	"readable_requirements": {

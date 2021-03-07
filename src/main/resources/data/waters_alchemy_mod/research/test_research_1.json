@@ -1,5 +1,6 @@
 {
 	"icon": "minecraft:diamond_block",
+	"category": "waters_alchemy_mod:basic",
 	"x": 6,
 	"y": 4,
 	"readable_requirements": {
