@@ -72,7 +72,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		client.getTextureManager().bindTexture(TEXTURE);
 		int x1 = (width - backgroundWidth) / 2;
 		int y1 = (height - backgroundHeight) / 2;
-		matrices.translate(0, 0, 400F);
+		matrices.translate(0, 0, 200F);
 		drawTexture(matrices, x1, y1, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 		matrices.pop();
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
@@ -103,7 +103,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		});
 		Iterator<ResearchCategory> categories = ResearchCategory.REGISTRY.getAll().iterator();
 		matrices.push();
-		matrices.translate(0, 0, 1000D);
+		matrices.translate(0, 0, 200D);
 		for(int i = 0; categories.hasNext(); i++)
 		{
 			ResearchCategory cat = categories.next();
@@ -140,7 +140,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				}
 				else
 				{
-					matrices.translate(0, 0, 398);
+					matrices.translate(0, 0, 175);
 					this.fillGradient(matrices, x, y, x + 16, y + 16, -1072689136, -804253680);
 				}
 				matrices.pop();
@@ -163,10 +163,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		categories = ResearchCategory.REGISTRY.getAll().iterator();
 		for(int i = 0; categories.hasNext(); i++)
 		{
+			int y = this.y + 24 + i * 24;
 			ResearchCategory cat = categories.next();
+			this.itemRenderer.zOffset += 200;
+			this.itemRenderer.renderInGui(cat.getIcon(), x, y);
+			this.itemRenderer.zOffset -= 200;
 			if(mouseX > x && mouseX < x + 16)
 			{
-				if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
+				if(mouseY > y && mouseY < y + 16)
 				{
 					matrices.push();
 					drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);

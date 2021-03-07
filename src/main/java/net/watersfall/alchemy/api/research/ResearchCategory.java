@@ -1,9 +1,11 @@
 package net.watersfall.alchemy.api.research;
 
 import com.google.gson.JsonObject;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,11 +17,13 @@ public class ResearchCategory
 
 	private Identifier id;
 	private Text name;
+	private ItemStack icon;
 
 	public ResearchCategory(Identifier id, JsonObject json)
 	{
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research_category/", "").replace(".json", "").replace("/", "."));
 		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
+		this.icon = new ItemStack(JsonHelper.getItem(json, "icon"), 1);
 	}
 
 	public Identifier getId()
@@ -30,6 +34,11 @@ public class ResearchCategory
 	public Text getName()
 	{
 		return name;
+	}
+
+	public ItemStack getIcon()
+	{
+		return this.icon;
 	}
 
 	public static class Registry
