@@ -51,7 +51,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		client.getTextureManager().bindTexture(BACKGROUND);
 		int x = (width - researchBackgroundWidth) / 2;
 		int y = (height - researchBackgroundHeight) / 2;
-		drawTexture(matrices, x, y, 0, 0, researchBackgroundWidth, researchBackgroundHeight);
+		drawTexture(matrices, x, y, 0, 0, researchBackgroundWidth, researchBackgroundHeight, researchBackgroundWidth, researchBackgroundHeight);
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		this.backgroundWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
 		this.backgroundHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
-		this.researchBackgroundWidth = backgroundWidth - 20;
-		this.researchBackgroundHeight = backgroundHeight - 20;
+		this.researchBackgroundWidth = backgroundWidth - 48;
+		this.researchBackgroundHeight = backgroundHeight - 24;
 		this.playerInventoryTitleX = -1000;
 		super.init();
 	}
@@ -107,7 +107,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		for(int i = 0; categories.hasNext(); i++)
 		{
 			ResearchCategory cat = categories.next();
-			drawTexture(matrices, this.x, this.y + 24 +  i * 24, 0, 0, 16, 16, 256, 256);
+			drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
 		}
 		matrices.pop();
 		Research.REGISTRY.getAll().forEach(research -> {
@@ -166,9 +166,9 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			int y = this.y + 24 + i * 24;
 			ResearchCategory cat = categories.next();
 			this.itemRenderer.zOffset += 200;
-			this.itemRenderer.renderInGui(cat.getIcon(), x, y);
+			this.itemRenderer.renderInGui(cat.getIcon(), x + 8, y);
 			this.itemRenderer.zOffset -= 200;
-			if(mouseX > x && mouseX < x + 16)
+			if(mouseX > x && mouseX < x + 24)
 			{
 				if(mouseY > y && mouseY < y + 16)
 				{
@@ -307,7 +307,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			for(int i = 0; categories.hasNext(); i++)
 			{
 				ResearchCategory cat = categories.next();
-				if(mouseX > x && mouseX < x + 16)
+				if(mouseX > x && mouseX < x + 24)
 				{
 					if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
 					{
