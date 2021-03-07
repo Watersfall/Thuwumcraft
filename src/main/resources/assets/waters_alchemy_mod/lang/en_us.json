@@ -41,5 +41,7 @@
 	"research.waters_alchemy_mod.test_research_5.desc": "Test research description",
 	"research.waters_alchemy_mod.test_research_6.name": "Test Research",
 	"research.waters_alchemy_mod.test_research_6.desc": "Test research description",
+	"research_category.waters_alchemy_mod.basic.name": "Basic Thuwumic Stuff",
+	"research_category.waters_alchemy_mod.advanced.name": "Advanced Thuwumic Stuff",
 	"research.toast.research_complete": "Research Complete!"
 }
