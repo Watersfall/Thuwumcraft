@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
@@ -19,6 +20,7 @@ import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
+import net.watersfall.alchemy.api.sound.AlchemySounds;
 
 import java.awt.*;
 import java.util.*;
@@ -320,6 +322,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
 					{
 						this.category = cat;
+						this.client.world.playSound(this.client.player, player.getX(), player.getEyeY(), player.getZ(), AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, (float)Math.random() * 0.2F + 1.1F, 1F);
 						break;
 					}
 				}
