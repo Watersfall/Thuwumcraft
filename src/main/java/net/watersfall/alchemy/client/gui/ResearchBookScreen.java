@@ -107,7 +107,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		for(int i = 0; categories.hasNext(); i++)
 		{
 			ResearchCategory cat = categories.next();
-			drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
+			if(mouseX > x + 1 && mouseX < x + 25)
+			{
+				if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
+				{
+					drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
+					continue;
+				}
+			}
+			drawTexture(matrices, this.x + 5, this.y + 24 +  i * 24, 0, 16, 20, 16, 256, 256);
 		}
 		matrices.pop();
 		Research.REGISTRY.getAll().forEach(research -> {
