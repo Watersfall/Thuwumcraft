@@ -53,7 +53,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		client.getTextureManager().bindTexture(BACKGROUND);
+		matrices.push();
+		matrices.translate(0, 0, -1);
 		drawTexture(matrices, researchBackgroundX, researchBackgroundY, 0, 0, researchBackgroundWidth, researchBackgroundHeight, researchBackgroundWidth, researchBackgroundHeight);
+		matrices.pop();
 	}
 
 	@Override
