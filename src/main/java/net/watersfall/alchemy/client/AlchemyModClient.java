@@ -23,6 +23,7 @@ import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
@@ -147,6 +148,7 @@ public class AlchemyModClient implements ClientModInitializer
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_packet"), (client, handler, buf, responseSender) -> {
+			ResearchCategory.REGISTRY.fromPacket(buf);
 			Research.REGISTRY.fromPacket(buf);
 		});
 	}

@@ -26,6 +26,7 @@ import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
@@ -182,7 +183,9 @@ public class AlchemyMod implements ModInitializer
 				provider.toPacket(buf);
 				if(entity.getType() == EntityType.PLAYER)
 				{
-					PacketByteBuf research = Research.REGISTRY.toPacket(PacketByteBufs.create());
+					PacketByteBuf research = PacketByteBufs.create();
+					ResearchCategory.REGISTRY.toPacket(research);
+					Research.REGISTRY.toPacket(research);
 					ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet_player"), buf);
 					ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
 				}

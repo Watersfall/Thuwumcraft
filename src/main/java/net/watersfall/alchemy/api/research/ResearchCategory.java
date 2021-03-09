@@ -2,6 +2,7 @@ package net.watersfall.alchemy.api.research;
 
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -26,6 +27,11 @@ public class ResearchCategory
 		this.icon = new ItemStack(JsonHelper.getItem(json, "icon"), 1);
 	}
 
+	public ResearchCategory(PacketByteBuf buf)
+	{
+		this.fromPacket(buf);
+	}
+
 	public Identifier getId()
 	{
 		return this.id;
@@ -39,6 +45,20 @@ public class ResearchCategory
 	public ItemStack getIcon()
 	{
 		return this.icon;
+	}
+
+	public PacketByteBuf toPacket(PacketByteBuf buf)
+	{
+		buf.writeIdentifier(this.id);
+		buf.writeItemStack(this.icon);
+		return buf;
+	}
+
+	public void fromPacket(PacketByteBuf buf)
+	{
+		this.id = buf.readIdentifier();
+		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
+		this.icon = buf.readItemStack();
 	}
 
 	public static class Registry
@@ -68,6 +88,26 @@ public class ResearchCategory
 		public Collection<ResearchCategory> getAll()
 		{
 			return this.categories.values();
+		}
+
+		public PacketByteBuf toPacket(PacketByteBuf buf)
+		{
+			buf.writeInt(this.categories.size());
+			this.categories.values().forEach((category -> {
+				category.toPacket(buf);
+			}));
+			return buf;
+		}
+
+		public void fromPacket(PacketByteBuf buf)
+		{
+			this.categories.clear();
+			int size = buf.readInt();
+			for(int i = 0; i < size; i++)
+			{
+				ResearchCategory category = new ResearchCategory(buf);
+				this.register(category.getId(), category);
+			}
 		}
 	}
 }
