@@ -74,9 +74,9 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 
 	private boolean isOverElement(int mouseX, int mouseY, int x, int y, int width, int height)
 	{
-		if(mouseX > x && mouseX < x + width)
+		if(mouseX >= x && mouseX < x + width)
 		{
-			return mouseY > y && mouseY < y + height;
+			return mouseY >= y && mouseY < y + height;
 		}
 		return false;
 	}
@@ -197,7 +197,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			this.itemRenderer.zOffset += 200;
 			this.itemRenderer.renderInGui(cat.getIcon(), x + 8, y);
 			this.itemRenderer.zOffset -= 200;
-			if(isOverElement(mouseX, mouseY, x, y, 24, 16))
+			if(isOverElement(mouseX, mouseY, x + 1, y, 24, 16))
 			{
 				matrices.push();
 				drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);
@@ -320,12 +320,9 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				{
 					int x = xOffset + research.getX();
 					int y = yOffset + research.getY();
-					if(mouseX > x && mouseX < x + 16)
+					if(isOverElement((int)mouseX, (int)mouseY, x, y, 16, 16))
 					{
-						if(mouseY > y && mouseY < y + 16)
-						{
-							this.client.openScreen(new ResearchScreen(this, research));
-						}
+						this.client.openScreen(new ResearchScreen(this, research));
 					}
 				}
 			});
@@ -333,14 +330,11 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			for(int i = 0; categories.hasNext(); i++)
 			{
 				ResearchCategory cat = categories.next();
-				if(mouseX > x && mouseX < x + 24)
+				if(isOverElement((int)mouseX, (int)mouseY, x, y + 24 + i * 24, 24, 16))
 				{
-					if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
-					{
-						this.category = cat;
-						this.client.world.playSound(this.client.player, player.getX(), player.getEyeY(), player.getZ(), AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, (float)Math.random() * 0.2F + 1.1F, 1F);
-						break;
-					}
+					this.category = cat;
+					this.client.world.playSound(this.client.player, player.getX(), player.getEyeY(), player.getZ(), AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, (float)Math.random() * 0.2F + 1.1F, 1F);
+					break;
 				}
 			}
 		}
