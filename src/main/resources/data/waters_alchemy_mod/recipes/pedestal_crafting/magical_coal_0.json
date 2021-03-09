@@ -14,5 +14,8 @@
 	"catalyst": {
 		"item": "minecraft:coal"
 	},
-	"output": "waters_alchemy_mod:magical_coal_0"
+	"output": "waters_alchemy_mod:magical_coal_0",
+	"research": [
+		"waters_alchemy_mod:test_research_1"
+	]
 }

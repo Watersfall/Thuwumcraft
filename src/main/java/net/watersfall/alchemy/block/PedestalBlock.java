@@ -57,11 +57,15 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.PEDESTAL_RECIPE, entity, world);
 					if(recipeOptional.isPresent())
 					{
-						if(!world.isClient)
+						PedestalRecipe recipe = recipeOptional.get();
+						if(recipe.playerHasResearch(player))
 						{
-							entity.beginCraft(recipeOptional.get());
+							if(!world.isClient)
+							{
+								entity.beginCraft(recipe);
+							}
+							return ActionResult.success(world.isClient);
 						}
-						return ActionResult.success(world.isClient);
 					}
 					return ActionResult.FAIL;
 				}

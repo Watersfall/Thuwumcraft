@@ -87,4 +87,10 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	{
 		return this.advancements.contains(id);
 	}
+
+	@Override
+	public boolean hasResearch(Identifier id)
+	{
+		return this.research.contains(Research.REGISTRY.get(id));
+	}
 }

@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -13,9 +14,12 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.JarEntity;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
@@ -34,10 +38,10 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
-public class PedestalRecipe implements Recipe<PedestalEntity>
+public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 {
-	private final Identifier id;
 	private final List<Ingredient> inputs;
 	private final List<AspectStack> aspects;
 	private final Ingredient catalyst;
@@ -97,9 +101,9 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 		return entities;
 	}
 
-	public PedestalRecipe(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output)
+	public PedestalRecipe(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research)
 	{
-		this.id = id;
+		super(id, research);
 		this.inputs = inputs;
 		this.catalyst = catalyst;
 		this.output = output;
@@ -228,7 +232,15 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 			}
 			Ingredient catalyst = Ingredient.fromJson(json.getAsJsonObject(CATALYST));
 			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
-			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output);
+			List<Identifier> research = new ArrayList<>();
+			JsonArray array = json.getAsJsonArray("research");
+			if(array != null)
+			{
+				array.forEach((element) -> {
+					research.add(Identifier.tryParse(element.getAsString()));
+				});
+			}
+			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -249,7 +261,13 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 			}
 			Ingredient catalyst = Ingredient.fromPacket(buf);
 			ItemStack output = buf.readItemStack();
-			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output);
+			List<Identifier> research = new ArrayList<>();
+			count = buf.readInt();
+			for(int i = 0; i < count; i++)
+			{
+				research.add(buf.readIdentifier());
+			}
+			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -268,11 +286,16 @@ public class PedestalRecipe implements Recipe<PedestalEntity>
 			}
 			recipe.getCatalyst().write(buf);
 			buf.writeItemStack(recipe.getOutput());
+			buf.writeInt(recipe.research.size());
+			for(int i = 0; i < recipe.research.size(); i++)
+			{
+				buf.writeIdentifier(recipe.research.get(i));
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>
 		{
-			T create(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output);
+			T create(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research);
 		}
 	}
 

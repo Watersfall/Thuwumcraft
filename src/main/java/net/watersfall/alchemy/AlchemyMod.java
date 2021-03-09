@@ -1,8 +1,10 @@
 package net.watersfall.alchemy;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -183,11 +185,14 @@ public class AlchemyMod implements ModInitializer
 				provider.toPacket(buf);
 				if(entity.getType() == EntityType.PLAYER)
 				{
-					PacketByteBuf research = PacketByteBufs.create();
-					ResearchCategory.REGISTRY.toPacket(research);
-					Research.REGISTRY.toPacket(research);
+					if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
+					{
+						PacketByteBuf research = PacketByteBufs.create();
+						ResearchCategory.REGISTRY.toPacket(research);
+						Research.REGISTRY.toPacket(research);
+						ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
+					}
 					ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet_player"), buf);
-					ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
 				}
 				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 				{
@@ -201,6 +206,13 @@ public class AlchemyMod implements ModInitializer
 				for(ServerPlayerEntity player : PlayerLookup.all(server))
 				{
 					ServerPlayNetworking.send(player, getId("research_packet"), Research.REGISTRY.toPacket(PacketByteBufs.create()));
+					if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
+					{
+						PacketByteBuf research = PacketByteBufs.create();
+						ResearchCategory.REGISTRY.toPacket(research);
+						Research.REGISTRY.toPacket(research);
+						ServerPlayNetworking.send(player, getId("research_packet"), research);
+					}
 				}
 			}
 		});

@@ -7,5 +7,8 @@
 	],
 	"water_use": 333,
 	"action": "create_potion",
-	"output": "minecraft:potion"
+	"output": "minecraft:potion",
+	"research": [
+		"waters_alchemy_mod:test_research_1"
+	]
 }

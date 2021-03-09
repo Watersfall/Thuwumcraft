@@ -30,6 +30,8 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 
 	boolean hasAdvancement(Identifier id);
 
+	boolean hasResearch(Identifier id);
+
 	@Override
 	default Identifier getId()
 	{
@@ -50,7 +52,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	@Override
 	default void fromNbt(CompoundTag tag, Entity t)
 	{
-		ListTag list = tag.getList("research_list", NbtType.STRING);
+		ListTag list = tag.getList("research_list_1", NbtType.STRING);
 		list.forEach(research -> {
 			addResearch(Identifier.tryParse(research.asString()));
 		});

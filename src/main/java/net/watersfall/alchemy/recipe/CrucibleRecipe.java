@@ -1,7 +1,10 @@
 package net.watersfall.alchemy.recipe;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -11,24 +14,27 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.research.Research;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class CrucibleRecipe implements Recipe<AspectInventory>
+public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory>
 {
-	public final Identifier id;
 	public final Ingredient catalyst;
 	public final List<AspectStack> aspects;
 	public final ItemStack output;
 
-	public CrucibleRecipe(Identifier id, Ingredient catalyst, List<AspectStack> aspects, ItemStack output)
+	public CrucibleRecipe(Identifier id, Ingredient catalyst, List<AspectStack> aspects, ItemStack output, List<Identifier> research)
 	{
-		this.id = id;
+		super(id, research);
 		this.catalyst = catalyst;
 		this.aspects = aspects;
 		this.output = output;
@@ -124,7 +130,15 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 				aspects.add(new AspectStack(aspect, amount));
 			}
 			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString())));
-			return new CrucibleRecipe(id, catalyst, aspects, output);
+			List<Identifier> research = new ArrayList<>();
+			JsonArray array = json.getAsJsonArray("research");
+			if(array != null)
+			{
+				array.forEach((element) -> {
+					research.add(Identifier.tryParse(element.getAsString()));
+				});
+			}
+			return new CrucibleRecipe(id, catalyst, aspects, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -139,7 +153,13 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 				list.add(new AspectStack(aspect, buf.readInt()));
 			}
 			ItemStack output = buf.readItemStack();
-			return new CrucibleRecipe(id, input, list, output);
+			List<Identifier> research = new ArrayList<>();
+			int count = buf.readInt();
+			for(int i = 0; i < count; i++)
+			{
+				research.add(buf.readIdentifier());
+			}
+			return new CrucibleRecipe(id, input, list, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -153,11 +173,16 @@ public class CrucibleRecipe implements Recipe<AspectInventory>
 				buf.writeInt(recipe.aspects.get(i).getCount());
 			}
 			buf.writeItemStack(recipe.output);
+			buf.writeInt(recipe.research.size());
+			for(int i = 0; i < recipe.research.size(); i++)
+			{
+				buf.writeIdentifier(recipe.research.get(i));
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>
 		{
-			T create(Identifier id, Ingredient catalyst, List<AspectStack> aspects, ItemStack output);
+			T create(Identifier id, Ingredient catalyst, List<AspectStack> aspects, ItemStack output, List<Identifier> research);
 		}
 	}
 }

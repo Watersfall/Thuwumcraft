@@ -13,5 +13,8 @@
 			"count": 20
 		}
 	],
-	"output": "minecraft:gold_ingot"
+	"output": "minecraft:gold_ingot",
+	"research": [
+		"waters_alchemy_mod:test_research_6"
+	]
 }

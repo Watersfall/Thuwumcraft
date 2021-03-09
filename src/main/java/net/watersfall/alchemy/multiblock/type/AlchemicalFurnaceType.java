@@ -3,9 +3,14 @@ package net.watersfall.alchemy.multiblock.type;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Direction;
+import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
+import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.api.multiblock.MultiBlockType;
@@ -47,6 +52,13 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 	@Override
 	public BlockPos[] matches(PlayerEntity player, World world, BlockPos pos)
 	{
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		PlayerResearchAbility ability = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
+		Research research = Research.REGISTRY.get(AlchemyMod.getId("test_research_6"));
+		if(!ability.getResearch().contains(research))
+		{
+			return MultiBlockType.MISSING;
+		}
 		BlockState furnace = world.getBlockState(pos);
 		BlockPos[] poses = new BlockPos[4];
 		poses[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT] = pos;

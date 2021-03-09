@@ -46,19 +46,22 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CRUCIBLE_RECIPE, entity, world);
 				if(crucibleOptional.isPresent())
 				{
-					if(!world.isClient)
+					CrucibleRecipe recipe = crucibleOptional.get();
+					if(recipe.playerHasResearch(player))
 					{
-						stack.decrement(1);
-						CrucibleRecipe recipe = crucibleOptional.get();
-						stack = recipe.craft(entity);
-						if(!player.getInventory().insertStack(stack))
+						if(!world.isClient)
 						{
-							player.dropItem(stack, true);
+							stack.decrement(1);
+							stack = recipe.craft(entity);
+							if(!player.getInventory().insertStack(stack))
+							{
+								player.dropItem(stack, true);
+							}
+							entity.markDirty();
+							entity.sync();
 						}
-						entity.markDirty();
-						entity.sync();
+						return ActionResult.success(world.isClient);
 					}
-					return ActionResult.success(world.isClient);
 				}
 				Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, entity, world);
 				if(aspectOptional.isPresent())

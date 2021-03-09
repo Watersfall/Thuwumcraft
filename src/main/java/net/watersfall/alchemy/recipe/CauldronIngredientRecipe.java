@@ -1,5 +1,7 @@
 package net.watersfall.alchemy.recipe;
 
+import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
@@ -12,9 +14,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory>
+public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory>
 {
 	public static final String ITEMS = "items";
 	public static final String ACTION = "action";
@@ -22,16 +26,15 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 	public static final String USES = "uses";
 	public static final String OUTPUT = "output";
 
-	private final Identifier id;
 	private final Ingredient input;
 	private final int waterUse;
 	private final int uses;
 	private final CraftingAction craftingAction;
 	private final ItemStack output;
 
-	public CauldronIngredientRecipe(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output)
+	public CauldronIngredientRecipe(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output, List<Identifier> research)
 	{
-		this.id = id;
+		super(id, research);
 		this.input = input;
 		this.waterUse = waterUse;
 		this.craftingAction = action;
@@ -131,7 +134,15 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 			{
 				output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
 			}
-			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output);
+			List<Identifier> research = new ArrayList<>();
+			JsonArray array = json.getAsJsonArray("research");
+			if(array != null)
+			{
+				array.forEach((element) -> {
+					research.add(Identifier.tryParse(element.getAsString()));
+				});
+			}
+			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -142,7 +153,13 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 			int uses = buf.readInt();
 			Ingredient input = Ingredient.fromPacket(buf);
 			ItemStack output = buf.readItemStack();
-			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output);
+			List<Identifier> research = new ArrayList<>();
+			int count = buf.readInt();
+			for(int i = 0; i < count; i++)
+			{
+				research.add(buf.readIdentifier());
+			}
+			return new CauldronIngredientRecipe(id, input, waterUse, action, uses, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -153,11 +170,16 @@ public class CauldronIngredientRecipe implements Recipe<BrewingCauldronInventory
 			buf.writeInt(recipe.getUses());
 			recipe.getInput().write(buf);
 			buf.writeItemStack(recipe.getOutput());
+			buf.writeInt(recipe.research.size());
+			for(int i = 0; i < recipe.research.size(); i++)
+			{
+				buf.writeIdentifier(recipe.research.get(i));
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>
 		{
-			T create(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output);
+			T create(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output, List<Identifier> research);
 		}
 	}
 

@@ -108,23 +108,51 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 			Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
 			if(typeOptional.isPresent())
 			{
-				if(!world.isClient)
+				CauldronIngredientRecipe typeRecipe = typeOptional.get();
+				if(typeRecipe.playerHasResearch(player))
 				{
-					CauldronIngredientRecipe typeRecipe = typeOptional.get();
-					CauldronIngredient recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
-					if(recipe == null)
+					if(!world.isClient)
 					{
-						player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
-						return ActionResult.FAIL;
+						CauldronIngredient recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
+						if(recipe == null)
+						{
+							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							return ActionResult.FAIL;
+						}
+						ItemStack stack = recipe.craft(entity, typeRecipe, entity.getWorld());
+						if(inputStack == stack)
+						{
+							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							return ActionResult.FAIL;
+						}
+						else
+						{
+							itemStack.decrement(1);
+							if(itemStack.isEmpty())
+							{
+								player.setStackInHand(hand, stack);
+							}
+							else if(!player.getInventory().insertStack(stack))
+							{
+								player.dropItem(stack, true);
+							}
+							entity.setInput(ItemStack.EMPTY);
+							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.getWaterUse()));
+							entity.sync();
+						}
 					}
-					ItemStack stack = recipe.craft(entity, typeRecipe, entity.getWorld());
-					if(inputStack == stack)
+					return ActionResult.success(world.isClient);
+				}
+			}
+			Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_ITEM_RECIPE, entity, world);
+			if(itemOptional.isPresent())
+			{
+				CauldronItemRecipe recipe = itemOptional.get();
+				if(recipe.playerHasResearch(player))
+				{
+					if(!world.isClient)
 					{
-						player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
-						return ActionResult.FAIL;
-					}
-					else
-					{
+						ItemStack stack = recipe.craft(entity);
 						itemStack.decrement(1);
 						if(itemStack.isEmpty())
 						{
@@ -135,33 +163,11 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 							player.dropItem(stack, true);
 						}
 						entity.setInput(ItemStack.EMPTY);
-						entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.getWaterUse()));
+						entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.getWaterUse()));
 						entity.sync();
 					}
+					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.success(world.isClient);
-			}
-			Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_ITEM_RECIPE, entity, world);
-			if(itemOptional.isPresent())
-			{
-				if(!world.isClient)
-				{
-					CauldronItemRecipe recipe = itemOptional.get();
-					ItemStack stack = recipe.craft(entity);
-					itemStack.decrement(1);
-					if(itemStack.isEmpty())
-					{
-						player.setStackInHand(hand, stack);
-					}
-					else if(!player.getInventory().insertStack(stack))
-					{
-						player.dropItem(stack, true);
-					}
-					entity.setInput(ItemStack.EMPTY);
-					entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.getWaterUse()));
-					entity.sync();
-				}
-				return ActionResult.success(world.isClient);
 			}
 			entity.setInput(ItemStack.EMPTY);
 			if(entity.count(item) > 0)

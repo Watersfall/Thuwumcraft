@@ -18,17 +18,16 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
+public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory>
 {
-	private final Identifier id;
 	private final Ingredient catalyst;
 	private final int waterUse;
 	private final List<Ingredient> inputs;
 	private final ItemStack output;
 
-	public CauldronItemRecipe(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output)
+	public CauldronItemRecipe(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output, List<Identifier> research)
 	{
-		this.id = id;
+		super(id, research);
 		this.catalyst = catalyst;
 		this.waterUse = waterUse;
 		this.inputs = ImmutableList.copyOf(inputs);
@@ -163,7 +162,15 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 				inputs.add(Ingredient.fromJson(array.get(i)));
 			}
 			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get("output").getAsString())));
-			return new CauldronItemRecipe(id, catalyst, waterUse, inputs, output);
+			List<Identifier> research = new ArrayList<>();
+			array = json.getAsJsonArray("research");
+			if(array != null)
+			{
+				array.forEach((element) -> {
+					research.add(Identifier.tryParse(element.getAsString()));
+				});
+			}
+			return new CauldronItemRecipe(id, catalyst, waterUse, inputs, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -178,7 +185,13 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 				inputs.add(Ingredient.fromPacket(buf));
 			}
 			ItemStack output = buf.readItemStack();
-			return new CauldronItemRecipe(id, catalyst, waterUse, inputs, output);
+			List<Identifier> research = new ArrayList<>();
+			int count = buf.readInt();
+			for(int i = 0; i < count; i++)
+			{
+				research.add(buf.readIdentifier());
+			}
+			return new CauldronItemRecipe(id, catalyst, waterUse, inputs, output, ImmutableList.copyOf(research));
 		}
 
 		@Override
@@ -192,11 +205,16 @@ public class CauldronItemRecipe implements Recipe<BrewingCauldronInventory>
 				recipe.getInputs().get(i).write(buf);
 			}
 			buf.writeItemStack(recipe.getOutput());
+			buf.writeInt(recipe.research.size());
+			for(int i = 0; i < recipe.research.size(); i++)
+			{
+				buf.writeIdentifier(recipe.research.get(i));
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>
 		{
-			T create(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output);
+			T create(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output, List<Identifier> research);
 		}
 	}
 }
