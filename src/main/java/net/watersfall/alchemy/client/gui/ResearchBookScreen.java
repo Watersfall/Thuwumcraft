@@ -35,6 +35,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Style STYLE = Style.EMPTY.withFont(FONT_ID);;
 	private int researchBackgroundWidth;
 	private int researchBackgroundHeight;
+	private int researchBackgroundX;
+	private int researchBackgroundY;
 	private float mapX = 0;
 	private float mapY = 0;
 	private ResearchCategory category = ResearchCategory.REGISTRY.getFirst();
@@ -51,9 +53,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		client.getTextureManager().bindTexture(BACKGROUND);
-		int x = (width - researchBackgroundWidth) / 2;
-		int y = (height - researchBackgroundHeight) / 2;
-		drawTexture(matrices, x, y, 0, 0, researchBackgroundWidth, researchBackgroundHeight, researchBackgroundWidth, researchBackgroundHeight);
+		drawTexture(matrices, researchBackgroundX, researchBackgroundY, 0, 0, researchBackgroundWidth, researchBackgroundHeight, researchBackgroundWidth, researchBackgroundHeight);
 	}
 
 	@Override
@@ -65,6 +65,26 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.researchBackgroundHeight = backgroundHeight - 24;
 		this.playerInventoryTitleX = -1000;
 		super.init();
+		researchBackgroundX = x + 24;
+		researchBackgroundY = y + 12;
+	}
+
+	private boolean isOverElement(int mouseX, int mouseY, int x, int y, int width, int height)
+	{
+		if(mouseX > x && mouseX < x + width)
+		{
+			return mouseY > y && mouseY < y + height;
+		}
+		return false;
+	}
+
+	private boolean isInsideBorder(int mouseX, int mouseY)
+	{
+		if(mouseX > researchBackgroundX && mouseX < researchBackgroundX + researchBackgroundWidth)
+		{
+			return mouseY > researchBackgroundY && mouseY < researchBackgroundY + researchBackgroundHeight;
+		}
+		return false;
 	}
 
 	@Override
@@ -109,15 +129,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		for(int i = 0; categories.hasNext(); i++)
 		{
 			ResearchCategory cat = categories.next();
-			if(mouseX > x + 1 && mouseX < x + 25)
+			if(isOverElement(mouseX, mouseY, x + 1, y + 24 + i * 24, 24, 16))
 			{
-				if(mouseY > y + 24 + i * 24 && mouseY < y + i * 24 + 40)
-				{
-					drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
-					continue;
-				}
+				drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
 			}
-			drawTexture(matrices, this.x + 5, this.y + 24 +  i * 24, 0, 16, 20, 16, 256, 256);
+			else
+			{
+				drawTexture(matrices, this.x + 5, this.y + 24 +  i * 24, 0, 16, 20, 16, 256, 256);
+			}
 		}
 		matrices.pop();
 		Research.REGISTRY.getAll().forEach(research -> {
@@ -132,7 +151,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					matrices.translate(0, 0, 2D);
 					if(!ability.getResearch().contains(research))
 					{
-						if(mouseX > x && mouseX < x + 16 && mouseY > y && mouseY < y + 16)
+						if(isOverElement(mouseX, mouseY, x, y, 16, 16))
 						{
 							fill(matrices, x, y, x + 16, y + 16, -2130706433);
 						}
@@ -154,18 +173,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 					this.fillGradient(matrices, x, y, x + 16, y + 16, -1072689136, -804253680);
 				}
 				matrices.pop();
-				if(mouseX > x && mouseX < x + 16)
+				if(isOverElement(mouseX, mouseY, x, y, 16, 16) && isInsideBorder(mouseX, mouseY))
 				{
-					if(mouseY > y && mouseY < y + 16)
+					if(research.isReadable(ability))
 					{
-						if(research.isReadable(ability))
-						{
-							drawMouseoverTooltip(matrices, research.getName().asOrderedText(), mouseX, mouseY);
-						}
-						else
-						{
-							drawMouseoverTooltip(matrices, generateSecretText(research), mouseX, mouseY);
-						}
+						drawMouseoverTooltip(matrices, research.getName().asOrderedText(), mouseX, mouseY);
+					}
+					else
+					{
+						drawMouseoverTooltip(matrices, generateSecretText(research), mouseX, mouseY);
 					}
 				}
 			}
@@ -178,14 +194,11 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			this.itemRenderer.zOffset += 200;
 			this.itemRenderer.renderInGui(cat.getIcon(), x + 8, y);
 			this.itemRenderer.zOffset -= 200;
-			if(mouseX > x && mouseX < x + 24)
+			if(isOverElement(mouseX, mouseY, x, y, 24, 16))
 			{
-				if(mouseY > y && mouseY < y + 16)
-				{
-					matrices.push();
-					drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);
-					matrices.pop();
-				}
+				matrices.push();
+				drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);
+				matrices.pop();
 			}
 		}
 	}
