@@ -1,0 +1,10 @@
+{
+	"icon": "minecraft:cauldron",
+	"category": "waters_alchemy_mod:basic",
+	"x": 0,
+	"y": 0,
+	"tabs": [
+		"minecraft:cauldron",
+		"waters_alchemy_mod:witchy_spoon"
+	]
+}

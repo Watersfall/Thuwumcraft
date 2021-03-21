@@ -57,7 +57,11 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	{
 		ListTag list = tag.getList("research_list", NbtType.STRING);
 		list.forEach(research -> {
-			addResearch(Identifier.tryParse(research.asString()));
+			Research check = Research.REGISTRY.get(Identifier.tryParse(research.asString()));
+			if(check != null)
+			{
+				addResearch(check);
+			}
 		});
 	}
 

@@ -1,24 +1,17 @@
 package net.watersfall.alchemy.api.research;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.alchemy.client.gui.ResearchTab;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Research
 {
@@ -27,8 +20,10 @@ public class Research
 	private Identifier id;
 	private Text name;
 	private Text description;
+	private Text completedDescription;
 	private ItemStack stack;
 	private ResearchCategory category;
+	private Identifier[] tabs;
 	private int x;
 	private int y;
 	private List<Identifier> visibilityAdvancements;
@@ -88,8 +83,15 @@ public class Research
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research/", "").replace(".json", "").replace("/", "."));
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
+		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
 		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
+		JsonArray tabsArray = json.getAsJsonArray("tabs");
+		this.tabs = new Identifier[tabsArray.size()];
+		for(int i = 0; i < tabs.length; i++)
+		{
+			tabs[i] = Identifier.tryParse(tabsArray.get(i).getAsString());
+		}
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
 		JsonObject visibleJson = json.getAsJsonObject("visibility_requirements");
@@ -129,6 +131,11 @@ public class Research
 		return this.description;
 	}
 
+	public Text getCompletedDescription()
+	{
+		return this.completedDescription;
+	}
+
 	public ResearchCategory getCategory()
 	{
 		return this.category;
@@ -159,6 +166,11 @@ public class Research
 		return this.isAvailable.test(ability);
 	}
 
+	public Identifier[] getTabs()
+	{
+		return this.tabs;
+	}
+
 	public ItemStack getStack()
 	{
 		return this.stack;
@@ -185,6 +197,11 @@ public class Research
 		buf.writeIdentifier(this.id);
 		buf.writeItemStack(this.stack);
 		buf.writeIdentifier(this.category.getId());
+		buf.writeInt(tabs.length);
+		for(int i = 0; i < tabs.length; i++)
+		{
+			buf.writeIdentifier(tabs[i]);
+		}
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
 		writeList(buf, visibilityAdvancements);
@@ -210,8 +227,14 @@ public class Research
 		this.id = buf.readIdentifier();
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
+		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
 		this.stack = buf.readItemStack();
 		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
+		this.tabs = new Identifier[buf.readInt()];
+		for(int i = 0; i < tabs.length; i++)
+		{
+			tabs[i] = buf.readIdentifier();
+		}
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.visibilityAdvancements = new ArrayList<>();

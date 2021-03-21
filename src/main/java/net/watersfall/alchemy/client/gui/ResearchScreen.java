@@ -18,10 +18,12 @@ import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ResearchScreen extends Screen
 {
 	public static final Identifier BACKGROUND = AlchemyMod.getId("textures/gui/research/research_page.png");
+	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
 
 	private final ResearchBookScreen parent;
 	private final Research research;
@@ -31,12 +33,18 @@ public class ResearchScreen extends Screen
 	private final int screenHeight = 256;
 	private final int buttonWidth = 112;
 	private final int buttonHeight = 16;
+	private final ResearchTab[] tabs;
 
 	protected ResearchScreen(ResearchBookScreen parent, Research research)
 	{
 		super(research.getName());
 		this.parent = parent;
 		this.research = research;
+		this.tabs = new ResearchTab[research.getTabs().length];
+		for(int i = 0; i < tabs.length; i++)
+		{
+			this.tabs[i] = new ResearchTab(research.getTabs()[i], this);
+		}
 		this.addButton(new ButtonWidget(242, 100, buttonWidth, buttonHeight, new LiteralText("research"), (button) -> {}));
 	}
 
@@ -60,7 +68,14 @@ public class ResearchScreen extends Screen
 		int buttonX = width - (width + screenWidth) / 2 + (screenWidth * 3 / 4) - (buttonWidth / 2);
 		int buttonY = height - 48;
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
-		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
+		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+		PlayerResearchAbility ability = null;
+		if(optional.isPresent())
+		{
+			ability = optional.get();
+		}
+		if(ability != null)
+		{
 			if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 			{
 				if(mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight)
@@ -72,24 +87,43 @@ public class ResearchScreen extends Screen
 					drawTexture(matrices, buttonX, buttonY, 0, 256, buttonWidth, buttonHeight, textureWidth, textureHeight);
 				}
 			}
-		}));
+		}
 		this.textRenderer.draw(matrices,
 				this.title,
 				(width - (screenWidth * 1.5F)) / 2F + (screenWidth / 2F) - (textRenderer.getWidth(this.title) / 2F),
 				24,
 				4210752);
-		List<OrderedText> text = this.textRenderer.wrapLines(this.research.getDescription(), 160);
+		List<OrderedText> text;
+		if(ability != null && ability.hasResearch(this.research))
+		{
+			text = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 160);
+		}
+		else
+		{
+			text = this.textRenderer.wrapLines(this.research.getDescription(), 160);
+		}
 		int offset = 40;
 		for(int i = 0; i < text.size(); i++, offset += 9)
 		{
 			this.textRenderer.draw(matrices, text.get(i), (width - screenWidth) / 2F + 16F, offset, 4210752);
 		}
-		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
+		if(ability != null)
+		{
 			if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 			{
 				DrawableHelper.drawCenteredText(matrices, textRenderer, new LiteralText("Complete Research"), buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 - 4, -1);
 			}
-		}));
+		}
+		if(this.research.getTabs().length > 0)
+		{
+			client.getTextureManager().bindTexture(ICONS);
+			int startX = 426;
+			int startY = 20;
+			for(int i = 0; i < this.research.getTabs().length; i++)
+			{
+				drawTexture(matrices, startX, startY +  i * 24, 24, 16, 24, 16, 256, 256);
+			}
+		}
 	}
 
 	@Override
@@ -109,6 +143,21 @@ public class ResearchScreen extends Screen
 				}
 			}
 		}));
+		return true;
+	}
+
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int button)
+	{
+		int startX = 426;
+		int startY = 20;
+		for(int i = 0; i < this.research.getTabs().length; i++)
+		{
+			if(mouseX > startX && mouseX < startX + 24 && mouseY > startY + i * 24 && mouseY < startY + i * 24 + 16)
+			{
+				this.client.openScreen(this.tabs[i]);
+			}
+		}
 		return true;
 	}
 
