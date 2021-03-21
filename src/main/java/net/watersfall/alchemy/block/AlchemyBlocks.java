@@ -15,6 +15,7 @@ public class AlchemyBlocks
 	public static final CrucibleBlock CRUCIBLE_BLOCK;
 	public static final JarBlock JAR_BLOCK;
 	public static final PhialShelfBlock PHIAL_SHELF_BLOCK;
+	public static final AspectPipeBlock ASPECT_PIPE_BLOCK;
 
 	static
 	{
@@ -25,6 +26,7 @@ public class AlchemyBlocks
 		CRUCIBLE_BLOCK = new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK));
 		JAR_BLOCK = new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true));
 		PHIAL_SHELF_BLOCK = new PhialShelfBlock(FabricBlockSettings.copyOf(Blocks.BIRCH_PLANKS).nonOpaque());
+		ASPECT_PIPE_BLOCK = new AspectPipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
 	}
 
 	public static void register()
@@ -36,5 +38,6 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("brewing_crucible"), CRUCIBLE_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("jar"), JAR_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("aspect_pipe"), ASPECT_PIPE_BLOCK);
 	}
 }

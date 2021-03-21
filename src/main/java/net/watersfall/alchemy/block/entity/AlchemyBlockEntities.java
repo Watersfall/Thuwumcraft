@@ -15,6 +15,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<CrucibleEntity> CRUCIBLE_ENTITY;
 	public static final BlockEntityType<JarEntity> JAR_ENTITY;
 	public static final BlockEntityType<PhialShelfEntity> PHIAL_SHELF_ENTITY;
+	public static final BlockEntityType<AspectPipeEntity> ASPECT_PIPE_ENTITY;
 
 	static
 	{
@@ -25,6 +26,7 @@ public class AlchemyBlockEntities
 		CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(CrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
 		JAR_ENTITY = FabricBlockEntityTypeBuilder.create(JarEntity::new, AlchemyBlocks.JAR_BLOCK).build(null);
 		PHIAL_SHELF_ENTITY = FabricBlockEntityTypeBuilder.create(PhialShelfEntity::new, AlchemyBlocks.PHIAL_SHELF_BLOCK).build(null);
+		ASPECT_PIPE_ENTITY = FabricBlockEntityTypeBuilder.create(AspectPipeEntity::new, AlchemyBlocks.ASPECT_PIPE_BLOCK).build(null);
 	}
 
 	public static void register()
@@ -36,5 +38,6 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("brewing_crucible_entity"), AlchemyBlockEntities.CRUCIBLE_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("jar_entity"), AlchemyBlockEntities.JAR_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("phial_shelf_entity"), PHIAL_SHELF_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("aspect_pipe_entity"), ASPECT_PIPE_ENTITY);
 	}
 }

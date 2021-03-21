@@ -1,0 +1,57 @@
+{
+	"multipart": [
+		{
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/center"
+			}
+		},
+		{
+			"when": {
+				"north": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/north"
+			}
+		},
+		{
+			"when": {
+				"south": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/south"
+			}
+		},
+		{
+			"when": {
+				"east": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/east"
+			}
+		},
+		{
+			"when": {
+				"west": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/west"
+			}
+		},
+		{
+			"when": {
+				"up": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/up"
+			}
+		},
+		{
+			"when": {
+				"down": "true"
+			},
+			"apply": {
+				"model": "waters_alchemy_mod:block/pipe/down"
+			}
+		}
+	]
+}
