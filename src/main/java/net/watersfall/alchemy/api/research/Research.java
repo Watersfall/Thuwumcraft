@@ -53,7 +53,7 @@ public class Research
 			}
 			for(int i = 0; i < research.size(); i++)
 			{
-				if(!ability.getResearch().contains(Research.REGISTRY.get(research.get(i))))
+				if(!ability.hasResearch(research.get(i)))
 				{
 					return false;
 				}

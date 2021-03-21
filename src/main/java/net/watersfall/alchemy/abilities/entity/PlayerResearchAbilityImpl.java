@@ -9,17 +9,19 @@ import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 {
-	private List<Research> research;
-	private List<Identifier> advancements;
+	private Set<Research> research;
+	private Set<Identifier> advancements;
 
 	public PlayerResearchAbilityImpl()
 	{
-		this.advancements = new ArrayList<>();
-		this.research = new ArrayList<>();
+		this.advancements = new HashSet<>();
+		this.research = new HashSet<>();
 	}
 
 	public PlayerResearchAbilityImpl(Entity entity)
@@ -53,13 +55,13 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	}
 
 	@Override
-	public List<Research> getResearch()
+	public Set<Research> getResearch()
 	{
 		return research;
 	}
 
 	@Override
-	public List<Identifier> getAdvancements()
+	public Set<Identifier> getAdvancements()
 	{
 		return this.advancements;
 	}
@@ -91,6 +93,11 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	@Override
 	public boolean hasResearch(Identifier id)
 	{
-		return this.research.contains(Research.REGISTRY.get(id));
+		return hasResearch(Research.REGISTRY.get(id));
+	}
+
+	public boolean hasResearch(Research research)
+	{
+		return this.research.contains(research);
 	}
 }

@@ -152,7 +152,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				if(research.isAvailable(ability))
 				{
 					matrices.translate(0, 0, 2D);
-					if(!ability.getResearch().contains(research))
+					if(!ability.hasResearch(research))
 					{
 						if(isOverElement(mouseX, mouseY, x, y, 16, 16))
 						{

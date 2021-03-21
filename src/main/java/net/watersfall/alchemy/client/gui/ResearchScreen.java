@@ -61,7 +61,7 @@ public class ResearchScreen extends Screen
 		int buttonY = height - 48;
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
-			if(!ability.getResearch().contains(this.research) && this.research.isAvailable(ability))
+			if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 			{
 				if(mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight)
 				{
@@ -85,7 +85,7 @@ public class ResearchScreen extends Screen
 			this.textRenderer.draw(matrices, text.get(i), (width - screenWidth) / 2F + 16F, offset, 4210752);
 		}
 		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
-			if(!ability.getResearch().contains(this.research) && this.research.isAvailable(ability))
+			if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 			{
 				DrawableHelper.drawCenteredText(matrices, textRenderer, new LiteralText("Complete Research"), buttonX + buttonWidth / 2, buttonY + buttonHeight / 2 - 4, -1);
 			}
@@ -97,7 +97,7 @@ public class ResearchScreen extends Screen
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
-			if(!ability.getResearch().contains(this.research) && this.research.isAvailable(ability))
+			if(!ability.hasResearch(research) && this.research.isAvailable(ability))
 			{
 				int buttonX = width - (width + screenWidth) / 2 + (screenWidth * 3 / 4) - (buttonWidth / 2);
 				int buttonY = height - 48;

@@ -13,14 +13,15 @@ import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.research.Research;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSerializable<Entity>
 {
 	public static final Identifier ID = new Identifier("waters_alchemy_mod", "player_research_ability");
 
-	List<Research> getResearch();
+	Set<Research> getResearch();
 
-	List<Identifier> getAdvancements();
+	Set<Identifier> getAdvancements();
 
 	void addResearch(Identifier id);
 
@@ -31,6 +32,8 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	boolean hasAdvancement(Identifier id);
 
 	boolean hasResearch(Identifier id);
+
+	boolean hasResearch(Research research);
 
 	@Override
 	default Identifier getId()
@@ -52,7 +55,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	@Override
 	default void fromNbt(CompoundTag tag, Entity t)
 	{
-		ListTag list = tag.getList("research_list_1", NbtType.STRING);
+		ListTag list = tag.getList("research_list", NbtType.STRING);
 		list.forEach(research -> {
 			addResearch(Identifier.tryParse(research.asString()));
 		});

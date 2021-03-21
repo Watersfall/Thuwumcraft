@@ -55,7 +55,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		PlayerResearchAbility ability = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
 		Research research = Research.REGISTRY.get(AlchemyMod.getId("test_research_6"));
-		if(!ability.getResearch().contains(research))
+		if(!ability.hasResearch(research))
 		{
 			return MultiBlockType.MISSING;
 		}
