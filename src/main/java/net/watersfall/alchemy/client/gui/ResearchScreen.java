@@ -123,26 +123,33 @@ public class ResearchScreen extends Screen
 			int startY = 20;
 			for(int i = 0; i < this.research.getTabs().length; i++)
 			{
-				if(mouseX > startX && mouseX < startX + 24 && mouseY > startY + i * 24 && mouseY < startY + i * 24 + 16)
+				if(!tabs[i].requiresComplete() || ability.hasResearch(research))
 				{
-					drawTexture(matrices, startX, startY +  i * 24, 24, 16, 24, 16, 256, 256);
+					if(mouseX > startX && mouseX < startX + 24 && mouseY > startY + i * 24 && mouseY < startY + i * 24 + 16)
+					{
+						drawTexture(matrices, startX, startY +  i * 24, 24, 16, 24, 16, 256, 256);
+					}
+					else
+					{
+						drawTexture(matrices, startX, startY +  i * 24, 28, 16, 20, 16, 256, 256);
+					}
 				}
-				else
-				{
-					drawTexture(matrices, startX, startY +  i * 24, 28, 16, 20, 16, 256, 256);
-				}
+
 			}
 			for(int i = 0; i < this.research.getTabs().length; i++)
 			{
-				long time = MinecraftClient.getInstance().world.getTime();
-				int index = (int)(time / (20F) % this.tabs[i].recipes.length);
-				if(mouseX > startX && mouseX < startX + 24 && mouseY > startY + i * 24 && mouseY < startY + i * 24 + 16)
+				if(!tabs[i].requiresComplete() || ability.hasResearch(research))
 				{
-					this.itemRenderer.renderInGui(tabs[i].recipes[index].getOutput(), startX + 4, startY + i * 24);
-				}
-				else
-				{
-					this.itemRenderer.renderInGui(tabs[i].recipes[index].getOutput(), startX, startY + i * 24);
+					long time = MinecraftClient.getInstance().world.getTime();
+					int index = (int)(time / (20F) % this.tabs[i].recipes.length);
+					if(mouseX > startX && mouseX < startX + 24 && mouseY > startY + i * 24 && mouseY < startY + i * 24 + 16)
+					{
+						this.itemRenderer.renderInGui(tabs[i].recipes[index].getOutput(), startX + 4, startY + i * 24);
+					}
+					else
+					{
+						this.itemRenderer.renderInGui(tabs[i].recipes[index].getOutput(), startX, startY + i * 24);
+					}
 				}
 			}
 		}

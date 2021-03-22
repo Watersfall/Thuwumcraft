@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.api.research;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -8,6 +9,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.alchemy.client.gui.element.RecipeElement;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -22,7 +24,7 @@ public class Research
 	private Text completedDescription;
 	private ItemStack stack;
 	private ResearchCategory category;
-	private Identifier[][] tabs;
+	private RecipeGroup[] tabs;
 	private int x;
 	private int y;
 	private List<Identifier> visibilityAdvancements;
@@ -86,15 +88,10 @@ public class Research
 		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
-		this.tabs = new Identifier[tabsArray.size()][];
+		this.tabs = new RecipeGroup[tabsArray.size()];
 		for(int i = 0; i < tabs.length; i++)
 		{
-			JsonArray tabArray = tabsArray.get(i).getAsJsonArray();
-			tabs[i] = new Identifier[tabArray.size()];
-			for(int o = 0; o < tabs[i].length; o++)
-			{
-				tabs[i][o] = Identifier.tryParse(tabArray.get(o).getAsString());
-			}
+			tabs[i] = new RecipeGroup(tabsArray.get(i).getAsJsonObject());
 		}
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
@@ -170,7 +167,7 @@ public class Research
 		return this.isAvailable.test(ability);
 	}
 
-	public Identifier[][] getTabs()
+	public RecipeGroup[] getTabs()
 	{
 		return this.tabs;
 	}
@@ -204,11 +201,7 @@ public class Research
 		buf.writeInt(tabs.length);
 		for(int i = 0; i < tabs.length; i++)
 		{
-			buf.writeInt(tabs[i].length);
-			for(int o = 0; o < tabs[i].length; o++)
-			{
-				buf.writeIdentifier(tabs[i][o]);
-			}
+			tabs[i].toPacket(buf);
 		}
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
@@ -238,14 +231,10 @@ public class Research
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
 		this.stack = buf.readItemStack();
 		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
-		this.tabs = new Identifier[buf.readInt()][];
+		this.tabs = new RecipeGroup[buf.readInt()];
 		for(int i = 0; i < tabs.length; i++)
 		{
-			tabs[i] = new Identifier[buf.readInt()];
-			for(int o = 0; o < tabs[i].length; o++)
-			{
-				tabs[i][o] = buf.readIdentifier();
-			}
+			tabs[i] = new RecipeGroup(buf);
 		}
 		this.x = buf.readInt();
 		this.y = buf.readInt();
@@ -309,6 +298,60 @@ public class Research
 				Research research = new Research(buf);
 				this.research.put(research.getId(), research);
 			}
+		}
+	}
+
+	public static class RecipeGroup
+	{
+		private final Identifier[] recipes;
+		private final boolean requiresComplete;
+
+		public RecipeGroup(Identifier[] recipes, boolean requiresComplete)
+		{
+			this.recipes = recipes;
+			this.requiresComplete = requiresComplete;
+		}
+
+		public RecipeGroup(PacketByteBuf buf)
+		{
+			this.recipes = new Identifier[buf.readInt()];
+			for(int i = 0; i < recipes.length; i++)
+			{
+				this.recipes[i] = buf.readIdentifier();
+			}
+			this.requiresComplete = buf.readBoolean();
+		}
+
+		public RecipeGroup(JsonObject json)
+		{
+			JsonArray array = json.getAsJsonArray("recipes");
+			this.recipes = new Identifier[array.size()];
+			for(int i = 0; i < recipes.length; i++)
+			{
+				this.recipes[i] = Identifier.tryParse(array.get(i).getAsString());
+			}
+			this.requiresComplete = json.get("requires_complete").getAsBoolean();
+		}
+
+		public Identifier[] getRecipes()
+		{
+			return this.recipes;
+		}
+
+		public boolean requiresComplete()
+		{
+			return this.requiresComplete;
+		}
+
+		public PacketByteBuf toPacket(PacketByteBuf buf)
+		{
+			buf.writeInt(this.recipes.length);
+			for(int i = 0; i < this.recipes.length; i++)
+			{
+				buf.writeIdentifier(this.recipes[i]);
+			}
+			buf.writeBoolean(this.requiresComplete);
+			return buf;
 		}
 	}
 }

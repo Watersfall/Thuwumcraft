@@ -10,6 +10,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.client.gui.element.ItemElement;
 import net.watersfall.alchemy.client.gui.element.RecipeElement;
 import net.watersfall.alchemy.client.util.PageCounter;
@@ -28,11 +29,12 @@ public class ResearchTab extends Screen
 	private final int textureWidth = 384 / 2;
 	private final int textureHeight = 256;
 	private PageCounter page;
+	private final boolean requiresComplete;
 
-	protected ResearchTab(Identifier[] recipeIds, ResearchScreen parent)
+	protected ResearchTab(Research.RecipeGroup group, ResearchScreen parent)
 	{
-		super(new TranslatableText(recipeIds.toString()));
-		this.recipeIds = recipeIds;
+		super(new TranslatableText(""));
+		this.recipeIds = group.getRecipes();
 		this.recipes = new Recipe[recipeIds.length];
 		this.recipeElements = new RecipeElement[recipeIds.length];
 		this.parent = parent;
@@ -41,6 +43,7 @@ public class ResearchTab extends Screen
 			Recipe<?> recipe = MinecraftClient.getInstance().world.getRecipeManager().get(recipeIds[i]).get();
 			recipes[i] = recipe;
 		}
+		this.requiresComplete = group.requiresComplete();
 	}
 
 	public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
@@ -120,5 +123,10 @@ public class ResearchTab extends Screen
 	public boolean isPauseScreen()
 	{
 		return false;
+	}
+
+	public boolean requiresComplete()
+	{
+		return this.requiresComplete;
 	}
 }

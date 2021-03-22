@@ -4,9 +4,18 @@
 	"x": 0,
 	"y": 0,
 	"tabs": [
-		[
-			"minecraft:cauldron",
-			"waters_alchemy_mod:witchy_spoon"
-		]
+		{
+			"recipes": [
+				"minecraft:cauldron",
+				"waters_alchemy_mod:witchy_spoon"
+			],
+			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"minecraft:glass_bottle"
+			],
+			"requires_complete": true
+		}
 	]
 }
