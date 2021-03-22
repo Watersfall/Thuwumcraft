@@ -4,7 +4,9 @@
 	"x": 0,
 	"y": 0,
 	"tabs": [
-		"minecraft:cauldron",
-		"waters_alchemy_mod:witchy_spoon"
+		[
+			"minecraft:cauldron",
+			"waters_alchemy_mod:witchy_spoon"
+		]
 	]
 }

@@ -8,7 +8,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.alchemy.client.gui.ResearchTab;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -23,7 +22,7 @@ public class Research
 	private Text completedDescription;
 	private ItemStack stack;
 	private ResearchCategory category;
-	private Identifier[] tabs;
+	private Identifier[][] tabs;
 	private int x;
 	private int y;
 	private List<Identifier> visibilityAdvancements;
@@ -87,10 +86,15 @@ public class Research
 		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
-		this.tabs = new Identifier[tabsArray.size()];
+		this.tabs = new Identifier[tabsArray.size()][];
 		for(int i = 0; i < tabs.length; i++)
 		{
-			tabs[i] = Identifier.tryParse(tabsArray.get(i).getAsString());
+			JsonArray tabArray = tabsArray.get(i).getAsJsonArray();
+			tabs[i] = new Identifier[tabArray.size()];
+			for(int o = 0; o < tabs[i].length; o++)
+			{
+				tabs[i][o] = Identifier.tryParse(tabArray.get(o).getAsString());
+			}
 		}
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();
@@ -166,7 +170,7 @@ public class Research
 		return this.isAvailable.test(ability);
 	}
 
-	public Identifier[] getTabs()
+	public Identifier[][] getTabs()
 	{
 		return this.tabs;
 	}
@@ -200,7 +204,11 @@ public class Research
 		buf.writeInt(tabs.length);
 		for(int i = 0; i < tabs.length; i++)
 		{
-			buf.writeIdentifier(tabs[i]);
+			buf.writeInt(tabs[i].length);
+			for(int o = 0; o < tabs[i].length; o++)
+			{
+				buf.writeIdentifier(tabs[i][o]);
+			}
 		}
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
@@ -230,10 +238,14 @@ public class Research
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
 		this.stack = buf.readItemStack();
 		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
-		this.tabs = new Identifier[buf.readInt()];
+		this.tabs = new Identifier[buf.readInt()][];
 		for(int i = 0; i < tabs.length; i++)
 		{
-			tabs[i] = buf.readIdentifier();
+			tabs[i] = new Identifier[buf.readInt()];
+			for(int o = 0; o < tabs[i].length; o++)
+			{
+				tabs[i][o] = buf.readIdentifier();
+			}
 		}
 		this.x = buf.readInt();
 		this.y = buf.readInt();
