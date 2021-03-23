@@ -80,11 +80,12 @@ public class AlchemyMod implements ModInitializer
 			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 			optional.ifPresent((ability) -> {
 				Research research = Research.REGISTRY.get(buf.readIdentifier());
-				if(!ability.getResearch().contains(research))
+				if(!ability.getResearch().contains(research) && research.isAvailable(ability) && research.hasItems(player))
 				{
 					ability.addResearch(research.getId());
 					PacketByteBuf buf2 = PacketByteBufs.create();
 					buf2.writeIdentifier(research.getId());
+					research.consumeItems(player);
 					responseSender.sendPacket(getId("research_click"), ability.toPacket(buf2));
 				}
 			});

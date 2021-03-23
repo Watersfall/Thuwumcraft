@@ -3,6 +3,15 @@
 	"category": "waters_alchemy_mod:basic",
 	"x": 0,
 	"y": 0,
+	"complete_requirements": {
+		"inventory_required": [
+			"minecraft:cauldron",
+			"waters_alchemy_mod:witchy_spoon"
+		],
+		"inventory_consumed": [
+			"minecraft:cobblestone"
+		]
+	},
 	"tabs": [
 		{
 			"recipes": [

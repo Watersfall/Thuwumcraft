@@ -11,6 +11,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
@@ -21,9 +22,7 @@ import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
-import net.watersfall.alchemy.client.gui.element.RecipeTabElement;
-import net.watersfall.alchemy.client.gui.element.ResearchButton;
-import net.watersfall.alchemy.client.gui.element.TabElement;
+import net.watersfall.alchemy.client.gui.element.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +70,19 @@ public class ResearchScreen extends Screen
 		{
 			this.addChild(new RecipeTabElement(tabs[i], this.x + startX, this.y + startY +  i * 24, true));
 		}
+		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size());
+		int i;
+		for(i = 0; i < this.research.getRequiredItems().size(); i++)
+		{
+			ItemStack stack = research.getRequiredItems().get(i).getDefaultStack();
+			this.addChild(new ItemRequirementElement(new ItemStack[]{stack}, startX + i * 20, this.y + 195, false));
+		}
+		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
+		for(i = 0; i < this.research.getConsumedItems().size(); i++)
+		{
+			ItemStack stack = research.getConsumedItems().get(i).getDefaultStack();
+			this.addChild(new ItemRequirementElement(new ItemStack[]{stack}, startX + i * 20, this.y + 195, true));
+		}
 		this.addChild(researchButton);
 	}
 
@@ -116,6 +128,13 @@ public class ResearchScreen extends Screen
 			if(this.children.get(i) instanceof Drawable)
 			{
 				((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+			}
+		}
+		for(int i = 0; i < this.children.size(); i++)
+		{
+			if(this.children.get(i).isMouseOver(mouseX, mouseY) && this.children.get(i) instanceof TooltipElement)
+			{
+				this.renderTooltip(matrices, ((TooltipElement)this.children.get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
 			}
 		}
 	}

@@ -43,7 +43,7 @@ public class ResearchButton implements Element, Drawable
 		if(enabled)
 		{
 			RenderSystem.setShaderTexture(0, TEXTURE);
-			if(isMouseOver(mouseX, mouseY))
+			if(isMouseOver(mouseX, mouseY) && research.hasItems(MinecraftClient.getInstance().player))
 			{
 				DrawableHelper.drawTexture(matrices, this.x, this.y, this.hoverU, this.hoverV, this.width, this.height, 384, 272);
 			}
@@ -58,7 +58,7 @@ public class ResearchButton implements Element, Drawable
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(enabled && button == 0 && isMouseOver(mouseX, mouseY))
+		if(enabled && button == 0 && isMouseOver(mouseX, mouseY) && research.hasItems(MinecraftClient.getInstance().player))
 		{
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeIdentifier(research.getId());

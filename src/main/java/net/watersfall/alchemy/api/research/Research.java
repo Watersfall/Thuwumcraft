@@ -1,13 +1,17 @@
 package net.watersfall.alchemy.api.research;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.client.gui.element.RecipeElement;
 
@@ -33,6 +37,8 @@ public class Research
 	private List<Identifier> visibilityResearch;
 	private List<Identifier> readableResearch;
 	private List<Identifier> researchResearch;
+	private List<Item> requiredItems;
+	private List<Item> consumedItems;
 	private Predicate<PlayerResearchAbility> isVisible;
 	private Predicate<PlayerResearchAbility> isReadable;
 	private Predicate<PlayerResearchAbility> isAvailable;
@@ -79,6 +85,14 @@ public class Research
 		}
 	}
 
+	private void fillItemLists(JsonArray json, List<Item> items)
+	{
+		for(int i = 0; i < json.size(); i++)
+		{
+			items.add(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get(i).getAsString())));
+		}
+	}
+
 	public Research(Identifier id, JsonObject json)
 	{
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research/", "").replace(".json", "").replace("/", "."));
@@ -98,6 +112,17 @@ public class Research
 		JsonObject visibleJson = json.getAsJsonObject("visibility_requirements");
 		JsonObject readableJson = json.getAsJsonObject("readable_requirements");
 		JsonObject researchRequirements = json.getAsJsonObject("research_requirements");
+		this.requiredItems = new ArrayList<>();
+		this.consumedItems = new ArrayList<>();
+		if(json.has("complete_requirements"))
+		{
+			JsonArray requiredItems = json.getAsJsonObject("complete_requirements").getAsJsonArray("inventory_required");
+			JsonArray consumedItems = json.getAsJsonObject("complete_requirements").getAsJsonArray("inventory_consumed");
+			if(requiredItems != null)
+				fillItemLists(requiredItems, this.requiredItems);
+			if(consumedItems != null)
+				fillItemLists(consumedItems, this.consumedItems);
+		}
 		this.visibilityAdvancements = new ArrayList<>();
 		this.readableAdvancements = new ArrayList<>();
 		this.researchAdvancements = new ArrayList<>();
@@ -177,6 +202,49 @@ public class Research
 		return this.stack;
 	}
 
+	public List<Item> getRequiredItems()
+	{
+		return this.requiredItems;
+	}
+
+	public List<Item> getConsumedItems()
+	{
+		return this.consumedItems;
+	}
+
+	public boolean hasItems(PlayerEntity player)
+	{
+		for(int i = 0; i < this.requiredItems.size(); i++)
+		{
+			if(!player.getInventory().containsAny(Sets.newHashSet(this.requiredItems.get(i))))
+			{
+				return false;
+			}
+		}
+		for(int i = 0; i < this.consumedItems.size(); i++)
+		{
+			if(!player.getInventory().containsAny(Sets.newHashSet(this.consumedItems.get(i))))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void consumeItems(PlayerEntity player)
+	{
+		for(int i = 0; i < this.consumedItems.size(); i++)
+		{
+			for(int o = 0; o < player.getInventory().size(); o++)
+			{
+				if(player.getInventory().getStack(o).getItem() == this.consumedItems.get(i))
+				{
+					player.getInventory().getStack(o).decrement(1);
+				}
+			}
+		}
+	}
+
 	public List<Research> getRequirements()
 	{
 		List<Research> list = new ArrayList<>();
@@ -191,6 +259,12 @@ public class Research
 	{
 		buf.writeInt(list.size());
 		list.forEach(buf::writeIdentifier);
+	}
+
+	private void writeItemList(PacketByteBuf buf, List<Item> list)
+	{
+		buf.writeInt(list.size());
+		list.forEach(item -> buf.writeIdentifier(net.minecraft.util.registry.Registry.ITEM.getId(item)));
 	}
 
 	public PacketByteBuf toPacket(PacketByteBuf buf)
@@ -211,6 +285,8 @@ public class Research
 		writeList(buf, readableResearch);
 		writeList(buf, researchAdvancements);
 		writeList(buf, researchResearch);
+		writeItemList(buf, requiredItems);
+		writeItemList(buf, consumedItems);
 		return buf;
 	}
 
@@ -220,6 +296,15 @@ public class Research
 		for(int i = 0; i < size; i++)
 		{
 			list.add(buf.readIdentifier());
+		}
+	}
+
+	private void readItemList(PacketByteBuf buf, List<Item> list)
+	{
+		int size = buf.readInt();
+		for(int i = 0; i < size; i++)
+		{
+			list.add(net.minecraft.util.registry.Registry.ITEM.get(buf.readIdentifier()));
 		}
 	}
 
@@ -244,12 +329,16 @@ public class Research
 		this.visibilityResearch = new ArrayList<>();
 		this.readableResearch = new ArrayList<>();
 		this.researchResearch = new ArrayList<>();
+		this.requiredItems = new ArrayList<>();
+		this.consumedItems = new ArrayList<>();
 		readList(buf, visibilityAdvancements);
 		readList(buf, visibilityResearch);
 		readList(buf, readableAdvancements);
 		readList(buf, readableResearch);
 		readList(buf, researchAdvancements);
 		readList(buf, researchResearch);
+		readItemList(buf, requiredItems);
+		readItemList(buf, consumedItems);
 		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
 		this.isReadable = generateFunction(readableAdvancements, readableResearch);
 		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
