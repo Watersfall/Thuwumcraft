@@ -112,9 +112,8 @@ public class RenderHelper
 
 	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color, int light, int overlay)
 	{
-		RenderSystem.pushMatrix();
 		RenderSystem.enableDepthTest();
-		MinecraftClient.getInstance().getTextureManager().bindTexture(sprite);
+		RenderSystem.setShaderTexture(0, sprite);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
 		builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL);
@@ -128,7 +127,6 @@ public class RenderHelper
 		add(builder, matrices, 1, 1, 0, 0.25F, 0.25F, color, light, overlay);
 		add(builder, matrices, 0, 1, 0, 0.125F, 0.25F, color, light, overlay);
 		tessellator.draw();
-		RenderSystem.popMatrix();
 	}
 
 	public static void renderAspects(Collection<AspectStack> aspects,

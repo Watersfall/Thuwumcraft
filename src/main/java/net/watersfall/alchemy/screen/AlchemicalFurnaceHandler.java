@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
@@ -105,5 +106,12 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 	public int getFuel()
 	{
 		return (int)((float)this.properties.get(2) / (float) AlchemicalFurnaceMultiBlock.MAX_FUEL * 124F);
+	}
+
+	@Override
+	public void onSlotClick(int slotIndex, int clickData, SlotActionType actionType, PlayerEntity player)
+	{
+		super.onSlotClick(slotIndex, clickData, actionType, player);
+		this.getSlot(slotIndex).markDirty();
 	}
 }

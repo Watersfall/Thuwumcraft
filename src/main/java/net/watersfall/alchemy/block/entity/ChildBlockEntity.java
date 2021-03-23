@@ -2,7 +2,7 @@ package net.watersfall.alchemy.block.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
 import net.minecraft.block.entity.BlockEntity;
@@ -32,13 +32,13 @@ public class ChildBlockEntity extends BlockEntity
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		return tag;

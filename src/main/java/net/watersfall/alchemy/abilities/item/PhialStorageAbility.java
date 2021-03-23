@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.abilities.item;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
@@ -13,11 +13,11 @@ import java.util.List;
 
 public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 {
-	private CompoundTag tag;
+	private NbtCompound tag;
 
 	public PhialStorageAbility(AspectStack stack)
 	{
-		tag = new CompoundTag();
+		tag = new NbtCompound();
 		tag.putInt(stack.getAspect().getId().toString(), stack.getCount());
 	}
 
@@ -31,13 +31,13 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 		this(new AspectStack(aspect, count));
 	}
 
-	public PhialStorageAbility(CompoundTag tag, ItemStack stack)
+	public PhialStorageAbility(NbtCompound tag, ItemStack stack)
 	{
 		this.tag = tag;
 	}
 
 	@Override
-	public CompoundTag getTag()
+	public NbtCompound getTag()
 	{
 		return this.tag;
 	}
@@ -100,13 +100,13 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag, ItemStack t)
+	public NbtCompound toNbt(NbtCompound tag, ItemStack t)
 	{
 		return this.tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag, ItemStack t)
+	public void fromNbt(NbtCompound tag, ItemStack t)
 	{
 		this.tag = tag;
 	}

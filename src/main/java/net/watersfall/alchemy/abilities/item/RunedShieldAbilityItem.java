@@ -1,24 +1,24 @@
 package net.watersfall.alchemy.abilities.item;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.common.RunedShieldAbility;
 
 public class RunedShieldAbilityItem implements RunedShieldAbility<ItemStack>
 {
-	private CompoundTag tag;
+	private NbtCompound tag;
 	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
 
-	public RunedShieldAbilityItem(CompoundTag tag, ItemStack stack)
+	public RunedShieldAbilityItem(NbtCompound tag, ItemStack stack)
 	{
 		this.fromNbt(tag, stack);
 	}
 
 	public RunedShieldAbilityItem(int shield, int max, int recharge)
 	{
-		this.tag = new CompoundTag();
+		this.tag = new NbtCompound();
 		this.setShieldAmount(shield);
 		this.setMaxAmount(max);
 		this.setRechargeRate(recharge);
@@ -31,13 +31,13 @@ public class RunedShieldAbilityItem implements RunedShieldAbility<ItemStack>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag, ItemStack t)
+	public NbtCompound toNbt(NbtCompound tag, ItemStack t)
 	{
 		return this.tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag, ItemStack t)
+	public void fromNbt(NbtCompound tag, ItemStack t)
 	{
 		this.tag = tag;
 	}

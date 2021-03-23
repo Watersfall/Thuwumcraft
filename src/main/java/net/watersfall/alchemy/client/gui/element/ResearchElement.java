@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.client.gui.element;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
@@ -69,7 +70,7 @@ public class ResearchElement extends ItemElement
 		{
 			int x = this.x + (int)screen.getMapX();
 			int y = this.y + (int)screen.getMapY();
-			MinecraftClient.getInstance().getTextureManager().bindTexture(ICONS);
+			RenderSystem.setShaderTexture(0, ICONS);
 			DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
 			matrices.translate(0, 0, -1F);
 			this.research.getRequirements().forEach((requirement) -> {

@@ -64,17 +64,16 @@ public class ApothecaryGuideHandler extends ScreenHandler
 	}
 
 	@Override
-	public ItemStack onSlotClick(int i, int j, SlotActionType actionType, PlayerEntity playerEntity)
+	public void onSlotClick(int i, int j, SlotActionType actionType, PlayerEntity playerEntity)
 	{
 		if(i == 0)
 		{
 			Slot slot = this.slots.get(i);
-			slot.setStack(playerEntity.getInventory().getCursorStack());
-			return ItemStack.EMPTY;
+			slot.setStack(this.getCursorStack());
 		}
 		else
 		{
-			return super.onSlotClick(i, j, actionType, playerEntity);
+			super.onSlotClick(i, j, actionType, playerEntity);
 		}
 	}
 
@@ -111,12 +110,6 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		public void onStackChanged(ItemStack originalItem, ItemStack itemStack)
 		{
 
-		}
-
-		@Override
-		public ItemStack onTakeItem(PlayerEntity player, ItemStack stack)
-		{
-			return super.onTakeItem(player, stack);
 		}
 
 		@Override

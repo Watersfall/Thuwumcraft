@@ -68,7 +68,7 @@ public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityPro
 		return getOutlineShape(state, world, pos, context);
 	}
 
-	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
+	public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
 		return getCollisionShape(state, world, pos, context);
 	}

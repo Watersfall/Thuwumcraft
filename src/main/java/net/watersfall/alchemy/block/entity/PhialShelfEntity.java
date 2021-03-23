@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.inventory.BasicInventory;
@@ -29,14 +29,14 @@ public class PhialShelfEntity extends BlockEntity implements BasicInventory, Blo
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		Inventories.readNbt(tag, this.contents);
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		Inventories.writeNbt(tag, this.contents);
@@ -45,14 +45,14 @@ public class PhialShelfEntity extends BlockEntity implements BasicInventory, Blo
 
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		this.contents.clear();
 		Inventories.readNbt(compoundTag, this.contents);
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
 		return Inventories.writeNbt(compoundTag, this.contents);
 	}

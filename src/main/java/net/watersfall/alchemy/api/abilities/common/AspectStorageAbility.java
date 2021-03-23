@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.api.abilities.common;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.Ability;
@@ -14,7 +14,7 @@ public interface AspectStorageAbility<T> extends Ability<T>
 {
 	public static final Identifier ID = AlchemyMod.getId("aspect_storage_ability");
 
-	CompoundTag getTag();
+	NbtCompound getTag();
 
 	@Override
 	default Identifier getId()

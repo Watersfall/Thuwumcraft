@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.api.abilities;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -8,9 +8,9 @@ public interface Ability<T>
 {
 	Identifier getId();
 
-	CompoundTag toNbt(CompoundTag tag, T t);
+	NbtCompound toNbt(NbtCompound tag, T t);
 
-	void fromNbt(CompoundTag tag, T t);
+	void fromNbt(NbtCompound tag, T t);
 
 	default void tick(T t)
 	{
@@ -25,7 +25,7 @@ public interface Ability<T>
 	@FunctionalInterface
 	interface FactoryTag<T>
 	{
-		Ability<T> create(CompoundTag tag, T t);
+		Ability<T> create(NbtCompound tag, T t);
 	}
 
 	@FunctionalInterface

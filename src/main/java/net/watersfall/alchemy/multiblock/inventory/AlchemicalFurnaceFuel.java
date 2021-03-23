@@ -5,16 +5,19 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceFuel implements SidedInventory
 {
 	private static final int[] AVAILABLE_SLOTS = new int[]{0};
 	private final DefaultedList<ItemStack> contents;
+	private final MultiBlock<?> multiBlock;
 
-	public AlchemicalFurnaceFuel()
+	public AlchemicalFurnaceFuel(MultiBlock<?> multiBlock)
 	{
 		this.contents = DefaultedList.ofSize(1, ItemStack.EMPTY);
+		this.multiBlock = multiBlock;
 	}
 
 	@Override
@@ -72,7 +75,7 @@ public class AlchemicalFurnaceFuel implements SidedInventory
 	public ItemStack removeStack(int slot)
 	{
 		ItemStack stack = contents.get(slot);
-		contents.remove(slot);
+		contents.set(slot, ItemStack.EMPTY);
 		return stack;
 	}
 
@@ -85,7 +88,7 @@ public class AlchemicalFurnaceFuel implements SidedInventory
 	@Override
 	public void markDirty()
 	{
-
+		this.multiBlock.markDirty();
 	}
 
 	@Override

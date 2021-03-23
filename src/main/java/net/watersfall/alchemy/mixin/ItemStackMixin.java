@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
@@ -25,9 +25,9 @@ import java.util.Optional;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 {
-	@Shadow public abstract CompoundTag getOrCreateTag();
+	@Shadow public abstract NbtCompound getOrCreateTag();
 
-	@Shadow private CompoundTag tag;
+	@Shadow private NbtCompound tag;
 
 	@Inject(method = "<init>(Lnet/minecraft/item/ItemConvertible;I)V", at = @At("TAIL"))
 	public void addData(ItemConvertible item, int count, CallbackInfo info)
@@ -48,7 +48,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
-		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new CompoundTag(), (ItemStack)(Object)this));
+		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new NbtCompound(), (ItemStack)(Object)this));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	{
 		if(this.getOrCreateTag().contains(id.toString()))
 		{
-			CompoundTag tag = this.tag.getCompound(id.toString());
+			NbtCompound tag = this.tag.getCompound(id.toString());
 			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag, (ItemStack)(Object)this);
 			if(clazz.isInstance(ability))
 			{
@@ -96,13 +96,13 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag)
+	public NbtCompound toNbt(NbtCompound tag)
 	{
 		return tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag)
+	public void fromNbt(NbtCompound tag)
 	{
 
 	}

@@ -8,7 +8,7 @@ import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.*;
@@ -194,7 +194,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			buf.writeInt(recipe.getColor());
 			for(int i = 0; i < recipe.getEffects().size(); i++)
 			{
-				buf.writeCompoundTag(recipe.getEffects().get(i).writeNbt(new CompoundTag()));
+				buf.writeCompoundTag(recipe.getEffects().get(i).writeNbt(new NbtCompound()));
 			}
 		}
 

@@ -8,8 +8,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SmeltingRecipe;
 import net.minecraft.screen.PropertyDelegate;
@@ -303,10 +303,10 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	}
 
 	@Override
-	public void read(CompoundTag tag)
+	public void read(NbtCompound tag)
 	{
 		this.components = new AlchemicalFurnaceComponent[4];
-		ListTag list = tag.getList("components", NbtType.COMPOUND);
+		NbtList list = tag.getList("components", NbtType.COMPOUND);
 		BlockPos input = new BlockPos(list.getCompound(INPUT).getInt("x"), list.getCompound(INPUT).getInt("y"), list.getCompound(INPUT).getInt("z"));
 		BlockPos output = new BlockPos(list.getCompound(OUTPUT).getInt("x"), list.getCompound(OUTPUT).getInt("y"), list.getCompound(OUTPUT).getInt("z"));
 		BlockPos left = new BlockPos(list.getCompound(BOTTOM_LEFT).getInt("x"), list.getCompound(BOTTOM_LEFT).getInt("y"), list.getCompound(BOTTOM_LEFT).getInt("z"));
@@ -326,12 +326,12 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	}
 
 	@Override
-	public CompoundTag write(CompoundTag tag)
+	public NbtCompound write(NbtCompound tag)
 	{
-		ListTag list = new ListTag();
+		NbtList list = new NbtList();
 		for(int i = 0; i < this.components.length; i++)
 		{
-			CompoundTag pos = new CompoundTag();
+			NbtCompound pos = new NbtCompound();
 			pos.putInt("x", this.components[i].getPos().getX());
 			pos.putInt("y", this.components[i].getPos().getY());
 			pos.putInt("z", this.components[i].getPos().getZ());

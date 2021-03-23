@@ -8,10 +8,10 @@ import com.google.gson.JsonParser;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -315,7 +315,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 		private int itemTick = 0;
 		private int aspectTick = 0;
 		private int stageDelayTicks = 0;
-		private CompoundTag tag;
+		private NbtCompound tag;
 
 		public StageTracker(PedestalEntity primaryEntity, World world, BlockPos pos, PedestalRecipe recipe)
 		{
@@ -328,7 +328,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 			this.neededAspects = new ArrayList<>(recipe.aspects);
 		}
 
-		public StageTracker(PedestalEntity primaryEntity, World world, BlockPos pos, CompoundTag tag)
+		public StageTracker(PedestalEntity primaryEntity, World world, BlockPos pos, NbtCompound tag)
 		{
 			this.primaryEntity = primaryEntity;
 			this.world = world;
@@ -341,19 +341,19 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 			this.world = world;
 		}
 
-		public CompoundTag toTag(CompoundTag tag)
+		public NbtCompound toTag(NbtCompound tag)
 		{
 			tag.putString("stage", this.stage.name());
 			tag.putString("recipe", this.recipe.getId().toString());
-			ListTag items = new ListTag();
-			ListTag aspects = new ListTag();
+			NbtList items = new NbtList();
+			NbtList aspects = new NbtList();
 			for(int i = 0; i < this.neededItems.size(); i++)
 			{
-				items.add(StringTag.of(this.neededItems.get(i).toJson().toString()));
+				items.add(NbtString.of(this.neededItems.get(i).toJson().toString()));
 			}
 			for(int i = 0; i < this.neededAspects.size(); i++)
 			{
-				CompoundTag aspectTag = new CompoundTag();
+				NbtCompound aspectTag = new NbtCompound();
 				aspectTag.putString("aspect", this.neededAspects.get(i).getAspect().getId().toString());
 				aspectTag.putInt("count", this.neededAspects.get(i).getCount());
 				aspects.add(aspectTag);
@@ -369,15 +369,15 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 			this.recipe = (PedestalRecipe) this.world.getRecipeManager().get(Identifier.tryParse(tag.getString("recipe"))).get();
 			this.neededItems = new ArrayList<>();
 			this.neededAspects = new ArrayList<>();
-			ListTag items = tag.getList("items", NbtType.STRING);
-			ListTag aspects = tag.getList("aspects", NbtType.COMPOUND);
+			NbtList items = tag.getList("items", NbtType.STRING);
+			NbtList aspects = tag.getList("aspects", NbtType.COMPOUND);
 			for(int i = 0; i < items.size(); i++)
 			{
 				this.neededItems.add(Ingredient.fromJson(new JsonParser().parse(items.getString(i))));
 			}
 			for(int i = 0; i < aspects.size(); i++)
 			{
-				CompoundTag aspectTag = aspects.getCompound(i);
+				NbtCompound aspectTag = aspects.getCompound(i);
 				AspectStack stack = new AspectStack(Aspects.getAspectById(Identifier.tryParse(aspectTag.getString("aspect"))), aspectTag.getInt("count"));
 				this.neededAspects.add(stack);
 			}

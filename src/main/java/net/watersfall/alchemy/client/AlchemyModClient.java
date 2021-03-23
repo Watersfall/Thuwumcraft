@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
@@ -45,9 +47,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
@@ -58,15 +57,15 @@ public class AlchemyModClient implements ClientModInitializer
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getTag() != null && !stack.getTag().isEmpty())
 			{
-				CompoundTag tag = stack.getTag();
+				NbtCompound tag = stack.getTag();
 				if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
 				{
-					ListTag list = tag.getList(StatusEffectHelper.EFFECTS_LIST, NbtType.COMPOUND);
+					NbtList list = tag.getList(StatusEffectHelper.EFFECTS_LIST, NbtType.COMPOUND);
 					if(list.size() > 0)
 					{
 						tooltip.add(StatusEffectHelper.APPLIED_EFFECTS);
 						list.forEach((effect) -> {
-							tooltip.add(StatusEffectHelper.getEffectText(StatusEffectHelper.getEffectFromTag((CompoundTag) effect), true));
+							tooltip.add(StatusEffectHelper.getEffectText(StatusEffectHelper.getEffectFromTag((NbtCompound) effect), true));
 						});
 					}
 					else

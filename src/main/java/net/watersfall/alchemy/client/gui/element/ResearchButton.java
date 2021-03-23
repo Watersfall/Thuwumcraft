@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.client.gui.element;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
@@ -41,7 +42,7 @@ public class ResearchButton implements Element, Drawable
 	{
 		if(enabled)
 		{
-			MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
+			RenderSystem.setShaderTexture(0, TEXTURE);
 			if(isMouseOver(mouseX, mouseY))
 			{
 				DrawableHelper.drawTexture(matrices, this.x, this.y, this.hoverU, this.hoverV, this.width, this.height, 384, 272);

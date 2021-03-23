@@ -3,7 +3,7 @@ package net.watersfall.alchemy.block.entity;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.api.multiblock.MultiBlock;
@@ -23,7 +23,7 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		this.multiBlock = new AlchemicalFurnaceMultiBlock();
@@ -31,7 +31,7 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		if(this.component != null && this.component.getMultiBlock() != null)
@@ -42,7 +42,7 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		if(this.multiBlock == null)
 		{
@@ -66,7 +66,7 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
 		if(this.component != null)
 		{

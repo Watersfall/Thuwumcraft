@@ -5,8 +5,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
@@ -22,12 +22,12 @@ import java.util.HashMap;
  */
 public interface AspectInventory extends SidedInventory
 {
-	public static void writeNbt(CompoundTag tag, AspectInventory inventory)
+	public static void writeNbt(NbtCompound tag, AspectInventory inventory)
 	{
 		Inventories.writeNbt(tag, inventory.getContents());
-		ListTag aspects = new ListTag();
+		NbtList aspects = new NbtList();
 		inventory.getAspects().values().forEach((aspect) -> {
-			CompoundTag aspectTag = new CompoundTag();
+			NbtCompound aspectTag = new NbtCompound();
 			aspectTag.putString("aspect", aspect.getAspect().getId().toString());
 			aspectTag.putInt("count", aspect.getCount());
 			aspects.add(aspectTag);
@@ -35,12 +35,12 @@ public interface AspectInventory extends SidedInventory
 		tag.put("aspects", aspects);
 	}
 
-	public static void readNbt(CompoundTag tag, AspectInventory inventory)
+	public static void readNbt(NbtCompound tag, AspectInventory inventory)
 	{
 		Inventories.readNbt(tag, inventory.getContents());
-		ListTag aspects = tag.getList("aspects", NbtType.COMPOUND);
+		NbtList aspects = tag.getList("aspects", NbtType.COMPOUND);
 		aspects.forEach((aspectTag) -> {
-			CompoundTag compound = (CompoundTag)aspectTag;
+			NbtCompound compound = (NbtCompound)aspectTag;
 			AspectStack stack = new AspectStack(Aspects.getAspectById(Identifier.tryParse(compound.getString("aspect"))), compound.getInt("count"));
 			inventory.addAspect(stack);
 		});
@@ -178,11 +178,11 @@ public interface AspectInventory extends SidedInventory
 	 * @param tag The CompoundTag to write the inventory to
 	 * @return The CompoundTag written to
 	 */
-	default CompoundTag toInventoryTag(CompoundTag tag)
+	default NbtCompound toInventoryTag(NbtCompound tag)
 	{
-		ListTag list = new ListTag();
+		NbtList list = new NbtList();
 		this.getAspects().keySet().forEach((key) -> {
-			CompoundTag aspect = new CompoundTag();
+			NbtCompound aspect = new NbtCompound();
 			aspect.putString("aspect", key.getId().toString());
 			aspect.putInt("count", this.getAspect(key).getCount());
 			list.add(aspect);
@@ -190,7 +190,7 @@ public interface AspectInventory extends SidedInventory
 		tag.put("aspects", list);
 		if(!getCurrentInput().isEmpty())
 		{
-			CompoundTag input = new CompoundTag();
+			NbtCompound input = new NbtCompound();
 			input.putString("item", Registry.ITEM.getId(getCurrentInput().getItem()).toString());
 			input.putInt("count", getCurrentInput().getCount());
 			tag.put("input", input);
@@ -204,19 +204,19 @@ public interface AspectInventory extends SidedInventory
 	 * Input ItemStack
 	 * @param tag The CompoundTag to read from
 	 */
-	default void fromInventoryTag(CompoundTag tag)
+	default void fromInventoryTag(NbtCompound tag)
 	{
 		this.getAspects().clear();
-		ListTag list = tag.getList("aspects", NbtType.COMPOUND);
+		NbtList list = tag.getList("aspects", NbtType.COMPOUND);
 		for(int i = 0; i < list.size(); i++)
 		{
-			CompoundTag aspect = (CompoundTag) list.get(i);
+			NbtCompound aspect = (NbtCompound) list.get(i);
 			AspectStack stack = new AspectStack(Aspects.ASPECTS.get(Identifier.tryParse(aspect.getString("aspect"))), aspect.getInt("count"));
 			setAspect(stack.getAspect(), stack.getCount());
 		}
 		if(tag.contains("input"))
 		{
-			CompoundTag input = tag.getCompound("input");
+			NbtCompound input = tag.getCompound("input");
 			ItemStack stack = new ItemStack(Registry.ITEM.get(Identifier.tryParse(input.getString("item"))), input.getInt("count"));
 			this.setCurrentInput(stack);
 		}

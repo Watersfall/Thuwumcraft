@@ -57,7 +57,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		Research research = Research.REGISTRY.get(AlchemyMod.getId("test_research_6"));
 		if(!ability.hasResearch(research))
 		{
-			return MultiBlockType.MISSING;
+			//return MultiBlockType.MISSING;
 		}
 		BlockState furnace = world.getBlockState(pos);
 		BlockPos[] poses = new BlockPos[4];

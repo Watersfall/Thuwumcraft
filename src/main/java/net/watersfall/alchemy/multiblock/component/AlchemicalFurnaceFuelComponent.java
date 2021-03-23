@@ -2,7 +2,7 @@ package net.watersfall.alchemy.multiblock.component;
 
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.api.multiblock.MultiBlock;
@@ -16,7 +16,7 @@ public class AlchemicalFurnaceFuelComponent extends AlchemicalFurnaceComponent i
 	public AlchemicalFurnaceFuelComponent(World world, MultiBlock<AlchemicalFurnaceComponent> multiBlock, BlockPos pos)
 	{
 		super(world, multiBlock, pos);
-		this.inventory = new AlchemicalFurnaceFuel();
+		this.inventory = new AlchemicalFurnaceFuel(multiBlock);
 	}
 
 	@Override
@@ -26,15 +26,15 @@ public class AlchemicalFurnaceFuelComponent extends AlchemicalFurnaceComponent i
 	}
 
 	@Override
-	public CompoundTag write(CompoundTag tag)
+	public NbtCompound write(NbtCompound tag)
 	{
 		super.write(tag);
-		tag.put("fuel_inventory", Inventories.writeNbt(new CompoundTag(), this.inventory.getContents()));
+		tag.put("fuel_inventory", Inventories.writeNbt(new NbtCompound(), this.inventory.getContents()));
 		return tag;
 	}
 
 	@Override
-	public void read(CompoundTag tag)
+	public void read(NbtCompound tag)
 	{
 		super.read(tag);
 		Inventories.readNbt(tag.getCompound("fuel_inventory"), this.inventory.getContents());

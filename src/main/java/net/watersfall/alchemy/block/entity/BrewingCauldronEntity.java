@@ -14,7 +14,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
@@ -44,7 +44,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		this.ingredientCount = tag.getByte(INGREDIENT_COUNT);
@@ -53,7 +53,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.putByte(INGREDIENT_COUNT, ingredientCount);
@@ -62,7 +62,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		super.fromClientTag(compoundTag);
 		this.ingredientCount = compoundTag.getByte(INGREDIENT_COUNT);
@@ -70,7 +70,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
 		super.toClientTag(compoundTag);
 		compoundTag.putByte(INGREDIENT_COUNT, this.ingredientCount);

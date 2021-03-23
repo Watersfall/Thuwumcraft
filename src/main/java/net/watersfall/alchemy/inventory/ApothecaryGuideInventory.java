@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 
 public class ApothecaryGuideInventory implements Inventory
@@ -15,7 +15,7 @@ public class ApothecaryGuideInventory implements Inventory
 	public ApothecaryGuideInventory(ItemStack stack)
 	{
 		this.stack = stack;
-		CompoundTag tag = stack.getSubTag("Items");
+		NbtCompound tag = stack.getSubTag("Items");
 
 		if (tag != null) {
 			Inventories.readNbt(tag, contents);
@@ -109,7 +109,7 @@ public class ApothecaryGuideInventory implements Inventory
 	@Override
 	public void markDirty()
 	{
-		CompoundTag tag = stack.getOrCreateSubTag("Items");
+		NbtCompound tag = stack.getOrCreateSubTag("Items");
 		Inventories.writeNbt(tag, contents);
 	}
 }

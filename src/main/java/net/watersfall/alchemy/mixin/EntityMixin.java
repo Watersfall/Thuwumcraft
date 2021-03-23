@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -98,14 +98,14 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Override
-	public CompoundTag toNbt(CompoundTag tag)
+	public NbtCompound toNbt(NbtCompound tag)
 	{
-		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new CompoundTag(), (Entity)(Object)this)));
+		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new NbtCompound(), (Entity)(Object)this)));
 		return tag;
 	}
 
 	@Override
-	public void fromNbt(CompoundTag tag)
+	public void fromNbt(NbtCompound tag)
 	{
 		AbilityProvider.ENTITY_REGISTRY.getIds().forEach((id) -> {
 			if(tag.contains(id.toString()))
@@ -171,13 +171,13 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 
 
 	@Inject(method = "writeNbt", at = @At("RETURN"))
-	public void writeCustomData(CompoundTag tag, CallbackInfoReturnable<CompoundTag> info)
+	public void writeCustomData(NbtCompound tag, CallbackInfoReturnable<NbtCompound> info)
 	{
 		this.toNbt(tag);
 	}
 
 	@Inject(method = "readNbt", at = @At("TAIL"))
-	public void readCustomData(CompoundTag tag, CallbackInfo info)
+	public void readCustomData(NbtCompound tag, CallbackInfo info)
 	{
 		this.fromNbt(tag);
 	}

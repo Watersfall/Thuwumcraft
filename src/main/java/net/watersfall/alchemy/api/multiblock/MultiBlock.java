@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.api.multiblock;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -65,14 +65,14 @@ public interface MultiBlock<T extends MultiBlockComponent>
 	 * Reads the MultiBlock, it's components, and all other data from the passed in tag
 	 * @param tag The tag to read from
 	 */
-	void read(CompoundTag tag);
+	void read(NbtCompound tag);
 
 	/**
 	 * Writes the MultiBlock, it's components, and all other data to the passed in tag
 	 * @param tag The CompoundTag to write to
 	 * @return The written to tag
 	 */
-	CompoundTag write(CompoundTag tag);
+	NbtCompound write(NbtCompound tag);
 
 	/**
 	 * Marks that this MultiBlock has been changed and needs to be saved

@@ -5,10 +5,13 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
 
 public interface AlchemicalFurnaceInventory extends SidedInventory
 {
 	DefaultedList<ItemStack> getContents();
+
+	MultiBlock<?> getMultiBlock();
 
 	@Override
 	default int size()
@@ -56,7 +59,7 @@ public interface AlchemicalFurnaceInventory extends SidedInventory
 	@Override
 	default void markDirty()
 	{
-
+		getMultiBlock().markDirty();
 	}
 
 	@Override

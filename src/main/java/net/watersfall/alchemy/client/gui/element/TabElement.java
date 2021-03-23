@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.client.gui.element;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
@@ -33,7 +34,7 @@ public abstract class TabElement implements Element, Drawable, TooltipElement
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		matrices.translate(0, 0, 201F);
-		MinecraftClient.getInstance().getTextureManager().bindTexture(ICONS);
+		RenderSystem.setShaderTexture(0, ICONS);
 		MinecraftClient.getInstance().getItemRenderer().zOffset += 200F;
 		if(isMouseOver(mouseX, mouseY))
 		{

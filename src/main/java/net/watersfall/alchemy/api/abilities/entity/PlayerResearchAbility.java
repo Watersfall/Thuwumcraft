@@ -3,9 +3,9 @@ package net.watersfall.alchemy.api.abilities.entity;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.Ability;
@@ -42,20 +42,20 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	}
 
 	@Override
-	default CompoundTag toNbt(CompoundTag tag, Entity t)
+	default NbtCompound toNbt(NbtCompound tag, Entity t)
 	{
-		ListTag list = new ListTag();
+		NbtList list = new NbtList();
 		getResearch().forEach(research -> {
-			list.add(StringTag.of(research.getId().toString()));
+			list.add(NbtString.of(research.getId().toString()));
 		});
 		tag.put("research_list", list);
 		return tag;
 	}
 
 	@Override
-	default void fromNbt(CompoundTag tag, Entity t)
+	default void fromNbt(NbtCompound tag, Entity t)
 	{
-		ListTag list = tag.getList("research_list_2", NbtType.STRING);
+		NbtList list = tag.getList("research_list_2", NbtType.STRING);
 		list.forEach(research -> {
 			Research check = Research.REGISTRY.get(Identifier.tryParse(research.asString()));
 			if(check != null)

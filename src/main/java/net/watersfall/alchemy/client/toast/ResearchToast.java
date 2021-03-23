@@ -20,8 +20,8 @@ public class ResearchToast implements Toast
 	@Override
 	public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime)
 	{
-		manager.getGame().getTextureManager().bindTexture(TEXTURE);
-		RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, TEXTURE);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		manager.drawTexture(matrices, 0, 0, 0, 0, this.getWidth(), this.getHeight());
 		manager.getGame().getItemRenderer().renderInGui(research.getStack(), 8, 8);
 		manager.getGame().textRenderer.draw(matrices, new TranslatableText("research.toast.research_complete").formatted(Formatting.DARK_PURPLE), 30F, 7F, -1);

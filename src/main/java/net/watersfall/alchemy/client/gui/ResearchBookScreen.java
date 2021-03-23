@@ -1,9 +1,11 @@
 package net.watersfall.alchemy.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +29,6 @@ import net.watersfall.alchemy.client.gui.element.ResearchElement;
 import net.watersfall.alchemy.client.gui.element.TooltipElement;
 
 import java.util.*;
-import java.util.List;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -79,10 +80,12 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		matrices.push();
 		matrices.translate(0, 0, -1F);
-		MinecraftClient.getInstance().getTextureManager().bindTexture(BACKGROUND);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, BACKGROUND);
 		drawTexture(matrices, 24, 12, 0, 0, width - 48, height - 24, width - 48, height - 24);
 		matrices.translate(0, 0, 201F);
-		MinecraftClient.getInstance().getTextureManager().bindTexture(BORDER);
+		RenderSystem.setShaderTexture(0, BORDER);
 		drawTexture(matrices, 0, 0, 0, 0, width, height, width, height);
 		matrices.pop();
 	}

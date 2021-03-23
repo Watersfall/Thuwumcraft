@@ -2,7 +2,6 @@ package net.watersfall.alchemy.block.entity;
 
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,7 +15,8 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Direction;
@@ -49,7 +49,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		this.setStack(ItemStack.fromNbt(compoundTag.getCompound("pedestal_item")));
 		this.main = compoundTag.getBoolean("main");
@@ -57,10 +57,10 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		this.neededAspects.clear();
 		if(compoundTag.contains("needed_aspects"))
 		{
-			ListTag listTag = compoundTag.getList("needed_aspects", NbtType.COMPOUND);
+			NbtList listTag = compoundTag.getList("needed_aspects", NbtType.COMPOUND);
 			for(int i = 0; i < listTag.size(); i++)
 			{
-				CompoundTag aspect = (CompoundTag) listTag.get(i);
+				NbtCompound aspect = (NbtCompound) listTag.get(i);
 				AspectStack stack = new AspectStack(Aspects.ASPECTS.get(Identifier.tryParse(aspect.getString("aspect"))), aspect.getInt("count"));
 				this.neededAspects.add(new AspectStack(stack.getAspect(), stack.getCount()));
 			}
@@ -68,7 +68,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		this.setStack(ItemStack.fromNbt(tag.getCompound("pedestal_item")));
@@ -77,22 +77,22 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		this.craftingFinished = tag.getBoolean("crafting_finished");
 		if(tag.contains("recipe"))
 		{
-			CompoundTag recipeTag = tag.getCompound("recipe");
+			NbtCompound recipeTag = tag.getCompound("recipe");
 			this.recipe = new PedestalRecipe.StageTracker(this, this.world, this.pos, recipeTag);
 		}
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
-		tag.put("pedestal_item", this.stack.writeNbt(new CompoundTag()));
+		tag.put("pedestal_item", this.stack.writeNbt(new NbtCompound()));
 		tag.putBoolean("main", main);
 		tag.putBoolean("crafting", crafting);
 		tag.putBoolean("crafting_finished", craftingFinished);
 		if(this.recipe != null)
 		{
-			CompoundTag recipeTag = new CompoundTag();
+			NbtCompound recipeTag = new NbtCompound();
 			this.recipe.toTag(recipeTag);
 			tag.put("recipe", recipeTag);
 		}
@@ -100,16 +100,16 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
-		compoundTag.put("pedestal_item", this.stack.writeNbt(new CompoundTag()));
+		compoundTag.put("pedestal_item", this.stack.writeNbt(new NbtCompound()));
 		compoundTag.putBoolean("main", main);
 		compoundTag.putBoolean("crafting", crafting);
 		if(this.recipe != null && this.recipe.getNeededAspects() != null && !this.recipe.getNeededAspects().isEmpty())
 		{
-			ListTag listTag = new ListTag();
+			NbtList listTag = new NbtList();
 			this.recipe.getNeededAspects().forEach((key) -> {
-				CompoundTag aspect = new CompoundTag();
+				NbtCompound aspect = new NbtCompound();
 				aspect.putString("aspect", key.getAspect().getId().toString());
 				aspect.putInt("count", key.getCount());
 				listTag.add(aspect);

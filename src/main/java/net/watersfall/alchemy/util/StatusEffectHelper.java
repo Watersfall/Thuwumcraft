@@ -10,8 +10,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -99,11 +99,11 @@ public class StatusEffectHelper
 
 	public static void createItem(ItemStack stack, Set<StatusEffectInstance> effects)
 	{
-		CompoundTag tag = stack.getOrCreateTag();
-		ListTag list = tag.getList(EFFECTS_LIST, NbtType.LIST);
+		NbtCompound tag = stack.getOrCreateTag();
+		NbtList list = tag.getList(EFFECTS_LIST, NbtType.LIST);
 		list.clear();
 		effects.forEach((effect) -> {
-			CompoundTag effectTag = new CompoundTag();
+			NbtCompound effectTag = new NbtCompound();
 			effectTag.putInt(EFFECT, StatusEffect.getRawId(effect.getEffectType()));
 			effectTag.putInt(DURATION, effect.getDuration());
 			effectTag.putInt(AMPLIFIER, effect.getAmplifier());
@@ -137,7 +137,7 @@ public class StatusEffectHelper
 		return text;
 	}
 
-	public static StatusEffectInstance getEffectFromTag(CompoundTag tag)
+	public static StatusEffectInstance getEffectFromTag(NbtCompound tag)
 	{
 		StatusEffect effect = StatusEffect.byRawId(tag.getInt(EFFECT));
 		int duration = 0;
@@ -153,13 +153,13 @@ public class StatusEffectHelper
 		return new StatusEffectInstance(effect, duration, amplifier);
 	}
 
-	public static List<StatusEffectInstance> getEffectsFromTag(CompoundTag tag)
+	public static List<StatusEffectInstance> getEffectsFromTag(NbtCompound tag)
 	{
 		if(tag == null || !tag.contains(EFFECTS_LIST))
 		{
 			return EMPTY_LIST;
 		}
-		ListTag listTag = tag.getList(EFFECTS_LIST, NbtType.COMPOUND);
+		NbtList listTag = tag.getList(EFFECTS_LIST, NbtType.COMPOUND);
 		if(listTag.size() <= 0)
 		{
 			return EMPTY_LIST;
@@ -168,13 +168,13 @@ public class StatusEffectHelper
 		{
 			List<StatusEffectInstance> list = new ArrayList<>(listTag.size());
 			listTag.forEach((element) -> {
-				list.add(getEffectFromTag((CompoundTag) element));
+				list.add(getEffectFromTag((NbtCompound) element));
 			});
 			return list;
 		}
 	}
 
-	public static boolean hasUses(CompoundTag tag)
+	public static boolean hasUses(NbtCompound tag)
 	{
 		if(tag.contains(USES))
 		{
@@ -184,7 +184,7 @@ public class StatusEffectHelper
 		return false;
 	}
 
-	public static void decrementUses(CompoundTag tag)
+	public static void decrementUses(NbtCompound tag)
 	{
 		if(tag.contains(USES))
 		{

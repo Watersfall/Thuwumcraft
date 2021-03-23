@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.api.aspect;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 public class AspectStack
@@ -19,7 +19,7 @@ public class AspectStack
 		this.count = amount;
 	}
 
-	public AspectStack(CompoundTag tag)
+	public AspectStack(NbtCompound tag)
 	{
 		this.aspect = Aspects.getAspectById(Identifier.tryParse(tag.getString("aspect")));
 		this.count = tag.getInt("count");

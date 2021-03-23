@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
@@ -77,8 +78,9 @@ public class ResearchScreen extends Screen
 	public void renderBackground(MatrixStack matrices)
 	{
 		super.renderBackground(matrices);
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		client.getTextureManager().bindTexture(BACKGROUND);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, BACKGROUND);
 		drawTexture(matrices, x, y, 0, 0, screenWidth, screenHeight, textureWidth, textureHeight);
 	}
 

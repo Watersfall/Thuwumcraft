@@ -3,7 +3,7 @@ package net.watersfall.alchemy.block.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
@@ -89,14 +89,14 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		this.fromInventoryTag(tag);
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		this.toInventoryTag(tag);
@@ -104,14 +104,14 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		super.fromClientTag(compoundTag);
 		this.fromInventoryTag(compoundTag);
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
 		super.toClientTag(compoundTag);
 		this.toInventoryTag(compoundTag);

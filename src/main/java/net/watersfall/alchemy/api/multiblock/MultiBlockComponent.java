@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.api.multiblock;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
@@ -46,12 +46,12 @@ public interface MultiBlockComponent
 	 * Reads this component from the passed in tag
 	 * @param tag The tag to read from
 	 */
-	void read(CompoundTag tag);
+	void read(NbtCompound tag);
 
 	/**
 	 * Writes this component to the passed in tag
 	 * @param tag The tag to write to
 	 * @return The written tag
 	 */
-	CompoundTag write(CompoundTag tag);
+	NbtCompound write(NbtCompound tag);
 }

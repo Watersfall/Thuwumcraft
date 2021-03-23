@@ -1,7 +1,7 @@
 package net.watersfall.alchemy.abilities.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -42,7 +42,7 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 		}
 	}
 
-	public PlayerResearchAbilityImpl(CompoundTag tag, Entity entity)
+	public PlayerResearchAbilityImpl(NbtCompound tag, Entity entity)
 	{
 		this(entity);
 		this.fromNbt(tag, entity);

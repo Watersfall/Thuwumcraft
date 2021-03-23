@@ -1,6 +1,6 @@
 package net.watersfall.alchemy.abilities.block;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Direction;
 import net.watersfall.alchemy.api.abilities.block.AspectContainer;
 import net.watersfall.alchemy.api.aspect.AspectStack;
@@ -41,14 +41,14 @@ public class AspectPipeAbility implements AspectContainer
 		return stack1;
 	}
 
-	public void fromTag(CompoundTag tag)
+	public void fromTag(NbtCompound tag)
 	{
 		this.stack = new AspectStack(tag.getCompound("pipe_stack"));
 	}
 
-	public CompoundTag toTag(CompoundTag tag)
+	public NbtCompound toTag(NbtCompound tag)
 	{
-		CompoundTag compound = new CompoundTag();
+		NbtCompound compound = new NbtCompound();
 		compound.putString("aspect", stack.getAspect().getId().toString());
 		compound.putInt("count", stack.getCount());
 		tag.put("pipe_stack", compound);

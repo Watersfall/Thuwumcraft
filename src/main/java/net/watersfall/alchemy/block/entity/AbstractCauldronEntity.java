@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -28,14 +28,14 @@ public abstract class AbstractCauldronEntity extends BlockEntity implements Bloc
 	}
 
 	@Override
-	public void readNbt(CompoundTag tag)
+	public void readNbt(NbtCompound tag)
 	{
 		super.readNbt(tag);
 		this.waterLevel = tag.getShort(WATER_LEVEL);
 	}
 
 	@Override
-	public CompoundTag writeNbt(CompoundTag tag)
+	public NbtCompound writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.putShort(WATER_LEVEL, waterLevel);
@@ -43,14 +43,14 @@ public abstract class AbstractCauldronEntity extends BlockEntity implements Bloc
 	}
 
 	@Override
-	public void fromClientTag(CompoundTag compoundTag)
+	public void fromClientTag(NbtCompound compoundTag)
 	{
 		this.waterLevel = compoundTag.getShort(WATER_LEVEL);
 		this.needsColorUpdate = compoundTag.getBoolean(NEEDS_COLOR_UPDATE);
 	}
 
 	@Override
-	public CompoundTag toClientTag(CompoundTag compoundTag)
+	public NbtCompound toClientTag(NbtCompound compoundTag)
 	{
 		compoundTag.putShort(WATER_LEVEL, waterLevel);
 		compoundTag.putBoolean(NEEDS_COLOR_UPDATE, needsColorUpdate);

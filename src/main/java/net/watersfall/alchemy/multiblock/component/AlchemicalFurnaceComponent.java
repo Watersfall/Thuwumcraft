@@ -1,11 +1,11 @@
 package net.watersfall.alchemy.multiblock.component;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.shape.VoxelShape;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.api.multiblock.MultiBlock;
 import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
@@ -85,13 +85,13 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	}
 
 	@Override
-	public CompoundTag write(CompoundTag tag)
+	public NbtCompound write(NbtCompound tag)
 	{
 		return tag;
 	}
 
 	@Override
-	public void read(CompoundTag tag)
+	public void read(NbtCompound tag)
 	{
 
 	}

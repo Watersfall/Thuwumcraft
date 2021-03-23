@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.Identifier;
@@ -36,9 +36,9 @@ public interface AbilityProvider<T> extends Clearable
 
 	<R> Optional<R> getAbility(Identifier id, Class<R> clazz);
 
-	CompoundTag toNbt(CompoundTag tag);
+	NbtCompound toNbt(NbtCompound tag);
 
-	void fromNbt(CompoundTag tag);
+	void fromNbt(NbtCompound tag);
 
 	PacketByteBuf toPacket(PacketByteBuf buf);
 
@@ -68,7 +68,7 @@ public interface AbilityProvider<T> extends Clearable
 			packetRegistry.put(id, packet);
 		}
 
-		public Ability<T> create(Identifier id, CompoundTag tag, T t)
+		public Ability<T> create(Identifier id, NbtCompound tag, T t)
 		{
 			return registry.get(id).create(tag, t);
 		}

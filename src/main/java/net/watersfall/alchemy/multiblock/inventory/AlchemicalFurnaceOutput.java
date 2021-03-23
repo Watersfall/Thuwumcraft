@@ -7,6 +7,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceOutput implements AlchemicalFurnaceInventory
@@ -15,12 +16,14 @@ public class AlchemicalFurnaceOutput implements AlchemicalFurnaceInventory
 	private final DefaultedList<ItemStack> contents;
 	private World world;
 	private BlockPos pos;
+	private final MultiBlock<?> multiBlock;
 
-	public AlchemicalFurnaceOutput(World world, BlockPos pos)
+	public AlchemicalFurnaceOutput(World world, BlockPos pos, MultiBlock<?> multiBlock)
 	{
 		this.contents = DefaultedList.ofSize(9, ItemStack.EMPTY);
 		this.world = world;
 		this.pos = pos;
+		this.multiBlock = multiBlock;
 	}
 
 	@Override
@@ -45,6 +48,12 @@ public class AlchemicalFurnaceOutput implements AlchemicalFurnaceInventory
 	public DefaultedList<ItemStack> getContents()
 	{
 		return contents;
+	}
+
+	@Override
+	public MultiBlock<?> getMultiBlock()
+	{
+		return this.multiBlock;
 	}
 
 	public void setWorld(World world)

@@ -90,7 +90,7 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 		return super.getOutlineShape(state, world, pos, context);
 	}
 
-	public VoxelShape getVisualShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
+	public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
 		return VoxelShapes.empty();
 	}

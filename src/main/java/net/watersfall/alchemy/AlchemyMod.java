@@ -12,7 +12,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.BlockTags;
@@ -122,7 +122,7 @@ public class AlchemyMod implements ModInitializer
 				{
 					if(player.getStackInHand(hand).getTag() != null)
 					{
-						CompoundTag tag = player.getStackInHand(hand).getTag();
+						NbtCompound tag = player.getStackInHand(hand).getTag();
 						if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
 						{
 							if(StatusEffectHelper.hasUses(tag))
