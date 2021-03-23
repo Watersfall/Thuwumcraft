@@ -148,4 +148,9 @@ public class ResearchTab extends Screen
 	{
 		return this.items;
 	}
+
+	public Research getResearch()
+	{
+		return this.parent.getResearch();
+	}
 }

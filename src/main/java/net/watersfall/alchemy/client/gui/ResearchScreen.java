@@ -129,4 +129,9 @@ public class ResearchScreen extends Screen
 	{
 		return false;
 	}
+
+	public Research getResearch()
+	{
+		return this.research;
+	}
 }

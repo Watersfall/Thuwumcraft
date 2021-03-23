@@ -1,25 +1,30 @@
 package net.watersfall.alchemy.client.gui.element;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundCategory;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.client.gui.ResearchTab;
 
 public class RecipeTabElement extends TabElement
 {
 	private final ResearchTab tab;
+	private final PlayerResearchAbility ability;
 
 	public RecipeTabElement(ResearchTab tab, int x, int y, boolean inverted)
 	{
 		super(null, x, y, inverted);
 		this.items = new ItemElement(tab.getItems(), x, y, inverted ? x + 4 : x - 4, y, this);
 		this.tab = tab;
+		ability = AbilityProvider.getProvider(MinecraftClient.getInstance().player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
 	}
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(button == 0 && isMouseOver(mouseX, mouseY))
+		if(button == 0 && isMouseOver(mouseX, mouseY) && (!tab.requiresComplete() || ability.hasResearch(tab.getResearch())))
 		{
 			if(MinecraftClient.getInstance().currentScreen != this.tab)
 			{
@@ -29,5 +34,14 @@ public class RecipeTabElement extends TabElement
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
+	{
+		if(!tab.requiresComplete() || ability.hasResearch(tab.getResearch()))
+		{
+			super.render(matrices, mouseX, mouseY, delta);
+		}
 	}
 }
