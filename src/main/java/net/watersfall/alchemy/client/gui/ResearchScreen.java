@@ -61,14 +61,14 @@ public class ResearchScreen extends Screen
 	protected void init()
 	{
 		super.init();
-		int startX = 426;
+		int startX = 378;
 		int startY = 20;
-		x = (width - textureWidth) / 2;
-		y = (height - textureHeight) / 2;
-		this.researchButton = new ResearchButton(this.research, 242, 100);
+		x = (width - screenWidth) / 2;
+		y = (height - screenHeight) / 2;
+		this.researchButton = new ResearchButton(this.research, this.x + 227, this.y + 217);
 		for(int i = 0; i < this.tabs.length; i++)
 		{
-			this.addChild(new RecipeTabElement(tabs[i], startX, startY +  i * 24, true));
+			this.addChild(new RecipeTabElement(tabs[i], this.x + startX, this.y + startY +  i * 24, true));
 		}
 		this.addChild(researchButton);
 	}
@@ -86,7 +86,7 @@ public class ResearchScreen extends Screen
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.renderBackground(matrices);
-		List<OrderedText> text = new ArrayList<>();
+		List<OrderedText> text;
 		if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 		{
 			this.researchButton.enable();
@@ -103,15 +103,11 @@ public class ResearchScreen extends Screen
 		{
 			text = this.textRenderer.wrapLines(this.research.getDescription(), 160);
 		}
-		this.textRenderer.draw(matrices,
-				this.title,
-				(width - (screenWidth * 1.5F)) / 2F + (screenWidth / 2F) - (textRenderer.getWidth(this.title) / 2F),
-				24,
-				4210752);
+		textRenderer.draw(matrices, this.title, this.x + this.screenWidth / 4F - (textRenderer.getWidth(this.title.asOrderedText()) / 2F), this.y + 24, 4210752);
 		int offset = 40;
 		for(int i = 0; i < text.size(); i++, offset += 9)
 		{
-			this.textRenderer.draw(matrices, text.get(i), (width - screenWidth) / 2F + 16F, offset, 4210752);
+			this.textRenderer.draw(matrices, text.get(i), this.x + 16F, this.y + offset, 4210752);
 		}
 		for(int i = 0; i < this.children.size(); i++)
 		{

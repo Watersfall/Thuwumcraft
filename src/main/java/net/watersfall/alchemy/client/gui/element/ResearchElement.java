@@ -41,11 +41,6 @@ public class ResearchElement extends ItemElement
 		this.ability = screen.getAbility();
 	}
 
-	public Text getResearchTooltip()
-	{
-		return research.getName();
-	}
-
 	@Override
 	public boolean isMouseOver(double mouseX, double mouseY)
 	{
