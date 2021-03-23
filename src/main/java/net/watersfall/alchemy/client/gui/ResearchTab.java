@@ -64,6 +64,13 @@ public class ResearchTab extends Screen
 	}
 
 	@Override
+	public void init(MinecraftClient client, int width, int height)
+	{
+		super.init(client, width, height);
+		parent.init(client, width, height);
+	}
+
+	@Override
 	protected void init()
 	{
 		super.init();
@@ -92,6 +99,7 @@ public class ResearchTab extends Screen
 		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.height - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
 		this.addButton(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.height - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
 		this.page = new PageCounter(0, 0, recipeElements.length / 2);
+		this.parent.init();
 	}
 
 	@Override
