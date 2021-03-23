@@ -1,7 +1,8 @@
 package net.watersfall.alchemy.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
@@ -21,333 +22,125 @@ import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
+import net.watersfall.alchemy.client.gui.element.CategoryTabElement;
+import net.watersfall.alchemy.client.gui.element.ResearchElement;
+import net.watersfall.alchemy.client.gui.element.TooltipElement;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
-	private static final Identifier TEXTURE = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
+	private static final Identifier BORDER = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_background.png");
 	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
-	private static final Identifier FONT_ID = new Identifier("minecraft", "alt");
-	private static final Style STYLE = Style.EMPTY.withFont(FONT_ID);;
-	private int researchBackgroundWidth;
-	private int researchBackgroundHeight;
-	private int researchBackgroundX;
-	private int researchBackgroundY;
-	private float mapX = 0;
-	private float mapY = 0;
-	private ResearchCategory category = ResearchCategory.REGISTRY.getFirst();
+	private final PlayerResearchAbility ability;
+	private float mapX;
+	private float mapY;
+	private ResearchCategory currentCategory;
+	private CategoryTabElement[] categories;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
 		player = inventory.player;
-	}
-
-	@Override
-	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
-	{
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		client.getTextureManager().bindTexture(BACKGROUND);
-		matrices.push();
-		matrices.translate(0, 0, -1);
-		drawTexture(matrices, researchBackgroundX, researchBackgroundY, 0, 0, researchBackgroundWidth, researchBackgroundHeight, researchBackgroundWidth, researchBackgroundHeight);
-		matrices.pop();
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+		ability = optional.get();
+		this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+		categories = new CategoryTabElement[ResearchCategory.REGISTRY.getAll().size()];
+		int i = 0;
+		for(ResearchCategory category : ResearchCategory.REGISTRY.getAll())
+		{
+			categories[i] = new CategoryTabElement(this, category, x + 1, y + 24 +  i * 24, false);
+			i++;
+		}
 	}
 
 	@Override
 	protected void init()
 	{
-		this.backgroundWidth = MinecraftClient.getInstance().getWindow().getScaledWidth();
-		this.backgroundHeight = MinecraftClient.getInstance().getWindow().getScaledHeight();
-		this.researchBackgroundWidth = backgroundWidth - 48;
-		this.researchBackgroundHeight = backgroundHeight - 24;
-		this.playerInventoryTitleX = -1000;
 		super.init();
-		researchBackgroundX = x + 24;
-		researchBackgroundY = y + 12;
+		this.children.clear();
+		this.mapX = this.width / 2F - 8;
+		this.mapY = this.height / 2F - 8;
+		Research.REGISTRY.getAll().forEach((research -> {
+			this.addChild(new ResearchElement(this, research));
+		}));
+		for(int i = 0; i < this.categories.length; i++)
+		{
+			this.addChild(categories[i]);
+		}
 	}
 
-	private boolean isOverElement(int mouseX, int mouseY, int x, int y, int width, int height)
+	@Override
+	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
 	{
-		if(mouseX >= x && mouseX < x + width)
-		{
-			return mouseY >= y && mouseY < y + height;
-		}
-		return false;
-	}
-
-	private boolean isInsideBorder(int mouseX, int mouseY)
-	{
-		if(mouseX > researchBackgroundX && mouseX < researchBackgroundX + researchBackgroundWidth)
-		{
-			return mouseY > researchBackgroundY && mouseY < researchBackgroundY + researchBackgroundHeight;
-		}
-		return false;
+		matrices.push();
+		matrices.translate(0, 0, -1F);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(BACKGROUND);
+		drawTexture(matrices, 24, 12, 0, 0, width - 48, height - 24, width - 48, height - 24);
+		matrices.translate(0, 0, 201F);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(BORDER);
+		drawTexture(matrices, 0, 0, 0, 0, width, height, width, height);
+		matrices.pop();
 	}
 
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
-		matrices.push();
-		client.getTextureManager().bindTexture(TEXTURE);
-		int x1 = (width - backgroundWidth) / 2;
-		int y1 = (height - backgroundHeight) / 2;
-		matrices.translate(0, 0, 200F);
-		drawTexture(matrices, x1, y1, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
-		matrices.pop();
-		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
-		PlayerResearchAbility ability = optional.get();
 		this.drawBackground(matrices, delta, mouseX, mouseY);
-		int xOffset = (int)getXOffset();
-		int yOffset = (int)getYOffset();
-		client.getTextureManager().bindTexture(ICONS);
-		Research.REGISTRY.getAll().forEach(research -> {
-			if(research.getCategory() == this.category)
+		this.children.forEach((child) -> {
+			if(child instanceof Drawable)
 			{
-				int x = research.getX() + xOffset;
-				int y = research.getY() + yOffset;
-				if(research.isVisible(ability))
-				{
-					matrices.push();
-					matrices.translate(0, 0, 1D);
-					drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
-					matrices.pop();
-					research.getRequirements().forEach((requirement -> {
-						int x2 = requirement.getX() + xOffset;
-						int y2 = requirement.getY() + yOffset;
-						this.drawArrow(matrices, x2, y2, x, y);
-					}));
-				}
+				((Drawable)child).render(matrices, mouseX, mouseY, delta);
 			}
 		});
-		Iterator<ResearchCategory> categories = ResearchCategory.REGISTRY.getAll().iterator();
-		matrices.push();
-		matrices.translate(0, 0, 200D);
-		for(int i = 0; categories.hasNext(); i++)
-		{
-			ResearchCategory cat = categories.next();
-			if(isOverElement(mouseX, mouseY, x + 1, y + 24 + i * 24, 24, 16))
+		this.children.forEach(child -> {
+			if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
 			{
-				drawTexture(matrices, this.x + 1, this.y + 24 +  i * 24, 0, 16, 24, 16, 256, 256);
-			}
-			else
-			{
-				drawTexture(matrices, this.x + 5, this.y + 24 +  i * 24, 0, 16, 20, 16, 256, 256);
-			}
-		}
-		matrices.pop();
-		Research.REGISTRY.getAll().forEach(research -> {
-			if(research.getCategory() == this.category && research.isVisible(ability))
-			{
-				int x = research.getX() + xOffset;
-				int y = research.getY() + yOffset;
-				this.itemRenderer.renderInGui(research.getStack(), x, y);
-				matrices.push();
-				if(research.isAvailable(ability))
-				{
-					matrices.translate(0, 0, 2D);
-					if(!ability.hasResearch(research))
-					{
-						if(isOverElement(mouseX, mouseY, x, y, 16, 16))
-						{
-							fill(matrices, x, y, x + 16, y + 16, -2130706433);
-						}
-						else
-						{
-							int shift = (int)(Math.sin((client.world.getTime() + delta) / 10F) * 64 + 64);
-							Color color = new Color(255, 255, 255, shift);
-							fill(matrices, x, y, x + 16, y + 16, color.hashCode());
-						}
-					}
-					else
-					{
-						fill(matrices, x, y, x + 16, y + 16, -2130706433);
-					}
-				}
-				else
-				{
-					matrices.translate(0, 0, 175);
-					this.fillGradient(matrices, x, y, x + 16, y + 16, -1072689136, -804253680);
-				}
-				matrices.pop();
-				if(isOverElement(mouseX, mouseY, x, y, 16, 16) && isInsideBorder(mouseX, mouseY))
-				{
-					if(research.isReadable(ability))
-					{
-						drawMouseoverTooltip(matrices, research.getName().asOrderedText(), mouseX, mouseY);
-					}
-					else
-					{
-						drawMouseoverTooltip(matrices, generateSecretText(research), mouseX, mouseY);
-					}
-				}
+				this.renderTooltip(matrices, ((TooltipElement)child).getTooltip(mouseX, mouseY), mouseX, mouseY);
 			}
 		});
-		categories = ResearchCategory.REGISTRY.getAll().iterator();
-		for(int i = 0; categories.hasNext(); i++)
-		{
-			int y = this.y + 24 + i * 24;
-			ResearchCategory cat = categories.next();
-			this.itemRenderer.zOffset += 200;
-			this.itemRenderer.renderInGui(cat.getIcon(), x + 8, y);
-			this.itemRenderer.zOffset -= 200;
-			if(isOverElement(mouseX, mouseY, x + 1, y, 24, 16))
-			{
-				matrices.push();
-				drawMouseoverTooltip(matrices, cat.getName().asOrderedText(), mouseX, mouseY);
-				matrices.pop();
-			}
-		}
-	}
-
-	private OrderedText generateSecretText(Research research)
-	{
-		Random random = new Random(research.getName().getString().hashCode());
-		int length = random.nextInt(research.getName().getString().length()) / 2;
-		LiteralText text = new LiteralText(research.getName().getString().substring(0, length));
-		return text.setStyle(STYLE).asOrderedText();
-	}
-
-	protected void drawMouseoverTooltip(MatrixStack matrices, OrderedText text, int x, int y)
-	{
-		List<OrderedText> list = new ArrayList<>();
-		list.add(text);
-		this.renderOrderedTooltip(matrices, list, x, y);
 	}
 
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY)
 	{
-		mapX += (deltaX * 2);
-		mapY -= (deltaY * 2);
-		mapX = MathHelper.clamp(mapX, -512, 512);
-		mapY = MathHelper.clamp(mapY, -512, 512);
+		mapX += (deltaX);
+		mapY += (deltaY);
+		mapX = MathHelper.clamp(mapX, 0, this.width);
+		mapY = MathHelper.clamp(mapY, 0, this.height);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
 
-	protected void drawArrow(MatrixStack matrices, int startX, int startY, int endX, int endY)
+	public float getMapX()
 	{
-		int horizontal = (endX - startX) / 16;
-		int vertical = (endY - startY) / 16;
-		boolean positiveHorizontal = horizontal > 0;
-		if(horizontal > 0)
-		{
-			drawTexture(matrices, endX - 16, endY, 16 * 9, 0, 16, 16);
-		}
-		else if(horizontal < 0)
-		{
-			drawTexture(matrices, endX + 16, endY, 16 * 8, 0, 16, 16);
-		}
-		else
-		{
-			if(vertical > 0)
-			{
-				drawTexture(matrices, endX, endY - 16, 16 * 11, 0, 16, 16);
-			}
-			else
-			{
-				drawTexture(matrices, endX, endY + 16, 16 * 10, 0, 16, 16);
-			}
-		}
-		if(horizontal > 0)
-		{
-			for(; horizontal > 0; horizontal--)
-			{
-				drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16);
-			}
-		}
-		else
-		{
-			for(; horizontal < 0; horizontal++)
-			{
-				drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16);
-			}
-		}
-		if(vertical > 0)
-		{
-			if(!positiveHorizontal)
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 112, 0, 16, 16);
-			}
-			else
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 16 * 6, 0, 16, 16);
-			}
-			vertical--;
-			for(; vertical > 0; vertical--)
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16);
-			}
-		}
-		else
-		{
-			if(!positiveHorizontal)
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 16 * 5, 0, 16, 16);
-			}
-			else
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 16 * 4, 0, 16, 16);
-			}
-			vertical++;
-			for(; vertical < 0; vertical++)
-			{
-				drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16);
-			}
-		}
-		int test = 0;
-		test++;
+		return this.mapX;
 	}
 
-	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int button)
+	public float getMapY()
 	{
-		if(button == 0)
+		return this.mapY;
+	}
+
+	public PlayerResearchAbility getAbility()
+	{
+		return ability;
+	}
+
+	public ResearchCategory getCurrentCategory()
+	{
+		return this.currentCategory;
+	}
+
+	public void setCurrentCategory(ResearchCategory category)
+	{
+		if(category != currentCategory)
 		{
-			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
-			PlayerResearchAbility ability = optional.get();
-			int xOffset = (int)getXOffset();
-			int yOffset = (int)getYOffset();
-			Research.REGISTRY.getAll().forEach(research -> {
-				if(research.getCategory() == this.category && research.isAvailable(ability))
-				{
-					int x = xOffset + research.getX();
-					int y = yOffset + research.getY();
-					if(isOverElement((int)mouseX, (int)mouseY, x, y, 16, 16))
-					{
-						this.client.openScreen(new ResearchScreen(this, research));
-					}
-				}
-			});
-			Iterator<ResearchCategory> categories = ResearchCategory.REGISTRY.getAll().iterator();
-			for(int i = 0; categories.hasNext(); i++)
-			{
-				ResearchCategory cat = categories.next();
-				if(isOverElement((int)mouseX, (int)mouseY, x, y + 24 + i * 24, 24, 16))
-				{
-					this.category = cat;
-					this.client.world.playSound(this.client.player, player.getX(), player.getEyeY(), player.getZ(), AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, (float)Math.random() * 0.2F + 1.1F, 1F);
-					break;
-				}
-			}
+			this.currentCategory = category;
+			client.player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 		}
-		return super.mouseReleased(mouseX, mouseY, button);
-	}
-
-	public float getXOffset()
-	{
-		return ((width / 2f)) + (mapX / 2f) - 8F;
-	}
-
-	public float getYOffset()
-	{
-		return (height / 2f) - (mapY / 2f) - 8F;
 	}
 }

@@ -8,9 +8,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ResearchCategory
 {
@@ -30,6 +28,18 @@ public class ResearchCategory
 	public ResearchCategory(PacketByteBuf buf)
 	{
 		this.fromPacket(buf);
+	}
+
+	public List<Research> getResearch()
+	{
+		List<Research> list = new ArrayList<>();
+		Research.REGISTRY.getAll().forEach((research -> {
+			if(research.getCategory() == this)
+			{
+				list.add(research);
+			}
+		}));
+		return list;
 	}
 
 	public Identifier getId()

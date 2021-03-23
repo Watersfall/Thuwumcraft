@@ -20,6 +20,7 @@ import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.alchemy.client.gui.element.RecipeTabElement;
 import net.watersfall.alchemy.client.gui.element.ResearchButton;
 import net.watersfall.alchemy.client.gui.element.TabElement;
 
@@ -44,7 +45,7 @@ public class ResearchScreen extends Screen
 	private final ResearchTab[] tabs;
 	private ResearchButton researchButton;
 
-	protected ResearchScreen(ResearchBookScreen parent, Research research)
+	public ResearchScreen(ResearchBookScreen parent, Research research)
 	{
 		super(research.getName());
 		this.parent = parent;
@@ -67,7 +68,7 @@ public class ResearchScreen extends Screen
 		this.researchButton = new ResearchButton(this.research, 242, 100);
 		for(int i = 0; i < this.tabs.length; i++)
 		{
-			this.addChild(new TabElement(tabs[i], startX, startY +  i * 24, true));
+			this.addChild(new RecipeTabElement(tabs[i], startX, startY +  i * 24, true));
 		}
 		this.addChild(researchButton);
 	}

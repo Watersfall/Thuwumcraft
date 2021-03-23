@@ -30,6 +30,7 @@ public class ResearchTab extends Screen
 	private final int textureHeight = 256;
 	private PageCounter page;
 	private final boolean requiresComplete;
+	private final ItemStack[] items;
 
 	protected ResearchTab(Research.RecipeGroup group, ResearchScreen parent)
 	{
@@ -44,6 +45,11 @@ public class ResearchTab extends Screen
 			recipes[i] = recipe;
 		}
 		this.requiresComplete = group.requiresComplete();
+		this.items = new ItemStack[recipes.length];
+		for(int i = 0; i < items.length; i++)
+		{
+			items[i] = recipes[i].getOutput();
+		}
 	}
 
 	public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
@@ -128,5 +134,10 @@ public class ResearchTab extends Screen
 	public boolean requiresComplete()
 	{
 		return this.requiresComplete;
+	}
+
+	public ItemStack[] getItems()
+	{
+		return this.items;
 	}
 }

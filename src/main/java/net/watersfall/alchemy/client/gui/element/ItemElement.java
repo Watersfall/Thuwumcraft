@@ -3,16 +3,22 @@ package net.watersfall.alchemy.client.gui.element;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemElement implements Element, Drawable, TooltipElement
 {
-	private final ItemStack[] stacks;
-	private final int x;
-	private final int y;
-	private final int offsetX;
-	private final int offsetY;
+	protected final ItemStack[] stacks;
+	protected final int x;
+	protected final int y;
+	protected final int offsetX;
+	protected final int offsetY;
+	protected final Element parent;
 
 	public ItemElement(ItemStack[] stacks, int x, int y)
 	{
@@ -21,6 +27,7 @@ public class ItemElement implements Element, Drawable, TooltipElement
 		this.y = y;
 		this.offsetX = x;
 		this.offsetY = y;
+		this.parent = null;
 	}
 
 	public ItemElement(ItemStack[] stacks, int x, int y, int offsetX, int offsetY)
@@ -30,11 +37,26 @@ public class ItemElement implements Element, Drawable, TooltipElement
 		this.y = y;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+		this.parent = null;
+	}
+
+	public ItemElement(ItemStack[] stacks, int x, int y, int offsetX, int offsetY, Element parent)
+	{
+		this.stacks = stacks;
+		this.x = x;
+		this.y = y;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
+		this.parent = parent;
 	}
 
 	@Override
 	public boolean isMouseOver(double mouseX, double mouseY)
 	{
+		if(parent != null)
+		{
+			return parent.isMouseOver(mouseX, mouseY);
+		}
 		return mouseX > x && mouseX < x + 16 && mouseY > y && mouseY < y + 16;
 	}
 
@@ -56,13 +78,13 @@ public class ItemElement implements Element, Drawable, TooltipElement
 	}
 
 	@Override
-	public ItemStack getTooltip(int mouseX, int mouseY)
+	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
 		if(stacks.length > 0)
 		{
 			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
-			return stacks[index];
+			return stacks[index].getTooltip(MinecraftClient.getInstance().player, TooltipContext.Default.NORMAL);
 		}
-		return ItemStack.EMPTY;
+		return new ArrayList<>();
 	}
 }

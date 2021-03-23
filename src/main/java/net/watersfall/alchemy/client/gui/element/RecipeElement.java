@@ -4,6 +4,10 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeElement implements Element, Drawable, TooltipElement
 {
@@ -24,7 +28,7 @@ public class RecipeElement implements Element, Drawable, TooltipElement
 	}
 
 	@Override
-	public ItemStack getTooltip(int mouseX, int mouseY)
+	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
 		for(int i = 0; i < items.length; i++)
 		{
@@ -33,7 +37,7 @@ public class RecipeElement implements Element, Drawable, TooltipElement
 				return items[i].getTooltip(mouseX, mouseY);
 			}
 		}
-		return ItemStack.EMPTY;
+		return new ArrayList<>();
 	}
 
 	@Override

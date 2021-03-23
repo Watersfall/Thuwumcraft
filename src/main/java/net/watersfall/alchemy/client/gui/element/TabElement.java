@@ -5,71 +5,62 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.client.gui.ResearchTab;
 
-public class TabElement implements Element, Drawable, TooltipElement
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class TabElement implements Element, Drawable, TooltipElement
 {
 	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
 
-	private final ResearchTab tab;
-	private final ItemElement items;
-	private final int x;
-	private final int y;
-	private final boolean inverted;
+	protected ItemElement items;
+	protected final int x;
+	protected final int y;
+	protected final boolean inverted;
 
-	public TabElement(ResearchTab tab, int x, int y, boolean inverted)
+	public TabElement(ItemElement items, int x, int y, boolean inverted)
 	{
 		this.x = x;
 		this.y = y;
 		this.inverted = inverted;
-		this.tab = tab;
-		ItemStack[] items = new ItemStack[tab.recipes.length];
-		for(int i = 0; i < items.length; i++)
-		{
-			items[i] = tab.recipes[i].getOutput();
-		}
-		this.items = new ItemElement(items, x, y, inverted ? x + 4 : x - 4, y);
+		this.items = items;
 	}
 
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		matrices.translate(0, 0, 201F);
 		MinecraftClient.getInstance().getTextureManager().bindTexture(ICONS);
+		MinecraftClient.getInstance().getItemRenderer().zOffset += 200F;
 		if(isMouseOver(mouseX, mouseY))
 		{
-			DrawableHelper.drawTexture(matrices, this.x, this.y, 24, 16, 24, 16, 256, 256);
+			int u = inverted ? 24 : 0;
+			DrawableHelper.drawTexture(matrices, x, this.y, u, 16, 24, 16, 256, 256);
 			this.items.render(matrices, mouseX, mouseY, delta);
 		}
 		else
 		{
-			DrawableHelper.drawTexture(matrices, this.x, this.y, 28, 16, 20, 16, 256, 256);
+			int u = inverted ? 28 : 0;
+			int x = inverted ? this.x : this.x + 4;
+			DrawableHelper.drawTexture(matrices, x, this.y, u, 16, 20, 16, 256, 256);
 			this.items.render(matrices, mouseX, mouseY, delta);
 		}
+		matrices.translate(0, 0, -201F);
+		MinecraftClient.getInstance().getItemRenderer().zOffset -= 200F;
 	}
 
 	@Override
-	public ItemStack getTooltip(int mouseX, int mouseY)
+	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
-		return ItemStack.EMPTY;
+		return new ArrayList<>();
 	}
 
 	@Override
 	public boolean isMouseOver(double mouseX, double mouseY)
 	{
 		return mouseX > x && mouseX < x + 24 && mouseY > y && mouseY < y + 16;
-	}
-
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button)
-	{
-		if(button == 0 && isMouseOver(mouseX, mouseY))
-		{
-			MinecraftClient.getInstance().openScreen(this.tab);
-			return true;
-		}
-		return false;
 	}
 }
