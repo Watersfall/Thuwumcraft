@@ -104,6 +104,15 @@ public class AlchemyModClient implements ClientModInitializer
 		ScreenRegistry.register(AlchemyMod.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), AlchemyBlocks.FIRE_CRYSTAL_CLUSTER,
+				AlchemyBlocks.FIRE_CRYSTAL_LARGE,
+				AlchemyBlocks.FIRE_CRYSTAL_MEDIUM,
+				AlchemyBlocks.FIRE_CRYSTAL_SMALL,
+				AlchemyBlocks.WATER_CRYSTAL_CLUSTER,
+				AlchemyBlocks.WATER_CRYSTAL_LARGE,
+				AlchemyBlocks.WATER_CRYSTAL_MEDIUM,
+				AlchemyBlocks.WATER_CRYSTAL_SMALL
+		);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
 		for(Item item : Registry.ITEM)
 		{

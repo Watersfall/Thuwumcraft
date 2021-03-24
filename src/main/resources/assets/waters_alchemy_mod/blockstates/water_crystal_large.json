@@ -1,0 +1,30 @@
+{
+	"variants": {
+		"facing=down": {
+			"model": "waters_alchemy_mod:block/water_crystal_large",
+			"x": 180
+		},
+		"facing=east": {
+			"model": "waters_alchemy_mod:block/water_crystal_large",
+			"x": 90,
+			"y": 90
+		},
+		"facing=north": {
+			"model": "waters_alchemy_mod:block/water_crystal_large",
+			"x": 90
+		},
+		"facing=south": {
+			"model": "waters_alchemy_mod:block/water_crystal_large",
+			"x": 90,
+			"y": 180
+		},
+		"facing=up": {
+			"model": "waters_alchemy_mod:block/water_crystal_large"
+		},
+		"facing=west": {
+			"model": "waters_alchemy_mod:block/water_crystal_large",
+			"x": 90,
+			"y": 270
+		}
+	}
+}

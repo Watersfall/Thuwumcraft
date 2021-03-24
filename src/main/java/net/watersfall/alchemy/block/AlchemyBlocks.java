@@ -1,8 +1,11 @@
 package net.watersfall.alchemy.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AmethystClusterBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 
@@ -16,6 +19,14 @@ public class AlchemyBlocks
 	public static final JarBlock JAR_BLOCK;
 	public static final PhialShelfBlock PHIAL_SHELF_BLOCK;
 	public static final AspectPipeBlock ASPECT_PIPE_BLOCK;
+	public static final AmethystClusterBlock FIRE_CRYSTAL_CLUSTER;
+	public static final AmethystClusterBlock FIRE_CRYSTAL_SMALL;
+	public static final AmethystClusterBlock FIRE_CRYSTAL_MEDIUM;
+	public static final AmethystClusterBlock FIRE_CRYSTAL_LARGE;
+	public static final AmethystClusterBlock WATER_CRYSTAL_CLUSTER;
+	public static final AmethystClusterBlock WATER_CRYSTAL_SMALL;
+	public static final AmethystClusterBlock WATER_CRYSTAL_MEDIUM;
+	public static final AmethystClusterBlock WATER_CRYSTAL_LARGE;
 
 	static
 	{
@@ -27,6 +38,14 @@ public class AlchemyBlocks
 		JAR_BLOCK = new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true));
 		PHIAL_SHELF_BLOCK = new PhialShelfBlock(FabricBlockSettings.copyOf(Blocks.BIRCH_PLANKS).nonOpaque());
 		ASPECT_PIPE_BLOCK = new AspectPipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
+		FIRE_CRYSTAL_CLUSTER = new AmethystClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER));
+		FIRE_CRYSTAL_LARGE = new AmethystClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD));
+		FIRE_CRYSTAL_MEDIUM = new AmethystClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD));
+		FIRE_CRYSTAL_SMALL = new AmethystClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD));
+		WATER_CRYSTAL_CLUSTER = new AmethystClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER));
+		WATER_CRYSTAL_LARGE = new AmethystClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD));
+		WATER_CRYSTAL_MEDIUM = new AmethystClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD));
+		WATER_CRYSTAL_SMALL = new AmethystClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD));
 	}
 
 	public static void register()
@@ -39,5 +58,18 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("jar"), JAR_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("aspect_pipe"), ASPECT_PIPE_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("fire_crystal_cluster"), FIRE_CRYSTAL_CLUSTER);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("fire_crystal_large"), FIRE_CRYSTAL_LARGE);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("fire_crystal_medium"), FIRE_CRYSTAL_MEDIUM);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("fire_crystal_small"), FIRE_CRYSTAL_SMALL);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_cluster"), WATER_CRYSTAL_CLUSTER);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_large"), WATER_CRYSTAL_LARGE);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_medium"), WATER_CRYSTAL_MEDIUM);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_small"), WATER_CRYSTAL_SMALL);
+	}
+
+	private static <T extends Block> T register(T block, Identifier id)
+	{
+		return Registry.register(Registry.BLOCK, id, block);
 	}
 }
