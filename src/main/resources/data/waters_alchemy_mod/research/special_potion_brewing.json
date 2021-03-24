@@ -1,10 +1,10 @@
 {
 	"icon": "minecraft:lingering_potion",
-	"category": "waters_alchemy_mod:basic",
+	"category": "waters_alchemy_mod:basic_alchemy",
 	"x": 0,
 	"y": 4,
 	"complete_requirements": {
-		"inventory_required": [
+		"inventory_consumed": [
 			"minecraft:splash_potion"
 		]
 	},

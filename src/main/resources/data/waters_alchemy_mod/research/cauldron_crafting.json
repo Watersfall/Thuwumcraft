@@ -1,6 +1,6 @@
 {
 	"icon": "minecraft:glass_bottle",
-	"category": "waters_alchemy_mod:basic",
+	"category": "waters_alchemy_mod:basic_alchemy",
 	"x": 0,
 	"y": 0,
 	"complete_requirements": {
