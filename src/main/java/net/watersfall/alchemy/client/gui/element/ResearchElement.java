@@ -21,6 +21,7 @@ import net.watersfall.alchemy.client.gui.ResearchBookScreen;
 import net.watersfall.alchemy.client.gui.ResearchScreen;
 
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -111,14 +112,18 @@ public class ResearchElement extends ItemElement
 	@Override
 	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
-		if(ability.hasResearch(this.research) || research.isReadable(ability))
+		if(research.getCategory() == screen.getCurrentCategory())
 		{
-			return readableTooltip;
+			if(ability.hasResearch(this.research) || research.isReadable(ability))
+			{
+				return readableTooltip;
+			}
+			else
+			{
+				return hiddenTooltip;
+			}
 		}
-		else
-		{
-			return hiddenTooltip;
-		}
+		return Collections.emptyList();
 	}
 
 	private Text generateSecretText(Research research)
