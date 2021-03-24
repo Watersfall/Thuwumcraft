@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecipeElement implements Element, Drawable, TooltipElement
@@ -37,7 +38,7 @@ public class RecipeElement implements Element, Drawable, TooltipElement
 				return items[i].getTooltip(mouseX, mouseY);
 			}
 		}
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

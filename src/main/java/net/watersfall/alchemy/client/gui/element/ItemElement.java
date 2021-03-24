@@ -19,25 +19,16 @@ public class ItemElement implements Element, Drawable, TooltipElement
 	protected final int offsetX;
 	protected final int offsetY;
 	protected final Element parent;
+	protected final List<List<Text>> tooltips;
 
 	public ItemElement(ItemStack[] stacks, int x, int y)
 	{
-		this.stacks = stacks;
-		this.x = x;
-		this.y = y;
-		this.offsetX = x;
-		this.offsetY = y;
-		this.parent = null;
+		this(stacks, x, y, x, y, null);
 	}
 
 	public ItemElement(ItemStack[] stacks, int x, int y, int offsetX, int offsetY)
 	{
-		this.stacks = stacks;
-		this.x = x;
-		this.y = y;
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
-		this.parent = null;
+		this(stacks, x, y, offsetX, offsetY, null);
 	}
 
 	public ItemElement(ItemStack[] stacks, int x, int y, int offsetX, int offsetY, Element parent)
@@ -48,6 +39,11 @@ public class ItemElement implements Element, Drawable, TooltipElement
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		this.parent = parent;
+		this.tooltips = new ArrayList<>(stacks.length);
+		for(int i = 0; i < stacks.length; i++)
+		{
+			tooltips.add(null);
+		}
 	}
 
 	@Override
@@ -83,7 +79,11 @@ public class ItemElement implements Element, Drawable, TooltipElement
 		if(stacks.length > 0)
 		{
 			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
-			return stacks[index].getTooltip(MinecraftClient.getInstance().player, TooltipContext.Default.NORMAL);
+			if(this.tooltips.get(index) == null)
+			{
+				this.tooltips.set(index, stacks[index].getTooltip(MinecraftClient.getInstance().player, TooltipContext.Default.NORMAL));
+			}
+			return this.tooltips.get(index);
 		}
 		return new ArrayList<>();
 	}

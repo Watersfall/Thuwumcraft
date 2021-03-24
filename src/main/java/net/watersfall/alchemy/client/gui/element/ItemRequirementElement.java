@@ -18,8 +18,10 @@ import java.util.List;
 public class ItemRequirementElement extends ItemElement
 {
 	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final TranslatableText CONSUMED_TEXT = new TranslatableText("consumed");
 
 	private final boolean consumed;
+	private boolean added;
 	private Item[] items;
 
 	public ItemRequirementElement(ItemStack[] stacks, int x, int y, boolean consumed)
@@ -31,15 +33,17 @@ public class ItemRequirementElement extends ItemElement
 		{
 			this.items[i] = stacks[i].getItem();
 		}
+		added = false;
 	}
 
 	@Override
 	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
 		List<Text> list = super.getTooltip(mouseX, mouseY);
-		if(consumed)
+		if(consumed && !added)
 		{
-			((MutableText)list.get(0)).append(new TranslatableText("consumed"));
+			((MutableText)list.get(0)).append(CONSUMED_TEXT);
+			this.added = true;
 		}
 		return list;
 	}

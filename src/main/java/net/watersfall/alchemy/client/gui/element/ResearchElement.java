@@ -33,6 +33,8 @@ public class ResearchElement extends ItemElement
 	private final Research research;
 	private final ResearchBookScreen screen;
 	private final PlayerResearchAbility ability;
+	private final List<Text> readableTooltip;
+	private final List<Text> hiddenTooltip;
 
 	public ResearchElement(ResearchBookScreen screen, Research research)
 	{
@@ -40,6 +42,8 @@ public class ResearchElement extends ItemElement
 		this.research = research;
 		this.screen = screen;
 		this.ability = screen.getAbility();
+		this.readableTooltip = Lists.newArrayList(research.getName());
+		this.hiddenTooltip = Lists.newArrayList(generateSecretText(research));
 	}
 
 	@Override
@@ -109,11 +113,11 @@ public class ResearchElement extends ItemElement
 	{
 		if(ability.hasResearch(this.research) || research.isReadable(ability))
 		{
-			return Lists.newArrayList(research.getName());
+			return readableTooltip;
 		}
 		else
 		{
-			return Lists.newArrayList(generateSecretText(research));
+			return hiddenTooltip;
 		}
 	}
 

@@ -44,6 +44,8 @@ public class ResearchScreen extends Screen
 	private int y;
 	private final ResearchTab[] tabs;
 	private ResearchButton researchButton;
+	private List<OrderedText> lines;
+	private List<OrderedText> completedLines;
 
 	public ResearchScreen(ResearchBookScreen parent, Research research)
 	{
@@ -55,6 +57,8 @@ public class ResearchScreen extends Screen
 		{
 			this.tabs[i] = new ResearchTab(research.getTabs()[i], this);
 		}
+		lines = null;
+		completedLines = null;
 	}
 
 	@Override
@@ -100,7 +104,6 @@ public class ResearchScreen extends Screen
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.renderBackground(matrices);
-		List<OrderedText> text;
 		if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
 		{
 			this.researchButton.enable();
@@ -111,17 +114,19 @@ public class ResearchScreen extends Screen
 		}
 		if(ability.hasResearch(this.research))
 		{
-			text = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 160);
+			if(completedLines == null)
+			{
+				completedLines = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 160);
+			}
+			drawText(matrices, completedLines);
 		}
 		else
 		{
-			text = this.textRenderer.wrapLines(this.research.getDescription(), 160);
-		}
-		textRenderer.draw(matrices, this.title, this.x + this.screenWidth / 4F - (textRenderer.getWidth(this.title.asOrderedText()) / 2F), this.y + 24, 4210752);
-		int offset = 40;
-		for(int i = 0; i < text.size(); i++, offset += 9)
-		{
-			this.textRenderer.draw(matrices, text.get(i), this.x + 16F, this.y + offset, 4210752);
+			if(lines == null)
+			{
+				lines = this.textRenderer.wrapLines(this.research.getDescription(), 160);
+			}
+			drawText(matrices, lines);
 		}
 		for(int i = 0; i < this.children.size(); i++)
 		{
@@ -136,6 +141,16 @@ public class ResearchScreen extends Screen
 			{
 				this.renderTooltip(matrices, ((TooltipElement)this.children.get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
 			}
+		}
+	}
+
+	private void drawText(MatrixStack matrices, List<OrderedText> text)
+	{
+		textRenderer.draw(matrices, this.title, this.x + this.screenWidth / 4F - (textRenderer.getWidth(this.title.asOrderedText()) / 2F), this.y + 24, 4210752);
+		int offset = 40;
+		for(int i = 0; i < text.size(); i++, offset += 9)
+		{
+			this.textRenderer.draw(matrices, text.get(i), this.x + 16F, this.y + offset, 4210752);
 		}
 	}
 

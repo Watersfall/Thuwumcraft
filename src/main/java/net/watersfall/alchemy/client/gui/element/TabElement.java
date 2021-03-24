@@ -11,6 +11,8 @@ import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class TabElement implements Element, Drawable, TooltipElement
@@ -56,7 +58,7 @@ public abstract class TabElement implements Element, Drawable, TooltipElement
 	@Override
 	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override
