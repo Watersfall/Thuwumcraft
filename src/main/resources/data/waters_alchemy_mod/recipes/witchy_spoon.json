@@ -15,5 +15,8 @@
 	},
 	"result": {
 		"item": "waters_alchemy_mod:witchy_spoon"
-	}
+	},
+	"research": [
+		"waters_alchemy_mod:beginner_brewing"
+	]
 }

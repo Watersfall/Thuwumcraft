@@ -1,8 +1,13 @@
 {
 	"icon": "minecraft:glass_bottle",
 	"category": "waters_alchemy_mod:basic",
-	"x": 4,
-	"y": 4,
+	"x": 0,
+	"y": 0,
+	"complete_requirements": {
+		"inventory_required": [
+			"minecraft:potion"
+		]
+	},
 	"readable_requirements": {
 		"research": [
 			"waters_alchemy_mod:beginner_brewing"
@@ -16,16 +21,9 @@
 	"tabs": [
 		{
 			"recipes": [
-				"minecraft:cauldron",
-				"waters_alchemy_mod:witchy_spoon"
-			],
-			"requires_complete": false
-		},
-		{
-			"recipes": [
 				"minecraft:glass_bottle"
 			],
-			"requires_complete": true
+			"requires_complete": false
 		}
 	]
 }

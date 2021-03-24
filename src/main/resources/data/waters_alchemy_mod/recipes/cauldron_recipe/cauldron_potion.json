@@ -9,6 +9,6 @@
 	"action": "create_potion",
 	"output": "minecraft:potion",
 	"research": [
-		"waters_alchemy_mod:test_research_1"
+		"waters_alchemy_mod:beginner_brewing"
 	]
 }

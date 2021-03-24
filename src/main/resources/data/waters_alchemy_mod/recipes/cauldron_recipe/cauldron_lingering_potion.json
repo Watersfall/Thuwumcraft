@@ -7,5 +7,8 @@
 	],
 	"water_use": 333,
 	"action": "create_potion",
-	"output": "minecraft:lingering_potion"
+	"output": "minecraft:lingering_potion",
+	"research": [
+		"waters_alchemy_mod:special_potion_brewing"
+	]
 }

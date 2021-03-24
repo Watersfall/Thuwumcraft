@@ -2,7 +2,7 @@
 	"icon": "minecraft:cauldron",
 	"category": "waters_alchemy_mod:basic",
 	"x": 0,
-	"y": 0,
+	"y": -4,
 	"complete_requirements": {
 		"inventory_required": [
 			"minecraft:cauldron",
@@ -19,12 +19,6 @@
 				"waters_alchemy_mod:witchy_spoon"
 			],
 			"requires_complete": false
-		},
-		{
-			"recipes": [
-				"minecraft:glass_bottle"
-			],
-			"requires_complete": true
 		}
 	]
 }

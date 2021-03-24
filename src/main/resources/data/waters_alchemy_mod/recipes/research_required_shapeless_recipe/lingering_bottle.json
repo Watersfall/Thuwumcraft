@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:crafting_shapeless",
+	"type": "waters_alchemy_mod:research_unlocked_shapeless_recipe",
 	"ingredients": [
 		{
 			"item": "minecraft:glass_bottle"
@@ -11,5 +11,8 @@
 	"result": {
 		"item": "waters_alchemy_mod:lingering_bottle",
 		"count": 2
-	}
+	},
+	"research": [
+		"waters_alchemy_mod:special_potion_brewing"
+	]
 }

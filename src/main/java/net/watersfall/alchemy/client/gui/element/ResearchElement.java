@@ -66,7 +66,7 @@ public class ResearchElement extends ItemElement
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
-		if(research.getCategory() == screen.getCurrentCategory())
+		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
 			int x = this.x + (int)screen.getMapX();
 			int y = this.y + (int)screen.getMapY();
