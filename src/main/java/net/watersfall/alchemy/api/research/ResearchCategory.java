@@ -17,12 +17,14 @@ public class ResearchCategory
 	private Identifier id;
 	private Text name;
 	private ItemStack icon;
+	private int index;
 
 	public ResearchCategory(Identifier id, JsonObject json)
 	{
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research_category/", "").replace(".json", "").replace("/", "."));
 		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.icon = new ItemStack(JsonHelper.getItem(json, "icon"), 1);
+		this.index = JsonHelper.getInt(json, "index", Integer.MAX_VALUE);
 	}
 
 	public ResearchCategory(PacketByteBuf buf)
@@ -55,6 +57,11 @@ public class ResearchCategory
 	public ItemStack getIcon()
 	{
 		return this.icon;
+	}
+
+	public int getIndex()
+	{
+		return this.index;
 	}
 
 	public PacketByteBuf toPacket(PacketByteBuf buf)

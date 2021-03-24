@@ -36,4 +36,9 @@ public class CategoryTabElement extends TabElement
 	{
 		return Lists.newArrayList(this.category.getName());
 	}
+
+	public ResearchCategory getCategory()
+	{
+		return this.category;
+	}
 }

@@ -52,10 +52,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.currentCategory = ResearchCategory.REGISTRY.getFirst();
 		categories = new CategoryTabElement[ResearchCategory.REGISTRY.getAll().size()];
 		int i = 0;
+		ResearchCategory[] tempCat = new ResearchCategory[categories.length];
 		for(ResearchCategory category : ResearchCategory.REGISTRY.getAll())
 		{
-			categories[i] = new CategoryTabElement(this, category, x + 1, y + 24 +  i * 24, false);
-			i++;
+			tempCat[i++] = category;
+		}
+		Arrays.sort(tempCat, Comparator.comparingInt(ResearchCategory::getIndex));
+		for(i = 0; i < categories.length; i++)
+		{
+			categories[i] = new CategoryTabElement(this, tempCat[i], x + 1, y + 24 +  i * 24, false);
 		}
 	}
 
