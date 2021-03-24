@@ -209,14 +209,10 @@ public class AlchemyMod implements ModInitializer
 			{
 				for(ServerPlayerEntity player : PlayerLookup.all(server))
 				{
-					ServerPlayNetworking.send(player, getId("research_packet"), Research.REGISTRY.toPacket(PacketByteBufs.create()));
-					if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
-					{
-						PacketByteBuf research = PacketByteBufs.create();
-						ResearchCategory.REGISTRY.toPacket(research);
-						Research.REGISTRY.toPacket(research);
-						ServerPlayNetworking.send(player, getId("research_packet"), research);
-					}
+					PacketByteBuf research = PacketByteBufs.create();
+					ResearchCategory.REGISTRY.toPacket(research);
+					Research.REGISTRY.toPacket(research);
+					ServerPlayNetworking.send(player, getId("research_packet"), research);
 				}
 			}
 		});
