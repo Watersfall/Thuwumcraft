@@ -20,7 +20,7 @@ public class AlchemyFeatures
 						new GeodeLayerConfig(
 								new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),
 								new SimpleBlockStateProvider(Blocks.CALCITE.getDefaultState()),
-								new SimpleBlockStateProvider(AlchemyBlocks.BUDDING_EARTH_CRYSTAL_BLOCK.getDefaultState()),
+								new SimpleBlockStateProvider(Blocks.CALCITE.getDefaultState()),
 								new SimpleBlockStateProvider(Blocks.TUFF.getDefaultState()),
 								new SimpleBlockStateProvider(Blocks.SMOOTH_BASALT.getDefaultState()),
 								ImmutableList.of(
