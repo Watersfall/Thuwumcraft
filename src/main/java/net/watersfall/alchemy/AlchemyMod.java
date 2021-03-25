@@ -1,6 +1,9 @@
 package net.watersfall.alchemy;
 
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
@@ -19,7 +22,10 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
@@ -58,6 +64,7 @@ import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
+import net.watersfall.alchemy.world.AlchemyFeatures;
 
 import java.util.*;
 
@@ -262,5 +269,9 @@ public class AlchemyMod implements ModInitializer
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
+		AlchemyFeatures.register();
+		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
+				GenerationStep.Feature.UNDERGROUND_DECORATION,
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());
 	}
 }

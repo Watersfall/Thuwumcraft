@@ -1,10 +1,7 @@
 package net.watersfall.alchemy.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AmethystClusterBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
@@ -27,6 +24,12 @@ public class AlchemyBlocks
 	public static final AmethystClusterBlock WATER_CRYSTAL_SMALL;
 	public static final AmethystClusterBlock WATER_CRYSTAL_MEDIUM;
 	public static final AmethystClusterBlock WATER_CRYSTAL_LARGE;
+	public static final AmethystBlock EARTH_CRYSTAL_BLOCK;
+	public static final BuddingAmethystBlock BUDDING_EARTH_CRYSTAL_BLOCK;
+	public static final AmethystClusterBlock EARTH_CRYSTAL_CLUSTER;
+	public static final AmethystClusterBlock EARTH_CRYSTAL_SMALL;
+	public static final AmethystClusterBlock EARTH_CRYSTAL_MEDIUM;
+	public static final AmethystClusterBlock EARTH_CRYSTAL_LARGE;
 
 	static
 	{
@@ -46,6 +49,12 @@ public class AlchemyBlocks
 		WATER_CRYSTAL_LARGE = new AmethystClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD));
 		WATER_CRYSTAL_MEDIUM = new AmethystClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD));
 		WATER_CRYSTAL_SMALL = new AmethystClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD));
+		EARTH_CRYSTAL_CLUSTER = new AmethystClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER));
+		EARTH_CRYSTAL_LARGE = new AmethystClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD));
+		EARTH_CRYSTAL_MEDIUM = new AmethystClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD));
+		EARTH_CRYSTAL_SMALL = new AmethystClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD));
+		EARTH_CRYSTAL_BLOCK = new AmethystBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
+		BUDDING_EARTH_CRYSTAL_BLOCK = new BuddingAmethystBlock(FabricBlockSettings.copyOf(Blocks.BUDDING_AMETHYST));
 	}
 
 	public static void register()
@@ -66,6 +75,12 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_large"), WATER_CRYSTAL_LARGE);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_medium"), WATER_CRYSTAL_MEDIUM);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("water_crystal_small"), WATER_CRYSTAL_SMALL);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_cluster"), EARTH_CRYSTAL_CLUSTER);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_large"), EARTH_CRYSTAL_LARGE);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_medium"), EARTH_CRYSTAL_MEDIUM);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_small"), EARTH_CRYSTAL_SMALL);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_block"), EARTH_CRYSTAL_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_budding"), BUDDING_EARTH_CRYSTAL_BLOCK);
 	}
 
 	private static <T extends Block> T register(T block, Identifier id)
