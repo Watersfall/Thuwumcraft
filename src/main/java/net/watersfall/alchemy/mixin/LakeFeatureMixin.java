@@ -50,14 +50,18 @@ public class LakeFeatureMixin
 							int z,
 							int y)
 	{
-		for(Direction direction : Direction.values())
+		if((context.getWorld().getLunarTime() & 0x100) == 0)
 		{
-			BlockPos currentPos = pos.add(x, y, z).offset(direction);
-			if(world.isAir(currentPos) && !bordersFluid(world, currentPos, Fluids.LAVA) && random.nextInt(10) == 0)
+			for(Direction direction : Direction.values())
 			{
-				world.setBlockState(currentPos, getFireCrystal(random, direction), 2);
+				BlockPos currentPos = pos.add(x, y, z).offset(direction);
+				if(world.isAir(currentPos) && !bordersFluid(world, currentPos, Fluids.LAVA) && random.nextInt(10) == 0)
+				{
+					world.setBlockState(currentPos, getFireCrystal(random, direction), 2);
+				}
 			}
 		}
+
 	}
 
 	@Inject(method = "generate",
@@ -75,23 +79,25 @@ public class LakeFeatureMixin
 								 int fakeY
 	)
 	{
-		for(int y = 0; y < 4; y++)
+		if((world.getLunarTime() & 0x10) == 0)
 		{
-			BlockPos currentPos = blockPos.add(x, y, z);
-			FluidState fluid = world.getFluidState(currentPos);
-			if(fluid.getFluid() == Fluids.WATER)
+			for(int y = 0; y < 4; y++)
 			{
-				for(Direction direction : Direction.values())
+				BlockPos currentPos = blockPos.add(x, y, z);
+				FluidState fluid = world.getFluidState(currentPos);
+				if(fluid.getFluid() == Fluids.WATER)
 				{
-					BlockState state = world.getBlockState(currentPos.offset(direction));
-					if(random.nextInt(10) == 0 && state.getMaterial().isSolid() && state.getMaterial() != Material.AMETHYST)
+					for(Direction direction : Direction.values())
 					{
-						world.setBlockState(currentPos, getWaterCrystal(random, direction.getOpposite()), 2);
+						BlockState state = world.getBlockState(currentPos.offset(direction));
+						if(random.nextInt(10) == 0 && state.getMaterial().isSolid() && state.getMaterial() != Material.AMETHYST)
+						{
+							world.setBlockState(currentPos, getWaterCrystal(random, direction.getOpposite()), 2);
+						}
 					}
 				}
 			}
 		}
-
 	}
 
 	private boolean bordersFluid(StructureWorldAccess world, BlockPos pos, Fluid fluid)
