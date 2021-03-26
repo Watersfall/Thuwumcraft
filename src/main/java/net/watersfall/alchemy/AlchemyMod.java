@@ -26,6 +26,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
@@ -287,5 +288,11 @@ public class AlchemyMod implements ModInitializer
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());
+		BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(),
+				GenerationStep.Feature.UNDERGROUND_DECORATION,
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.NETHER_GEODE).get());
+		BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
+				GenerationStep.Feature.UNDERGROUND_DECORATION,
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.BASALT_DELTA_GEODE).get());
 	}
 }
