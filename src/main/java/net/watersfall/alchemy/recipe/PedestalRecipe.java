@@ -5,13 +5,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.nbt.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -46,6 +45,8 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	private final List<AspectStack> aspects;
 	private final Ingredient catalyst;
 	private final ItemStack output;
+	private final NbtCompound nbt;
+	private final boolean nbtReplace;
 	private static final byte HORIZONTAL_RANGE = 5;
 	private static final byte VERTICAL_RANGE = 1;
 
@@ -101,13 +102,15 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 		return entities;
 	}
 
-	public PedestalRecipe(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research)
+	public PedestalRecipe(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research, NbtCompound nbt, boolean nbtReplace)
 	{
 		super(id, research);
 		this.inputs = inputs;
 		this.catalyst = catalyst;
 		this.output = output;
 		this.aspects = aspects;
+		this.nbt = nbt;
+		this.nbtReplace = nbtReplace;
 	}
 
 	@Override
@@ -127,6 +130,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 					{
 						if(inputs.get(i).test(entities.get(o).getStack()))
 						{
+							entities.remove(o);
 							found = true;
 							break;
 						}
@@ -145,7 +149,18 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	@Override
 	public ItemStack craft(PedestalEntity inv)
 	{
-		inv.setStack(this.output.copy());
+		ItemStack stack = this.output.copy();
+		stack.getOrCreateTag();
+		if(nbtReplace)
+		{
+			stack.setTag(nbt);
+		}
+		else
+		{
+			inv.getStack().getOrCreateTag().copyFrom(nbt);
+			stack.setTag(inv.getStack().getTag());
+		}
+		inv.setStack(stack);
 		inv.sync();
 		return output.copy();
 	}
@@ -231,7 +246,20 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 				}
 			}
 			Ingredient catalyst = Ingredient.fromJson(json.getAsJsonObject(CATALYST));
-			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(json.get(OUTPUT).getAsString())));
+			JsonObject outputJson = json.get("output").getAsJsonObject();
+			ItemStack output = new ItemStack(Registry.ITEM.get(Identifier.tryParse(outputJson.get("item").getAsString())));
+			NbtCompound nbt = null;
+			boolean nbtReplace = false;
+			if(outputJson.has("nbt"))
+			{
+				StringNbtReader reader = new StringNbtReader(new StringReader(outputJson.get("nbt").getAsString()));
+				nbtReplace = outputJson.get("replace").getAsBoolean();
+				try
+				{
+					nbt = reader.parseCompound();
+				}
+				catch(CommandSyntaxException e) { e.printStackTrace(); }
+			}
 			List<Identifier> research = new ArrayList<>();
 			JsonArray array = json.getAsJsonArray("research");
 			if(array != null)
@@ -240,7 +268,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 					research.add(Identifier.tryParse(element.getAsString()));
 				});
 			}
-			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research));
+			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research), nbt, nbtReplace);
 		}
 
 		@Override
@@ -267,7 +295,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 			{
 				research.add(buf.readIdentifier());
 			}
-			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research));
+			return new PedestalRecipe(id, ImmutableList.copyOf(list), ImmutableList.copyOf(aspects), catalyst, output, ImmutableList.copyOf(research), null, false);
 		}
 
 		@Override
@@ -295,7 +323,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 
 		public interface RecipeFactory<T extends Recipe<?>>
 		{
-			T create(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research);
+			T create(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research, NbtCompound nbt, boolean nbtReplace);
 		}
 	}
 

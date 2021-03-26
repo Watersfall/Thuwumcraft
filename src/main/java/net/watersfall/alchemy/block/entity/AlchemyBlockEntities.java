@@ -16,6 +16,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<JarEntity> JAR_ENTITY;
 	public static final BlockEntityType<PhialShelfEntity> PHIAL_SHELF_ENTITY;
 	public static final BlockEntityType<AspectPipeEntity> ASPECT_PIPE_ENTITY;
+	public static final BlockEntityType<CustomSpawnerEntity> CUSTOM_SPAWNER_ENTITY;
 
 	static
 	{
@@ -27,6 +28,7 @@ public class AlchemyBlockEntities
 		JAR_ENTITY = FabricBlockEntityTypeBuilder.create(JarEntity::new, AlchemyBlocks.JAR_BLOCK).build(null);
 		PHIAL_SHELF_ENTITY = FabricBlockEntityTypeBuilder.create(PhialShelfEntity::new, AlchemyBlocks.PHIAL_SHELF_BLOCK).build(null);
 		ASPECT_PIPE_ENTITY = FabricBlockEntityTypeBuilder.create(AspectPipeEntity::new, AlchemyBlocks.ASPECT_PIPE_BLOCK).build(null);
+		CUSTOM_SPAWNER_ENTITY = FabricBlockEntityTypeBuilder.create(CustomSpawnerEntity::new, AlchemyBlocks.CUSTOM_SPAWNER).build(null);
 	}
 
 	public static void register()
@@ -39,5 +41,6 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("jar_entity"), AlchemyBlockEntities.JAR_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("phial_shelf_entity"), PHIAL_SHELF_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("aspect_pipe_entity"), ASPECT_PIPE_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("custom_spawner_entity"), CUSTOM_SPAWNER_ENTITY);
 	}
 }

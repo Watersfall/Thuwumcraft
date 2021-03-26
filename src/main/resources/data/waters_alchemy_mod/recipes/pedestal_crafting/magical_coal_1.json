@@ -20,5 +20,7 @@
 	"catalyst": {
 		"item": "waters_alchemy_mod:magical_coal_0"
 	},
-	"output": "waters_alchemy_mod:magical_coal_1"
+	"output": {
+		"item": "waters_alchemy_mod:magical_coal_1"
+	}
 }

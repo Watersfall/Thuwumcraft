@@ -1,0 +1,22 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "minecraft:blaze_powder"
+		},
+		{
+			"item": "minecraft:redstone"
+		},
+		{
+			"item": "minecraft:blaze_powder"
+		}
+	],
+	"catalyst": {
+		"item": "waters_alchemy_mod:custom_spawner"
+	},
+	"output": {
+		"item": "waters_alchemy_mod:custom_spawner",
+		"nbt": "{MinSpawnDelay:10,MaxSpawnDelay:20,SpawnCount:1}",
+		"replace": false
+	}
+}

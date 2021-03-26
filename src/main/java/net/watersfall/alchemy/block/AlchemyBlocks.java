@@ -30,6 +30,8 @@ public class AlchemyBlocks
 	public static final AmethystClusterBlock EARTH_CRYSTAL_SMALL;
 	public static final AmethystClusterBlock EARTH_CRYSTAL_MEDIUM;
 	public static final AmethystClusterBlock EARTH_CRYSTAL_LARGE;
+	public static final Block SPAWNER_FRAME;
+	public static final CustomSpawnerBlock CUSTOM_SPAWNER;
 
 	static
 	{
@@ -55,6 +57,9 @@ public class AlchemyBlocks
 		EARTH_CRYSTAL_SMALL = new AmethystClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD));
 		EARTH_CRYSTAL_BLOCK = new AmethystBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK));
 		BUDDING_EARTH_CRYSTAL_BLOCK = new BuddingAmethystBlock(FabricBlockSettings.copyOf(Blocks.BUDDING_AMETHYST));
+		SPAWNER_FRAME = new Block(FabricBlockSettings.copyOf(Blocks.SPAWNER));
+		CUSTOM_SPAWNER = new CustomSpawnerBlock(FabricBlockSettings.copyOf(Blocks.SPAWNER));
+
 	}
 
 	public static void register()
@@ -81,6 +86,8 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_small"), EARTH_CRYSTAL_SMALL);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_block"), EARTH_CRYSTAL_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("earth_crystal_budding"), BUDDING_EARTH_CRYSTAL_BLOCK);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("spawner_frame"), SPAWNER_FRAME);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
 	}
 
 	private static <T extends Block> T register(T block, Identifier id)

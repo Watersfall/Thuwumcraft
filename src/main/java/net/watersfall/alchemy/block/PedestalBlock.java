@@ -76,7 +76,9 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 					{
 						if(!world.isClient)
 						{
-							entity.setStack(new ItemStack(playerStack.getItem()));
+							ItemStack newStack = playerStack.copy();
+							newStack.setCount(1);
+							entity.setStack(newStack);
 							playerStack.decrement(1);
 							if(!entityStack.isEmpty())
 							{

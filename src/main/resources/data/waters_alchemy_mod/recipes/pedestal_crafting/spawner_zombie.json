@@ -12,12 +12,11 @@
 		}
 	],
 	"catalyst": {
-		"item": "minecraft:coal"
+		"item": "waters_alchemy_mod:custom_spawner"
 	},
 	"output": {
-		"item": "waters_alchemy_mod:magical_coal_0"
-	},
-	"research": [
-		"waters_alchemy_mod:test_research_1"
-	]
+		"item": "waters_alchemy_mod:custom_spawner",
+		"nbt": "{SpawnData:{id:\"zombie\"}}",
+		"replace": false
+	}
 }

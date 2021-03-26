@@ -115,7 +115,8 @@ public class AlchemyModClient implements ClientModInitializer
 				AlchemyBlocks.EARTH_CRYSTAL_CLUSTER,
 				AlchemyBlocks.EARTH_CRYSTAL_LARGE,
 				AlchemyBlocks.EARTH_CRYSTAL_MEDIUM,
-				AlchemyBlocks.EARTH_CRYSTAL_SMALL
+				AlchemyBlocks.EARTH_CRYSTAL_SMALL,
+				AlchemyBlocks.CUSTOM_SPAWNER
 		);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
 		for(Item item : Registry.ITEM)

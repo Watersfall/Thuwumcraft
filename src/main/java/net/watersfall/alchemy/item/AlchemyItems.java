@@ -32,6 +32,11 @@ public class AlchemyItems
 	public static final Item PHIAL_SHELF_ITEM;
 	public static final ResearchBookItem RESEARCH_BOOK_ITEM;
 	public static final BlockItem ASPECT_PIPE_ITEM;
+	public static final Item NECROMANCY_SKULL;
+	public static final Item NECROMANCY_ARM;
+	public static final Item NECROMANCY_LEG;
+	public static final Item NECROMANCY_TORSO;
+	public static final BlockItem CUSTOM_SPAWNER;
 
 	static
 	{
@@ -53,6 +58,11 @@ public class AlchemyItems
 		PHIAL_SHELF_ITEM = new BlockItem(AlchemyBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
 		RESEARCH_BOOK_ITEM = new ResearchBookItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		ASPECT_PIPE_ITEM = new BlockItem(AlchemyBlocks.ASPECT_PIPE_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		NECROMANCY_SKULL = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		NECROMANCY_ARM = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		NECROMANCY_LEG = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		NECROMANCY_TORSO = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		CUSTOM_SPAWNER = new BlockItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	public static void register()
@@ -78,6 +88,11 @@ public class AlchemyItems
 		Registry.register(Registry.ITEM, AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("research_book"), RESEARCH_BOOK_ITEM);
 		Registry.register(Registry.ITEM, AlchemyMod.getId("aspect_pipe"), ASPECT_PIPE_ITEM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("necromancy_skull"), NECROMANCY_SKULL);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("necromancy_arm"), NECROMANCY_ARM);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("necromancy_leg"), NECROMANCY_LEG);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("necromancy_torso"), NECROMANCY_TORSO);
+		Registry.register(Registry.ITEM, AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
 	}
 
 	public static Supplier<ItemStack> displayGroupIcon()
