@@ -15,6 +15,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.LakeFeature;
 import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,18 +32,8 @@ import java.util.Random;
 @Mixin(LakeFeature.class)
 public class LakeFeatureMixin
 {
-	private static final BlockState[] fireCrystals = new BlockState[]{
-			AlchemyBlocks.FIRE_CRYSTAL_CLUSTER.getDefaultState(),
-			AlchemyBlocks.FIRE_CRYSTAL_LARGE.getDefaultState(),
-			AlchemyBlocks.FIRE_CRYSTAL_MEDIUM.getDefaultState(),
-			AlchemyBlocks.FIRE_CRYSTAL_SMALL.getDefaultState()
-	};
-	private static final BlockState[] waterCrystals = new BlockState[]{
-			AlchemyBlocks.WATER_CRYSTAL_CLUSTER.getDefaultState(),
-			AlchemyBlocks.WATER_CRYSTAL_LARGE.getDefaultState(),
-			AlchemyBlocks.WATER_CRYSTAL_MEDIUM.getDefaultState(),
-			AlchemyBlocks.WATER_CRYSTAL_SMALL.getDefaultState()
-	};
+	private static BlockState[] fireCrystals = null;
+	private static BlockState[] waterCrystals = null;
 
 	@Inject(method = "generate",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/StructureWorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", ordinal = 3, shift = At.Shift.AFTER, by = 1),
@@ -116,11 +107,29 @@ public class LakeFeatureMixin
 
 	private BlockState getFireCrystal(Random random, Direction direction)
 	{
+		if(fireCrystals == null)
+		{
+			fireCrystals = new BlockState[]{
+					Aspects.ASPECT_TO_CLUSTER.get(Aspects.FIRE).getDefaultState(),
+					Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.FIRE).getDefaultState(),
+					Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.FIRE).getDefaultState(),
+					Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.FIRE).getDefaultState()
+			};
+		}
 		return fireCrystals[random.nextInt(fireCrystals.length)].with(AmethystClusterBlock.FACING, direction);
 	}
 
 	private BlockState getWaterCrystal(Random random, Direction direction)
 	{
+		if(waterCrystals == null)
+		{
+			waterCrystals = new BlockState[]{
+					Aspects.ASPECT_TO_CLUSTER.get(Aspects.WATER).getDefaultState(),
+					Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.WATER).getDefaultState(),
+					Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.WATER).getDefaultState(),
+					Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.WATER).getDefaultState()
+			};
+		}
 		return waterCrystals[random.nextInt(waterCrystals.length)].with(AmethystClusterBlock.FACING, direction).with(Properties.WATERLOGGED, true);
 	}
 }

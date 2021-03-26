@@ -8,7 +8,7 @@ import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.watersfall.alchemy.api.aspect.Aspects;
 
 public class AlchemyFeatures
 {
@@ -24,10 +24,10 @@ public class AlchemyFeatures
 								new SimpleBlockStateProvider(Blocks.TUFF.getDefaultState()),
 								new SimpleBlockStateProvider(Blocks.SMOOTH_BASALT.getDefaultState()),
 								ImmutableList.of(
-										AlchemyBlocks.EARTH_CRYSTAL_SMALL.getDefaultState(),
-										AlchemyBlocks.EARTH_CRYSTAL_MEDIUM.getDefaultState(),
-										AlchemyBlocks.EARTH_CRYSTAL_LARGE.getDefaultState(),
-										AlchemyBlocks.EARTH_CRYSTAL_CLUSTER.getDefaultState()
+										Aspects.ASPECT_TO_CLUSTER.get(Aspects.EARTH).getDefaultState(),
+										Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.EARTH).getDefaultState(),
+										Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.EARTH).getDefaultState(),
+										Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.EARTH).getDefaultState()
 								)
 						),
 						new GeodeLayerThicknessConfig(1.7D, 2.2D, 3.2D, 4.2D),

@@ -1,0 +1,7 @@
+ {
+  "variants": {
+   "": {
+	   "model": "waters_alchemy_mod:block/cluster/water_crystal_block"
+   }
+  }
+ }
