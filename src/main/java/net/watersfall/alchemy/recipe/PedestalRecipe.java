@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.collection.DefaultedList;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
@@ -192,6 +193,15 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 		return this.id;
 	}
 
+	@Override
+	public DefaultedList<Ingredient> getPreviewInputs()
+	{
+		DefaultedList<Ingredient> list = DefaultedList.of();
+		list.add(this.catalyst);
+		list.addAll(this.inputs);
+		return list;
+	}
+
 	public List<Ingredient> getInputs()
 	{
 		return inputs;
@@ -212,6 +222,11 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	public RecipeType<?> getType()
 	{
 		return AlchemyRecipes.PEDESTAL_RECIPE;
+	}
+
+	public List<AspectStack> getAspects()
+	{
+		return this.aspects;
 	}
 
 	public static class Serializer implements RecipeSerializer<PedestalRecipe>

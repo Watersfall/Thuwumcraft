@@ -18,7 +18,7 @@
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:nekomancy_table"
+				"waters_alchemy_mod:pedestal_crafting/spider_egg"
 			],
 			"requires_complete": false
 		}

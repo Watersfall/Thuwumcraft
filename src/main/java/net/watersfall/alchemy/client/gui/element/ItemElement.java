@@ -65,10 +65,12 @@ public class ItemElement implements Element, Drawable, TooltipElement
 			if(isMouseOver(mouseX, mouseY))
 			{
 				MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[index], offsetX, offsetY);
+				MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, stacks[index], offsetX, offsetY);
 			}
 			else
 			{
 				MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[index], x, y);
+				MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, stacks[index], x, y);
 			}
 		}
 	}

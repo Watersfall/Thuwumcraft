@@ -35,6 +35,24 @@
 	"catalyst": {
 		"item": "waters_alchemy_mod:spawn_egg_base"
 	},
+	"aspects": [
+		{
+			"aspect": "waters_alchemy_mod:air",
+			"count": 20
+		},
+		{
+			"aspect": "waters_alchemy_mod:earth",
+			"count": 20
+		},
+		{
+			"aspect": "waters_alchemy_mod:fire",
+			"count": 20
+		},
+		{
+			"aspect": "waters_alchemy_mod:water",
+			"count": 20
+		}
+	],
 	"output": {
 		"item": "minecraft:spider_spawn_egg"
 	}
