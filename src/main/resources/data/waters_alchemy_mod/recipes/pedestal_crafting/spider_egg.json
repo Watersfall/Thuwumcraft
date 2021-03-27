@@ -33,7 +33,7 @@
 		}
 	],
 	"catalyst": {
-		"item": "minecraft:egg"
+		"item": "waters_alchemy_mod:spawn_egg_base"
 	},
 	"output": {
 		"item": "minecraft:spider_spawn_egg"

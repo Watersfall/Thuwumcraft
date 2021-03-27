@@ -42,6 +42,7 @@ public class AlchemyItems
 	public static final Item NECROMANCY_HEART;
 	public static final Item NECROMANCY_RIBCAGE;
 	public static final BlockItem CUSTOM_SPAWNER;
+	public static final Item SPAWN_EGG_BASE;
 
 	static
 	{
@@ -73,6 +74,7 @@ public class AlchemyItems
 		NECROMANCY_HEART = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		NECROMANCY_RIBCAGE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		CUSTOM_SPAWNER = new BlockItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		SPAWN_EGG_BASE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	public static void register()
@@ -104,6 +106,7 @@ public class AlchemyItems
 		register(AlchemyMod.getId("necromancy_heart"), NECROMANCY_HEART);
 		register(AlchemyMod.getId("necromancy_ribcage"), NECROMANCY_RIBCAGE);
 		register(AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
+		register(AlchemyMod.getId("spawn_egg_base"), SPAWN_EGG_BASE);
 	}
 
 	private static final List<Item> items = new ArrayList<>();
