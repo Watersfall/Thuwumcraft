@@ -1,0 +1,29 @@
+{
+	"type": "waters_alchemy_mod:nekomancy_recipe",
+	"pattern": [
+		"LLL",
+		"LXL",
+		"LLL"
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:spider_eye"
+		},
+		"L": {
+			"item": "waters_alchemy_mod:necromancy_leg"
+		}
+	},
+	"result": {
+		"item": "minecraft:spider_spawn_egg"
+	},
+	"shards": [
+		{
+			"aspect": "waters_alchemy_mod:air",
+			"count": 8
+		},
+		{
+			"aspect": "waters_alchemy_mod:fire",
+			"count": 8
+		}
+	]
+}

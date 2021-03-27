@@ -60,7 +60,7 @@ public interface BasicInventory extends Inventory
 	@Override
 	default int getMaxCountPerStack()
 	{
-		return 0;
+		return 64;
 	}
 
 	@Override

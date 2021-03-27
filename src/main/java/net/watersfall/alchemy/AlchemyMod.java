@@ -77,6 +77,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
+import net.watersfall.alchemy.screen.NekomancyTableHandler;
 import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.watersfall.alchemy.world.AlchemyFeatures;
@@ -88,6 +89,7 @@ public class AlchemyMod implements ModInitializer
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
 	public static final ScreenHandlerType<ResearchBookHandler> RESEARCH_BOOK_HANDLER;
+	public static final ScreenHandlerType<NekomancyTableHandler> NEKOMANCY_TABLE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 	public static final BlockApiLookup<AspectContainer, Direction> API = BlockApiLookup.get(AlchemyMod.getId("aspect_container"), AspectContainer.class, Direction.class);
 
@@ -96,6 +98,7 @@ public class AlchemyMod implements ModInitializer
 		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
 		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
 		RESEARCH_BOOK_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), ResearchBookHandler::new);
+		NEKOMANCY_TABLE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("nekomancy_handler"), NekomancyTableHandler::new);
 		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
 			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);

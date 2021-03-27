@@ -18,6 +18,7 @@ public class AlchemyBlocks
 	public static final AspectPipeBlock ASPECT_PIPE_BLOCK;
 	public static final Block SPAWNER_FRAME;
 	public static final CustomSpawnerBlock CUSTOM_SPAWNER;
+	public static final NekomancyBlock NEKOMANCY_TABLE;
 
 	static
 	{
@@ -31,7 +32,7 @@ public class AlchemyBlocks
 		ASPECT_PIPE_BLOCK = new AspectPipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque());
 		SPAWNER_FRAME = new Block(FabricBlockSettings.copyOf(Blocks.SPAWNER));
 		CUSTOM_SPAWNER = new CustomSpawnerBlock(FabricBlockSettings.copyOf(Blocks.SPAWNER));
-
+		NEKOMANCY_TABLE = new NekomancyBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE));
 	}
 
 	public static void register()
@@ -46,6 +47,7 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("aspect_pipe"), ASPECT_PIPE_BLOCK);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("spawner_frame"), SPAWNER_FRAME);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("nekomancy_table"), NEKOMANCY_TABLE);
 	}
 
 	private static <T extends Block> T register(T block, Identifier id)

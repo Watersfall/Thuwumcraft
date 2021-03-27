@@ -30,6 +30,7 @@ import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
+import net.watersfall.alchemy.client.gui.NekomancyTableScreen;
 import net.watersfall.alchemy.client.gui.ResearchBookScreen;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
@@ -102,6 +103,7 @@ public class AlchemyModClient implements ClientModInitializer
 		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(AlchemyMod.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
+		ScreenRegistry.register(AlchemyMod.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), AlchemyBlocks.CUSTOM_SPAWNER);

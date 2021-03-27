@@ -17,6 +17,7 @@ public class AlchemyRecipes
 	public static final RecipeType<CrucibleRecipe> CRUCIBLE_RECIPE;
 	public static final RecipeType<ResearchUnlockedShapedRecipe> RESEARCH_UNLOCKED_SHAPED_RECIPE;
 	public static final RecipeType<ResearchUnlockedShapelessRecipe> RESEARCH_UNLOCKED_SHAPELESS_RECIPE;
+	public static final RecipeType<NekomancyRecipe> NEKOMANCY_RECIPE;
 	public static final RecipeSerializer<CauldronIngredient> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<CauldronItemRecipe> CAULDRON_ITEM_RECIPE_SERIALIZER;
@@ -26,6 +27,7 @@ public class AlchemyRecipes
 	public static final RecipeSerializer<CrucibleRecipe> CRUCIBLE_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<ResearchUnlockedShapedRecipe> RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<ResearchUnlockedShapelessRecipe> RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<NekomancyRecipe> NEKOMANCY_RECIPE_SERIALIZER;
 	
 	static 
 	{
@@ -38,6 +40,7 @@ public class AlchemyRecipes
 		CRUCIBLE_RECIPE = getRecipeType("crucible_recipe");
 		RESEARCH_UNLOCKED_SHAPED_RECIPE = getRecipeType("research_unlocked_shaped_recipe");
 		RESEARCH_UNLOCKED_SHAPELESS_RECIPE = getRecipeType("research_unlocked_shapeless_recipe");
+		NEKOMANCY_RECIPE = getRecipeType("nekomancy_recipe");
 		CAULDRON_INGREDIENTS_SERIALIZER = new CauldronIngredient.Serializer(CauldronIngredient::new);
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new);
 		CAULDRON_ITEM_RECIPE_SERIALIZER = new CauldronItemRecipe.Serializer(CauldronItemRecipe::new);
@@ -47,6 +50,7 @@ public class AlchemyRecipes
 		CRUCIBLE_RECIPE_SERIALIZER = new CrucibleRecipe.Serializer(CrucibleRecipe::new);
 		RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER = new ResearchUnlockedShapedRecipe.Serializer();
 		RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER = new ResearchUnlockedShapelessRecipe.Serializer();
+		NEKOMANCY_RECIPE_SERIALIZER = new NekomancyRecipe.Serializer();
 	}
 
 	public static void register()
@@ -60,6 +64,7 @@ public class AlchemyRecipes
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("crucible_recipe"), CRUCIBLE_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
@@ -69,6 +74,7 @@ public class AlchemyRecipes
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("crucible_recipe"), CRUCIBLE_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)
