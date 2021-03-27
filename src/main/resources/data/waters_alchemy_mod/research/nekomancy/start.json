@@ -1,0 +1,26 @@
+{
+	"icon": "waters_alchemy_mod:custom_spawner",
+	"category": "waters_alchemy_mod:nekomancy",
+	"x": 0,
+	"y": -6,
+	"complete_requirements": {
+		"inventory_consumed": [
+			"waters_alchemy_mod:necromancy_skull",
+			"waters_alchemy_mod:necromancy_arm",
+			"waters_alchemy_mod:necromancy_leg",
+			"waters_alchemy_mod:necromancy_ribcage",
+			"waters_alchemy_mod:necromancy_heart"
+		],
+		"inventory_required": [
+			"waters_alchemy_mod:nekomancy_table"
+		]
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:nekomancy_table"
+			],
+			"requires_complete": false
+		}
+	]
+}

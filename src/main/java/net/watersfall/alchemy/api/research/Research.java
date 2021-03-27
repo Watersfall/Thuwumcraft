@@ -95,17 +95,24 @@ public class Research
 
 	public Research(Identifier id, JsonObject json)
 	{
-		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research/", "").replace(".json", "").replace("/", "."));
-		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
+		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research/", "").replace(".json", ""));
+		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
 		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
-		this.tabs = new RecipeGroup[tabsArray.size()];
-		for(int i = 0; i < tabs.length; i++)
+		if(tabsArray != null)
 		{
-			tabs[i] = new RecipeGroup(tabsArray.get(i).getAsJsonObject());
+			this.tabs = new RecipeGroup[tabsArray.size()];
+			for(int i = 0; i < tabs.length; i++)
+			{
+				tabs[i] = new RecipeGroup(tabsArray.get(i).getAsJsonObject());
+			}
+		}
+		else
+		{
+			this.tabs = new RecipeGroup[0];
 		}
 		this.x = json.get("x").getAsInt();
 		this.y = json.get("y").getAsInt();

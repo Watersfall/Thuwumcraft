@@ -1,0 +1,17 @@
+{
+	"icon": "minecraft:redstone",
+	"category": "waters_alchemy_mod:nekomancy",
+	"x": 0,
+	"y": 3,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:nekomancy/spawner_crafting"
+		]
+	},
+	"complete_requirements": {
+		"inventory_consumed": [
+			"waters_alchemy_mod:custom_spawner",
+			"minecraft:diamond"
+		]
+	}
+}

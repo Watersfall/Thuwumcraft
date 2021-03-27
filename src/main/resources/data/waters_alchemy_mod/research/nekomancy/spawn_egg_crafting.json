@@ -1,0 +1,24 @@
+{
+	"icon": "waters_alchemy_mod:spawn_egg_base",
+	"category": "waters_alchemy_mod:nekomancy",
+	"x": 0,
+	"y": -3,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:nekomancy/start"
+		]
+	},
+	"complete_requirements": {
+		"inventory_required": [
+			"waters_alchemy_mod:spawn_egg_base"
+		]
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:pedestal_crafting/spawn_egg_base"
+			],
+			"requires_complete": false
+		}
+	]
+}

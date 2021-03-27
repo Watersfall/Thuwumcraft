@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"YYY",
+		"YXY",
+		"YYY"
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:stick"
+		},
+		"Y": {
+			"tag": "minecraft:planks"
+		}
+	},
+	"result": {
+		"item": "waters_alchemy_mod:nekomancy_table"
+	}
+}

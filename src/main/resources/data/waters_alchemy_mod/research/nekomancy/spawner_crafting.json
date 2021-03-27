@@ -1,0 +1,24 @@
+{
+	"icon": "waters_alchemy_mod:custom_spawner",
+	"category": "waters_alchemy_mod:nekomancy",
+	"x": 0,
+	"y": 0,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:nekomancy/spawn_egg_crafting"
+		]
+	},
+	"complete_requirements": {
+		"inventory_required": [
+			"waters_alchemy_mod:custom_spawner"
+		]
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:custom_spawner"
+			],
+			"requires_complete": false
+		}
+	]
+}
