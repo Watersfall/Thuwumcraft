@@ -1,0 +1,25 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "minecraft:diamond_block"
+		},
+		{
+			"item": "minecraft:gold_ingot"
+		},
+		{
+			"item": "minecraft:gold_ingot"
+		},
+		{
+			"item": "minecraft:gold_ingot"
+		}
+	],
+	"catalyst": {
+		"item": "minecraft:iron_block"
+	},
+	"output": {
+		"item": "waters_alchemy_mod:custom_spawner",
+		"nbt": "{delay:7200,min_delay:3600,max_delay:7200,min_spawn_count:1,max_spawn_count:1,max_nearby_entities:1,player_range:32}",
+		"replace": true
+	}
+}

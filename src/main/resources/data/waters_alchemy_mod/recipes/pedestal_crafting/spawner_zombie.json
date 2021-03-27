@@ -16,7 +16,7 @@
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",
-		"nbt": "{SpawnData:{id:\"zombie\"}}",
+		"nbt": "{mob:{Entity:{id:\"zombie\"}}}",
 		"replace": false
 	}
 }
