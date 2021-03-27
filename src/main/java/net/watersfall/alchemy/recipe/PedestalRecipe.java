@@ -151,14 +151,17 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	{
 		ItemStack stack = this.output.copy();
 		stack.getOrCreateTag();
-		if(nbtReplace)
+		if(nbt != null)
 		{
-			stack.setTag(nbt);
-		}
-		else
-		{
-			inv.getStack().getOrCreateTag().copyFrom(nbt);
-			stack.setTag(inv.getStack().getTag());
+			if(nbtReplace)
+			{
+				stack.setTag(nbt);
+			}
+			else
+			{
+				inv.getStack().getOrCreateTag().copyFrom(nbt);
+				stack.setTag(inv.getStack().getTag());
+			}
 		}
 		inv.setStack(stack);
 		inv.sync();

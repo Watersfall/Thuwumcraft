@@ -1,0 +1,41 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "minecraft:spider_eye"
+		},
+		{
+			"item": "minecraft:spider_eye"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		},
+		{
+			"item": "waters_alchemy_mod:necromancy_leg"
+		}
+	],
+	"catalyst": {
+		"item": "minecraft:egg"
+	},
+	"output": {
+		"item": "minecraft:spider_spawn_egg"
+	}
+}
