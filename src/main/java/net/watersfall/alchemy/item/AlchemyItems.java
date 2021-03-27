@@ -39,7 +39,7 @@ public class AlchemyItems
 	public static final Item NECROMANCY_SKULL;
 	public static final Item NECROMANCY_ARM;
 	public static final Item NECROMANCY_LEG;
-	public static final Item NECROMANCY_TORSO;
+	public static final Item NECROMANCY_HEART;
 	public static final Item NECROMANCY_RIBCAGE;
 	public static final BlockItem CUSTOM_SPAWNER;
 
@@ -70,7 +70,7 @@ public class AlchemyItems
 		NECROMANCY_SKULL = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		NECROMANCY_ARM = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		NECROMANCY_LEG = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_TORSO = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		NECROMANCY_HEART = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		NECROMANCY_RIBCAGE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		CUSTOM_SPAWNER = new BlockItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 	}
@@ -101,7 +101,7 @@ public class AlchemyItems
 		register(AlchemyMod.getId("necromancy_skull"), NECROMANCY_SKULL);
 		register(AlchemyMod.getId("necromancy_arm"), NECROMANCY_ARM);
 		register(AlchemyMod.getId("necromancy_leg"), NECROMANCY_LEG);
-		register(AlchemyMod.getId("necromancy_torso"), NECROMANCY_TORSO);
+		register(AlchemyMod.getId("necromancy_heart"), NECROMANCY_HEART);
 		register(AlchemyMod.getId("necromancy_ribcage"), NECROMANCY_RIBCAGE);
 		register(AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
 	}

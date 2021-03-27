@@ -1,13 +1,16 @@
 package net.watersfall.alchemy;
 
+import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
+import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v1.FabricLootSupplier;
+import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
@@ -15,10 +18,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.entity.mob.SpiderEntity;
+import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
@@ -28,7 +40,6 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
@@ -36,12 +47,12 @@ import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.block.AspectContainer;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
+import net.watersfall.alchemy.api.tag.AlchemyEntityTags;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
@@ -69,12 +80,6 @@ import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.watersfall.alchemy.world.AlchemyFeatures;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class AlchemyMod implements ModInitializer
@@ -232,12 +237,33 @@ public class AlchemyMod implements ModInitializer
 				}
 			}
 		});
-		ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((world, killer, killed) -> {
-			if(killer.getType() == EntityType.PLAYER && killed instanceof MobEntity)
+		LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
+			if(id.getPath().startsWith("entities/"))
 			{
-
+				String[] path = id.getPath().split("/");
+				Optional<EntityType<?>> optional = EntityType.get(path[path.length - 1]);
+				if(optional.isPresent())
+				{
+					generateNecromancyDrop(AlchemyItems.NECROMANCY_SKULL, supplier, AlchemyEntityTags.DROPS_HEAD);
+					generateNecromancyDrop(AlchemyItems.NECROMANCY_ARM, supplier, AlchemyEntityTags.DROPS_ARM);
+					generateNecromancyDrop(AlchemyItems.NECROMANCY_LEG, supplier, AlchemyEntityTags.DROPS_LEG);
+					generateNecromancyDrop(AlchemyItems.NECROMANCY_HEART, supplier, AlchemyEntityTags.DROPS_HEART);
+					generateNecromancyDrop(AlchemyItems.NECROMANCY_RIBCAGE, supplier, AlchemyEntityTags.DROPS_RIBCAGE);
+				}
 			}
-		});
+		}));
+	}
+
+	private static void generateNecromancyDrop(Item item, FabricLootSupplierBuilder supplier, Tag<EntityType<?>> tag)
+	{
+		FabricLootPoolBuilder pool = FabricLootPoolBuilder.builder()
+				.rolls(ConstantLootNumberProvider.create(1))
+				.withEntry(ItemEntry.builder(item)
+				.conditionally(RandomChanceWithLootingLootCondition.builder(0.05F, 0.05F))
+				.conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().type(tag)))
+				.build()
+				);
+		supplier.withPool(pool.build());
 	}
 
 	private static void registerAspects()
@@ -285,6 +311,7 @@ public class AlchemyMod implements ModInitializer
 		registerMultiBlocks();
 		registerAbilities();
 		AlchemyFeatures.register();
+		AlchemyEntityTags.register();
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());

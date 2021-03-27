@@ -1,0 +1,31 @@
+{
+	"replace": false,
+	"values": [
+		"minecraft:cave_spider",
+		"minecraft:creeper",
+		"minecraft:drowned",
+		"minecraft:enderman",
+		"minecraft:evoker",
+		"minecraft:giant",
+		"minecraft:hoglin",
+		"minecraft:husk",
+		"minecraft:illusioner",
+		"minecraft:piglin",
+		"minecraft:piglin_brute",
+		"minecraft:pillager",
+		"minecraft:ravager",
+		"minecraft:skeleton",
+		"minecraft:spider",
+		"minecraft:stray",
+		"minecraft:villager",
+		"minecraft:vindicator",
+		"minecraft:wandering_trader",
+		"minecraft:witch",
+		"minecraft:wither_skeleton",
+		"minecraft:zoglin",
+		"minecraft:zombie",
+		"minecraft:zombie_villager",
+		"minecraft:zombified_piglin",
+		"minecraft:player"
+	]
+}
