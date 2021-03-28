@@ -68,6 +68,7 @@ public class ResearchCategory
 	{
 		buf.writeIdentifier(this.id);
 		buf.writeItemStack(this.icon);
+		buf.writeInt(this.index);
 		return buf;
 	}
 
@@ -76,6 +77,7 @@ public class ResearchCategory
 		this.id = buf.readIdentifier();
 		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.icon = buf.readItemStack();
+		this.index = buf.readInt();
 	}
 
 	public static class Registry

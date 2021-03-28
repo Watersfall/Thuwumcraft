@@ -5,10 +5,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -20,13 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ResearchUnlockedShapedRecipe extends ShapedRecipe implements ResearchRequiredCraftingRecipe
+public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRecipe, Recipe<CraftingInventory>
 {
+	private final Identifier id;
 	private final List<Identifier> research;
+	private final ShapedRecipe recipe;
 
-	public ResearchUnlockedShapedRecipe(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output, List<Identifier> research)
+	public ResearchUnlockedShapedRecipe(Identifier id, ShapedRecipe recipe, List<Identifier> research)
 	{
-		super(id, group, width, height, ingredients, output);
+		this.id = id;
+		this.recipe = recipe;
 		this.research = research;
 	}
 
@@ -37,9 +37,27 @@ public class ResearchUnlockedShapedRecipe extends ShapedRecipe implements Resear
 	}
 
 	@Override
+	public ItemStack craft(CraftingInventory inv)
+	{
+		return recipe.craft(inv);
+	}
+
+	@Override
+	public boolean fits(int width, int height)
+	{
+		return recipe.fits(width, height);
+	}
+
+	@Override
+	public ItemStack getOutput()
+	{
+		return recipe.getOutput();
+	}
+
+	@Override
 	public boolean matches(CraftingInventory craftingInventory, World world, PlayerResearchAbility ability)
 	{
-		if(!super.matches(craftingInventory, world))
+		if(!recipe.matches(craftingInventory, world))
 		{
 			return false;
 		}
@@ -63,9 +81,21 @@ public class ResearchUnlockedShapedRecipe extends ShapedRecipe implements Resear
 	}
 
 	@Override
+	public Identifier getId()
+	{
+		return this.id;
+	}
+
+	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
 		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
+	}
+
+	@Override
+	public RecipeType<?> getType()
+	{
+		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE;
 	}
 
 	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapedRecipe>
@@ -73,51 +103,29 @@ public class ResearchUnlockedShapedRecipe extends ShapedRecipe implements Resear
 		@Override
 		public ResearchUnlockedShapedRecipe read(Identifier id, JsonObject json)
 		{
-			String group = JsonHelper.getString(json, "group", "");
-			Map<String, Ingredient> components = ShapedRecipe.getComponents(JsonHelper.getObject(json, "key"));
-			String[] pattern = ShapedRecipe.combinePattern(ShapedRecipe.getPattern(JsonHelper.getArray(json, "pattern")));
-			int width = pattern[0].length();
-			int height = pattern.length;
-			DefaultedList<Ingredient> ingredients = ShapedRecipe.getIngredients(pattern, components, width, height);
-			ItemStack output = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"));
+			ShapedRecipe recipe = RecipeSerializer.SHAPED.read(id, json);
 			List<Identifier> research = new ArrayList<>();
 			JsonHelper.getArray(json, "research", new JsonArray()).forEach(element -> research.add(Identifier.tryParse(element.getAsString())));
-			return new ResearchUnlockedShapedRecipe(id, group, width, height, ingredients, output, research);
+			return new ResearchUnlockedShapedRecipe(id, recipe, research);
 		}
 
 		@Override
 		public ResearchUnlockedShapedRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			int width = buf.readVarInt();
-			int height = buf.readVarInt();
-			String group = buf.readString();
-			DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
-			for(int i = 0; i < ingredients.size(); i++)
-			{
-				ingredients.set(i, Ingredient.fromPacket(buf));
-			}
-			ItemStack output = buf.readItemStack();
+			ShapedRecipe recipe = RecipeSerializer.SHAPED.read(id, buf);
 			int size = buf.readInt();
 			List<Identifier> research = new ArrayList<>();
 			for(int i = 0; i < size; i++)
 			{
 				research.add(buf.readIdentifier());
 			}
-			return new ResearchUnlockedShapedRecipe(id, group, width, height, ingredients, output, research);
+			return new ResearchUnlockedShapedRecipe(id, recipe, research);
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, ResearchUnlockedShapedRecipe recipe)
 		{
-			ShapedRecipeAccessor accessor = (ShapedRecipeAccessor)recipe;
-			buf.writeVarInt(accessor.getWidth());
-			buf.writeVarInt(accessor.getHeight());
-			buf.writeString(accessor.getGroup());
-			for(Ingredient ingredient : accessor.getInputs())
-			{
-				ingredient.write(buf);
-			}
-			buf.writeItemStack(accessor.getOutput());
+			RecipeSerializer.SHAPED.write(buf, recipe.recipe);
 			buf.writeInt(recipe.research.size());
 			for(int i = 0; i < recipe.research.size(); i++)
 			{

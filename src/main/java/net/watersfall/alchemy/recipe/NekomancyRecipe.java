@@ -132,13 +132,25 @@ public class NekomancyRecipe implements Recipe<NekomancerTableInventory>
 		@Override
 		public NekomancyRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			return null;
+			ShapedRecipe recipe = RecipeSerializer.SHAPED.read(id, buf);
+			int size = buf.readInt();
+			List<ItemStack> shards = new ArrayList<>();
+			for(int i = 0; i < size; i++)
+			{
+				shards.add(buf.readItemStack());
+			}
+			return new NekomancyRecipe(id, recipe, shards, recipe.getOutput());
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, NekomancyRecipe recipe)
 		{
-
+			RecipeSerializer.SHAPED.write(buf, recipe.recipe);
+			buf.writeInt(recipe.crystals.size());
+			for(int i = 0; i < recipe.crystals.size(); i++)
+			{
+				buf.writeItemStack(recipe.crystals.get(i));
+			}
 		}
 
 		public interface RecipeFactory<T extends Recipe<?>>

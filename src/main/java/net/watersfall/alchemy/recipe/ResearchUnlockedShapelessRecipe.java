@@ -18,14 +18,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ResearchUnlockedShapelessRecipe extends ShapelessRecipe implements ResearchRequiredCraftingRecipe
+public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCraftingRecipe, Recipe<CraftingInventory>
 {
+	private final Identifier id;
 	private final List<Identifier> research;
+	private final ShapelessRecipe recipe;
 
-	public ResearchUnlockedShapelessRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input, List<Identifier> research)
+	public ResearchUnlockedShapelessRecipe(Identifier id, ShapelessRecipe recipe, List<Identifier> research)
 	{
-		super(id, group, output, input);
+		this.id = id;
 		this.research = research;
+		this.recipe = recipe;
 	}
 
 	@Override
@@ -35,9 +38,27 @@ public class ResearchUnlockedShapelessRecipe extends ShapelessRecipe implements 
 	}
 
 	@Override
+	public ItemStack craft(CraftingInventory inv)
+	{
+		return this.recipe.craft(inv);
+	}
+
+	@Override
+	public boolean fits(int width, int height)
+	{
+		return this.recipe.fits(width, height);
+	}
+
+	@Override
+	public ItemStack getOutput()
+	{
+		return this.recipe.getOutput();
+	}
+
+	@Override
 	public boolean matches(CraftingInventory craftingInventory, World world, PlayerResearchAbility ability)
 	{
-		if(!super.matches(craftingInventory, world))
+		if(!recipe.matches(craftingInventory, world))
 		{
 			return false;
 		}
@@ -61,9 +82,21 @@ public class ResearchUnlockedShapelessRecipe extends ShapelessRecipe implements 
 	}
 
 	@Override
+	public Identifier getId()
+	{
+		return this.id;
+	}
+
+	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
 		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+	}
+
+	@Override
+	public RecipeType<?> getType()
+	{
+		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE;
 	}
 
 	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapelessRecipe>
@@ -71,55 +104,29 @@ public class ResearchUnlockedShapelessRecipe extends ShapelessRecipe implements 
 		@Override
 		public ResearchUnlockedShapelessRecipe read(Identifier id, JsonObject json)
 		{
-			String string = JsonHelper.getString(json, "group", "");
-			DefaultedList<Ingredient> defaultedList = ShapelessRecipe.Serializer.getIngredients(JsonHelper.getArray(json, "ingredients"));
-			if (defaultedList.isEmpty())
-			{
-				throw new JsonParseException("No ingredients for shapeless recipe");
-			}
-			else if (defaultedList.size() > 9)
-			{
-				throw new JsonParseException("Too many ingredients for shapeless recipe");
-			}
-			else
-			{
-				ItemStack itemStack = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"));
-				List<Identifier> research = new ArrayList<>();
-				JsonHelper.getArray(json, "research", new JsonArray()).forEach(element -> research.add(Identifier.tryParse(element.getAsString())));
-				return new ResearchUnlockedShapelessRecipe(id, string, itemStack, defaultedList, research);
-			}
+			ShapelessRecipe recipe = RecipeSerializer.SHAPELESS.read(id, json);
+			List<Identifier> research = new ArrayList<>();
+			JsonHelper.getArray(json, "research", new JsonArray()).forEach(element -> research.add(Identifier.tryParse(element.getAsString())));
+			return new ResearchUnlockedShapelessRecipe(id, recipe, research);
 		}
 
 		@Override
 		public ResearchUnlockedShapelessRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			String string = buf.readString();
-			int i = buf.readVarInt();
-			DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(i, Ingredient.EMPTY);
-			for(int j = 0; j < defaultedList.size(); ++j)
-			{
-				defaultedList.set(j, Ingredient.fromPacket(buf));
-			}
-			ItemStack itemStack = buf.readItemStack();int size = buf.readInt();
+			ShapelessRecipe recipe = RecipeSerializer.SHAPELESS.read(id, buf);
 			List<Identifier> research = new ArrayList<>();
-			for(i = 0; i < size; i++)
+			int size = buf.readInt();
+			for(int i = 0; i < size; i++)
 			{
 				research.add(buf.readIdentifier());
 			}
-			return new ResearchUnlockedShapelessRecipe(id, string, itemStack, defaultedList, research);
+			return new ResearchUnlockedShapelessRecipe(id, recipe, research);
 		}
 
 		@Override
 		public void write(PacketByteBuf buf, ResearchUnlockedShapelessRecipe recipe)
 		{
-			ShapelessRecipeAccessor accessor = (ShapelessRecipeAccessor)recipe;
-			buf.writeString(accessor.getGroup());
-			buf.writeVarInt(accessor.getInput().size());
-			for(Ingredient ingredient : accessor.getInput())
-			{
-				ingredient.write(buf);
-			}
-			buf.writeItemStack(accessor.getOutput());
+			RecipeSerializer.SHAPELESS.write(buf, recipe.recipe);
 			buf.writeInt(recipe.research.size());
 			for(int i = 0; i < recipe.research.size(); i++)
 			{
