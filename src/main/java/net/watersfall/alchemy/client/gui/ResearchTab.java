@@ -141,6 +141,16 @@ public class ResearchTab extends Screen
 		}
 		matrices.push();
 		matrices.translate(0, 0, 51F);
+		this.buttons.get(0).visible = true;
+		this.buttons.get(1).visible = true;
+		if(page.getValue() <= page.getMin())
+		{
+			this.buttons.get(0).visible = false;
+		}
+		if(page.getValue() >= page.getMax())
+		{
+			this.buttons.get(1).visible = false;
+		}
 		super.render(matrices, mouseX, mouseY, delta);
 		matrices.pop();
 	}
