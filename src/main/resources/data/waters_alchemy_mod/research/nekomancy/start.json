@@ -18,7 +18,14 @@
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:pedestal_crafting/spider_egg"
+				"waters_alchemy_mod:pedestal_crafting/spider_egg",
+				"waters_alchemy_mod:pedestal_crafting/custom_spawner",
+				"minecraft:blaze_powder",
+				"waters_alchemy_mod:pedestal_crafting/custom_spawner",
+				"minecraft:blaze_powder",
+				"minecraft:blaze_powder",
+				"minecraft:blaze_powder",
+				"waters_alchemy_mod:pedestal_crafting/custom_spawner"
 			],
 			"requires_complete": false
 		}

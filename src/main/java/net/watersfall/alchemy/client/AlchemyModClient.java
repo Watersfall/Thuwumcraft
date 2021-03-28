@@ -169,7 +169,7 @@ public class AlchemyModClient implements ClientModInitializer
 				items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
-			return new RecipeElement(items);
+			return new RecipeElement(items, true);
 		}));
 		RecipeTabType.REGISTRY.register(AlchemyRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
@@ -194,7 +194,7 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
-			return new RecipeElement(items);
+			return new RecipeElement(items, false);
 		}));
 	}
 }

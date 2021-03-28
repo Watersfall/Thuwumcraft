@@ -17,6 +17,7 @@ import net.watersfall.alchemy.api.item.AspectItem;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.client.gui.element.ItemElement;
 import net.watersfall.alchemy.client.gui.element.RecipeElement;
+import net.watersfall.alchemy.client.gui.element.RecipePage;
 import net.watersfall.alchemy.client.util.PageCounter;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -39,6 +40,7 @@ public class ResearchTab extends Screen
 	private PageCounter page;
 	private final boolean requiresComplete;
 	private final ItemStack[] items;
+	private RecipePage[] recipePages;
 
 	protected ResearchTab(Research.RecipeGroup group, ResearchScreen parent)
 	{
@@ -86,21 +88,42 @@ public class ResearchTab extends Screen
 		this.x = (width - textureWidth) / 2;
 		this.y = (height - textureHeight) / 2;
 		int offsetY = y + (this.textureHeight / 4) - (60 / 2);
+		int offsetY2 = y + (this.textureHeight / 4) * 3 - (60 / 2);
+		int count = 0;
 		for(int i = 0; i < recipeIds.length; i++)
 		{
 			recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
-			if(i % 2 == 0)
+			if(recipeElements[i].twoPage && i + 1 < recipes.length)
 			{
-				offsetY = y + (this.textureHeight / 4) * 3 - (60 / 2);
+				i++;
+				recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
+				if(!recipeElements[i].twoPage)
+				{
+					count++;
+				}
+				else
+				{
+					recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY2, textureWidth, textureHeight);
+				}
 			}
-			else
-			{
-				offsetY = y + (this.textureHeight / 4) - (60 / 2);
-			}
+			count++;
 		}
 		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.height - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
 		this.addButton(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.height - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
-		this.page = new PageCounter(0, 0, recipeElements.length / 2);
+		this.recipePages = new RecipePage[count];
+		count = 0;
+		for(int i = 0; i < recipeElements.length; i++)
+		{
+			if(recipeElements[i].twoPage && i + 1 < recipeElements.length && recipeElements[i + 1].twoPage)
+			{
+				recipePages[count++] = new RecipePage(recipeElements[i], recipeElements[++i]);
+			}
+			else
+			{
+				recipePages[count++] = new RecipePage(recipeElements[i]);
+			}
+		}
+		this.page = new PageCounter(0, 0, recipePages.length - 1);
 		this.parent.init();
 	}
 
@@ -108,13 +131,10 @@ public class ResearchTab extends Screen
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.drawBackground(matrices, delta, mouseX, mouseY);
-		for(int i = page.getValue() * 2; i < this.recipeElements.length && i < page.getValue() * 2 + 2; i++)
+		this.recipePages[page.getValue()].render(matrices, mouseX, mouseY, delta);
+		if(recipePages[page.getValue()].isMouseOver(mouseX, mouseY))
 		{
-			this.recipeElements[i].render(matrices, mouseX, mouseY, delta);
-			if(recipeElements[i].isMouseOver(mouseX, mouseY))
-			{
-				this.renderTooltip(matrices, this.recipeElements[i].getTooltip(mouseX, mouseY), mouseX, mouseY);
-			}
+			this.renderTooltip(matrices, this.recipePages[page.getValue()].getTooltip(mouseX, mouseY), mouseX, mouseY);
 		}
 		matrices.push();
 		matrices.translate(0, 0, 51F);

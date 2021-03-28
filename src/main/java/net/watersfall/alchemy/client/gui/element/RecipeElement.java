@@ -13,10 +13,12 @@ import java.util.List;
 public class RecipeElement implements Element, Drawable, TooltipElement
 {
 	public ItemElement[] items;
+	public boolean twoPage;
 
-	public RecipeElement(ItemElement[] items)
+	public RecipeElement(ItemElement[] items, boolean twoPage)
 	{
 		this.items = items;
+		this.twoPage = twoPage;
 	}
 
 	@Override
