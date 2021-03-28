@@ -41,6 +41,7 @@ public class ResearchTab extends Screen
 	private final boolean requiresComplete;
 	private final ItemStack[] items;
 	private RecipePage[] recipePages;
+	private boolean researchButtonOriginalState;
 
 	protected ResearchTab(Research.RecipeGroup group, ResearchScreen parent)
 	{
@@ -125,6 +126,8 @@ public class ResearchTab extends Screen
 		}
 		this.page = new PageCounter(0, 0, recipePages.length - 1);
 		this.parent.init();
+		researchButtonOriginalState = this.parent.getResearchButton().isEnabled();
+		this.parent.getResearchButton().disable();
 	}
 
 	@Override
@@ -145,6 +148,9 @@ public class ResearchTab extends Screen
 	@Override
 	public void onClose()
 	{
+		this.parent.childOpen = false;
+		if(researchButtonOriginalState)
+			this.parent.getResearchButton().enable();
 		this.client.openScreen(parent);
 	}
 
@@ -174,5 +180,10 @@ public class ResearchTab extends Screen
 	public Research getResearch()
 	{
 		return this.parent.getResearch();
+	}
+
+	public ResearchScreen getParent()
+	{
+		return this.parent;
 	}
 }

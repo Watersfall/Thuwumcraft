@@ -46,6 +46,7 @@ public class ResearchScreen extends Screen
 	private ResearchButton researchButton;
 	private List<OrderedText> lines;
 	private List<OrderedText> completedLines;
+	public boolean childOpen = false;
 
 	public ResearchScreen(ResearchBookScreen parent, Research research)
 	{
@@ -135,11 +136,14 @@ public class ResearchScreen extends Screen
 				((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
 			}
 		}
-		for(int i = 0; i < this.children.size(); i++)
+		if(!childOpen)
 		{
-			if(this.children.get(i).isMouseOver(mouseX, mouseY) && this.children.get(i) instanceof TooltipElement)
+			for(int i = 0; i < this.children.size(); i++)
 			{
-				this.renderTooltip(matrices, ((TooltipElement)this.children.get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
+				if(this.children.get(i).isMouseOver(mouseX, mouseY) && this.children.get(i) instanceof TooltipElement)
+				{
+					this.renderTooltip(matrices, ((TooltipElement)this.children.get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
+				}
 			}
 		}
 	}
@@ -169,5 +173,10 @@ public class ResearchScreen extends Screen
 	public Research getResearch()
 	{
 		return this.research;
+	}
+
+	public ResearchButton getResearchButton()
+	{
+		return this.researchButton;
 	}
 }

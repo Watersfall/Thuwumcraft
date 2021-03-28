@@ -30,6 +30,7 @@ public class RecipeTabElement extends TabElement
 			{
 				MinecraftClient.getInstance().player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 			}
+			this.tab.getParent().childOpen = true;
 			MinecraftClient.getInstance().openScreen(this.tab);
 			return true;
 		}

@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.client.gui.element;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.util.math.MatrixStack;
@@ -24,10 +25,12 @@ public class RecipeElement implements Element, Drawable, TooltipElement
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		MinecraftClient.getInstance().getItemRenderer().zOffset += 100;
 		for(int i = 0; i < items.length; i++)
 		{
 			items[i].render(matrices, mouseX, mouseY, delta);
 		}
+		MinecraftClient.getInstance().getItemRenderer().zOffset -= 100;
 	}
 
 	@Override

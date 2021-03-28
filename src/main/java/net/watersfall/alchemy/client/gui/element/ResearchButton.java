@@ -83,4 +83,9 @@ public class ResearchButton implements Element, Drawable
 	{
 		this.enabled = false;
 	}
+
+	public boolean isEnabled()
+	{
+		return this.enabled;
+	}
 }
