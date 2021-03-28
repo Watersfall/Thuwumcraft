@@ -1,5 +1,6 @@
 package net.watersfall.alchemy.block;
 
+import net.minecraft.recipe.Recipe;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.entity.BrewingCauldronEntity;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
@@ -30,23 +31,6 @@ import java.util.Optional;
 
 public class BrewingCauldronBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
-	public static final HashMap<Item, CauldronIngredient> INGREDIENTS = new HashMap<>();
-
-	public static CauldronIngredient getIngredient(Item item, RecipeManager manager)
-	{
-		if(!INGREDIENTS.containsKey(item))
-		{
-			manager.listAllOfType(AlchemyRecipes.CAULDRON_INGREDIENTS).forEach((recipe) -> {
-				if(recipe.getInput().getItem() == item)
-				{
-					INGREDIENTS.put(item, recipe);
-					return;
-				}
-			});
-		}
-		return INGREDIENTS.get(item);
-	}
-
 	public BrewingCauldronBlock(Settings settings)
 	{
 		super(settings);
@@ -54,9 +38,10 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
 	{
-		BrewingCauldronEntity cauldron = (BrewingCauldronEntity) world.getBlockEntity(pos);
-		if(cauldron != null)
+		BlockEntity test = world.getBlockEntity(pos);
+		if(test instanceof BrewingCauldronEntity)
 		{
+			BrewingCauldronEntity cauldron = (BrewingCauldronEntity)test;
 			if(entity instanceof LivingEntity)
 			{
 				if(!world.isClient && entity.isOnFire() && cauldron.getWaterLevel() > 333)
@@ -113,13 +98,13 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 				{
 					if(!world.isClient)
 					{
-						CauldronIngredient recipe = getIngredient(entity.getStack(0).getItem(), world.getRecipeManager());
-						if(recipe == null)
+						Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
+						if(!optional.isPresent())
 						{
 							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
 							return ActionResult.FAIL;
 						}
-						ItemStack stack = recipe.craft(entity, typeRecipe, entity.getWorld());
+						ItemStack stack = optional.get().craft(entity, typeRecipe, world);
 						if(inputStack == stack)
 						{
 							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);

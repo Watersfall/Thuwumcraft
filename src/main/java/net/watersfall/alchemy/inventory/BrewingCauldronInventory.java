@@ -9,6 +9,7 @@ import net.minecraft.util.collection.DefaultedList;
 public interface BrewingCauldronInventory extends Inventory
 {
 	DefaultedList<ItemStack> getContents();
+
 	DefaultedList<ItemStack> getInput();
 
 	@Override
@@ -142,5 +143,11 @@ public interface BrewingCauldronInventory extends Inventory
 			}
 		}
 		return count;
+	}
+
+	default BrewingCauldronInventory withInput(int slot)
+	{
+		this.setInput(this.getStack(slot));
+		return this;
 	}
 }

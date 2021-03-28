@@ -9,7 +9,6 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
@@ -26,7 +25,7 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 
 	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output, Inventory fuel, PropertyDelegate properties)
 	{
-		super(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, syncId);
+		super(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, syncId);
 		this.input = input;
 		this.output = output;
 		this.properties = properties;

@@ -1,8 +1,12 @@
 package net.watersfall.alchemy.util;
 
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.world.World;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
 import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
+import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffect;
@@ -34,15 +38,17 @@ public class StatusEffectHelper
 	public static final Text NO_EFFECT = new TranslatableText("text.waters_alchemy_mod.tooltip.no_effect").formatted(Formatting.GRAY);
 	public static final Text APPLIED_EFFECTS = new TranslatableText("potion.whenDrank").append(" ").formatted(Formatting.GRAY);
 
-	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory, RecipeManager manager)
+	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory, RecipeManager manager, World world)
 	{
-		CauldronIngredient i1 = BrewingCauldronBlock.getIngredient(inventory.getContents().get(0).getItem(), manager);
-		CauldronIngredient i2 = BrewingCauldronBlock.getIngredient(inventory.getContents().get(1).getItem(), manager);
-		CauldronIngredient i3 = null;
-		if(inventory.getIngredientCount() == 3)
+		Optional<CauldronIngredient> optional1 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(0), world);
+		Optional<CauldronIngredient> optional2 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(1), world);
+		Optional<CauldronIngredient> optional3 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(2), world);
+		if(!optional1.isPresent() || !optional2.isPresent())
 		{
-			i3 = BrewingCauldronBlock.INGREDIENTS.get(inventory.getContents().get(2).getItem());
+			return INVALID_RECIPE;
 		}
+		CauldronIngredient i1 = optional1.get();
+		CauldronIngredient i2 = optional2.get();
 		StatusEffect effect = null;
 		StatusEffect effect2 = null;
 		int length = 0;
@@ -63,8 +69,9 @@ public class StatusEffectHelper
 				}
 			}
 		}
-		if(i3 != null)
+		if(optional3.isPresent())
 		{
+			CauldronIngredient i3 = optional3.get();
 			found = false;
 			for(int i = 0; i < i3.getEffects().size(); i++)
 			{

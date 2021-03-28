@@ -22,7 +22,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 
 	public ApothecaryGuideHandler(int syncId, PlayerInventory playerInventory, Inventory inventory)
 	{
-		super(AlchemyMod.APOTHECARY_GUIDE_HANDLER, syncId);
+		super(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, syncId);
 		checkSize(inventory, 1);
 		this.inventory = inventory;
 		this.addSlot(new IngredientSlot(inventory, 0, 26, 35));
@@ -45,7 +45,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 	@Override
 	public ScreenHandlerType<?> getType()
 	{
-		return AlchemyMod.APOTHECARY_GUIDE_HANDLER;
+		return AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
@@ -25,15 +26,18 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.watersfall.alchemy.api.fluid.ColoredWaterContainer;
 import net.watersfall.alchemy.api.fluid.WaterContainer;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.block.entity.AbstractCauldronEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -134,7 +138,7 @@ public abstract class AbstractCauldronBlock extends Block
 		assert entity != null;
 		if(itemStack.isEmpty())
 		{
-			if(player.isSneaking())
+			if(player.isSneaking() && entity.getWaterLevel() > 0)
 			{
 				if(!world.isClient)
 				{
@@ -209,5 +213,34 @@ public abstract class AbstractCauldronBlock extends Block
 	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type)
 	{
 		return false;
+	}
+
+	@Override
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos)
+	{
+		if(direction == Direction.DOWN)
+		{
+			if(neighborState.isIn(BlockTags.FIRE) || neighborState.isIn(BlockTags.CAMPFIRES))
+			{
+				return state.with(POWERED, true);
+			}
+			else
+			{
+				return state.with(POWERED, false);
+			}
+		}
+		return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+	}
+
+	@Nullable
+	@Override
+	public BlockState getPlacementState(ItemPlacementContext ctx)
+	{
+		BlockState below = ctx.getWorld().getBlockState(ctx.getBlockPos().down());
+		if(below.isIn(BlockTags.FIRE) || below.isIn(BlockTags.CAMPFIRES))
+		{
+			return super.getPlacementState(ctx).with(POWERED, true);
+		}
+		return super.getPlacementState(ctx);
 	}
 }

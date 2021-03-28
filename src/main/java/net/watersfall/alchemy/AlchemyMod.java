@@ -1,6 +1,5 @@
 package net.watersfall.alchemy;
 
-import com.google.common.collect.Lists;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -8,7 +7,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.FabricLootSupplier;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.*;
@@ -19,11 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.mob.SpiderEntity;
-import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
 import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.context.LootContext;
@@ -64,15 +58,13 @@ import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.alchemy.research.ResearchCategoryLoader;
 import net.watersfall.alchemy.research.ResearchLoader;
-import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
-import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
+import net.watersfall.alchemy.screen.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.item.Item;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.Tag;
@@ -81,8 +73,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
-import net.watersfall.alchemy.screen.NekomancyTableHandler;
-import net.watersfall.alchemy.screen.ResearchBookHandler;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.watersfall.alchemy.world.AlchemyFeatures;
 import java.util.*;
@@ -90,35 +80,8 @@ import java.util.*;
 public class AlchemyMod implements ModInitializer
 {
 	public static final String MOD_ID = "waters_alchemy_mod";
-	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
-	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;
-	public static final ScreenHandlerType<ResearchBookHandler> RESEARCH_BOOK_HANDLER;
-	public static final ScreenHandlerType<NekomancyTableHandler> NEKOMANCY_TABLE_HANDLER;
 	private static Tag<Item> INGREDIENT_TAG;
 	public static final BlockApiLookup<AspectContainer, Direction> API = BlockApiLookup.get(AlchemyMod.getId("aspect_container"), AspectContainer.class, Direction.class);
-
-	static
-	{
-		APOTHECARY_GUIDE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("apothecary_guide_handler"), ApothecaryGuideHandler::new);
-		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
-		RESEARCH_BOOK_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), ResearchBookHandler::new);
-		NEKOMANCY_TABLE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("nekomancy_handler"), NekomancyTableHandler::new);
-		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
-			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
-			optional.ifPresent((ability) -> {
-				Research research = Research.REGISTRY.get(buf.readIdentifier());
-				if(!ability.getResearch().contains(research) && research.isAvailable(ability) && research.hasItems(player))
-				{
-					ability.addResearch(research.getId());
-					PacketByteBuf buf2 = PacketByteBufs.create();
-					buf2.writeIdentifier(research.getId());
-					research.consumeItems(player);
-					responseSender.sendPacket(getId("research_click"), ability.toPacket(buf2));
-				}
-			});
-		}));
-	}
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
@@ -140,6 +103,25 @@ public class AlchemyMod implements ModInitializer
 	private static void setIngredientTag(Tag<Item> ingredientTag)
 	{
 		INGREDIENT_TAG = ingredientTag;
+	}
+
+	private static void registerNetwork()
+	{
+		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			optional.ifPresent((ability) -> {
+				Research research = Research.REGISTRY.get(buf.readIdentifier());
+				if(!ability.getResearch().contains(research) && research.isAvailable(ability) && research.hasItems(player))
+				{
+					ability.addResearch(research.getId());
+					PacketByteBuf buf2 = PacketByteBufs.create();
+					buf2.writeIdentifier(research.getId());
+					research.consumeItems(player);
+					responseSender.sendPacket(getId("research_click"), ability.toPacket(buf2));
+				}
+			});
+		}));
 	}
 
 	private static void registerEvents()
@@ -192,8 +174,8 @@ public class AlchemyMod implements ModInitializer
 			Block block = state.getBlock();
 			ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
 			Item item = stack.getItem();
-			if((item == AlchemyItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock || block == Blocks.COPPER_ORE)) ||
-					(item == AlchemyItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
+			if(item == AlchemyItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock)
+					|| (item == AlchemyItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
 			{
 				BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
 				if(breakPos.equals(pos))
@@ -317,6 +299,7 @@ public class AlchemyMod implements ModInitializer
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
+		registerNetwork();
 		AlchemyFeatures.register();
 		AlchemyEntityTags.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());

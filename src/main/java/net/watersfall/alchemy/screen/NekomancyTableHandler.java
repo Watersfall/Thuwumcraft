@@ -7,7 +7,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.inventory.NekomancerTableInventory;
@@ -32,7 +31,7 @@ public class NekomancyTableHandler extends ScreenHandler
 
 	public NekomancyTableHandler(int syncId, PlayerInventory playerInventory, NekomancerTableInventory inventory)
 	{
-		super(AlchemyMod.NEKOMANCY_TABLE_HANDLER, syncId);
+		super(AlchemyScreenHandlers.NEKOMANCY_TABLE_HANDLER, syncId);
 		this.inventory = inventory;
 
 		//This inventory

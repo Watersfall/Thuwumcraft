@@ -49,7 +49,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	@Override
 	public boolean matches(BrewingCauldronInventory inv, World world)
 	{
-		return inv.getContents().get(0).getItem() == this.getInput().getItem();
+		return inv.getInput().get(0).getItem() == this.getInput().getItem();
 	}
 
 	@Override
@@ -61,18 +61,18 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	public ItemStack craft(BrewingCauldronInventory inventory, CauldronIngredientRecipe recipe, World world)
 	{
 		ItemStack stack = inventory.getInput().get(0).copy();
-		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory, world.getRecipeManager());
+		Set<StatusEffectInstance> effects = StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world);
 		if(effects != StatusEffectHelper.INVALID_RECIPE)
 		{
 			if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
 			{
-				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
+				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
 			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
 			{
 				stack = recipe.getOutput().copy();
-				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
 				return stack;
 			}
 			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_NO_EFFECT)
@@ -82,7 +82,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_ITEM_EFFECT)
 			{
 				stack = recipe.getOutput().copy();
-				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager()));
+				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
 			return stack;

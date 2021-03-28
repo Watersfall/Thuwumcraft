@@ -17,7 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
+import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
+
+import java.util.Optional;
 
 public class BrewingCauldronEntity extends AbstractCauldronEntity implements BrewingCauldronInventory
 {
@@ -64,6 +67,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	@Override
 	public void fromClientTag(NbtCompound compoundTag)
 	{
+		this.contents.clear();
 		super.fromClientTag(compoundTag);
 		this.ingredientCount = compoundTag.getByte(INGREDIENT_COUNT);
 		Inventories.readNbt(compoundTag, contents);
@@ -82,6 +86,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	{
 		this.ingredientCount = 0;
 		this.contents.clear();
+		this.input.clear();
 		super.clear();
 	}
 
@@ -101,8 +106,8 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 			colors[0] = BiomeColors.getWaterColor(this.world, this.getPos());
 			for(int i = 1; i <= this.getIngredientCount(); i++)
 			{
-				CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(this.getStack(i - 1).getItem(), this.world.getRecipeManager());
-				colors[i] = ingredient == null ? -1 : ingredient.getColor();
+				Optional<CauldronIngredient> ingredient = this.world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, this.withInput(i - 1), world);
+				colors[i] = ingredient.isPresent() ? ingredient.get().getColor() : -1;
 			}
 			this.setColor(RenderHelper.getColor(colors));
 			this.setNeedsColorUpdate(false);

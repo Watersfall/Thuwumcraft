@@ -19,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
-import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
@@ -43,6 +42,7 @@ import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
+import net.watersfall.alchemy.screen.AlchemyScreenHandlers;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -81,16 +81,6 @@ public class AlchemyModClient implements ClientModInitializer
 						tooltip.add(StatusEffectHelper.NO_EFFECT);
 					}
 				}
-				else if(stack.getItem() == Items.NETHERITE_CHESTPLATE)
-				{
-					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
-					Optional<RunedShieldAbilityItem> abilityOptional = provider.getAbility(AlchemyMod.getId("runed_shield_ability"), RunedShieldAbilityItem.class);
-					if(abilityOptional.isPresent())
-					{
-						RunedShieldAbilityItem ability = abilityOptional.get();
-						tooltip.add(new LiteralText("Amount: " + ability.getShieldAmount() + " Max: " + ability.getMaxAmount()));
-					}
-				}
 			}
 		}));
 	}
@@ -107,13 +97,14 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.JAR_ENTITY, JarEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
-		ScreenRegistry.register(AlchemyMod.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
-		ScreenRegistry.register(AlchemyMod.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
-		ScreenRegistry.register(AlchemyMod.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
-		ScreenRegistry.register(AlchemyMod.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.CHILD_BLOCK, RenderLayer.getCutout());
+		ScreenRegistry.register(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
-		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), AlchemyBlocks.CUSTOM_SPAWNER);
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+				AlchemyBlocks.CUSTOM_SPAWNER,
+				AlchemyBlocks.CHILD_BLOCK);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
 		for(Item item : Registry.ITEM)
 		{

@@ -2,8 +2,10 @@ package net.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.util.collection.DefaultedList;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.BrewingCauldronBlock;
+import net.watersfall.alchemy.inventory.BrewingCauldronInventory;
 import net.watersfall.alchemy.recipe.CauldronIngredient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,7 +17,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.Optional;
 
+//TODO shove this into research book
 public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 {
 	private static final Identifier TEXTURE = new Identifier(AlchemyMod.MOD_ID, "textures/gui/container/apothecary_guide_book.png");
@@ -43,10 +47,10 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 		super.render(matrices, mouseX, mouseY, delta);
 		if(handler.getStacks().get(0) != ItemStack.EMPTY)
 		{
-			CauldronIngredient ingredient = BrewingCauldronBlock.getIngredient(handler.getStacks().get(0).getItem(), this.client.getNetworkHandler().getRecipeManager());
-			if(ingredient != null)
+			Optional<CauldronIngredient> ingredient = Optional.empty();
+			if(ingredient.isPresent())
 			{
-				List<StatusEffectInstance> list = ingredient.getEffects();
+				List<StatusEffectInstance> list = ingredient.get().getEffects();
 				for(int i = 0; i < list.size(); i++)
 				{
 					textRenderer.draw(matrices, list.get(i).getEffectType().getName(), this.x + 56, this.y + 24 + (i * 10), 4210752);
