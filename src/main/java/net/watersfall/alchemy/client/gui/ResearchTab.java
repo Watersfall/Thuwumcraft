@@ -12,6 +12,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.client.gui.RecipeTabType;
 import net.watersfall.alchemy.api.item.AspectItem;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.client.gui.element.ItemElement;
@@ -84,61 +85,17 @@ public class ResearchTab extends Screen
 		super.init();
 		this.x = (width - textureWidth) / 2;
 		this.y = (height - textureHeight) / 2;
-		int offsetX = x + (this.textureWidth / 2) - (100 / 2);
 		int offsetY = y + (this.textureHeight / 4) - (60 / 2);
 		for(int i = 0; i < recipeIds.length; i++)
 		{
-			if(recipes[i].getType() == RecipeType.CRAFTING)
+			recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
+			if(i % 2 == 0)
 			{
-				ItemElement[] items = new ItemElement[recipes[i].getPreviewInputs().size() + 1];
-				for(int o = 0; o < recipes[i].getPreviewInputs().size(); o++)
-				{
-					items[o] = new ItemElement(recipes[i].getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, offsetY + (o / 3) * 20);
-				}
-				items[items.length - 1] = new ItemElement(new ItemStack[]{recipes[i].getOutput()}, offsetX + 84, offsetY + 20);
-				recipeElements[i] = new RecipeElement(items);
-				if(i % 2 == 0)
-				{
-					offsetY = y + (this.textureHeight / 4) * 3 - (60 / 2);
-				}
-				else
-				{
-					offsetY = y + (this.textureHeight / 4) - (60 / 2);
-				}
+				offsetY = y + (this.textureHeight / 4) * 3 - (60 / 2);
 			}
-			else if(recipes[i].getType() == AlchemyRecipes.PEDESTAL_RECIPE)
+			else
 			{
-				PedestalRecipe recipe = (PedestalRecipe) recipes[i];
-				ItemElement[] items = new ItemElement[recipes[i].getPreviewInputs().size() + 1 + recipe.getAspects().size()];
-				Point origin = new Point(this.x + this.textureWidth / 2 - 32, this.y + this.textureHeight / 2 - 64);
-				items[0] = new ItemElement(recipes[i].getPreviewInputs().get(0).getMatchingStacksClient(), origin.x, origin.y);
-				int total = recipes[i].getPreviewInputs().size();
-				for(int o = 1; o < total; o++)
-				{
-					double angle = Math.PI * 2  / (total - 1) * o;
-					int x = origin.x + (int)(40 * Math.cos(angle));
-					int y = origin.y + (int)(40 * Math.sin(angle));
-					items[o] = new ItemElement(recipes[i].getPreviewInputs().get(o).getMatchingStacksClient(), x, y);
-				}
-				int startX = this.x + this.textureWidth / 2 - (recipe.getAspects().size() * 20) / 2;
-				if(!recipe.getAspects().isEmpty())
-				{
-					for(int o = 0; o < recipe.getAspects().size(); o++)
-					{
-						ItemStack stack = new ItemStack(recipe.getAspects().get(o).getAspect().getItem(), recipe.getAspects().get(o).getCount());
-						items[total + o] = new ItemElement(new ItemStack[]{stack}, startX + o * 20, origin.y + 60);
-					}
-				}
-				items[items.length - 1] = new ItemElement(new ItemStack[]{recipes[i].getOutput()}, offsetX + 84, origin.y);
-				recipeElements[i] = new RecipeElement(items);
-				if(i % 2 == 0)
-				{
-					offsetY = y + (this.textureHeight / 4) * 3 - (60 / 2);
-				}
-				else
-				{
-					offsetY = y + (this.textureHeight / 4) - (60 / 2);
-				}
+				offsetY = y + (this.textureHeight / 4) - (60 / 2);
 			}
 		}
 		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.height - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));

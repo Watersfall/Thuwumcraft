@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -22,6 +23,7 @@ import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
+import net.watersfall.alchemy.api.client.gui.RecipeTabType;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
@@ -32,12 +34,15 @@ import net.watersfall.alchemy.client.gui.AlchemicalFurnaceScreen;
 import net.watersfall.alchemy.client.gui.ApothecaryGuideScreen;
 import net.watersfall.alchemy.client.gui.NekomancyTableScreen;
 import net.watersfall.alchemy.client.gui.ResearchBookScreen;
+import net.watersfall.alchemy.client.gui.element.ItemElement;
+import net.watersfall.alchemy.client.gui.element.RecipeElement;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
+import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -48,6 +53,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.color.world.BiomeColors;
+
+import java.awt.*;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
@@ -153,5 +160,41 @@ public class AlchemyModClient implements ClientModInitializer
 			ResearchCategory.REGISTRY.fromPacket(buf);
 			Research.REGISTRY.fromPacket(buf);
 		});
+
+		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
+			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
+			int offsetX = x + (width / 2) - 50;
+			for(int o = 0; o < recipe.getPreviewInputs().size(); o++)
+			{
+				items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+			}
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
+			return new RecipeElement(items);
+		}));
+		RecipeTabType.REGISTRY.register(AlchemyRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
+			PedestalRecipe recipe = (PedestalRecipe) recipe2;
+			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1 + recipe.getAspects().size()];
+			Point origin = new Point(x + width / 2 - 32, y + height / 2 - 64);
+			items[0] = new ItemElement(recipe.getPreviewInputs().get(0).getMatchingStacksClient(), origin.x, origin.y);
+			int total = recipe.getPreviewInputs().size();
+			for(int o = 1; o < total; o++)
+			{
+				double angle = Math.PI * 2  / (total - 1) * o;
+				int circleX = origin.x + (int)(40 * Math.cos(angle));
+				int circleY = origin.y + (int)(40 * Math.sin(angle));
+				items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), circleX, circleY);
+			}
+			int startX = x + width / 2 - (recipe.getAspects().size() * 20) / 2;
+			if(!recipe.getAspects().isEmpty())
+			{
+				for(int o = 0; o < recipe.getAspects().size(); o++)
+				{
+					ItemStack stack = new ItemStack(recipe.getAspects().get(o).getAspect().getItem(), recipe.getAspects().get(o).getCount());
+					items[total + o] = new ItemElement(new ItemStack[]{stack}, startX + o * 20, origin.y + 60);
+				}
+			}
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
+			return new RecipeElement(items);
+		}));
 	}
 }
