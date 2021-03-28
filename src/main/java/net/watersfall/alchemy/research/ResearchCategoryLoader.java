@@ -2,11 +2,13 @@ package net.watersfall.alchemy.research;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceReloadListener;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 
@@ -16,7 +18,7 @@ import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-public class ResearchCategoryLoader implements ResourceReloadListener
+public class ResearchCategoryLoader implements IdentifiableResourceReloadListener
 {
 	@Override
 	public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor)
@@ -39,5 +41,11 @@ public class ResearchCategoryLoader implements ResourceReloadListener
 				}
 			});
 		}, applyExecutor);
+	}
+
+	@Override
+	public Identifier getFabricId()
+	{
+		return AlchemyMod.getId("research_category");
 	}
 }

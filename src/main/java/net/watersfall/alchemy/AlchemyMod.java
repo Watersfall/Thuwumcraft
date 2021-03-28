@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.loot.v1.FabricLootSupplier;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.*;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
@@ -60,6 +62,8 @@ import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
+import net.watersfall.alchemy.research.ResearchCategoryLoader;
+import net.watersfall.alchemy.research.ResearchLoader;
 import net.watersfall.alchemy.screen.AlchemicalFurnaceHandler;
 import net.watersfall.alchemy.screen.ApothecaryGuideHandler;
 import net.fabricmc.api.ModInitializer;
@@ -315,6 +319,8 @@ public class AlchemyMod implements ModInitializer
 		registerAbilities();
 		AlchemyFeatures.register();
 		AlchemyEntityTags.register();
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());
