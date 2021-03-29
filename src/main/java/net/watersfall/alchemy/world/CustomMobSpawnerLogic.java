@@ -1,16 +1,21 @@
 package net.watersfall.alchemy.world;
 
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.MobSpawnerEntry;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -148,5 +153,40 @@ public class CustomMobSpawnerLogic
 		if(this.entry != null)
 			tag.put("mob", entry.serialize());
 		return tag;
+	}
+
+	public static List<Text> toTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context)
+	{
+		NbtCompound tag = stack.getTag();
+		if(tag == null)
+		{
+			return tooltip;
+		}
+		else
+		{
+			if(tag.contains("mob"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".mob", tag.getCompound("mob").getCompound("Entity").getString("id")));
+			else
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".mob", new TranslatableText(stack.getItem().getTranslationKey() + ".no_spawn")));
+			if(tag.contains("delay"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".delay", tag.getInt("delay")));
+			if(tag.contains("min_delay"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".min_delay", tag.getInt("min_delay")));
+			if(tag.contains("max_delay"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".max_delay", tag.getInt("max_delay")));
+			if(tag.contains("requires_player"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".requires_player", tag.getBoolean("requires_player")));
+			if(tag.contains("player_range"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".player_range", tag.getInt("player_range")));
+			if(tag.contains("min_spawn_count"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".min_spawn_count", tag.getInt("min_spawn_count")));
+			if(tag.contains("max_spawn_count"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".max_spawn_count", tag.getInt("max_spawn_count")));
+			if(tag.contains("max_nearby_entities"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".max_nearby_entities", tag.getInt("max_nearby_entities")));
+			if(tag.contains("spawn_range"))
+				tooltip.add(new TranslatableText(stack.getItem().getTranslationKey() + ".spawn_range", tag.getInt("spawn_range")));
+		}
+		return tooltip;
 	}
 }
