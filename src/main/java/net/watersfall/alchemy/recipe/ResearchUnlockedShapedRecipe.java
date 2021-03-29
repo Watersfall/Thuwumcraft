@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRecipe, Recipe<CraftingInventory>
+public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRecipe, CraftingRecipe
 {
 	private final Identifier id;
 	private final List<Identifier> research;
@@ -33,7 +33,7 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 	@Override
 	public boolean matches(CraftingInventory craftingInventory, World world)
 	{
-		return false;
+		return recipe.matches(craftingInventory, world);
 	}
 
 	@Override
@@ -75,6 +75,12 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 	}
 
 	@Override
+	public DefaultedList<ItemStack> getRemainingStacks(CraftingInventory inventory)
+	{
+		return recipe.getRemainingStacks(inventory);
+	}
+
+	@Override
 	public boolean isIgnoredInRecipeBook()
 	{
 		return true;
@@ -95,7 +101,13 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE;
+		return RecipeType.CRAFTING;
+	}
+
+	@Override
+	public DefaultedList<Ingredient> getPreviewInputs()
+	{
+		return this.recipe.getPreviewInputs();
 	}
 
 	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapedRecipe>

@@ -15,8 +15,6 @@ public class AlchemyRecipes
 	public static final RecipeType<GrindingRecipe> GRINDING_RECIPE;
 	public static final RecipeType<AspectIngredient> ASPECT_INGREDIENTS;
 	public static final RecipeType<CrucibleRecipe> CRUCIBLE_RECIPE;
-	public static final RecipeType<ResearchUnlockedShapedRecipe> RESEARCH_UNLOCKED_SHAPED_RECIPE;
-	public static final RecipeType<ResearchUnlockedShapelessRecipe> RESEARCH_UNLOCKED_SHAPELESS_RECIPE;
 	public static final RecipeType<NekomancyRecipe> NEKOMANCY_RECIPE;
 	public static final RecipeSerializer<CauldronIngredient> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
@@ -38,8 +36,6 @@ public class AlchemyRecipes
 		GRINDING_RECIPE = getRecipeType("grinding");
 		ASPECT_INGREDIENTS = getRecipeType("aspect_ingredient");
 		CRUCIBLE_RECIPE = getRecipeType("crucible_recipe");
-		RESEARCH_UNLOCKED_SHAPED_RECIPE = getRecipeType("research_unlocked_shaped_recipe");
-		RESEARCH_UNLOCKED_SHAPELESS_RECIPE = getRecipeType("research_unlocked_shapeless_recipe");
 		NEKOMANCY_RECIPE = getRecipeType("nekomancy_recipe");
 		CAULDRON_INGREDIENTS_SERIALIZER = new CauldronIngredient.Serializer(CauldronIngredient::new);
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new);
@@ -62,8 +58,6 @@ public class AlchemyRecipes
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("grinding"), AlchemyRecipes.GRINDING_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("aspect_ingredient"), ASPECT_INGREDIENTS);
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("crucible_recipe"), CRUCIBLE_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);

@@ -22,12 +22,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mixin(CraftingScreenHandler.class)
 public class CraftingScreenHandlerMixin
 {
 	@Inject(method = "updateResult",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/CraftingResultInventory;setStack(ILnet/minecraft/item/ItemStack;)V"),
+			at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/recipe/RecipeManager;getFirstMatch(Lnet/minecraft/recipe/RecipeType;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/world/World;)Ljava/util/Optional;"),
 			locals = LocalCapture.CAPTURE_FAILHARD,
 			cancellable = true)
 	private static void checkResearchCrafting(ScreenHandler handler,
@@ -37,27 +38,19 @@ public class CraftingScreenHandlerMixin
 											  CraftingResultInventory resultInventory,
 											  CallbackInfo info,
 											  ServerPlayerEntity serverPlayer,
-											  ItemStack stack)
+											  ItemStack stack,
+											  Optional<CraftingRecipe> optional)
 	{
-		if(stack == ItemStack.EMPTY)
+		if(optional.isPresent() && optional.get() instanceof ResearchRequiredCraftingRecipe)
 		{
-			List<CraftingRecipe> recipes = world.getServer().getRecipeManager().listAllOfType(RecipeType.CRAFTING);
-			for(int i = 0; i < recipes.size(); i++)
+			if (resultInventory.shouldCraftRecipe(world, serverPlayer, optional.get()))
 			{
-				if(recipes.get(i) instanceof ResearchRequiredCraftingRecipe)
-				{
-					ResearchRequiredCraftingRecipe recipe = (ResearchRequiredCraftingRecipe) recipes.get(i);
-					if(recipe.matches(inventory, world, AbilityProvider.getProvider(serverPlayer).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get()))
-					{
-						stack = recipes.get(i).getOutput();
-						break;
-					}
-				}
+				stack = optional.get().craft(inventory);
+				resultInventory.setStack(0, stack);
+				handler.setPreviousTrackedSlot(0, stack);
+				serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, 0, stack));
+				info.cancel();
 			}
-			resultInventory.setStack(0, stack);
-			handler.setPreviousTrackedSlot(0, stack);
-			serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, 0, stack));
-			info.cancel();
 		}
 	}
 }
