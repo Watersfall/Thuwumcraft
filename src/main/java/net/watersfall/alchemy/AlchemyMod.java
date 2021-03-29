@@ -223,6 +223,11 @@ public class AlchemyMod implements ModInitializer
 					ResearchCategory.REGISTRY.toPacket(research);
 					Research.REGISTRY.toPacket(research);
 					ServerPlayNetworking.send(player, getId("research_packet"), research);
+					AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+					provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability) -> {
+						NbtCompound tag = ability.toNbt(new NbtCompound(), player);
+						ability.fromNbt(tag, player);
+					});
 				}
 			}
 		});
