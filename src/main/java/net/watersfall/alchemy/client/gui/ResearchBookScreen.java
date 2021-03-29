@@ -36,6 +36,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Identifier BORDER = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_background.png");
 	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private final int textureWidth = 431;
+	private final int textureHeight = 256;
 	private final PlayerResearchAbility ability;
 	private float mapX;
 	private float mapY;
@@ -52,6 +54,17 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		ability = optional.get();
 		this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+	}
+
+	@Override
+	protected void init()
+	{
+		this.backgroundWidth = textureWidth;
+		this.backgroundHeight = textureHeight;
+		super.init();
+		this.children.clear();
+		this.mapX = this.textureWidth / (scale * 2F) - 8;
+		this.mapY = this.textureHeight / (scale * 2F) - 8;
 		categories = new CategoryTabElement[ResearchCategory.REGISTRY.getAll().size()];
 		int i = 0;
 		ResearchCategory[] tempCat = new ResearchCategory[categories.length];
@@ -62,21 +75,12 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		Arrays.sort(tempCat, Comparator.comparingInt(ResearchCategory::getIndex));
 		for(i = 0; i < categories.length; i++)
 		{
-			categories[i] = new CategoryTabElement(this, tempCat[i], x + 1, y + 24 +  i * 24, false);
+			categories[i] = new CategoryTabElement(this, tempCat[i], x - 24, y + 12 +  i * 24, false);
 		}
-	}
-
-	@Override
-	protected void init()
-	{
-		super.init();
-		this.children.clear();
-		this.mapX = this.width / (scale * 2F) - 8;
-		this.mapY = this.height / (scale * 2F) - 8;
 		Research.REGISTRY.getAll().forEach((research -> {
 			this.addChild(new ResearchElement(this, research));
 		}));
-		for(int i = 0; i < this.categories.length; i++)
+		for(i = 0; i < this.categories.length; i++)
 		{
 			this.addChild(categories[i]);
 		}
@@ -86,14 +90,18 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
 	{
 		matrices.push();
+		matrices.translate(0, 0, -2F);
+		super.renderBackground(matrices);
+		matrices.pop();
+		matrices.push();
 		matrices.translate(0, 0, -1F);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, BACKGROUND);
-		drawTexture(matrices, 24, 12, 0, 0, width - 48, height - 24, width - 48, height - 24);
+		drawTexture(matrices, this.x + 12, this.y + 12, 0, 0, backgroundWidth - 24, backgroundHeight - 24, backgroundWidth - 24, backgroundHeight - 24);
 		matrices.translate(0, 0, 201F);
 		RenderSystem.setShaderTexture(0, BORDER);
-		drawTexture(matrices, 0, 0, 0, 0, width, height, width, height);
+		drawTexture(matrices, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 		matrices.pop();
 	}
 
@@ -166,5 +174,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			this.currentCategory = category;
 			client.player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 		}
+	}
+
+	public int getX()
+	{
+		return x;
+	}
+
+	public int getY()
+	{
+		return y;
 	}
 }

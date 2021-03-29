@@ -75,6 +75,8 @@ public class ResearchElement extends ItemElement
 	{
 		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
+			int scale = (int)MinecraftClient.getInstance().getWindow().getScaleFactor();
+			RenderSystem.enableScissor(screen.getX() * scale, screen.getY() * scale + scale, 431 * scale - scale, 256 * scale);
 			matrices.scale(screen.scale, screen.scale, 1F);
 			int x = (int)(this.x + screen.getMapX() / screen.scale);
 			int y = (int)(this.y + screen.getMapY() / screen.scale);
@@ -114,6 +116,7 @@ public class ResearchElement extends ItemElement
 				matrices.translate(0, 0, -199F);
 			}
 			matrices.scale(1F / screen.scale, 1F / screen.scale, 1F);
+			RenderSystem.disableScissor();
 		}
 	}
 
@@ -149,67 +152,67 @@ public class ResearchElement extends ItemElement
 		boolean positiveHorizontal = horizontal > 0;
 		if(horizontal > 0)
 		{
-			DrawableHelper.drawTexture(matrices, endX - 16, endY, 16 * 9, 0, 16, 16, 256, 256);
+			DrawableHelper.drawTexture(matrices, endX - 16, endY, 16 * 9, -0.001F, 16, 16, 256, 256);
 		}
 		else if(horizontal < 0)
 		{
-			DrawableHelper.drawTexture(matrices, endX + 16, endY, 16 * 8, 0, 16, 16, 256, 256);
+			DrawableHelper.drawTexture(matrices, endX + 16, endY, 16 * 8, -0.001F, 16, 16, 256, 256);
 		}
 		else
 		{
 			if(vertical > 0)
 			{
-				DrawableHelper.drawTexture(matrices, endX, endY - 16, 16 * 11, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, endX, endY - 16, 16 * 11, -0.001F, 16, 16, 256, 256);
 			}
 			else
 			{
-				DrawableHelper.drawTexture(matrices, endX, endY + 16, 16 * 10, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, endX, endY + 16, 16 * 10, -0.001F, 16, 16, 256, 256);
 			}
 		}
 		if(horizontal > 0)
 		{
 			for(; horizontal > 0; horizontal--)
 			{
-				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, -0.001F, 16, 16, 256, 256);
 			}
 		}
 		else
 		{
 			for(; horizontal < 0; horizontal++)
 			{
-				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, -0.001F, 16, 16, 256, 256);
 			}
 		}
 		if(vertical > 0)
 		{
 			if(!positiveHorizontal)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 112, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 112, -0.001F, 16, 16, 256, 256);
 			}
 			else
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 6, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 6, -0.001F, 16, 16, 256, 256);
 			}
 			vertical--;
 			for(; vertical > 0; vertical--)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, -0.001F, 16, 16, 256, 256);
 			}
 		}
 		else
 		{
 			if(!positiveHorizontal)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 5, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 5, -0.001F, 16, 16, 256, 256);
 			}
 			else
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 4, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 4, -0.001F, 16, 16, 256, 256);
 			}
 			vertical++;
 			for(; vertical < 0; vertical++)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, 0, 16, 16, 256, 256);
+				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, -0.001F, 16, 16, 256, 256);
 			}
 		}
 	}

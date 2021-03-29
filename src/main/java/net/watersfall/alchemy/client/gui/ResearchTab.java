@@ -109,8 +109,8 @@ public class ResearchTab extends Screen
 			}
 			count++;
 		}
-		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.height - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
-		this.addButton(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.height - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
+		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
+		this.addButton(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.textureHeight - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
 		this.recipePages = new RecipePage[count];
 		count = 0;
 		for(int i = 0; i < recipeElements.length; i++)
