@@ -56,7 +56,7 @@ public class ResearchElement extends ItemElement
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(isMouseOver(mouseX, mouseY))
+		if(isMouseOver(mouseX, mouseY) && this.research.getCategory() == screen.getCurrentCategory())
 		{
 			if(research.isAvailable(ability))
 			{
