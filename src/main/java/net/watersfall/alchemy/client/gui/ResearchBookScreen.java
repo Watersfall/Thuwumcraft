@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -40,6 +41,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private float mapY;
 	private ResearchCategory currentCategory;
 	private CategoryTabElement[] categories;
+	public float scale = 0.7F;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -69,8 +71,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		super.init();
 		this.children.clear();
-		this.mapX = this.width / 2F - 8;
-		this.mapY = this.height / 2F - 8;
+		this.mapX = this.width / (scale * 2F) - 8;
+		this.mapY = this.height / (scale * 2F) - 8;
 		Research.REGISTRY.getAll().forEach((research -> {
 			this.addChild(new ResearchElement(this, research));
 		}));
@@ -118,9 +120,23 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	{
 		mapX += (deltaX);
 		mapY += (deltaY);
-		mapX = MathHelper.clamp(mapX, 0, this.width);
-		mapY = MathHelper.clamp(mapY, 0, this.height);
+		mapX = MathHelper.clamp(mapX, 0, this.width / scale);
+		mapY = MathHelper.clamp(mapY, 0, this.height / scale);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+	}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double amount)
+	{
+		if(amount < 0)
+		{
+			scale = MathHelper.clamp(scale - 0.05F, 0.5F, 1F);
+		}
+		else
+		{
+			scale = MathHelper.clamp(scale + 0.05F, 0.5F, 1F);
+		}
+		return true;
 	}
 
 	public float getMapX()

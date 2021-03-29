@@ -50,7 +50,9 @@ public class ResearchElement extends ItemElement
 	@Override
 	public boolean isMouseOver(double mouseX, double mouseY)
 	{
-		return mouseX > x + screen.getMapX() && mouseX < x + screen.getMapX() + 16 && mouseY > y + screen.getMapY() && mouseY < y + screen.getMapY() + 16;
+		float x = this.x * screen.scale + screen.getMapX();
+		float y = this.y * screen.scale + screen.getMapY();
+		return mouseX > x && mouseX < x + 16 * screen.scale && mouseY > y && mouseY < y + 16 * screen.scale;
 	}
 
 	@Override
@@ -73,16 +75,21 @@ public class ResearchElement extends ItemElement
 	{
 		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
-			int x = this.x + (int)screen.getMapX();
-			int y = this.y + (int)screen.getMapY();
+			matrices.scale(screen.scale, screen.scale, 1F);
+			int x = (int)(this.x + screen.getMapX() / screen.scale);
+			int y = (int)(this.y + screen.getMapY() / screen.scale);
 			RenderSystem.setShaderTexture(0, ICONS);
 			DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
 			matrices.translate(0, 0, -1F);
 			this.research.getRequirements().forEach((requirement) -> {
-				drawArrow(matrices, requirement.getX() + (int)screen.getMapX(), requirement.getY() + (int)screen.getMapY(), x, y);
+				drawArrow(matrices, requirement.getX() + (int)(screen.getMapX() / screen.scale), requirement.getY() + (int)(screen.getMapY() / screen.scale), x, y);
 			});
 			matrices.translate(0, 0, 1F);
+			RenderSystem.getModelViewStack().push();
+			RenderSystem.getModelViewStack().scale(screen.scale, screen.scale, 1F);
 			MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[0], x, y);
+			RenderSystem.getModelViewStack().pop();
+			RenderSystem.applyModelViewMatrix();
 			if(ability.hasResearch(this.research))
 			{
 				Screen.fill(matrices, x, y, x + 16, y + 16, -2130706433);
@@ -106,6 +113,7 @@ public class ResearchElement extends ItemElement
 				Screen.fill(matrices, x, y, x + 16, y + 16, -1072689136);
 				matrices.translate(0, 0, -199F);
 			}
+			matrices.scale(1F / screen.scale, 1F / screen.scale, 1F);
 		}
 	}
 
