@@ -133,7 +133,17 @@ public class ResearchScreen extends Screen
 		{
 			if(this.children.get(i) instanceof Drawable)
 			{
-				((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+				if(this.children.get(i) instanceof ItemRequirementElement)
+				{
+					if(!ability.hasResearch(research))
+					{
+						((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+					}
+				}
+				else
+				{
+					((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+				}
 			}
 		}
 		if(!childOpen)
