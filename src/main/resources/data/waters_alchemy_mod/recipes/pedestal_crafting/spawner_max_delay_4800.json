@@ -8,10 +8,10 @@
 			"item": "minecraft:amethyst_shard"
 		},
 		{
-			"item": "minecraft:diamond_block"
+			"item": "minecraft:amethyst_shard"
 		},
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:diamond"
 		}
 	],
 	"catalyst": {
@@ -19,7 +19,7 @@
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",
-		"nbt": "{min_delay:2400,max_delay:4800}",
+		"nbt": "{max_delay:4800}",
 		"replace": false
 	}
 }

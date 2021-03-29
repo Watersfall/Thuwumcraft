@@ -2,20 +2,26 @@
 	"type": "waters_alchemy_mod:pedestal_crafting",
 	"inputs": [
 		{
-			"item": "minecraft:diamond_block"
+			"item": "minecraft:iron_bars"
 		},
 		{
-			"item": "minecraft:gold_ingot"
+			"item": "minecraft:iron_bars"
 		},
 		{
-			"item": "minecraft:gold_ingot"
+			"item": "minecraft:iron_bars"
 		},
 		{
-			"item": "minecraft:gold_ingot"
+			"item": "minecraft:iron_bars"
+		},
+		{
+			"item": "minecraft:iron_bars"
+		},
+		{
+			"item": "minecraft:iron_bars"
 		}
 	],
 	"catalyst": {
-		"item": "minecraft:iron_block"
+		"item": "waters_alchemy_mod:spawn_egg_base"
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",

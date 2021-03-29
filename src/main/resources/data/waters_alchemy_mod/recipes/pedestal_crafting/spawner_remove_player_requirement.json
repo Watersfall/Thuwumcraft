@@ -1,0 +1,31 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "waters_alchemy_mod:crystal/earth"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/earth"
+		},
+		{
+			"item": "minecraft:nether_star"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/earth"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/earth"
+		},
+		{
+			"item": "minecraft:netherite_block"
+		}
+	],
+	"catalyst": {
+		"item": "waters_alchemy_mod:custom_spawner"
+	},
+	"output": {
+		"item": "waters_alchemy_mod:custom_spawner",
+		"nbt": "{requires_player:0}",
+		"replace": false
+	}
+}

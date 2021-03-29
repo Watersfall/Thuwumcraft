@@ -26,6 +26,7 @@ public class ResearchLoader implements IdentifiableResourceReloadListener
 			return manager.findResources("research", (string) -> string.endsWith(".json"));
 		});
 		return resourceFuture.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((collection) -> {
+			Research.REGISTRY.clear();
 			collection.forEach((id) -> {
 				try
 				{

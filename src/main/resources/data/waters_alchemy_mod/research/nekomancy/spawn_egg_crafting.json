@@ -19,6 +19,14 @@
 				"waters_alchemy_mod:pedestal_crafting/spawn_egg_base"
 			],
 			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"waters_alchemy_mod:pedestal_crafting/zombie_egg",
+				"waters_alchemy_mod:pedestal_crafting/skeleton_egg",
+				"waters_alchemy_mod:pedestal_crafting/spider_egg"
+			],
+			"requires_complete": true
 		}
 	]
 }

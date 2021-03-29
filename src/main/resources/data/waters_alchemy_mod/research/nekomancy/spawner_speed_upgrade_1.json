@@ -13,5 +13,14 @@
 			"waters_alchemy_mod:custom_spawner",
 			"minecraft:diamond"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:pedestal_crafting/spawner_fast",
+				"waters_alchemy_mod:pedestal_crafting/spawner_faster"
+			],
+			"requires_complete": true
+		}
+	]
 }

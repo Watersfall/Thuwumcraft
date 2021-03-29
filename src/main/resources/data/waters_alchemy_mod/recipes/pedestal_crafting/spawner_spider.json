@@ -2,16 +2,13 @@
 	"type": "waters_alchemy_mod:pedestal_crafting",
 	"inputs": [
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:string"
 		},
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:spider_eye"
 		},
 		{
-			"item": "minecraft:diamond_block"
-		},
-		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:spider_spawn_egg"
 		}
 	],
 	"catalyst": {
@@ -19,7 +16,7 @@
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",
-		"nbt": "{min_delay:2400,max_delay:4800}",
+		"nbt": "{mob:{Entity:{id:\"spider\"}}}",
 		"replace": false
 	}
 }

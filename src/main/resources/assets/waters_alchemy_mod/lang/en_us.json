@@ -70,7 +70,7 @@
 	"block.waters_alchemy_mod.custom_spawner.delay": "Current Delay: %d",
 	"block.waters_alchemy_mod.custom_spawner.min_delay": "Minimum Delay: %d",
 	"block.waters_alchemy_mod.custom_spawner.max_delay": "Maximum Delay: %d",
-	"block.waters_alchemy_mod.custom_spawner.requires_player": "Player Required: %b",
+	"block.waters_alchemy_mod.custom_spawner.requires_player": "Player Required: %s",
 	"block.waters_alchemy_mod.custom_spawner.player_range": "Required Player Range: %d",
 	"block.waters_alchemy_mod.custom_spawner.min_spawn_count": "Minimum Spawn Count: %d",
 	"block.waters_alchemy_mod.custom_spawner.max_spawn_count": "Maximum Spawn Count: %d",

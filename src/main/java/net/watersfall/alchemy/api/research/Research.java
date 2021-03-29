@@ -395,6 +395,11 @@ public class Research
 				this.research.put(research.getId(), research);
 			}
 		}
+
+		public void clear()
+		{
+			research.clear();
+		}
 	}
 
 	public static class RecipeGroup

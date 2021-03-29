@@ -55,7 +55,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	@Override
 	default void fromNbt(NbtCompound tag, Entity t)
 	{
-		NbtList list = tag.getList("research_list_2", NbtType.STRING);
+		NbtList list = tag.getList("research_list", NbtType.STRING);
 		list.forEach(research -> {
 			Research check = Research.REGISTRY.get(Identifier.tryParse(research.asString()));
 			if(check != null)

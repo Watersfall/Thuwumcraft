@@ -1,0 +1,73 @@
+{
+	"type": "minecraft:block",
+	"pools": [
+		{
+			"rolls": 1.0,
+			"bonus_rolls": 0.0,
+			"entries": [
+				{
+					"type": "minecraft:item",
+					"functions": [
+						{
+							"function": "minecraft:copy_nbt",
+							"source": "block_entity",
+							"ops": [
+								{
+									"source": "mob",
+									"target": "mob",
+									"op": "replace"
+								},
+								{
+									"source": "delay",
+									"target": "delay",
+									"op": "replace"
+								},
+								{
+									"source": "min_delay",
+									"target": "min_delay",
+									"op": "replace"
+								},
+								{
+									"source": "max_delay",
+									"target": "max_delay",
+									"op": "replace"
+								},
+								{
+									"source": "requires_player",
+									"target": "requires_player",
+									"op": "replace"
+								},
+								{
+									"source": "player_range",
+									"target": "player_range",
+									"op": "replace"
+								},
+								{
+									"source": "min_spawn_count",
+									"target": "min_spawn_count",
+									"op": "replace"
+								},
+								{
+									"source": "max_spawn_count",
+									"target": "max_spawn_count",
+									"op": "replace"
+								},
+								{
+									"source": "max_nearby_entities",
+									"target": "max_nearby_entities",
+									"op": "replace"
+								},
+								{
+									"source": "spawn_range",
+									"target": "spawn_range",
+									"op": "replace"
+								}
+							]
+						}
+					],
+					"name": "waters_alchemy_mod:custom_spawner"
+				}
+			]
+		}
+	]
+}

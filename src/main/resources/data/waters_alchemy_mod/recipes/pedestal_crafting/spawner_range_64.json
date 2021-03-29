@@ -2,19 +2,19 @@
 	"type": "waters_alchemy_mod:pedestal_crafting",
 	"inputs": [
 		{
-			"item": "minecraft:rotten_flesh"
+			"item": "waters_alchemy_mod:crystal/earth"
 		},
 		{
-			"item": "minecraft:potato"
+			"item": "waters_alchemy_mod:crystal/earth"
 		},
 		{
-			"item": "minecraft:carrot"
+			"item": "minecraft:diamond"
 		},
 		{
-			"item": "minecraft:iron_ingot"
+			"item": "waters_alchemy_mod:crystal/earth"
 		},
 		{
-			"item": "minecraft:zombie_spawn_egg"
+			"item": "waters_alchemy_mod:crystal/earth"
 		}
 	],
 	"catalyst": {
@@ -22,7 +22,7 @@
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",
-		"nbt": "{mob:{Entity:{id:\"zombie\"}}}",
+		"nbt": "{player_range:64}",
 		"replace": false
 	}
 }

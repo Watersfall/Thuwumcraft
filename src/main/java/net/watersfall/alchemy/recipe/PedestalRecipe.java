@@ -112,6 +112,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 		this.aspects = aspects;
 		this.nbt = nbt;
 		this.nbtReplace = nbtReplace;
+		this.output.setTag(nbt);
 	}
 
 	@Override

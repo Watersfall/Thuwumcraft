@@ -7,14 +7,20 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.MobSpawnerEntry;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.CustomSpawnerEntity;
+import net.watersfall.alchemy.item.AlchemyItems;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class CustomSpawnerBlock extends SpawnerBlock
 {
@@ -35,17 +41,6 @@ public class CustomSpawnerBlock extends SpawnerBlock
 				spawner.getLogic().readNbt(world, pos, stack.getTag());
 			}
 		}
-	}
-
-	@Override
-	public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack)
-	{
-		if(blockEntity instanceof CustomSpawnerEntity)
-		{
-			CustomSpawnerEntity entity = (CustomSpawnerEntity)blockEntity;
-			entity.getLogic().writeNbt(world, pos, stack.getOrCreateTag());
-		}
-		dropStacks(state, world, pos, blockEntity, player, stack);
 	}
 
 	@Override

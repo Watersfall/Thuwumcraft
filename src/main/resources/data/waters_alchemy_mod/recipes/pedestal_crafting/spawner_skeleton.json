@@ -2,16 +2,16 @@
 	"type": "waters_alchemy_mod:pedestal_crafting",
 	"inputs": [
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:bone"
 		},
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:bow"
 		},
 		{
-			"item": "minecraft:diamond_block"
+			"item": "minecraft:arrow"
 		},
 		{
-			"item": "minecraft:amethyst_shard"
+			"item": "minecraft:skeleton_spawn_egg"
 		}
 	],
 	"catalyst": {
@@ -19,7 +19,7 @@
 	},
 	"output": {
 		"item": "waters_alchemy_mod:custom_spawner",
-		"nbt": "{min_delay:2400,max_delay:4800}",
+		"nbt": "{mob:{Entity:{id:\"skeleton\"}}}",
 		"replace": false
 	}
 }

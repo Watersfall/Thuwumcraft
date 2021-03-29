@@ -1,0 +1,28 @@
+{
+	"type": "waters_alchemy_mod:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "waters_alchemy_mod:crystal/fire"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/fire"
+		},
+		{
+			"item": "minecraft:diamond"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/fire"
+		},
+		{
+			"item": "waters_alchemy_mod:crystal/fire"
+		}
+	],
+	"catalyst": {
+		"item": "waters_alchemy_mod:custom_spawner"
+	},
+	"output": {
+		"item": "waters_alchemy_mod:custom_spawner",
+		"nbt": "{min_spawn_count:2,max_spawn_count:2}",
+		"replace": false
+	}
+}

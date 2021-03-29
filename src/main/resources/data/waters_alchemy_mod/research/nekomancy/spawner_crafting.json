@@ -16,9 +16,17 @@
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:custom_spawner"
+				"waters_alchemy_mod:pedestal_crafting/custom_spawner"
 			],
 			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"waters_alchemy_mod:pedestal_crafting/spawner_zombie",
+				"waters_alchemy_mod:pedestal_crafting/spawner_skeleton",
+				"waters_alchemy_mod:pedestal_crafting/spawner_spider"
+			],
+			"requires_complete": true
 		}
 	]
 }

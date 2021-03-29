@@ -12,7 +12,7 @@
 		"inventory_consumed": [
 			"waters_alchemy_mod:spawn_egg_base",
 			"minecraft:ender_pearl",
-			"minecraft:shulker_shell.json"
+			"minecraft:shulker_shell"
 		]
 	}
 }

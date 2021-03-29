@@ -11,7 +11,16 @@
 	"complete_requirements": {
 		"inventory_consumed": [
 			"waters_alchemy_mod:custom_spawner",
-			"minecraft:diamond"
+			"minecraft:diamond",
+			"minecraft:amethyst_shard"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:pedestal_crafting/spawner_max_delay_4800"
+			],
+			"requires_complete": true
+		}
+	]
 }
