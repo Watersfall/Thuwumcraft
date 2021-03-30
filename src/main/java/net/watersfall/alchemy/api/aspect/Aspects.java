@@ -52,6 +52,7 @@ public class Aspects
 		ASPECT_TO_CRYSTAL.put(aspect, crystal);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
+		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
 		registerClusters(aspect);
 		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 		{

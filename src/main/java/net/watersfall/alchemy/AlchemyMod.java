@@ -296,8 +296,6 @@ public class AlchemyMod implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		AlchemyItems.register();
-		AlchemyBlocks.register();
 		AlchemyStatusEffects.register();
 		AlchemyRecipes.register();
 		AlchemyBlockEntities.register();

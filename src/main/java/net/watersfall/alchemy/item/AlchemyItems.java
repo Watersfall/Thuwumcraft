@@ -45,84 +45,49 @@ public class AlchemyItems
 	public static final Item SPAWN_EGG_BASE;
 	public static final BlockItem NEKOMANCY_TABLE;
 	public static final BlockItem CRAFTING_HOPPER;
+	private static final List<Item> items;
 
 	static
 	{
+		items = new ArrayList<>();
 		ALCHEMY_MOD_ITEM_GROUP = FabricItemGroupBuilder.create(AlchemyMod
 				.getId("alchemy_mod_group"))
 				.icon(AlchemyItems::getDisplayIcon)
 				.appendItems(AlchemyItems::getStacks)
 				.build();
-		WITCHY_SPOON_ITEM = new WitchySpoonItem();
-		THROW_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		LINGERING_BOTTLE = new Item(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP));
-		LADLE_ITEM = new LadleItem();
-		APOTHECARY_GUIDE = new ApothecaryGuideItem();
-		PEDESTAL_ITEM = new BlockItem(AlchemyBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		MAGICAL_COAL_TIER_0 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 0);
-		MAGICAL_COAL_TIER_1 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 1);
-		MAGICAL_COAL_TIER_2 = new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 2);
-		MAGIC_DUST = new MagicDustItem();
-		SPECIAL_PICKAXE_ITEM = new SpecialPickaxeItem();
-		SPECIAL_AXE_ITEM = new SpecialAxeItem();
-		JAR_ITEM = new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		EMPTY_PHIAL_ITEM = new GlassPhialItem(Aspect.EMPTY);
-		PHIAL_SHELF_ITEM = new BlockItem(AlchemyBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		RESEARCH_BOOK_ITEM = new ResearchBookItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		ASPECT_PIPE_ITEM = new BlockItem(AlchemyBlocks.ASPECT_PIPE_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_SKULL = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_ARM = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_LEG = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_HEART = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NECROMANCY_RIBCAGE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		CUSTOM_SPAWNER = new CustomMobSpawnerItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		SPAWN_EGG_BASE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		NEKOMANCY_TABLE = new BlockItem(AlchemyBlocks.NEKOMANCY_TABLE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
-		CRAFTING_HOPPER = new BlockItem(AlchemyBlocks.CRAFTING_HOPPER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		WITCHY_SPOON_ITEM = register(AlchemyMod.getId("witchy_spoon"), new WitchySpoonItem());
+		THROW_BOTTLE = register(AlchemyMod.getId("throw_bottle"), new Item(new FabricItemSettings().maxCount(64).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
+		LINGERING_BOTTLE = register(AlchemyMod.getId("lingering_bottle"), new Item(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP)));
+		LADLE_ITEM = register(AlchemyMod.getId("ladle"), new LadleItem());
+		APOTHECARY_GUIDE = register(AlchemyMod.getId("apothecary_guide_book"), new ApothecaryGuideItem());
+		PEDESTAL_ITEM = register(AlchemyMod.getId("pedestal"), new BlockItem(AlchemyBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
+		MAGICAL_COAL_TIER_0 =  register(AlchemyMod.getId("magical_coal_0"), new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 0));
+		MAGICAL_COAL_TIER_1 =register(AlchemyMod.getId("magical_coal_1"), new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 1));
+		MAGICAL_COAL_TIER_2 =register(AlchemyMod.getId("magical_coal_2"), new MagicalCoalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), 2));
+		MAGIC_DUST = register(AlchemyMod.getId("magic_dust"), new MagicDustItem());
+		SPECIAL_PICKAXE_ITEM =register(AlchemyMod.getId("magic_pickaxe"), new SpecialPickaxeItem());
+		SPECIAL_AXE_ITEM = register(AlchemyMod.getId("magic_axe"), new SpecialAxeItem());
+		JAR_ITEM = register(AlchemyMod.getId("jar"), new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
+		EMPTY_PHIAL_ITEM = register(AlchemyMod.getId("phial/empty"), new GlassPhialItem(Aspect.EMPTY));
+		PHIAL_SHELF_ITEM = register(AlchemyMod.getId("phial_shelf"), new BlockItem(AlchemyBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
+		RESEARCH_BOOK_ITEM = register(AlchemyMod.getId("research_book"), new ResearchBookItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		ASPECT_PIPE_ITEM = register(AlchemyMod.getId("aspect_pipe"), new BlockItem(AlchemyBlocks.ASPECT_PIPE_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NECROMANCY_SKULL = register(AlchemyMod.getId("necromancy_skull"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NECROMANCY_ARM = register(AlchemyMod.getId("necromancy_arm"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NECROMANCY_LEG = register(AlchemyMod.getId("necromancy_leg"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NECROMANCY_HEART = register(AlchemyMod.getId("necromancy_heart"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NECROMANCY_RIBCAGE = register(AlchemyMod.getId("necromancy_ribcage"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		CUSTOM_SPAWNER = register(AlchemyMod.getId("custom_spawner"), new CustomMobSpawnerItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		SPAWN_EGG_BASE = register(AlchemyMod.getId("spawn_egg_base"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		NEKOMANCY_TABLE = register(AlchemyMod.getId("nekomancy_table"), new BlockItem(AlchemyBlocks.NEKOMANCY_TABLE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		CRAFTING_HOPPER = register(AlchemyMod.getId("crafting_hopper"), new BlockItem(AlchemyBlocks.CRAFTING_HOPPER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
-	public static void register()
-	{
-		register(AlchemyMod.getId("pedestal"), AlchemyItems.PEDESTAL_ITEM);
-		register(AlchemyMod.getId("witchy_spoon"), AlchemyItems.WITCHY_SPOON_ITEM);
-		register(AlchemyMod.getId("ladle"), AlchemyItems.LADLE_ITEM);
-		register(AlchemyMod.getId("throw_bottle"), AlchemyItems.THROW_BOTTLE);
-		register(AlchemyMod.getId("lingering_bottle"), AlchemyItems.LINGERING_BOTTLE);
-		register(AlchemyMod.getId("apothecary_guide_book"), AlchemyItems.APOTHECARY_GUIDE);
-		register(AlchemyMod.getId("magical_coal_0"), AlchemyItems.MAGICAL_COAL_TIER_0);
-		register(AlchemyMod.getId("magical_coal_1"), AlchemyItems.MAGICAL_COAL_TIER_1);
-		register(AlchemyMod.getId("magical_coal_2"), AlchemyItems.MAGICAL_COAL_TIER_2);
-		register(AlchemyMod.getId("magic_dust"), AlchemyItems.MAGIC_DUST);
-		register(AlchemyMod.getId("magic_pickaxe"), AlchemyItems.SPECIAL_PICKAXE_ITEM);
-		register(AlchemyMod.getId("magic_axe"), AlchemyItems.SPECIAL_AXE_ITEM);
-		register(AlchemyMod.getId("jar"), AlchemyItems.JAR_ITEM);
-		register(AlchemyMod.getId("aspect/air"), AspectItems.AIR);
-		register(AlchemyMod.getId("aspect/earth"), AspectItems.EARTH);
-		register(AlchemyMod.getId("aspect/fire"), AspectItems.FIRE);
-		register(AlchemyMod.getId("aspect/water"), AspectItems.WATER);
-		register(AlchemyMod.getId("aspect/order"), AspectItems.ORDER);
-		register(AlchemyMod.getId("aspect/disorder"), AspectItems.DISORDER);
-		register(AlchemyMod.getId("phial/empty"), EMPTY_PHIAL_ITEM);
-		register(AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_ITEM);
-		register(AlchemyMod.getId("research_book"), RESEARCH_BOOK_ITEM);
-		register(AlchemyMod.getId("aspect_pipe"), ASPECT_PIPE_ITEM);
-		register(AlchemyMod.getId("necromancy_skull"), NECROMANCY_SKULL);
-		register(AlchemyMod.getId("necromancy_arm"), NECROMANCY_ARM);
-		register(AlchemyMod.getId("necromancy_leg"), NECROMANCY_LEG);
-		register(AlchemyMod.getId("necromancy_heart"), NECROMANCY_HEART);
-		register(AlchemyMod.getId("necromancy_ribcage"), NECROMANCY_RIBCAGE);
-		register(AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
-		register(AlchemyMod.getId("spawn_egg_base"), SPAWN_EGG_BASE);
-		register(AlchemyMod.getId("nekomancy_table"), NEKOMANCY_TABLE);
-		register(AlchemyMod.getId("crafting_hopper"), CRAFTING_HOPPER);
-	}
-
-	private static final List<Item> items = new ArrayList<>();
-
-	private static void register(Identifier id, Item item)
+	private static <T extends Item> T register(Identifier id, T item)
 	{
 		Registry.register(Registry.ITEM, id, item);
 		items.add(item);
+		return item;
 	}
 
 	private static void getStacks(List<ItemStack> stack)
