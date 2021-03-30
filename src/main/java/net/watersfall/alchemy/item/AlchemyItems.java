@@ -100,6 +100,8 @@ public class AlchemyItems
 		register(AlchemyMod.getId("aspect/earth"), AspectItems.EARTH);
 		register(AlchemyMod.getId("aspect/fire"), AspectItems.FIRE);
 		register(AlchemyMod.getId("aspect/water"), AspectItems.WATER);
+		register(AlchemyMod.getId("aspect/order"), AspectItems.ORDER);
+		register(AlchemyMod.getId("aspect/disorder"), AspectItems.DISORDER);
 		register(AlchemyMod.getId("phial/empty"), EMPTY_PHIAL_ITEM);
 		register(AlchemyMod.getId("phial_shelf"), PHIAL_SHELF_ITEM);
 		register(AlchemyMod.getId("research_book"), RESEARCH_BOOK_ITEM);

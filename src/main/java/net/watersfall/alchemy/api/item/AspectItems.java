@@ -9,6 +9,8 @@ public class AspectItems
 	public static final AspectItem EARTH;
 	public static final AspectItem FIRE;
 	public static final AspectItem WATER;
+	public static final AspectItem ORDER;
+	public static final AspectItem DISORDER;
 
 	static
 	{
@@ -16,5 +18,7 @@ public class AspectItems
 		EARTH = new AspectItem();
 		FIRE = new AspectItem();
 		WATER = new AspectItem();
+		ORDER = new AspectItem();
+		DISORDER = new AspectItem();
 	}
 }

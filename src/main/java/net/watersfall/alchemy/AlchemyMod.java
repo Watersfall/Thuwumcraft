@@ -266,6 +266,8 @@ public class AlchemyMod implements ModInitializer
 		Aspects.register(Aspects.EARTH.getId(), Aspects.EARTH);
 		Aspects.register(Aspects.WATER.getId(), Aspects.WATER);
 		Aspects.register(Aspects.FIRE.getId(), Aspects.FIRE);
+		Aspects.register(Aspects.ORDER.getId(), Aspects.ORDER);
+		Aspects.register(Aspects.DISORDER.getId(), Aspects.DISORDER);
 	}
 
 	private static void registerSounds()
