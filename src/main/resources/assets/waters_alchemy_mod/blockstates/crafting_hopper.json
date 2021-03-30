@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "waters_alchemy_mod:block/crafting_hopper",
+			"y": 90
+		},
+		"facing=north": {
+			"model": "waters_alchemy_mod:block/crafting_hopper"
+		},
+		"facing=south": {
+			"model": "waters_alchemy_mod:block/crafting_hopper",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "waters_alchemy_mod:block/crafting_hopper",
+			"y": 270
+		}
+	}
+}

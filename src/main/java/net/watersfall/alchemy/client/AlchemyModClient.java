@@ -97,6 +97,7 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.JAR_ENTITY, JarEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);

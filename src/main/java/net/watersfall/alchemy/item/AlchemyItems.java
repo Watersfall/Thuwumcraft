@@ -44,6 +44,7 @@ public class AlchemyItems
 	public static final CustomMobSpawnerItem CUSTOM_SPAWNER;
 	public static final Item SPAWN_EGG_BASE;
 	public static final BlockItem NEKOMANCY_TABLE;
+	public static final BlockItem CRAFTING_HOPPER;
 
 	static
 	{
@@ -77,6 +78,7 @@ public class AlchemyItems
 		CUSTOM_SPAWNER = new CustomMobSpawnerItem(AlchemyBlocks.CUSTOM_SPAWNER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		SPAWN_EGG_BASE = new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 		NEKOMANCY_TABLE = new BlockItem(AlchemyBlocks.NEKOMANCY_TABLE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
+		CRAFTING_HOPPER = new BlockItem(AlchemyBlocks.CRAFTING_HOPPER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	public static void register()
@@ -110,6 +112,7 @@ public class AlchemyItems
 		register(AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
 		register(AlchemyMod.getId("spawn_egg_base"), SPAWN_EGG_BASE);
 		register(AlchemyMod.getId("nekomancy_table"), NEKOMANCY_TABLE);
+		register(AlchemyMod.getId("crafting_hopper"), CRAFTING_HOPPER);
 	}
 
 	private static final List<Item> items = new ArrayList<>();

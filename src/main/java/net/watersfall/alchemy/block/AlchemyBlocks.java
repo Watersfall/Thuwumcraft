@@ -19,6 +19,7 @@ public class AlchemyBlocks
 	public static final Block SPAWNER_FRAME;
 	public static final CustomSpawnerBlock CUSTOM_SPAWNER;
 	public static final NekomancyBlock NEKOMANCY_TABLE;
+	public static final CraftingHopper CRAFTING_HOPPER;
 
 	static
 	{
@@ -33,6 +34,7 @@ public class AlchemyBlocks
 		SPAWNER_FRAME = new Block(FabricBlockSettings.copyOf(Blocks.SPAWNER));
 		CUSTOM_SPAWNER = new CustomSpawnerBlock(FabricBlockSettings.copyOf(Blocks.SPAWNER));
 		NEKOMANCY_TABLE = new NekomancyBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE));
+		CRAFTING_HOPPER = new CraftingHopper(FabricBlockSettings.copyOf(Blocks.HOPPER));
 	}
 
 	public static void register()
@@ -48,6 +50,7 @@ public class AlchemyBlocks
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("spawner_frame"), SPAWNER_FRAME);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("custom_spawner"), CUSTOM_SPAWNER);
 		Registry.register(Registry.BLOCK, AlchemyMod.getId("nekomancy_table"), NEKOMANCY_TABLE);
+		Registry.register(Registry.BLOCK, AlchemyMod.getId("crafting_hopper"), CRAFTING_HOPPER);
 	}
 
 	private static <T extends Block> T register(T block, Identifier id)
