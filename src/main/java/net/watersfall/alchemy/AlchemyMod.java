@@ -32,9 +32,11 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GenerationStep;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
@@ -42,6 +44,7 @@ import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.block.AspectContainer;
+import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -122,6 +125,12 @@ public class AlchemyMod implements ModInitializer
 				}
 			});
 		}));
+		ServerPlayNetworking.registerGlobalReceiver(getId("chunk_packet"), (server, player, handler, buf, responseSender) -> {
+			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(player.getServerWorld().getChunk(pos.getStartPos()));
+			buf = provider.toPacket(PacketByteBufs.create());
+			responseSender.sendPacket(getId("chunk_packet"), buf);
+		});
 	}
 
 	private static void registerEvents()
@@ -286,6 +295,7 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(getId("aspect_storage_ability"), PhialStorageAbility::new);
 		AbilityProvider.ENTITY_REGISTRY.register(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
+		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbility::new);
 	}
 
 	private static void registerMultiBlocks()

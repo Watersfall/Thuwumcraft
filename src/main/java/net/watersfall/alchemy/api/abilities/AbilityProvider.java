@@ -8,6 +8,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ProtoChunk;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -22,6 +24,7 @@ public interface AbilityProvider<T> extends Clearable
 
 	public static final Registry<Entity> ENTITY_REGISTRY = new Registry<>();
 	public static final Registry<ItemStack> ITEM_REGISTRY = new Registry<>();
+	public static final Registry<Chunk> CHUNK_REGISTRY = new Registry<>();
 
 	void addAbility(Ability<T> ability);
 

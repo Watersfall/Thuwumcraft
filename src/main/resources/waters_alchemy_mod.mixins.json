@@ -6,13 +6,16 @@
 	"mixins": [
 		"AnvilScreenHandlerMixin",
 		"CampfireBlockMixin",
+		"ChunkSerializerMixin",
 		"CraftingScreenHandlerMixin",
 		"EntityMixin",
 		"ItemStackMixin",
 		"LakeFeatureMixin",
 		"LivingEntityMixin",
 		"PlayerAdvancementTrackerMixin",
-		"ServerPlayerEntityMixin"
+		"ReadOnlyChunkMixin",
+		"ServerPlayerEntityMixin",
+		"WorldChunkMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

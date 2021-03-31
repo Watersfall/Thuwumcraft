@@ -1,11 +1,15 @@
 package net.watersfall.alchemy.client;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,9 +18,15 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.abilities.Ability;
+import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
@@ -129,6 +139,20 @@ public class AlchemyModClient implements ClientModInitializer
 				AlchemyBlocks.CUSTOM_SPAWNER,
 				AlchemyBlocks.CHILD_BLOCK);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
+		ClientChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeInt(chunk.getPos().x);
+			buf.writeInt(chunk.getPos().z);
+			ClientPlayNetworking.send(AlchemyMod.getId("chunk_packet"), buf);
+		});
+		HudRenderCallback.EVENT.register((matrices, value) -> {
+			World world = MinecraftClient.getInstance().world;
+			PlayerEntity player = MinecraftClient.getInstance().player;
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(world.getChunk(player.getBlockPos()));
+			provider.getAbility(VisAbility.ID, VisAbility.class).ifPresent((ability) -> {
+				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.vis), 0, 0, -1);
+			});
+		});
 		for(Item item : Registry.ITEM)
 		{
 			MultiTooltipComponent.REGISTRY.register(item, (stack) -> {
@@ -174,6 +198,11 @@ public class AlchemyModClient implements ClientModInitializer
 			ResearchCategory.REGISTRY.fromPacket(buf);
 			Research.REGISTRY.fromPacket(buf);
 		});
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("chunk_packet"), (client, handler, buf, responseSender) -> {
+			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(client.world.getChunk(pos.getStartPos()));
+			provider.fromPacket(buf);
+		});
 
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
@@ -213,5 +242,6 @@ public class AlchemyModClient implements ClientModInitializer
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
 			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);
 		});
+		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbility::new);
 	}
 }
