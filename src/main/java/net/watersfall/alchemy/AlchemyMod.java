@@ -52,7 +52,6 @@ import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.api.tag.AlchemyEntityTags;
-import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
@@ -61,12 +60,10 @@ import net.watersfall.alchemy.item.SpecialPickaxeItem;
 import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.alchemy.research.ResearchCategoryLoader;
 import net.watersfall.alchemy.research.ResearchLoader;
-import net.watersfall.alchemy.screen.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.state.property.Properties;
@@ -77,7 +74,8 @@ import net.minecraft.world.World;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.util.StatusEffectHelper;
-import net.watersfall.alchemy.world.AlchemyFeatures;
+import net.watersfall.alchemy.world.biome.AlchemyBiomes;
+import net.watersfall.alchemy.world.feature.AlchemyFeatures;
 import java.util.*;
 
 public class AlchemyMod implements ModInitializer
@@ -317,6 +315,7 @@ public class AlchemyMod implements ModInitializer
 		registerNetwork();
 		AlchemyFeatures.register();
 		AlchemyEntityTags.register();
+		AlchemyBiomes.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),

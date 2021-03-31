@@ -1,14 +1,20 @@
-package net.watersfall.alchemy.world;
+package net.watersfall.alchemy.world.feature;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
+import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.world.config.DecoratedRockConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeLayersConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeSizeConfig;
@@ -17,14 +23,18 @@ import net.watersfall.alchemy.world.feature.NetherGeodeFeature;
 public class AlchemyFeatures
 {
 	public static final NetherGeodeFeature NETHER_GEODE_FEATURE;
+	public static final DecoratedRockFeature DECORATED_ROCK_FEATURE;
 
 	public static final ConfiguredFeature<?, ?> EARTH_CRYSTAL_GEODE;
 	public static final ConfiguredFeature<?, ?> NETHER_GEODE;
 	public static final ConfiguredFeature<?, ?> BASALT_DELTA_GEODE;
+	public static final ConfiguredFeature<?, ?> MAGIC_FOREST_TREES;
+	public static final ConfiguredFeature<?, ?> MOSSY_ASPECT_ROCKS;
 
 	static
 	{
 		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
+		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
 
 		EARTH_CRYSTAL_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 						new GeodeLayerConfig(
@@ -115,6 +125,21 @@ public class AlchemyFeatures
 				new NetherGeodeSizeConfig(4, 7, 3, 5, 1, 3, -16, 16),
 				0.35D, 0.083D, true, 0.05D, 1
 			)).rangeOf(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
+		MAGIC_FOREST_TREES = Feature.RANDOM_SELECTOR.configure(
+				new RandomFeatureConfig(
+						ImmutableList.of(
+								ConfiguredFeatures.FANCY_OAK_BEES_0002.withChance(0.5F),
+								ConfiguredFeatures.HUGE_BROWN_MUSHROOM.withChance(0.05F),
+								ConfiguredFeatures.HUGE_RED_MUSHROOM.withChance(0.05F),
+								ConfiguredFeatures.OAK.withChance(0.4F)
+						),
+						ConfiguredFeatures.OAK
+				))
+				.decorate(ConfiguredFeatures.Decorators.field_29534)
+				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
+		MOSSY_ASPECT_ROCKS = DECORATED_ROCK_FEATURE.configure(new DecoratedRockConfig(
+				new SimpleBlockStateProvider(Blocks.MOSSY_COBBLESTONE.getDefaultState())
+		)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(2);
 	}
 
 	public static void register()
@@ -122,5 +147,7 @@ public class AlchemyFeatures
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("earth_crystal_geode"), EARTH_CRYSTAL_GEODE);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("basalt_delta_geode"), BASALT_DELTA_GEODE);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("nether_geode"), NETHER_GEODE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("magic_forest_trees"), MAGIC_FOREST_TREES);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("mossy_aspect_rocks"), MOSSY_ASPECT_ROCKS);
 	}
 }
