@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.item;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -8,7 +9,6 @@ import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.item.AspectItem;
-import net.watersfall.alchemy.api.item.AspectItems;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
@@ -45,11 +45,23 @@ public class AlchemyItems
 	public static final Item SPAWN_EGG_BASE;
 	public static final BlockItem NEKOMANCY_TABLE;
 	public static final BlockItem CRAFTING_HOPPER;
-	private static final List<Item> items;
+	public static final Item THUWUMIUM_INGOT;
+	public static final PickaxeItem THUWUMIUM_PICKAXE;
+	public static final AxeItem THUWUMIUM_AXE;
+	public static final HoeItem THUWUMIUM_HOE;
+	public static final ShovelItem THUWUMIUM_SHOVEL;
+	public static final SwordItem THUWUMIUM_SWORD;
+	public static final Item THUWUMIC_MAGNIFYING_GLASS;
+	public static final ArmorItem THUWUMIUM_HELMET;
+	public static final ArmorItem THUWUMIUM_CHESTPLATE;
+	public static final ArmorItem THUWUMIUM_LEGGINGS;
+	public static final ArmorItem THUWUMIUM_BOOTS;
+	public static final ArmorItem GOGGLES;
+	public static final List<Item> ITEMS;
 
 	static
 	{
-		items = new ArrayList<>();
+		ITEMS = new ArrayList<>();
 		ALCHEMY_MOD_ITEM_GROUP = FabricItemGroupBuilder.create(AlchemyMod
 				.getId("alchemy_mod_group"))
 				.icon(AlchemyItems::getDisplayIcon)
@@ -81,24 +93,36 @@ public class AlchemyItems
 		SPAWN_EGG_BASE = register(AlchemyMod.getId("spawn_egg_base"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		NEKOMANCY_TABLE = register(AlchemyMod.getId("nekomancy_table"), new BlockItem(AlchemyBlocks.NEKOMANCY_TABLE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		CRAFTING_HOPPER = register(AlchemyMod.getId("crafting_hopper"), new BlockItem(AlchemyBlocks.CRAFTING_HOPPER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_INGOT = register(AlchemyMod.getId("thuwumium_ingot"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_PICKAXE = register(AlchemyMod.getId("thuwumium_pickaxe"), new OpenPickaxeItem(AlchemyToolMaterials.THUWUMIUM, 1, -2.8F, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_AXE = register(AlchemyMod.getId("thuwumium_axe"), new OpenAxeItem(AlchemyToolMaterials.THUWUMIUM, 5, -3.0F, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_HOE = register(AlchemyMod.getId("thuwumium_hoe"), new OpenHoeItem(AlchemyToolMaterials.THUWUMIUM, -2, -1.0F, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_SHOVEL = register(AlchemyMod.getId("thuwumium_shovel"), new ShovelItem(AlchemyToolMaterials.THUWUMIUM, 1.5F, -3.0F, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_SWORD = register(AlchemyMod.getId("thuwumium_sword"), new SwordItem(AlchemyToolMaterials.THUWUMIUM, 3, -2.4F, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_HELMET = register(AlchemyMod.getId("thuwumium_helmet"), new ArmorItem(AlchemyArmorMaterials.THUWUMIUM, EquipmentSlot.HEAD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_CHESTPLATE = register(AlchemyMod.getId("thuwumium_chestplate"), new ArmorItem(AlchemyArmorMaterials.THUWUMIUM, EquipmentSlot.CHEST, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_LEGGINGS = register(AlchemyMod.getId("thuwumium_leggings"), new ArmorItem(AlchemyArmorMaterials.THUWUMIUM, EquipmentSlot.LEGS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIUM_BOOTS = register(AlchemyMod.getId("thuwumium_boots"), new ArmorItem(AlchemyArmorMaterials.THUWUMIUM, EquipmentSlot.FEET, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		GOGGLES = register(AlchemyMod.getId("goggles"), new ArmorItem(AlchemyArmorMaterials.GOGGLES, EquipmentSlot.HEAD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		THUWUMIC_MAGNIFYING_GLASS = register(AlchemyMod.getId("magnifying_glass"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
 	{
 		Registry.register(Registry.ITEM, id, item);
-		items.add(item);
+		ITEMS.add(item);
 		return item;
 	}
 
 	private static void getStacks(List<ItemStack> stack)
 	{
-		items.forEach((item) -> {
+		ITEMS.forEach((item) -> {
 			if(item instanceof BlockItem)
 			{
 				stack.add(item.getDefaultStack());
 			}
 		});
-		items.forEach((item) -> {
+		ITEMS.forEach((item) -> {
 			if(!(item instanceof BlockItem) && item != EMPTY_PHIAL_ITEM && !(item instanceof AspectItem))
 			{
 				stack.add(item.getDefaultStack());

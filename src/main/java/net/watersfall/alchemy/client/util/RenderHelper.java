@@ -4,16 +4,21 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.alchemy.api.aspect.AspectStack;
+import net.watersfall.alchemy.item.AlchemyItems;
 
 import java.util.Collection;
 import java.util.List;
@@ -139,45 +144,51 @@ public class RenderHelper
 		if(aspects.size() > 0)
 		{
 			HitResult result = MinecraftClient.getInstance().crosshairTarget;
-			if(!MinecraftClient.getInstance().options.hudHidden && result != null && result.getType() == HitResult.Type.BLOCK)
+			ClientPlayerEntity player = MinecraftClient.getInstance().player;
+			boolean shouldRender = (
+					!MinecraftClient.getInstance().options.hudHidden
+							&& result != null && result.getType() == HitResult.Type.BLOCK
+							&& ((BlockHitResult)result).getBlockPos().equals(entity.getPos()))
+					&& (player.getStackInHand(Hand.MAIN_HAND).getItem() == AlchemyItems.THUWUMIC_MAGNIFYING_GLASS
+							|| player.getStackInHand(Hand.OFF_HAND).getItem() == AlchemyItems.THUWUMIC_MAGNIFYING_GLASS)
+					|| (player.getEquippedStack(EquipmentSlot.HEAD).getItem() == AlchemyItems.GOGGLES
+							&& entity.getPos().getSquaredDistance(player.getBlockPos()) < 256);
+			if(shouldRender)
 			{
-				BlockPos pos = new BlockPos(result.getPos());
-				if(pos.equals(entity.getPos()))
-				{
-					matrices.push();
-					VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
-					matrices.translate(0.5D, 1.75D, 0.5D);
-					Quaternion quaternion = dispatcher.camera.getRotation().copy();
-					quaternion.hamiltonProduct(Vec3f.NEGATIVE_X.getDegreesQuaternion(270));
-					matrices.scale(0.25F, 0.25F, 0.25F);
-					matrices.multiply(quaternion);
-					matrices.translate(0.5D, 0D, 0.5D);
-					matrices.translate(-0.5F * (aspects.size() + 1), 0F, 0F);
-					aspects.forEach((aspectStack -> {
-						Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getSprite();
-						RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360, false);
-						if(aspectStack.getCount() > 1)
+				matrices.push();
+				VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
+				matrices.translate(0.5D, 1.75D, 0.5D);
+				Quaternion quaternion = dispatcher.camera.getRotation().copy();
+				quaternion.hamiltonProduct(Vec3f.NEGATIVE_X.getDegreesQuaternion(270));
+				matrices.scale(0.25F, 0.25F, 0.25F);
+				matrices.multiply(quaternion);
+				matrices.translate(0.5D, 0D, 0.5D);
+				matrices.translate(-0.5F * (aspects.size() + 1), 0F, 0F);
+				aspects.forEach((aspectStack -> {
+					Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getSprite();
+					RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360, false);
+					if(aspectStack.getCount() > 1)
+					{
+						matrices.push();
+						matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
+						if(aspectStack.getCount() >= 10)
 						{
-							matrices.push();
-							matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
-							if(aspectStack.getCount() >= 10)
-							{
-								matrices.translate(0.5F, -0.625F, 0.99F);
-							}
-							else
-							{
-								matrices.translate(0.375F, -0.625F, 0.99F);
-							}
-							matrices.scale(0.0625F, 0.0625F, 0.0625F);
-							matrices.scale(-1F, -1F, -1F);
-							textRenderer.draw(matrices, "" + aspectStack.getCount(), 0F, 0F, -1);
-							matrices.pop();
+							matrices.translate(0.5F, -0.625F, 0.99F);
 						}
-						matrices.translate(1F, 0F, 0F);
-					}));
-					matrices.pop();
-				}
+						else
+						{
+							matrices.translate(0.375F, -0.625F, 0.99F);
+						}
+						matrices.scale(0.0625F, 0.0625F, 0.0625F);
+						matrices.scale(-1F, -1F, -1F);
+						textRenderer.draw(matrices, "" + aspectStack.getCount(), 0F, 0F, -1);
+						matrices.pop();
+					}
+					matrices.translate(1F, 0F, 0F);
+				}));
+				matrices.pop();
 			}
+
 		}
 	}
 }

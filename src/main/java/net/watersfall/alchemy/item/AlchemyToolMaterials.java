@@ -11,6 +11,9 @@ public enum AlchemyToolMaterials implements ToolMaterial
 {
 	MAGIC(921, 8.0F, 3.0F, 3, 25, () -> {
 		return Ingredient.ofItems(Items.AMETHYST_SHARD);
+	}),
+	THUWUMIUM(512, 7.0F, 2.5F, 2, 25, () -> {
+		return Ingredient.ofItems(AlchemyItems.THUWUMIUM_INGOT);
 	});
 
 	private final int durability;

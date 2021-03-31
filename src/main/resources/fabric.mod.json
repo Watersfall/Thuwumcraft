@@ -24,7 +24,9 @@
 	},
 	"mixins": [
 		"waters_alchemy_mod.mixins.json",
-		"waters_alchemy_mod.client.mixins.json"
+		"waters_alchemy_mod.client.mixins.json",
+		"waters_alchemy_mod.accessor.mixins.json",
+		"waters_alchemy_mod.client.accessor.mixins.json"
 	],
 	"accessWidener" : "waters_alchemy_mod.accesswidener",
 	"depends": {

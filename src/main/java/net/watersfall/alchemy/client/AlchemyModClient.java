@@ -6,19 +6,18 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
+import net.watersfall.alchemy.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
@@ -39,6 +38,8 @@ import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
+import net.watersfall.alchemy.item.AlchemyArmorMaterials;
+import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -53,8 +54,10 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.color.world.BiomeColors;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
@@ -83,6 +86,25 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			}
 		}));
+	}
+
+	private void preRegisterArmorTextures(Identifier name, boolean hasOverlay)
+	{
+		for (int layer = 1; layer <= 2; layer++)
+		{
+			preRegisterArmorTexture(name, layer, null);
+			if (hasOverlay)
+			{
+				preRegisterArmorTexture(name, layer, "overlay");
+			}
+		}
+	}
+
+	private void preRegisterArmorTexture(Identifier name, int layer, @Nullable String extra)
+	{
+		String key = "textures/models/armor/" + name.getPath() + "_layer_" + layer + (extra == null ? "" : "_" + extra) + ".png";
+		Identifier value = new Identifier(name.getNamespace(), "textures/models/armor/" + name.getPath() + "_layer_" + layer + (extra == null ? "" : "_" + extra) + ".png");
+		ArmorFeatureRendererAccessor.getArmorTextureCache().put(key, value);
 	}
 
 	@Override
@@ -188,5 +210,8 @@ public class AlchemyModClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
 			return new RecipeElement(items, false);
 		}));
+		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
+			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);
+		});
 	}
 }
