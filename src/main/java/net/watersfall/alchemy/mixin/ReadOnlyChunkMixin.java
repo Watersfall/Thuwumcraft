@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.chunk.*;
+import net.watersfall.alchemy.abilities.chunk.VisAbilityImpl;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
@@ -25,7 +26,13 @@ public class ReadOnlyChunkMixin implements AbilityProvider<Chunk>
 	public void addAbilities(WorldChunk wrapped, CallbackInfo ci)
 	{
 		parentProvider = AbilityProvider.getProvider((Chunk)(Object)wrapped);
-		parentProvider.addAbility(new VisAbility());
+		parentProvider.addAbility(new VisAbilityImpl());
+	}
+
+	@Override
+	public void tick(Chunk chunk)
+	{
+		parentProvider.tick(chunk);
 	}
 
 	@Override

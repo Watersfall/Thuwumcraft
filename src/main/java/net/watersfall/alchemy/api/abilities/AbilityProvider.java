@@ -48,6 +48,8 @@ public interface AbilityProvider<T> extends Clearable
 	@Environment(EnvType.CLIENT)
 	void fromPacket(PacketByteBuf buf);
 
+	void tick(T t);
+
 	void sync(T t);
 
 	class Registry<T>

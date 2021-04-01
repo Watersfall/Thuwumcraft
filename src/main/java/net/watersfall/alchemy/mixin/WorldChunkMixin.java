@@ -22,6 +22,7 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.chunk.WorldChunk;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.chunk.VisAbilityImpl;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -50,7 +51,7 @@ public abstract class WorldChunkMixin implements AbilityProvider<Chunk>
 	public void addAbilities(World world, ChunkPos pos, BiomeArray biomes, UpgradeData upgradeData, TickScheduler<Block> blockTickScheduler, TickScheduler<Fluid> fluidTickScheduler, long inhabitedTime, ChunkSection[] sections, Consumer<WorldChunk> loadToWorldConsumer, CallbackInfo ci)
 	{
 		AbilityProvider<Chunk> provider = AbilityProvider.getProvider((Chunk)(Object)this);
-		provider.addAbility(new VisAbility());
+		provider.addAbility(new VisAbilityImpl());
 	}
 
 	@Override
@@ -92,6 +93,14 @@ public abstract class WorldChunkMixin implements AbilityProvider<Chunk>
 	}
 
 	@Override
+	public void tick(Chunk chunk)
+	{
+		this.abilities.values().forEach((ability) -> {
+			ability.tick(chunk);
+		});
+	}
+
+	@Override
 	public NbtCompound toNbt(NbtCompound tag)
 	{
 		NbtCompound compound = new NbtCompound();
@@ -118,15 +127,12 @@ public abstract class WorldChunkMixin implements AbilityProvider<Chunk>
 	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
-		buf.writeInt(this.pos.x);
-		buf.writeInt(this.pos.z);
 		buf.writeInt(this.abilities.size());
 		for(Ability<Chunk> ability : abilities.values())
 		{
 			if(ability instanceof AbilityClientSerializable)
 			{
-				String id = ability.getId().toString();
-				buf.writeString(id);
+				buf.writeIdentifier(ability.getId());
 				((AbilityClientSerializable)ability).toPacket(buf);
 			}
 		}
@@ -141,7 +147,7 @@ public abstract class WorldChunkMixin implements AbilityProvider<Chunk>
 		int size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
-			Identifier id = Identifier.tryParse(buf.readString());
+			Identifier id = buf.readIdentifier();
 			temp.put(id, AbilityProvider.CHUNK_REGISTRY.create(id, buf));
 		}
 		MinecraftClient.getInstance().execute(() -> {
@@ -153,15 +159,7 @@ public abstract class WorldChunkMixin implements AbilityProvider<Chunk>
 	@Override
 	public void sync(Chunk chunk)
 	{
-		if(chunk instanceof WorldChunk)
-		{
-			ServerWorld world = (ServerWorld)((WorldChunk)chunk).getWorld();
-			PacketByteBuf buf = this.toPacket(PacketByteBufs.create());
-			for(ServerPlayerEntity player : PlayerLookup.tracking(world, this.pos))
-			{
-				ServerPlayNetworking.send(player, AlchemyMod.getId("chunk_packet"), buf);
-			}
-		}
+
 	}
 
 	@Override

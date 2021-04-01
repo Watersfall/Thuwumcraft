@@ -10,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -25,7 +24,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.api.abilities.Ability;
+import net.watersfall.alchemy.abilities.chunk.VisAbilityImpl;
 import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -49,7 +48,6 @@ import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.item.AlchemyArmorMaterials;
-import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
@@ -150,7 +148,7 @@ public class AlchemyModClient implements ClientModInitializer
 			PlayerEntity player = MinecraftClient.getInstance().player;
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(world.getChunk(player.getBlockPos()));
 			provider.getAbility(VisAbility.ID, VisAbility.class).ifPresent((ability) -> {
-				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.vis), 0, 0, -1);
+				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.getVis()), 0, 0, -1);
 			});
 		});
 		for(Item item : Registry.ITEM)
@@ -203,6 +201,12 @@ public class AlchemyModClient implements ClientModInitializer
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(client.world.getChunk(pos.getStartPos()));
 			provider.fromPacket(buf);
 		});
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("vis_packet"), (client, handler, buf, responder) -> {
+			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(client.world.getChunk(pos.getStartPos()));
+			provider.removeAbility(VisAbility.ID);
+			provider.addAbility(AbilityProvider.CHUNK_REGISTRY.create(VisAbility.ID, buf));
+		});
 
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
@@ -242,6 +246,6 @@ public class AlchemyModClient implements ClientModInitializer
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
 			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);
 		});
-		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbility::new);
+		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbilityImpl::new);
 	}
 }

@@ -20,6 +20,7 @@ public class AlchemyBlocks
 	public static final CustomSpawnerBlock CUSTOM_SPAWNER;
 	public static final NekomancyBlock NEKOMANCY_TABLE;
 	public static final CraftingHopper CRAFTING_HOPPER;
+	public static final VisLiquifierBlock VIS_LIQUIFIER;
 
 	static
 	{
@@ -35,6 +36,7 @@ public class AlchemyBlocks
 		CUSTOM_SPAWNER = register(AlchemyMod.getId("custom_spawner"), new CustomSpawnerBlock(FabricBlockSettings.copyOf(Blocks.SPAWNER)));
 		NEKOMANCY_TABLE = register(AlchemyMod.getId("nekomancy_table"), new NekomancyBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
 		CRAFTING_HOPPER = register(AlchemyMod.getId("crafting_hopper"), new CraftingHopper(FabricBlockSettings.copyOf(Blocks.HOPPER)));
+		VIS_LIQUIFIER = register(AlchemyMod.getId("vis_liquifier"), new VisLiquifierBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

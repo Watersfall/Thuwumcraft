@@ -80,6 +80,12 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	}
 
 	@Override
+	public void tick(ItemStack stack)
+	{
+
+	}
+
+	@Override
 	public void copy(ItemStack to, boolean alive)
 	{
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(to);

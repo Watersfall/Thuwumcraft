@@ -3,6 +3,7 @@ package net.watersfall.alchemy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
@@ -38,6 +39,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GenerationStep;
+import net.watersfall.alchemy.abilities.chunk.VisAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
@@ -126,8 +128,11 @@ public class AlchemyMod implements ModInitializer
 		ServerPlayNetworking.registerGlobalReceiver(getId("chunk_packet"), (server, player, handler, buf, responseSender) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(player.getServerWorld().getChunk(pos.getStartPos()));
-			buf = provider.toPacket(PacketByteBufs.create());
-			responseSender.sendPacket(getId("chunk_packet"), buf);
+			PacketByteBuf buf2 = PacketByteBufs.create();
+			buf2.writeInt(pos.x);
+			buf2.writeInt(pos.z);
+			provider.toPacket(buf2);
+			responseSender.sendPacket(getId("chunk_packet"), buf2);
 		});
 	}
 
@@ -204,17 +209,6 @@ public class AlchemyMod implements ModInitializer
 				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
 				PacketByteBuf buf = PacketByteBufs.create();
 				provider.toPacket(buf);
-				if(entity.getType() == EntityType.PLAYER)
-				{
-					if(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
-					{
-						PacketByteBuf research = PacketByteBufs.create();
-						ResearchCategory.REGISTRY.toPacket(research);
-						Research.REGISTRY.toPacket(research);
-						ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
-					}
-					ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet_player"), buf);
-				}
 				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 				{
 					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
@@ -293,7 +287,7 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(getId("aspect_storage_ability"), PhialStorageAbility::new);
 		AbilityProvider.ENTITY_REGISTRY.register(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
-		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbility::new);
+		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbilityImpl::new);
 	}
 
 	private static void registerMultiBlocks()
