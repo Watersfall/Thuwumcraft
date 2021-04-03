@@ -43,11 +43,12 @@ public class AlchemyBiomes
 		DefaultBiomeFeatures.addSprings(generationSettings);
 		DefaultBiomeFeatures.addAmethystGeodes(generationSettings);
 		DefaultBiomeFeatures.addForestFlowers(generationSettings);
-		DefaultBiomeFeatures.addForestGrass(generationSettings);
 		DefaultBiomeFeatures.addDefaultMushrooms(generationSettings);
 		DefaultBiomeFeatures.addSwampVegetation(generationSettings);
 		DefaultBiomeFeatures.addExtraDefaultFlowers(generationSettings);
 		DefaultBiomeFeatures.addSweetBerryBushes(generationSettings);
+		DefaultBiomeFeatures.addPlainsTallGrass(generationSettings);
+		DefaultBiomeFeatures.addPlainsFeatures(generationSettings);
 		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, AlchemyFeatures.MAGIC_FOREST_TREES);
 		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, AlchemyFeatures.MOSSY_ASPECT_ROCKS);
 		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.PATCH_WATERLILLY);
