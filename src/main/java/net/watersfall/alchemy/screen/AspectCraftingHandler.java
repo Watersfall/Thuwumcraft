@@ -10,9 +10,11 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.block.entity.AspectCraftingEntity;
 import net.watersfall.alchemy.inventory.AspectCraftingInventory;
 import net.watersfall.alchemy.screen.slot.AspectCraftingOutputSlot;
+import net.watersfall.alchemy.screen.slot.CrystalSlot;
 
 import java.util.Optional;
 
@@ -41,23 +43,22 @@ public class AspectCraftingHandler extends ScreenHandler
 			this.inventory = new AspectCraftingInventory(this);
 		}
 
-		this.addSlot(new AspectCraftingOutputSlot(playerInventory.player, this.inventory, this.inventory.output, 0, 124, 35));
+		this.addSlot(new AspectCraftingOutputSlot(playerInventory.player, this.inventory, this.inventory.output, 0, 143, 53));
 
 		for(int y = 0; y < 3; ++y)
 		{
 			for(int x = 0; x < 3; ++x)
 			{
-				this.addSlot(new Slot(this.inventory, x + y * 3, 30 + x * 18, 17 + y * 18));
+				this.addSlot(new Slot(this.inventory, x + y * 3, 30 + x * 18, 35 + y * 18));
 			}
 		}
 
-		for(int y = 0; y < 2; y++)
-		{
-			for(int x = 0; x < 3; x++)
-			{
-				this.addSlot(new Slot(this.inventory.crystals, x + y * 3, 86 + x * 18, 17 + y * 18));
-			}
-		}
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 0, 84, 35, Aspects.AIR));
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 1, 12, 35, Aspects.WATER));
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 2, 12, 71, Aspects.EARTH));
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 3, 84, 71, Aspects.FIRE));
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 4, 48, 17, Aspects.ORDER));
+		this.addSlot(new CrystalSlot(this.inventory.crystals, 5, 48, 89, Aspects.DISORDER));
 
 		if(entity != null)
 		{
@@ -70,13 +71,14 @@ public class AspectCraftingHandler extends ScreenHandler
 		{
 			for (int x = 0; x < 9; ++x)
 			{
-				this.addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 111 + y * 18));
+				this.addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 120 + y * 18));
 			}
 		}
 		for (int y = 0; y < 9; ++y)
 		{
-			this.addSlot(new Slot(playerInventory, y, 8 + y * 18, 169));
+			this.addSlot(new Slot(playerInventory, y, 8 + y * 18, 178));
 		}
+		this.context.run((world, blockPos) -> updateResult(world, this.inventory));
 	}
 
 	protected void updateResult(World world, AspectCraftingInventory inventory)

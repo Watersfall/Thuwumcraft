@@ -12,11 +12,20 @@ import net.watersfall.alchemy.screen.AspectCraftingHandler;
 
 public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/nekomancy_table.png");
+	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/aspect_crafting_table.png");
 
 	public AspectCraftingScreen(AspectCraftingHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
+	}
+
+	@Override
+	protected void init()
+	{
+		this.backgroundWidth = 175;
+		this.backgroundHeight = 201;
+		this.playerInventoryTitleY = 108;
+		super.init();
 	}
 
 	@Override
