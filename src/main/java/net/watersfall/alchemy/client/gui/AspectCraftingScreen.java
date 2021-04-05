@@ -56,7 +56,7 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 		VisAbility ability = provider.getAbility(VisAbility.ID, VisAbility.class).get();
 		matrices.scale(0.5F, 0.5F, 1F);
 		this.textRenderer.draw(matrices, new LiteralText(ability.getVis() + " Vis Available"), (this.x + 116) * 2, (y + 36) * 2, -1);
-		if(handler.currentRecipe != null && handler.currentRecipe instanceof AspectCraftingShapedRecipe)
+		if(handler.currentRecipe != null && handler.currentRecipe instanceof AspectCraftingShapedRecipe && handler.canTakeOutput())
 		{
 			AspectCraftingShapedRecipe recipe = (AspectCraftingShapedRecipe)handler.currentRecipe;
 			int color = ability.getVis() >= recipe.getVis() ? 0x00FF00 : 0xFF0000;
