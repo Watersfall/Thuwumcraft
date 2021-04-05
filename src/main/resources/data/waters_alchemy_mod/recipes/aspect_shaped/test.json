@@ -1,0 +1,28 @@
+{
+	"type": "waters_alchemy_mod:aspect_shaped",
+	"pattern": [
+		"  Y",
+		" X ",
+		"X  "
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:stick"
+		},
+		"Y": {
+			"tag": "minecraft:planks"
+		}
+	},
+	"result": {
+		"item": "waters_alchemy_mod:witchy_spoon"
+	},
+	"research": [
+		"waters_alchemy_mod:special_potion_brewing"
+	],
+	"crystals": [
+		{
+			"aspect": "waters_alchemy_mod:air",
+			"count": 5
+		}
+	]
+}

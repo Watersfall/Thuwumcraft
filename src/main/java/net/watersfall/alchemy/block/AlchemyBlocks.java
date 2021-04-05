@@ -15,12 +15,13 @@ public class AlchemyBlocks
 	public static final CrucibleBlock CRUCIBLE_BLOCK;
 	public static final JarBlock JAR_BLOCK;
 	public static final PhialShelfBlock PHIAL_SHELF_BLOCK;
-	public static final AspectPipeBlock ASPECT_PIPE_BLOCK;
+	public static final PipeBlock ASPECT_PIPE_BLOCK;
 	public static final Block SPAWNER_FRAME;
 	public static final CustomSpawnerBlock CUSTOM_SPAWNER;
 	public static final NekomancyBlock NEKOMANCY_TABLE;
 	public static final CraftingHopper CRAFTING_HOPPER;
 	public static final VisLiquifierBlock VIS_LIQUIFIER;
+	public static final AspectCraftingBlock ASPECT_CRAFTING_BLOCK;
 
 	static
 	{
@@ -31,12 +32,13 @@ public class AlchemyBlocks
 		CRUCIBLE_BLOCK = register(AlchemyMod.getId("brewing_crucible"), new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON_BLOCK)));
 		JAR_BLOCK = register(AlchemyMod.getId("jar"), new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true)));
 		PHIAL_SHELF_BLOCK = register(AlchemyMod.getId("phial_shelf"), new PhialShelfBlock(FabricBlockSettings.copyOf(Blocks.BIRCH_PLANKS).nonOpaque()));
-		ASPECT_PIPE_BLOCK = register(AlchemyMod.getId("aspect_pipe"), new AspectPipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque()));
+		ASPECT_PIPE_BLOCK = register(AlchemyMod.getId("aspect_pipe"), new PipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque()));
 		SPAWNER_FRAME = register(AlchemyMod.getId("spawner_frame"), new Block(FabricBlockSettings.copyOf(Blocks.SPAWNER)));
 		CUSTOM_SPAWNER = register(AlchemyMod.getId("custom_spawner"), new CustomSpawnerBlock(FabricBlockSettings.copyOf(Blocks.SPAWNER)));
 		NEKOMANCY_TABLE = register(AlchemyMod.getId("nekomancy_table"), new NekomancyBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
 		CRAFTING_HOPPER = register(AlchemyMod.getId("crafting_hopper"), new CraftingHopper(FabricBlockSettings.copyOf(Blocks.HOPPER)));
 		VIS_LIQUIFIER = register(AlchemyMod.getId("vis_liquifier"), new VisLiquifierBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
+		ASPECT_CRAFTING_BLOCK = register(AlchemyMod.getId("aspect_crafting_block"), new AspectCraftingBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

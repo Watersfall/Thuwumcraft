@@ -10,18 +10,16 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.accessor.ShapedRecipeAccessor;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRecipe, CraftingRecipe
 {
 	private final Identifier id;
 	private final List<Identifier> research;
-	private final ShapedRecipe recipe;
+	public final ShapedRecipe recipe;
 
 	public ResearchUnlockedShapedRecipe(Identifier id, ShapedRecipe recipe, List<Identifier> research)
 	{
@@ -143,11 +141,6 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, String group, int width, int height, DefaultedList<Ingredient> ingredients, ItemStack output, List<Identifier> research);
 		}
 	}
 }

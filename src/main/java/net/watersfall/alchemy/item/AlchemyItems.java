@@ -58,6 +58,7 @@ public class AlchemyItems
 	public static final ArmorItem THUWUMIUM_BOOTS;
 	public static final ArmorItem GOGGLES;
 	public static final BlockItem VIS_LIQUIFIER;
+	public static final BlockItem ASPECT_CRAFTING_BLOCK;
 	public static final List<Item> ITEMS;
 
 	static
@@ -107,6 +108,7 @@ public class AlchemyItems
 		GOGGLES = register(AlchemyMod.getId("goggles"), new ArmorItem(AlchemyArmorMaterials.GOGGLES, EquipmentSlot.HEAD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		THUWUMIC_MAGNIFYING_GLASS = register(AlchemyMod.getId("magnifying_glass"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		VIS_LIQUIFIER = register(AlchemyMod.getId("vis_liquifier"), new BlockItem(AlchemyBlocks.VIS_LIQUIFIER, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		ASPECT_CRAFTING_BLOCK = register(AlchemyMod.getId("aspect_crafting_block"), new BlockItem(AlchemyBlocks.ASPECT_CRAFTING_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

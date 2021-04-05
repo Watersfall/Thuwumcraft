@@ -1,6 +1,7 @@
 accessWidener	v1	named
 accessible field net/minecraft/client/render/block/entity/SkullBlockEntityRenderer TEXTURES Ljava/util/Map;
 accessible field net/minecraft/inventory/CraftingInventory stacks Lnet/minecraft/util/collection/DefaultedList;
+mutable field net/minecraft/inventory/CraftingInventory handler Lnet/minecraft/screen/ScreenHandler;
 extendable class net/minecraft/item/ItemStack
 accessible method net/minecraft/recipe/ShapedRecipe getComponents (Lcom/google/gson/JsonObject;)Ljava/util/Map;
 accessible method net/minecraft/recipe/ShapedRecipe combinePattern ([Ljava/lang/String;)[Ljava/lang/String;

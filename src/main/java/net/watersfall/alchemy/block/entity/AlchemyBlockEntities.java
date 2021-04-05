@@ -15,10 +15,11 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<CrucibleEntity> CRUCIBLE_ENTITY;
 	public static final BlockEntityType<JarEntity> JAR_ENTITY;
 	public static final BlockEntityType<PhialShelfEntity> PHIAL_SHELF_ENTITY;
-	public static final BlockEntityType<AspectPipeEntity> ASPECT_PIPE_ENTITY;
+	public static final BlockEntityType<PipeEntity> ASPECT_PIPE_ENTITY;
 	public static final BlockEntityType<CustomSpawnerEntity> CUSTOM_SPAWNER_ENTITY;
 	public static final BlockEntityType<CraftingHopperEntity> CRAFTING_HOPPER;
 	public static final BlockEntityType<VisLiquifierEntity> VIS_LIQUIFIER_ENTITY;
+	public static final BlockEntityType<AspectCraftingEntity> ASPECT_CRAFTING_ENTITY;
 
 	static
 	{
@@ -29,10 +30,11 @@ public class AlchemyBlockEntities
 		CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(CrucibleEntity::new, AlchemyBlocks.CRUCIBLE_BLOCK).build(null);
 		JAR_ENTITY = FabricBlockEntityTypeBuilder.create(JarEntity::new, AlchemyBlocks.JAR_BLOCK).build(null);
 		PHIAL_SHELF_ENTITY = FabricBlockEntityTypeBuilder.create(PhialShelfEntity::new, AlchemyBlocks.PHIAL_SHELF_BLOCK).build(null);
-		ASPECT_PIPE_ENTITY = FabricBlockEntityTypeBuilder.create(AspectPipeEntity::new, AlchemyBlocks.ASPECT_PIPE_BLOCK).build(null);
+		ASPECT_PIPE_ENTITY = FabricBlockEntityTypeBuilder.create(PipeEntity::new, AlchemyBlocks.ASPECT_PIPE_BLOCK).build(null);
 		CUSTOM_SPAWNER_ENTITY = FabricBlockEntityTypeBuilder.create(CustomSpawnerEntity::new, AlchemyBlocks.CUSTOM_SPAWNER).build(null);
 		CRAFTING_HOPPER = FabricBlockEntityTypeBuilder.create(CraftingHopperEntity::new, AlchemyBlocks.CRAFTING_HOPPER).build(null);
 		VIS_LIQUIFIER_ENTITY = FabricBlockEntityTypeBuilder.create(VisLiquifierEntity::new, AlchemyBlocks.VIS_LIQUIFIER).build(null);
+		ASPECT_CRAFTING_ENTITY = FabricBlockEntityTypeBuilder.create(AspectCraftingEntity::new, AlchemyBlocks.ASPECT_CRAFTING_BLOCK).build(null);
 	}
 
 	public static void register()
@@ -48,5 +50,6 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("custom_spawner_entity"), CUSTOM_SPAWNER_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("crafting_hopper_entity"), CRAFTING_HOPPER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("vis_liquifier_entity"), VIS_LIQUIFIER_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("aspect_crafting_entity"), ASPECT_CRAFTING_ENTITY);
 	}
 }

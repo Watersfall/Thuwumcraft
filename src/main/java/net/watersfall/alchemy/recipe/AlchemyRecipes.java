@@ -26,6 +26,7 @@ public class AlchemyRecipes
 	public static final RecipeSerializer<ResearchUnlockedShapedRecipe> RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<ResearchUnlockedShapelessRecipe> RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<NekomancyRecipe> NEKOMANCY_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<AspectCraftingShapedRecipe> ASPECT_SHAPED_SERIALIZER;
 	
 	static 
 	{
@@ -47,6 +48,7 @@ public class AlchemyRecipes
 		RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER = new ResearchUnlockedShapedRecipe.Serializer();
 		RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER = new ResearchUnlockedShapelessRecipe.Serializer();
 		NEKOMANCY_RECIPE_SERIALIZER = new NekomancyRecipe.Serializer();
+		ASPECT_SHAPED_SERIALIZER =new AspectCraftingShapedRecipe.Serializer();
 	}
 
 	public static void register()
@@ -69,6 +71,7 @@ public class AlchemyRecipes
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("aspect_shaped"), ASPECT_SHAPED_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)

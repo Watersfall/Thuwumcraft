@@ -15,12 +15,12 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
-import net.watersfall.alchemy.block.entity.AspectPipeEntity;
+import net.watersfall.alchemy.block.entity.PipeEntity;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.state.property.Properties.*;
 
-public class AspectPipeBlock extends Block implements BlockEntityProvider
+public class PipeBlock extends Block implements BlockEntityProvider
 {
 	protected static final VoxelShape[] OUTLINE_SHAPES = new VoxelShape[64];
 
@@ -52,7 +52,7 @@ public class AspectPipeBlock extends Block implements BlockEntityProvider
 		}
 	}
 
-	public AspectPipeBlock(Settings settings)
+	public PipeBlock(Settings settings)
 	{
 		super(settings);
 		this.setDefaultState(this.getDefaultState()
@@ -76,7 +76,7 @@ public class AspectPipeBlock extends Block implements BlockEntityProvider
 	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new AspectPipeEntity(pos, state);
+		return new PipeEntity(pos, state);
 	}
 
 	public static BooleanProperty getPropertyFromDirection(Direction direction)
@@ -147,7 +147,7 @@ public class AspectPipeBlock extends Block implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.ASPECT_PIPE_ENTITY, AspectPipeEntity::tick);
+		return world.isClient ? null : checkType(type, AlchemyBlockEntities.ASPECT_PIPE_ENTITY, PipeEntity::tick);
 	}
 
 	private byte generateIndex(BlockState state)
