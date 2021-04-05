@@ -21,7 +21,7 @@
 	],
 	"crystals": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "air",
 			"count": 5
 		}
 	],

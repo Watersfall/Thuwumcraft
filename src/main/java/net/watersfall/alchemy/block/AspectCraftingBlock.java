@@ -1,14 +1,17 @@
 package net.watersfall.alchemy.block;
 
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -54,8 +57,15 @@ public class AspectCraftingBlock extends Block implements BlockEntityProvider
 		if(test instanceof AspectCraftingEntity)
 		{
 			AspectCraftingEntity entity = (AspectCraftingEntity)test;
-			return new NamedScreenHandlerFactory()
+			return new ExtendedScreenHandlerFactory()
 			{
+				@Override
+				public void writeScreenOpeningData(ServerPlayerEntity serverPlayerEntity, PacketByteBuf buf)
+				{
+					buf.writeBlockPos(pos);
+					buf.writeBlockPos(pos);
+				}
+
 				@Override
 				public Text getDisplayName()
 				{
@@ -65,7 +75,7 @@ public class AspectCraftingBlock extends Block implements BlockEntityProvider
 				@Override
 				public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 				{
-					return new AspectCraftingHandler(syncId, inv, entity, ScreenHandlerContext.create(world, pos));
+					return new AspectCraftingHandler(syncId, inv, entity, ScreenHandlerContext.create(world, pos), pos);
 				}
 			};
 		}

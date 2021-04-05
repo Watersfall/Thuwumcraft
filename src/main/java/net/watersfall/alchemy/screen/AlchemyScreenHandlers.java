@@ -19,6 +19,6 @@ public class AlchemyScreenHandlers
 		ALCHEMICAL_FURNACE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("alchemical_furnace_handler"), AlchemicalFurnaceHandler::new);
 		RESEARCH_BOOK_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), ResearchBookHandler::new);
 		NEKOMANCY_TABLE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("nekomancy_handler"), NekomancyTableHandler::new);
-		ASPECT_CRAFTING_HANDLER = ScreenHandlerRegistry.registerSimple(getId("aspect_crafting_handler"), AspectCraftingHandler::new);
+		ASPECT_CRAFTING_HANDLER = ScreenHandlerRegistry.registerExtended(getId("aspect_crafting_handler"), AspectCraftingHandler::new);
 	}
 }

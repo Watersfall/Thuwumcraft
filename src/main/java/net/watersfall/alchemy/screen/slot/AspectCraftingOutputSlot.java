@@ -8,6 +8,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.WorldChunk;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
@@ -123,12 +124,13 @@ public class AspectCraftingOutputSlot extends Slot
 				CrystalItem item = (CrystalItem)aspect.getItem();
 				inventory.getStack(item.getAspect()).decrement(aspect.getCount());
 			});
-			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(handler.entity.getWorld().getChunk(handler.entity.getPos()));
+			WorldChunk chunk = handler.entity.getWorld().getWorldChunk(handler.entity.getPos());
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
 			Optional<VisAbility> abilityOptional = provider.getAbility(VisAbility.ID, VisAbility.class);
-			if(abilityOptional.isPresent())
+			if(abilityOptional.isPresent() && !chunk.getWorld().isClient)
 			{
 				abilityOptional.get().setVis(abilityOptional.get().getVis() - recipe.getVis());
-				abilityOptional.get().sync(handler.entity.getWorld().getChunk(handler.entity.getPos()));
+				abilityOptional.get().sync(chunk);
 			}
 		}
 	}

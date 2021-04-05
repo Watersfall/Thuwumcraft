@@ -12,6 +12,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.inventory.AspectCraftingInventory;
 import net.watersfall.alchemy.item.CrystalItem;
@@ -119,7 +120,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 			for(int i = 0; i < array.size(); i++)
 			{
 				JsonObject object = array.get(i).getAsJsonObject();
-				Item crystal = Aspects.ASPECT_TO_CRYSTAL.get(Aspects.getAspectById(new Identifier(object.get("aspect").getAsString())));
+				Item crystal = Aspects.ASPECT_TO_CRYSTAL.get(Aspects.getAspectById(AlchemyMod.getId(object.get("aspect").getAsString())));
 				int count = object.get("count").getAsInt();
 				list.add(new ItemStack(crystal, count));
 			}

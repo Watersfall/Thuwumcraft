@@ -4,11 +4,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -27,25 +30,27 @@ public class AspectCraftingHandler extends ScreenHandler
 	private final ScreenHandlerContext context;
 	public final AspectCraftingEntity entity;
 	private AspectCraftingInventory inventory;
+	public Recipe<?> currentRecipe = null;
 
-	public AspectCraftingHandler(int syncId, PlayerInventory inventory)
+	public AspectCraftingHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf)
 	{
-		this(syncId, inventory, null, ScreenHandlerContext.EMPTY);
+		this(syncId, inventory, null, ScreenHandlerContext.create(inventory.player.world, buf.readBlockPos()), buf.readBlockPos());
 	}
 
-	public AspectCraftingHandler(int syncId, PlayerInventory playerInventory, AspectCraftingEntity inventory, ScreenHandlerContext context)
+	public AspectCraftingHandler(int syncId, PlayerInventory playerInventory, AspectCraftingEntity inventory, ScreenHandlerContext context, BlockPos pos)
 	{
 		super(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, syncId);
 		this.context = context;
-		this.entity = inventory;
-		if(this.entity != null)
+
+		if(inventory != null)
 		{
-			this.inventory = this.entity.getInventory(this);
+			this.entity = inventory;
 		}
 		else
 		{
-			this.inventory = new AspectCraftingInventory(this);
+			this.entity = (AspectCraftingEntity)playerInventory.player.world.getBlockEntity(pos);
 		}
+		this.inventory = entity.getInventory(this);
 
 		this.addSlot(new AspectCraftingOutputSlot(this, playerInventory.player, this.inventory, this.inventory.output, 0, 143, 53));
 
@@ -87,14 +92,19 @@ public class AspectCraftingHandler extends ScreenHandler
 
 	protected void updateResult(World world, AspectCraftingInventory inventory)
 	{
+		ItemStack output = ItemStack.EMPTY;
+		Optional<CraftingRecipe> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, inventory, world);
+		if (optional.isPresent())
+		{
+			output = optional.get().craft(inventory);
+			this.currentRecipe = optional.get();
+		}
+		else
+		{
+			this.currentRecipe = null;
+		}
 		if (!world.isClient)
 		{
-			ItemStack output = ItemStack.EMPTY;
-			Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getFirstMatch(RecipeType.CRAFTING, inventory, world);
-			if (optional.isPresent())
-			{
-				output = optional.get().craft(inventory);
-			}
 			inventory.output.setStack(0, output);
 			if(this.slots.size() > 0)
 				this.slots.get(0).markDirty();
