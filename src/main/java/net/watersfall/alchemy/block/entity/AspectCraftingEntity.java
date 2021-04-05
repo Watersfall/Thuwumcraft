@@ -2,7 +2,9 @@ package net.watersfall.alchemy.block.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -33,5 +35,25 @@ public class AspectCraftingEntity extends BlockEntity
 	public void close(ScreenHandler handler)
 	{
 		handlers.remove(handler);
+	}
+
+	@Override
+	public void readNbt(NbtCompound tag)
+	{
+		super.readNbt(tag);
+		Inventories.readNbt(tag, contents);
+	}
+
+	@Override
+	public NbtCompound writeNbt(NbtCompound tag)
+	{
+		DefaultedList<ItemStack> writeList = DefaultedList.ofSize(15, ItemStack.EMPTY);
+		for(int i = 0; i < 15; i++)
+		{
+			writeList.set(i, this.contents.get(i));
+		}
+		super.writeNbt(tag);
+		Inventories.writeNbt(tag, writeList);
+		return tag;
 	}
 }
