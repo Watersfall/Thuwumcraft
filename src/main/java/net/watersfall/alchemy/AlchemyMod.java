@@ -219,6 +219,13 @@ public class AlchemyMod implements ModInitializer
 					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
 				}
 			}
+			if(entity.getType() == EntityType.PLAYER)
+			{
+				PacketByteBuf research = PacketByteBufs.create();
+				ResearchCategory.REGISTRY.toPacket(research);
+				Research.REGISTRY.toPacket(research);
+				ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
+			}
 		});
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
 			if(success)
