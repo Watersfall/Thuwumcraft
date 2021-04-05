@@ -1,7 +1,6 @@
 package net.watersfall.alchemy.api.abilities.entity;
 
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.advancement.Advancement;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -12,7 +11,6 @@ import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.research.Research;
 
-import java.util.List;
 import java.util.Set;
 
 public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSerializable<Entity>

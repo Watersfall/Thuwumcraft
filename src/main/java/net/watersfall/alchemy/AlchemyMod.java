@@ -1,5 +1,6 @@
 package net.watersfall.alchemy;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -16,6 +17,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.OreBlock;
@@ -219,7 +221,7 @@ public class AlchemyMod implements ModInitializer
 					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
 				}
 			}
-			if(entity.getType() == EntityType.PLAYER)
+			if(entity.getType() == EntityType.PLAYER && FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
 			{
 				PacketByteBuf research = PacketByteBufs.create();
 				ResearchCategory.REGISTRY.toPacket(research);

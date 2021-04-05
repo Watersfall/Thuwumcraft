@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.block.entity.AspectCraftingEntity;
 import net.watersfall.alchemy.inventory.AspectCraftingInventory;
@@ -31,6 +32,7 @@ public class AspectCraftingHandler extends ScreenHandler
 	public final AspectCraftingEntity entity;
 	private AspectCraftingInventory inventory;
 	public Recipe<?> currentRecipe = null;
+	private final PlayerEntity player;
 
 	public AspectCraftingHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf)
 	{
@@ -41,6 +43,7 @@ public class AspectCraftingHandler extends ScreenHandler
 	{
 		super(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, syncId);
 		this.context = context;
+		this.player = playerInventory.player;
 
 		if(inventory != null)
 		{
@@ -149,9 +152,10 @@ public class AspectCraftingHandler extends ScreenHandler
 			AspectCraftingShapedRecipe recipe = (AspectCraftingShapedRecipe)optional.get();
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(entity.getWorld().getWorldChunk(entity.getPos()));
 			Optional<VisAbility> abilityOptional = provider.getAbility(VisAbility.ID, VisAbility.class);
-			if(abilityOptional.isPresent())
+			Optional<PlayerResearchAbility> researchOptional = AbilityProvider.getProvider(player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			if(abilityOptional.isPresent() && researchOptional.isPresent())
 			{
-				return abilityOptional.get().getVis() >= recipe.getVis();
+				return abilityOptional.get().getVis() >= recipe.getVis() && recipe.matches(inventory, this.entity.getWorld(), researchOptional.get());
 			}
 			return false;
 		}

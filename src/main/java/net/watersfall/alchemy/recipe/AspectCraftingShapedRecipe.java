@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.inventory.AspectCraftingInventory;
 import net.watersfall.alchemy.item.CrystalItem;
@@ -20,7 +21,7 @@ import net.watersfall.alchemy.item.CrystalItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AspectCraftingShapedRecipe implements CraftingRecipe
+public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequiredCraftingRecipe
 {
 	protected final ResearchUnlockedShapedRecipe recipe;
 	protected final List<ItemStack> aspects;
@@ -56,6 +57,8 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 		}
 		return true;
 	}
+
+
 
 	@Override
 	public ItemStack craft(CraftingInventory inv)
@@ -107,6 +110,12 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 	public int getVis()
 	{
 		return this.vis;
+	}
+
+	@Override
+	public boolean matches(CraftingInventory inventory, World world, PlayerResearchAbility ability)
+	{
+		return this.matches(inventory, world) && recipe.matches(inventory, world, ability);
 	}
 
 	public static class Serializer implements RecipeSerializer<AspectCraftingShapedRecipe>

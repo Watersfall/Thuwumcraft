@@ -78,6 +78,22 @@ public class AspectCraftingOutputSlot extends Slot
 		return this.handler.canTakeOutput();
 	}
 
+	@Override
+	public ItemStack getStack()
+	{
+		PlayerResearchAbility ability = AbilityProvider.getProvider(player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
+		Optional<CraftingRecipe> optional = player.world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, this.inventory, player.world);
+		if(optional.isPresent() && optional.get() instanceof ResearchRequiredCraftingRecipe)
+		{
+			ResearchRequiredCraftingRecipe recipe = (ResearchRequiredCraftingRecipe)optional.get();
+			if(recipe.matches(inventory, this.handler.entity.getWorld(), ability))
+			{
+				return super.getStack();
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
 	public void onTakeItem(PlayerEntity player, ItemStack stack)
 	{
 		this.onCrafted(stack);
