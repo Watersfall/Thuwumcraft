@@ -24,12 +24,14 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 	protected final ResearchUnlockedShapedRecipe recipe;
 	protected final List<ItemStack> aspects;
 	protected final Identifier id;
+	protected final int vis;
 
-	public AspectCraftingShapedRecipe(Identifier id, ResearchUnlockedShapedRecipe recipe, List<ItemStack> aspects)
+	public AspectCraftingShapedRecipe(Identifier id, ResearchUnlockedShapedRecipe recipe, List<ItemStack> aspects, int vis)
 	{
 		this.id = id;
 		this.recipe = recipe;
 		this.aspects = aspects;
+		this.vis = vis;
 	}
 
 	@Override
@@ -101,6 +103,11 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 		return this.aspects;
 	}
 
+	public int getVis()
+	{
+		return this.vis;
+	}
+
 	public static class Serializer implements RecipeSerializer<AspectCraftingShapedRecipe>
 	{
 		@Override
@@ -116,7 +123,8 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 				int count = object.get("count").getAsInt();
 				list.add(new ItemStack(crystal, count));
 			}
-			return new AspectCraftingShapedRecipe(id, recipe, list);
+			int vis = json.get("vis").getAsInt();
+			return new AspectCraftingShapedRecipe(id, recipe, list, vis);
 		}
 
 		@Override
@@ -129,7 +137,8 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 			{
 				list.add(buf.readItemStack());
 			}
-			return new AspectCraftingShapedRecipe(id, recipe, list);
+			int vis = buf.readInt();
+			return new AspectCraftingShapedRecipe(id, recipe, list, vis);
 		}
 
 		@Override
@@ -141,6 +150,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe
 			{
 				buf.writeItemStack(recipe.aspects.get(i));
 			}
+			buf.writeInt(recipe.vis);
 		}
 	}
 }

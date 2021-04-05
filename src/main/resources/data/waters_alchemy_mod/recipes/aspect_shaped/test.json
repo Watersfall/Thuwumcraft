@@ -24,5 +24,6 @@
 			"aspect": "waters_alchemy_mod:air",
 			"count": 5
 		}
-	]
+	],
+	"vis": 10
 }

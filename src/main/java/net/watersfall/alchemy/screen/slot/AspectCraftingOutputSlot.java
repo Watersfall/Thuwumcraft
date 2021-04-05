@@ -7,28 +7,33 @@ import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.inventory.AspectCraftingInventory;
 import net.watersfall.alchemy.item.CrystalItem;
 import net.watersfall.alchemy.recipe.AspectCraftingShapedRecipe;
 import net.watersfall.alchemy.recipe.ResearchRequiredCraftingRecipe;
+import net.watersfall.alchemy.screen.AspectCraftingHandler;
 
 import java.util.Optional;
 
 public class AspectCraftingOutputSlot extends Slot
 {
+	private final AspectCraftingHandler handler;
 	private final AspectCraftingInventory inventory;
 	private final PlayerEntity player;
 	private int amount;
 	private final Inventory output;
 
-	public AspectCraftingOutputSlot(PlayerEntity player, AspectCraftingInventory inventory, Inventory output, int index, int x, int y)
+	public AspectCraftingOutputSlot(AspectCraftingHandler handler, PlayerEntity player, AspectCraftingInventory inventory, Inventory output, int index, int x, int y)
 	{
 		super(output, index, x, y);
 		this.inventory = inventory;
 		this.player = player;
 		this.output = output;
+		this.handler = handler;
 	}
 
 	@Override
@@ -64,6 +69,12 @@ public class AspectCraftingOutputSlot extends Slot
 			stack.onCraft(this.player.world, this.player, this.amount);
 		}
 		this.amount = 0;
+	}
+
+	@Override
+	public boolean canTakeItems(PlayerEntity playerEntity)
+	{
+		return this.handler.canTakeOutput();
 	}
 
 	public void onTakeItem(PlayerEntity player, ItemStack stack)
@@ -112,6 +123,13 @@ public class AspectCraftingOutputSlot extends Slot
 				CrystalItem item = (CrystalItem)aspect.getItem();
 				inventory.getStack(item.getAspect()).decrement(aspect.getCount());
 			});
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(handler.entity.getWorld().getChunk(handler.entity.getPos()));
+			Optional<VisAbility> abilityOptional = provider.getAbility(VisAbility.ID, VisAbility.class);
+			if(abilityOptional.isPresent())
+			{
+				abilityOptional.get().setVis(abilityOptional.get().getVis() - recipe.getVis());
+				abilityOptional.get().sync(handler.entity.getWorld().getChunk(handler.entity.getPos()));
+			}
 		}
 	}
 }
