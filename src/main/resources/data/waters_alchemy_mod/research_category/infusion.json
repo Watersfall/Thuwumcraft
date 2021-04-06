@@ -1,4 +1,7 @@
 {
 	"icon": "waters_alchemy_mod:pedestal",
-	"index": 3
+	"index": 3,
+	"required_research": [
+		"waters_alchemy_mod:cauldron_crafting"
+	]
 }

@@ -1,4 +1,5 @@
 {
 	"icon": "minecraft:cauldron",
-	"index": 1
+	"index": 1,
+	"required_research": []
 }

@@ -1,4 +1,5 @@
 {
 	"icon": "waters_alchemy_mod:magic_dust",
-	"index": 0
+	"index": 0,
+	"required_research": []
 }

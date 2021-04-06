@@ -24,9 +24,7 @@ import net.watersfall.alchemy.client.gui.element.CategoryTabElement;
 import net.watersfall.alchemy.client.gui.element.ResearchElement;
 import net.watersfall.alchemy.client.gui.element.TooltipElement;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -71,22 +69,26 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.children.clear();
 		this.mapX = this.textureWidth / (scale * 2F) - 8;
 		this.mapY = this.textureHeight / (scale * 2F) - 8;
-		categories = new CategoryTabElement[ResearchCategory.REGISTRY.getAll().size()];
-		int i = 0;
-		ResearchCategory[] tempCat = new ResearchCategory[categories.length];
+		int total = 0;
+		List<ResearchCategory> tempCat = new ArrayList<>();
 		for(ResearchCategory category : ResearchCategory.REGISTRY.getAll())
 		{
-			tempCat[i++] = category;
+			if(category.isVisible(ability))
+			{
+				tempCat.add(category);
+				total++;
+			}
 		}
-		Arrays.sort(tempCat, Comparator.comparingInt(ResearchCategory::getIndex));
-		for(i = 0; i < categories.length; i++)
+		tempCat.sort(Comparator.comparingInt(ResearchCategory::getIndex));
+		categories = new CategoryTabElement[total];
+		for(int i = 0; i < total; i++)
 		{
-			categories[i] = new CategoryTabElement(this, tempCat[i], x - 24, y + 12 +  i * 24, false);
+			categories[i] = new CategoryTabElement(this, tempCat.get(i), x - 24, y + 12 +  i * 24, false);
 		}
 		Research.REGISTRY.getAll().forEach((research -> {
 			this.addChild(new ResearchElement(this, research));
 		}));
-		for(i = 0; i < this.categories.length; i++)
+		for(int i = 0; i < this.categories.length; i++)
 		{
 			this.addChild(categories[i]);
 		}
