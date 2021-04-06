@@ -3,7 +3,6 @@ package net.watersfall.alchemy.api.research;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.text.Text;
@@ -25,7 +24,7 @@ public class Research
 	private Text name;
 	private Text description;
 	private Text completedDescription;
-	private ItemStack stack;
+	private Ingredient stack;
 	private ResearchCategory category;
 	private RecipeGroup[] tabs;
 	private int x;
@@ -105,7 +104,15 @@ public class Research
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
-		this.stack = net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())).getDefaultStack();
+		if(json.get("icon").isJsonObject() || json.get("icon").isJsonArray())
+		{
+			this.stack = Ingredient.fromJson(json.get("icon"));
+		}
+		else
+		{
+			this.stack = Ingredient.ofItems(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())));
+		}
+
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
 		if(tabsArray != null)
@@ -210,7 +217,7 @@ public class Research
 		return this.tabs;
 	}
 
-	public ItemStack getStack()
+	public Ingredient getStack()
 	{
 		return this.stack;
 	}
@@ -302,7 +309,7 @@ public class Research
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
 		buf.writeIdentifier(this.id);
-		buf.writeItemStack(this.stack);
+		this.stack.write(buf);
 		buf.writeIdentifier(this.category.getId());
 		buf.writeInt(tabs.length);
 		for(int i = 0; i < tabs.length; i++)
@@ -346,7 +353,7 @@ public class Research
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
-		this.stack = buf.readItemStack();
+		this.stack = Ingredient.fromPacket(buf);
 		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
 		this.tabs = new RecipeGroup[buf.readInt()];
 		for(int i = 0; i < tabs.length; i++)

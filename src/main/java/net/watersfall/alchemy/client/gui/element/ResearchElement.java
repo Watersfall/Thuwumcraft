@@ -35,15 +35,17 @@ public class ResearchElement extends ItemElement
 	private final PlayerResearchAbility ability;
 	private final List<Text> readableTooltip;
 	private final List<Text> hiddenTooltip;
+	private final ItemStack[] stacks;
 
 	public ResearchElement(ResearchBookScreen screen, Research research)
 	{
-		super(new ItemStack[]{research.getStack()}, research.getX(), research.getY());
+		super(research.getStack().getMatchingStacksClient(), research.getX(), research.getY());
 		this.research = research;
 		this.screen = screen;
 		this.ability = screen.getAbility();
 		this.readableTooltip = Lists.newArrayList(research.getName());
 		this.hiddenTooltip = Lists.newArrayList(generateSecretText(research));
+		this.stacks = research.getStack().getMatchingStacksClient();
 	}
 
 	@Override
@@ -74,6 +76,7 @@ public class ResearchElement extends ItemElement
 	{
 		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
+			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
 			int scale = (int)MinecraftClient.getInstance().getWindow().getScaleFactor();
 			int mod = scale % 2 == 0 ? -1 * scale + 1 : 0;
 			RenderSystem.enableScissor(screen.getX() * scale + 12 * scale, screen.bottomY + (12 * scale) + mod, 431 * scale - (24 * scale), 256 * scale - (24 * scale));
@@ -89,7 +92,7 @@ public class ResearchElement extends ItemElement
 			matrices.translate(0, 0, 1F);
 			RenderSystem.getModelViewStack().push();
 			RenderSystem.getModelViewStack().scale(screen.scale, screen.scale, 1F);
-			MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[0], x, y);
+			MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[index], x, y);
 			RenderSystem.getModelViewStack().pop();
 			RenderSystem.applyModelViewMatrix();
 			if(ability.hasResearch(this.research))

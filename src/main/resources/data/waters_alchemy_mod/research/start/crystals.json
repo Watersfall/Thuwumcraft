@@ -1,5 +1,24 @@
 {
-	"icon": "waters_alchemy_mod:cluster/fire_crystal_cluster",
+	"icon": [
+		{
+			"item": "waters_alchemy_mod:cluster/fire_crystal_cluster"
+		},
+		{
+			"item": "waters_alchemy_mod:cluster/air_crystal_cluster"
+		},
+		{
+			"item": "waters_alchemy_mod:cluster/water_crystal_cluster"
+		},
+		{
+			"item": "waters_alchemy_mod:cluster/earth_crystal_cluster"
+		},
+		{
+			"item": "waters_alchemy_mod:cluster/order_crystal_cluster"
+		},
+		{
+			"item": "waters_alchemy_mod:cluster/disorder_crystal_cluster"
+		}
+	],
 	"category": "waters_alchemy_mod:starter",
 	"x": 4,
 	"y": -4,
