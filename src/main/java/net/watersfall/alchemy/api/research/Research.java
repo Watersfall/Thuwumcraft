@@ -1,21 +1,20 @@
 package net.watersfall.alchemy.api.research;
 
-import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.alchemy.client.gui.element.RecipeElement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class Research
@@ -37,8 +36,8 @@ public class Research
 	private List<Identifier> visibilityResearch;
 	private List<Identifier> readableResearch;
 	private List<Identifier> researchResearch;
-	private List<Item> requiredItems;
-	private List<Item> consumedItems;
+	private List<Ingredient> requiredItems;
+	private List<Ingredient> consumedItems;
 	private Predicate<PlayerResearchAbility> isVisible;
 	private Predicate<PlayerResearchAbility> isReadable;
 	private Predicate<PlayerResearchAbility> isAvailable;
@@ -85,11 +84,18 @@ public class Research
 		}
 	}
 
-	private void fillItemLists(JsonArray json, List<Item> items)
+	private void fillItemLists(JsonArray json, List<Ingredient> items)
 	{
 		for(int i = 0; i < json.size(); i++)
 		{
-			items.add(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get(i).getAsString())));
+			if(json.get(i).isJsonObject() || json.get(i).isJsonArray())
+			{
+				items.add(Ingredient.fromJson(json.get(i)));
+			}
+			else
+			{
+				items.add(Ingredient.ofItems(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get(i).getAsString()))));
+			}
 		}
 	}
 
@@ -209,12 +215,12 @@ public class Research
 		return this.stack;
 	}
 
-	public List<Item> getRequiredItems()
+	public List<Ingredient> getRequiredItems()
 	{
 		return this.requiredItems;
 	}
 
-	public List<Item> getConsumedItems()
+	public List<Ingredient> getConsumedItems()
 	{
 		return this.consumedItems;
 	}
@@ -223,14 +229,32 @@ public class Research
 	{
 		for(int i = 0; i < this.requiredItems.size(); i++)
 		{
-			if(!player.getInventory().containsAny(Sets.newHashSet(this.requiredItems.get(i))))
+			boolean found = false;
+			for(int o = 0; o < player.getInventory().size(); o++)
+			{
+				if(this.requiredItems.get(i).test(player.getInventory().getStack(o)))
+				{
+					found = true;
+					break;
+				}
+			}
+			if(!found)
 			{
 				return false;
 			}
 		}
 		for(int i = 0; i < this.consumedItems.size(); i++)
 		{
-			if(!player.getInventory().containsAny(Sets.newHashSet(this.consumedItems.get(i))))
+			boolean found = false;
+			for(int o = 0; o < player.getInventory().size(); o++)
+			{
+				if(this.consumedItems.get(i).test(player.getInventory().getStack(o)))
+				{
+					found = true;
+					break;
+				}
+			}
+			if(!found)
 			{
 				return false;
 			}
@@ -244,9 +268,10 @@ public class Research
 		{
 			for(int o = 0; o < player.getInventory().size(); o++)
 			{
-				if(player.getInventory().getStack(o).getItem() == this.consumedItems.get(i))
+				if(consumedItems.get(i).test(player.getInventory().getStack(o)))
 				{
 					player.getInventory().getStack(o).decrement(1);
+					break;
 				}
 			}
 		}
@@ -268,10 +293,10 @@ public class Research
 		list.forEach(buf::writeIdentifier);
 	}
 
-	private void writeItemList(PacketByteBuf buf, List<Item> list)
+	private void writeItemList(PacketByteBuf buf, List<Ingredient> list)
 	{
 		buf.writeInt(list.size());
-		list.forEach(item -> buf.writeIdentifier(net.minecraft.util.registry.Registry.ITEM.getId(item)));
+		list.forEach(ingredient -> ingredient.write(buf));
 	}
 
 	public PacketByteBuf toPacket(PacketByteBuf buf)
@@ -306,12 +331,12 @@ public class Research
 		}
 	}
 
-	private void readItemList(PacketByteBuf buf, List<Item> list)
+	private void readItemList(PacketByteBuf buf, List<Ingredient> list)
 	{
 		int size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
-			list.add(net.minecraft.util.registry.Registry.ITEM.get(buf.readIdentifier()));
+			list.add(Ingredient.fromPacket(buf));
 		}
 	}
 

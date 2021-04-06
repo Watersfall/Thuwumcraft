@@ -1,32 +1,23 @@
 package net.watersfall.alchemy.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.OrderedText;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
-import net.watersfall.alchemy.client.gui.element.*;
+import net.watersfall.alchemy.client.gui.element.ItemRequirementElement;
+import net.watersfall.alchemy.client.gui.element.RecipeTabElement;
+import net.watersfall.alchemy.client.gui.element.ResearchButton;
+import net.watersfall.alchemy.client.gui.element.TooltipElement;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ResearchScreen extends Screen
 {
@@ -79,14 +70,12 @@ public class ResearchScreen extends Screen
 		int i;
 		for(i = 0; i < this.research.getRequiredItems().size(); i++)
 		{
-			ItemStack stack = research.getRequiredItems().get(i).getDefaultStack();
-			this.addChild(new ItemRequirementElement(new ItemStack[]{stack}, startX + i * 20, this.y + 195, false));
+			this.addChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, false));
 		}
 		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
 		for(i = 0; i < this.research.getConsumedItems().size(); i++)
 		{
-			ItemStack stack = research.getConsumedItems().get(i).getDefaultStack();
-			this.addChild(new ItemRequirementElement(new ItemStack[]{stack}, startX + i * 20, this.y + 195, true));
+			this.addChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, true));
 		}
 		this.addChild(researchButton);
 	}

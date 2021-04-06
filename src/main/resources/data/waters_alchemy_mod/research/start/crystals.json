@@ -1,0 +1,30 @@
+{
+	"icon": "waters_alchemy_mod:cluster/fire_crystal_cluster",
+	"category": "waters_alchemy_mod:starter",
+	"x": 4,
+	"y": -4,
+	"complete_requirements": {
+		"inventory_consumed": [
+			[
+				{
+					"item": "waters_alchemy_mod:crystal/air"
+				},
+				{
+					"item": "waters_alchemy_mod:crystal/water"
+				},
+				{
+					"item": "waters_alchemy_mod:crystal/fire"
+				},
+				{
+					"item": "waters_alchemy_mod:crystal/earth"
+				},
+				{
+					"item": "waters_alchemy_mod:crystal/order"
+				},
+				{
+					"item": "waters_alchemy_mod:crystal/disorder"
+				}
+			]
+		]
+	}
+}
