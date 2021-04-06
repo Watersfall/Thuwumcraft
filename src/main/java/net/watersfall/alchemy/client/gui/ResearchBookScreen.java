@@ -3,8 +3,6 @@ package net.watersfall.alchemy.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,9 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -29,7 +24,9 @@ import net.watersfall.alchemy.client.gui.element.CategoryTabElement;
 import net.watersfall.alchemy.client.gui.element.ResearchElement;
 import net.watersfall.alchemy.client.gui.element.TooltipElement;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -44,6 +41,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private ResearchCategory currentCategory;
 	private CategoryTabElement[] categories;
 	public float scale = 0.7F;
+	public int bottomY = 0;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -54,6 +52,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		ability = optional.get();
 		this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+	}
+
+	@Override
+	public void init(MinecraftClient client, int width, int height)
+	{
+		super.init(client, width, height);
+		int scale = (int)client.getWindow().getScaleFactor();
+		this.bottomY = height * scale - (textureHeight * scale) - this.y * scale;
 	}
 
 	@Override

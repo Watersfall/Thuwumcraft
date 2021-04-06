@@ -9,7 +9,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -76,7 +75,8 @@ public class ResearchElement extends ItemElement
 		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
 			int scale = (int)MinecraftClient.getInstance().getWindow().getScaleFactor();
-			RenderSystem.enableScissor(screen.getX() * scale, screen.getY() * scale + scale, 431 * scale - scale, 256 * scale);
+			int mod = scale % 2 == 0 ? -1 * scale + 1 : 0;
+			RenderSystem.enableScissor(screen.getX() * scale + 12 * scale, screen.bottomY + (12 * scale) + mod, 431 * scale - (24 * scale), 256 * scale - (24 * scale));
 			matrices.scale(screen.scale, screen.scale, 1F);
 			int x = (int)(this.x + screen.getMapX() / screen.scale);
 			int y = (int)(this.y + screen.getMapY() / screen.scale);
