@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Research
 {
@@ -37,29 +36,24 @@ public class Research
 	private List<Identifier> researchResearch;
 	private List<Ingredient> requiredItems;
 	private List<Ingredient> consumedItems;
-	private Predicate<PlayerResearchAbility> isVisible;
-	private Predicate<PlayerResearchAbility> isReadable;
-	private Predicate<PlayerResearchAbility> isAvailable;
 
-	private Predicate<PlayerResearchAbility> generateFunction(List<Identifier> advancements, List<Identifier> research)
+	private boolean checkList(PlayerResearchAbility ability, List<Identifier> advancements, List<Identifier> research)
 	{
-		return (ability -> {
-			for(int i = 0; i < advancements.size(); i++)
+		for(int i = 0; i < advancements.size(); i++)
+		{
+			if(!ability.hasAdvancement(advancements.get(i)))
 			{
-				if(!ability.hasAdvancement(advancements.get(i)))
-				{
-					return false;
-				}
+				return false;
 			}
-			for(int i = 0; i < research.size(); i++)
+		}
+		for(int i = 0; i < research.size(); i++)
+		{
+			if(!ability.hasResearch(research.get(i)))
 			{
-				if(!ability.hasResearch(research.get(i)))
-				{
-					return false;
-				}
+				return false;
 			}
-			return true;
-		});
+		}
+		return true;
 	}
 
 	private void fillLists(JsonObject json, List<Identifier> advancements, List<Identifier> research)
@@ -152,9 +146,6 @@ public class Research
 		fillLists(visibleJson, visibilityAdvancements, visibilityResearch);
 		fillLists(readableJson, readableAdvancements, readableResearch);
 		fillLists(researchRequirements, researchAdvancements, researchResearch);
-		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
-		this.isReadable = generateFunction(readableAdvancements, readableResearch);
-		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
 	}
 
 	public Research(PacketByteBuf buf)
@@ -199,17 +190,17 @@ public class Research
 
 	public boolean isVisible(PlayerResearchAbility ability)
 	{
-		return this.isVisible.test(ability);
+		return this.checkList(ability, this.visibilityAdvancements, this.visibilityResearch);
 	}
 
 	public boolean isReadable(PlayerResearchAbility ability)
 	{
-		return this.isReadable.test(ability);
+		return this.checkList(ability, this.readableAdvancements, this.readableResearch);
 	}
 
 	public boolean isAvailable(PlayerResearchAbility ability)
 	{
-		return this.isAvailable.test(ability);
+		return this.checkList(ability, this.researchAdvancements, this.researchResearch);
 	}
 
 	public RecipeGroup[] getTabs()
@@ -378,9 +369,21 @@ public class Research
 		readList(buf, researchResearch);
 		readItemList(buf, requiredItems);
 		readItemList(buf, consumedItems);
-		this.isVisible = generateFunction(visibilityAdvancements, visibilityResearch);
-		this.isReadable = generateFunction(readableAdvancements, readableResearch);
-		this.isAvailable = generateFunction(researchAdvancements, researchResearch);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(super.equals(obj))
+		{
+			return true;
+		}
+		else if(obj instanceof Research)
+		{
+			Research research = (Research)obj;
+			return research.getId().equals(this.id);
+		}
+		return false;
 	}
 
 	public static class Registry

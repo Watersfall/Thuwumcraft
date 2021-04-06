@@ -8,14 +8,12 @@ import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.research.Research;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 {
-	private Set<Research> research;
+	private Set<Identifier> research;
 	private Set<Identifier> advancements;
 
 	public PlayerResearchAbilityImpl()
@@ -55,7 +53,7 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	}
 
 	@Override
-	public Set<Research> getResearch()
+	public Set<Identifier> getResearch()
 	{
 		return research;
 	}
@@ -69,13 +67,13 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	@Override
 	public void addResearch(Identifier id)
 	{
-		this.research.add(Research.REGISTRY.get(id));
+		this.research.add(id);
 	}
 
 	@Override
 	public void addResearch(Research research)
 	{
-		this.research.add(research);
+		this.research.add(research.getId());
 	}
 
 	@Override
@@ -98,6 +96,6 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 
 	public boolean hasResearch(Research research)
 	{
-		return this.research.contains(research);
+		return this.research.contains(research.getId());
 	}
 }

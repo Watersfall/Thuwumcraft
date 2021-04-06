@@ -17,7 +17,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 {
 	public static final Identifier ID = new Identifier("waters_alchemy_mod", "player_research_ability");
 
-	Set<Research> getResearch();
+	Set<Identifier> getResearch();
 
 	Set<Identifier> getAdvancements();
 
@@ -44,7 +44,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	{
 		NbtList list = new NbtList();
 		getResearch().forEach(research -> {
-			list.add(NbtString.of(research.getId().toString()));
+			list.add(NbtString.of(research.toString()));
 		});
 		tag.put("research_list", list);
 		return tag;
@@ -68,7 +68,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 	default PacketByteBuf toPacket(PacketByteBuf buf)
 	{
 		buf.writeInt(getResearch().size());
-		getResearch().forEach(research -> buf.writeIdentifier(research.getId()));
+		getResearch().forEach(buf::writeIdentifier);
 		buf.writeInt(getAdvancements().size());
 		getAdvancements().forEach(buf::writeIdentifier);
 		return buf;
