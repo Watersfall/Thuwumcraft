@@ -283,6 +283,7 @@ public class AlchemyMod implements ModInitializer
 		Aspects.register(Aspects.FIRE.getId(), Aspects.FIRE);
 		Aspects.register(Aspects.ORDER.getId(), Aspects.ORDER);
 		Aspects.register(Aspects.DISORDER.getId(), Aspects.DISORDER);
+		Aspects.register(Aspects.METAL.getId(), Aspects.METAL);
 	}
 
 	private static void registerSounds()

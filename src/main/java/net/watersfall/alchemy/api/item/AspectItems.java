@@ -1,8 +1,6 @@
 package net.watersfall.alchemy.api.item;
 
-import net.minecraft.util.registry.Registry;
-import net.watersfall.alchemy.AlchemyMod;
-
+//TODO kill this
 public class AspectItems
 {
 	public static final AspectItem AIR;
@@ -11,6 +9,7 @@ public class AspectItems
 	public static final AspectItem WATER;
 	public static final AspectItem ORDER;
 	public static final AspectItem DISORDER;
+	public static final AspectItem METAL;
 
 	static
 	{
@@ -20,5 +19,6 @@ public class AspectItems
 		WATER = new AspectItem();
 		ORDER = new AspectItem();
 		DISORDER = new AspectItem();
+		METAL = new AspectItem();
 	}
 }

@@ -1,7 +1,6 @@
 package net.watersfall.alchemy.api.aspect;
 
 import net.minecraft.util.Identifier;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.item.AspectItem;
 
 public class Aspect
@@ -11,12 +10,25 @@ public class Aspect
 	private final Identifier name;
 	private final int color;
 	private final AspectItem item;
+	private final boolean primitive;
+	private final Aspect[] components;
 
-	public Aspect(Identifier name, int color, AspectItem item)
+	public Aspect(Identifier name, int color, AspectItem item, Aspect[] components)
 	{
 		this.name = name;
 		this.color = color;
 		this.item = item;
+		this.primitive = false;
+		this.components = components;
+	}
+
+	protected Aspect(Identifier name, int color, AspectItem item)
+	{
+		this.name = name;
+		this.color = color;
+		this.item = item;
+		this.primitive = true;
+		this.components = new Aspect[]{};
 	}
 
 	/**
@@ -55,5 +67,21 @@ public class Aspect
 	public AspectItem getItem()
 	{
 		return this.item;
+	}
+
+	/**
+	 * @return Whether this aspect is a primitive aspect (one that is not made up of other aspects)
+	 */
+	public boolean isPrimitive()
+	{
+		return primitive;
+	}
+
+	/**
+	 * @return Returns the components that make up this aspect, or an empty list if primitive
+	 */
+	public Aspect[] getComponents()
+	{
+		return this.components;
 	}
 }

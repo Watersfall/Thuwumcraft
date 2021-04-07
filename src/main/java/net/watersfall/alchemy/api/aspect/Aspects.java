@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.AmethystClusterBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
@@ -42,6 +41,7 @@ public class Aspects
 	public static final Aspect FIRE = new Aspect(AlchemyMod.getId("fire"), 0xe69836, AspectItems.FIRE);
 	public static final Aspect ORDER = new Aspect(AlchemyMod.getId("order"), 0xdddddd, AspectItems.ORDER);
 	public static final Aspect DISORDER = new Aspect(AlchemyMod.getId("disorder"), 0x222222, AspectItems.DISORDER);
+	public static final Aspect METAL = new Aspect(AlchemyMod.getId("metal"), 0xdddddd, AspectItems.METAL, new Aspect[]{EARTH, ORDER});
 
 	public static Aspect register(Identifier id, Aspect aspect)
 	{
@@ -53,7 +53,10 @@ public class Aspects
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
-		registerClusters(aspect);
+		if(aspect.isPrimitive())
+		{
+			registerClusters(aspect);
+		}
 		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 		{
 			ColorProviderRegistry.ITEM.register(
