@@ -1,15 +1,12 @@
 {
 	"icon": "minecraft:cauldron",
-	"category": "waters_alchemy_mod:basic_alchemy",
+	"category": "waters_alchemy_mod:alchemy",
 	"x": 0,
 	"y": -4,
 	"complete_requirements": {
 		"inventory_required": [
 			"minecraft:cauldron",
 			"waters_alchemy_mod:witchy_spoon"
-		],
-		"inventory_consumed": [
-			"minecraft:cobblestone"
 		]
 	},
 	"tabs": [

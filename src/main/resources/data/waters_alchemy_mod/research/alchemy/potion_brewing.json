@@ -1,8 +1,8 @@
 {
-	"icon": "minecraft:glass_bottle",
-	"category": "waters_alchemy_mod:basic_alchemy",
-	"x": 0,
-	"y": 0,
+	"icon": "minecraft:potion",
+	"category": "waters_alchemy_mod:alchemy",
+	"x": -4,
+	"y": -4,
 	"complete_requirements": {
 		"inventory_required": [
 			"minecraft:potion"
@@ -10,12 +10,12 @@
 	},
 	"readable_requirements": {
 		"research": [
-			"waters_alchemy_mod:beginner_brewing"
+			"waters_alchemy_mod:alchemy/basic_alchemy"
 		]
 	},
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:beginner_brewing"
+			"waters_alchemy_mod:alchemy/basic_alchemy"
 		]
 	},
 	"tabs": [

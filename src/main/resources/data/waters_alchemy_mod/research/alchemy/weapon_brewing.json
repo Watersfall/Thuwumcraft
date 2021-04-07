@@ -1,0 +1,29 @@
+{
+	"icon": "minecraft:iron_sword",
+	"category": "waters_alchemy_mod:alchemy",
+	"x": -8,
+	"y": -8,
+	"complete_requirements": {
+		"inventory_consumed": [
+			"minecraft:potion",
+			{
+				"tag": "fabric:swords"
+			}
+		]
+	},
+	"readable_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/potion_brewing"
+		]
+	},
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/potion_brewing"
+		]
+	},
+	"visibility_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/basic_alchemy"
+		]
+	}
+}

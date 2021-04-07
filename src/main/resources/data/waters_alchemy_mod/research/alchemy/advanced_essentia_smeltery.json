@@ -1,0 +1,12 @@
+{
+	"icon": "minecraft:furnace",
+	"category": "waters_alchemy_mod:alchemy",
+	"x": 7,
+	"y": 2,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/essentia_smeltery",
+			"waters_alchemy_mod:alchemy/advanced_magical_metal"
+		]
+	}
+}

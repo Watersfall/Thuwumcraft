@@ -1,26 +1,33 @@
 {
 	"icon": "minecraft:lingering_potion",
-	"category": "waters_alchemy_mod:basic_alchemy",
-	"x": 0,
-	"y": 4,
+	"category": "waters_alchemy_mod:alchemy",
+	"x": -8,
+	"y": -4,
 	"complete_requirements": {
 		"inventory_consumed": [
-			"minecraft:splash_potion"
+			[
+				{
+					"item": "minecraft:splash_potion"
+				},
+				{
+					"item": "minecraft:lingering_potion"
+				}
+			]
 		]
 	},
 	"readable_requirements": {
 		"research": [
-			"waters_alchemy_mod:cauldron_crafting"
+			"waters_alchemy_mod:alchemy/potion_brewing"
 		]
 	},
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:cauldron_crafting"
+			"waters_alchemy_mod:alchemy/potion_brewing"
 		]
 	},
 	"visibility_requirements": {
 		"research": [
-			"waters_alchemy_mod:beginner_brewing"
+			"waters_alchemy_mod:alchemy/basic_alchemy"
 		]
 	},
 	"tabs": [

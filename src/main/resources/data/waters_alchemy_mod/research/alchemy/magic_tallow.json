@@ -1,0 +1,13 @@
+{
+	"icon": {
+		"tag": "minecraft:candles"
+	},
+	"category": "waters_alchemy_mod:alchemy",
+	"x": -3,
+	"y": 5,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/crucible"
+		]
+	}
+}
