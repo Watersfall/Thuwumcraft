@@ -64,7 +64,7 @@ public class GrindingRecipe extends ShapelessRecipe
 			JsonArray jsonInputs = json.getAsJsonArray("inputs");
 			for(int i = 0; i < jsonInputs.size(); i++)
 			{
-				inputs.add(Ingredient.fromJson(jsonInputs.get(i).getAsJsonObject()));
+				inputs.add(Ingredient.fromJson(jsonInputs.get(i)));
 			}
 			inputs.add(Ingredient.ofItems(Items.BOWL));
 			inputs.add(Ingredient.ofItems(Items.FLINT));

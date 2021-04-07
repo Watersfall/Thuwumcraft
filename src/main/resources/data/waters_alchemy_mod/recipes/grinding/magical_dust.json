@@ -7,9 +7,26 @@
 		{
 			"item": "minecraft:redstone"
 		},
-		{
-			"item": "minecraft:blaze_powder"
-		},
+		[
+			{
+				"item": "waters_alchemy_mod:crystal/air"
+			},
+			{
+				"item": "waters_alchemy_mod:crystal/water"
+			},
+			{
+				"item": "waters_alchemy_mod:crystal/fire"
+			},
+			{
+				"item": "waters_alchemy_mod:crystal/earth"
+			},
+			{
+				"item": "waters_alchemy_mod:crystal/order"
+			},
+			{
+				"item": "waters_alchemy_mod:crystal/disorder"
+			}
+		],
 		{
 			"item": "minecraft:glass_bottle"
 		}

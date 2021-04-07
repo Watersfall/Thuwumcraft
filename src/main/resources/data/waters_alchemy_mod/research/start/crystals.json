@@ -45,5 +45,13 @@
 				}
 			]
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:grinding/magical_dust"
+			],
+			"requires_complete": true
+		}
+	]
 }

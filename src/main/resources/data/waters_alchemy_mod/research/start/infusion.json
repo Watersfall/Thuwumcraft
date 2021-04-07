@@ -1,0 +1,11 @@
+{
+	"icon": "waters_alchemy_mod:pedestal",
+	"category": "waters_alchemy_mod:starter",
+	"x": -4,
+	"y": 4,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:start/gadgets"
+		]
+	}
+}

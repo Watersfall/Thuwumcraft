@@ -1,0 +1,27 @@
+{
+	"icon": "minecraft:cauldron",
+	"category": "waters_alchemy_mod:starter",
+	"x": 0,
+	"y": 0,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:start/crystals",
+			"waters_alchemy_mod:start/book"
+		]
+	},
+	"complete_requirements": {
+		"inventory_required": [
+			"minecraft:cauldron",
+			"waters_alchemy_mod:witchy_spoon"
+		]
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"minecraft:cauldron",
+				"waters_alchemy_mod:witchy_spoon"
+			],
+			"requires_complete": false
+		}
+	]
+}
