@@ -1,5 +1,12 @@
 {
-	"icon": "minecraft:copper_ingot",
+	"icon":  [
+		{
+			"item": "waters_alchemy_mod:thuwumium_ingot"
+		},
+		{
+			"item": "waters_alchemy_mod:brass_ingot"
+		}
+	],
 	"category": "waters_alchemy_mod:alchemy",
 	"x": 0,
 	"y": 0,
@@ -7,5 +14,28 @@
 		"research": [
 			"waters_alchemy_mod:alchemy/basic_alchemy"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:cauldron_item/brass_ingot",
+				"waters_alchemy_mod:cauldron_item/thuwumium_ingot"
+			],
+			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"waters_alchemy_mod:thuwumium_pickaxe",
+				"waters_alchemy_mod:thuwumium_axe",
+				"waters_alchemy_mod:thuwumium_shovel",
+				"waters_alchemy_mod:thuwumium_hoe",
+				"waters_alchemy_mod:thuwumium_sword",
+				"waters_alchemy_mod:thuwumium_helmet",
+				"waters_alchemy_mod:thuwumium_chestplate",
+				"waters_alchemy_mod:thuwumium_leggings",
+				"waters_alchemy_mod:thuwumium_boots"
+			],
+			"requires_complete": true
+		}
+	]
 }

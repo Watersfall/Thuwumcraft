@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"X X",
+		"X X"
+	],
+	"key": {
+		"X": {
+			"item": "waters_alchemy_mod:thuwumium_ingot"
+		}
+	},
+	"result": {
+		"item": "waters_alchemy_mod:thuwumium_boots"
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"XX",
+		" #",
+		" #"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:stick"
+		},
+		"X": {
+			"item": "waters_alchemy_mod:thuwumium_ingot"
+		}
+	},
+	"result": {
+		"item": "waters_alchemy_mod:thuwumium_hoe"
+	}
+}
