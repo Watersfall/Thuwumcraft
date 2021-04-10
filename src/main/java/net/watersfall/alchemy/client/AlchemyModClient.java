@@ -17,6 +17,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
@@ -47,6 +48,7 @@ import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.item.AlchemyArmorMaterials;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
+import net.watersfall.alchemy.recipe.CauldronItemRecipe;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.screen.AlchemyScreenHandlers;
 import net.watersfall.alchemy.util.StatusEffectHelper;
@@ -130,6 +132,8 @@ public class AlchemyModClient implements ClientModInitializer
 		ScreenRegistry.register(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, AspectCraftingScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				AlchemyBlocks.CUSTOM_SPAWNER,
@@ -205,13 +209,39 @@ public class AlchemyModClient implements ClientModInitializer
 			provider.removeAbility(VisAbility.ID);
 			provider.addAbility(AbilityProvider.CHUNK_REGISTRY.create(VisAbility.ID, buf));
 		});
-
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
 			int offsetX = x + (width / 2) - 50;
-			for(int o = 0; o < recipe.getPreviewInputs().size(); o++)
+			//TODO make a special recipe type enum or some other solution to this
+			if(recipe instanceof ShapedRecipe)
 			{
-				items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+				items = new ItemElement[10];
+				int o = 0;
+				int input = 0;
+				ShapedRecipe recipe1 = (ShapedRecipe)recipe;
+				for(int recipeY = 0; recipeY < 3; recipeY++)
+				{
+					for(int recipeX = 0; recipeX < 3; recipeX++)
+					{
+						if(recipeX < recipe1.getWidth() && recipeY < recipe1.getHeight())
+						{
+							items[o] = new ItemElement(recipe.getPreviewInputs().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+							input++;
+						}
+						else
+						{
+							items[o] = new ItemElement(new ItemStack[]{ItemStack.EMPTY}, offsetX + (o % 3) * 20, y + (o / 3) * 20);
+						}
+						o++;
+					}
+				}
+			}
+			else
+			{
+				for(int o = 0; o < recipe.getPreviewInputs().size(); o++)
+				{
+					items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
 			return new RecipeElement(items, true);
@@ -240,6 +270,18 @@ public class AlchemyModClient implements ClientModInitializer
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
 			return new RecipeElement(items, false);
+		}));
+		RecipeTabType.REGISTRY.register(AlchemyRecipes.CAULDRON_ITEM_RECIPE, ((recipe2, x, y, width, height) -> {
+			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
+			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];
+			int offsetX = x + (width / 2) - 50;
+			items[0] = new ItemElement(recipe.getCatalyst().getMatchingStacksClient(), offsetX, y);
+			for(int i = 1; i < items.length - 1; i++)
+			{
+				items[i] = new ItemElement(recipe.getInputs().get(i - 1).getMatchingStacksClient(), offsetX + 24 + i * 24, y + 40);
+			}
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 36, y);
+			return new RecipeElement(items, true);
 		}));
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
 			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);

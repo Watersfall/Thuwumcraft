@@ -22,6 +22,8 @@ public class AlchemyBlocks
 	public static final CraftingHopper CRAFTING_HOPPER;
 	public static final VisLiquifierBlock VIS_LIQUIFIER;
 	public static final AspectCraftingBlock ASPECT_CRAFTING_BLOCK;
+	public static final PotionSprayerBlock POTION_SPRAYER_BLOCK;
+	public static final EssentiaSmeltery ESSENTIA_SMELTERY;
 
 	static
 	{
@@ -39,6 +41,8 @@ public class AlchemyBlocks
 		CRAFTING_HOPPER = register(AlchemyMod.getId("crafting_hopper"), new CraftingHopper(FabricBlockSettings.copyOf(Blocks.HOPPER)));
 		VIS_LIQUIFIER = register(AlchemyMod.getId("vis_liquifier"), new VisLiquifierBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
 		ASPECT_CRAFTING_BLOCK = register(AlchemyMod.getId("aspect_crafting_block"), new AspectCraftingBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
+		POTION_SPRAYER_BLOCK = register(AlchemyMod.getId("potion_sprayer"), new PotionSprayerBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
+		ESSENTIA_SMELTERY = register(AlchemyMod.getId("essentia_smeltery"), new EssentiaSmeltery(FabricBlockSettings.copyOf(Blocks.FURNACE)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

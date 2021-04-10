@@ -12,6 +12,8 @@ public class AlchemyScreenHandlers
 	public static final ScreenHandlerType<ResearchBookHandler> RESEARCH_BOOK_HANDLER;
 	public static final ScreenHandlerType<NekomancyTableHandler> NEKOMANCY_TABLE_HANDLER;
 	public static final ScreenHandlerType<AspectCraftingHandler> ASPECT_CRAFTING_HANDLER;
+	public static final ScreenHandlerType<PotionSprayerHandler> POTION_SPRAYER_HANDLER;
+	public static final ScreenHandlerType<EssentiaSmelteryHandler> ESSENTIA_SMELTERY_HANDLER;
 
 	static
 	{
@@ -20,5 +22,7 @@ public class AlchemyScreenHandlers
 		RESEARCH_BOOK_HANDLER = ScreenHandlerRegistry.registerSimple(getId("guide_handler"), ResearchBookHandler::new);
 		NEKOMANCY_TABLE_HANDLER = ScreenHandlerRegistry.registerSimple(getId("nekomancy_handler"), NekomancyTableHandler::new);
 		ASPECT_CRAFTING_HANDLER = ScreenHandlerRegistry.registerExtended(getId("aspect_crafting_handler"), AspectCraftingHandler::new);
+		POTION_SPRAYER_HANDLER = ScreenHandlerRegistry.registerSimple(getId("potion_sprayer_handler"), PotionSprayerHandler::new);
+		ESSENTIA_SMELTERY_HANDLER = ScreenHandlerRegistry.registerSimple(getId("essentia_smeltery_handler"), EssentiaSmelteryHandler::new);
 	}
 }

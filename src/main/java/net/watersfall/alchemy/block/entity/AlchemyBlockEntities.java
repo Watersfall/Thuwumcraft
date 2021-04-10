@@ -20,6 +20,8 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<CraftingHopperEntity> CRAFTING_HOPPER;
 	public static final BlockEntityType<VisLiquifierEntity> VIS_LIQUIFIER_ENTITY;
 	public static final BlockEntityType<AspectCraftingEntity> ASPECT_CRAFTING_ENTITY;
+	public static final BlockEntityType<PotionSprayerEntity> POTION_SPRAYER;
+	public static final BlockEntityType<EssentiaSmelteryEntity> ESSENTIA_SMELTERY_ENTITY;
 
 	static
 	{
@@ -35,6 +37,8 @@ public class AlchemyBlockEntities
 		CRAFTING_HOPPER = FabricBlockEntityTypeBuilder.create(CraftingHopperEntity::new, AlchemyBlocks.CRAFTING_HOPPER).build(null);
 		VIS_LIQUIFIER_ENTITY = FabricBlockEntityTypeBuilder.create(VisLiquifierEntity::new, AlchemyBlocks.VIS_LIQUIFIER).build(null);
 		ASPECT_CRAFTING_ENTITY = FabricBlockEntityTypeBuilder.create(AspectCraftingEntity::new, AlchemyBlocks.ASPECT_CRAFTING_BLOCK).build(null);
+		POTION_SPRAYER = FabricBlockEntityTypeBuilder.create(PotionSprayerEntity::new, AlchemyBlocks.POTION_SPRAYER_BLOCK).build(null);
+		ESSENTIA_SMELTERY_ENTITY = FabricBlockEntityTypeBuilder.create(EssentiaSmelteryEntity::new, AlchemyBlocks.ESSENTIA_SMELTERY).build(null);
 	}
 
 	public static void register()
@@ -51,5 +55,7 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("crafting_hopper_entity"), CRAFTING_HOPPER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("vis_liquifier_entity"), VIS_LIQUIFIER_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("aspect_crafting_entity"), ASPECT_CRAFTING_ENTITY);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("potion_sprayer_entity"), POTION_SPRAYER);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("essentia_smeltery_entity"), ESSENTIA_SMELTERY_ENTITY);
 	}
 }
