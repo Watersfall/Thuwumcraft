@@ -14,6 +14,7 @@ import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.GlassPhialItem;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,6 +29,8 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Shadow public abstract NbtCompound getOrCreateTag();
 
 	@Shadow private NbtCompound tag;
+
+	@Shadow @Nullable public abstract NbtCompound getTag();
 
 	@Inject(method = "<init>(Lnet/minecraft/item/ItemConvertible;I)V", at = @At("TAIL"))
 	public void addData(ItemConvertible item, int count, CallbackInfo info)
@@ -66,7 +69,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
-		if(this.getOrCreateTag().contains(id.toString()))
+		if(this.getTag() != null && this.getTag().contains(id.toString()))
 		{
 			NbtCompound tag = this.tag.getCompound(id.toString());
 			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag, (ItemStack)(Object)this);

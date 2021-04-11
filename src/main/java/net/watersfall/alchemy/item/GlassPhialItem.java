@@ -9,28 +9,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
-import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.common.AspectStorageAbility;
 import net.watersfall.alchemy.api.aspect.Aspect;
-import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.client.item.GlassPhialTooltipData;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.text.html.Option;
-import java.security.Provider;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,70 +47,63 @@ public class GlassPhialItem extends Item
 		ItemStack stack = context.getStack();
 		PlayerEntity player = context.getPlayer();
 		Hand hand = context.getHand();
-		if(test instanceof AspectInventory)
+		if(test instanceof AspectContainer)
 		{
-			Direction direction = context.getSide();
-			AspectInventory inventory = (AspectInventory) test;
-			if(stack.getItem() == AlchemyItems.EMPTY_PHIAL_ITEM)
+			if(world.isClient)
 			{
-				if(inventory.canExtract(direction))
+				return ActionResult.SUCCESS;
+			}
+			AspectContainer container = (AspectContainer)test;
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			Optional<PhialStorageAbility> ability = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
+			ability.ifPresent(phial -> {
+				AspectStack phialStack = phial.getAspects().get(0);
+				AspectStack original = phialStack.copy();
+				if((phialStack = container.insert(phialStack)).isEmpty())
 				{
-					if(!world.isClient)
+					stack.decrement(1);
+					ItemStack newStack = new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM, 1);
+					if(!player.getInventory().insertStack(newStack))
 					{
-						AspectStack invStack = inventory.getAspects().values().stream().findFirst().get();
-						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(invStack.getAspect()));
-						AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(newStack);
-						PhialStorageAbility ability = provider.getAbility(AspectStorageAbility.ID, PhialStorageAbility.class).get();
-						int remove = Math.min(invStack.getCount(), MAX_COUNT);
-						invStack = inventory.removeAspect(invStack.getAspect(), remove);
-						ability.setAspect(invStack);
+						player.dropItem(newStack, true);
+					}
+				}
+				else if(original.getCount() != phialStack.getCount())
+				{
+					stack.decrement(1);
+					ItemStack newStack = Aspects.ASPECT_TO_PHIAL.get(phialStack.getAspect()).getDefaultStack();
+					AbilityProvider<ItemStack> provider2 = AbilityProvider.getProvider(newStack);
+					PhialStorageAbility ability2 = provider2.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class).get();
+					ability2.setAspect(phialStack);
+					if(!player.getInventory().insertStack(newStack))
+					{
+						player.dropItem(newStack, true);
+					}
+				}
+			});
+			if(!ability.isPresent())
+			{
+				Aspects.ASPECTS.values().forEach((aspect -> {
+					AspectStack check = new AspectStack(aspect, 64);
+					if(!(check = container.extract(check)).isEmpty())
+					{
 						stack.decrement(1);
-						if(stack.isEmpty())
+						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(check.getAspect()), 1);
+						AbilityProvider<ItemStack> provider2 = AbilityProvider.getProvider(newStack);
+						PhialStorageAbility ability2 = provider2.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class).get();
+						ability2.setAspect(check);
+						if(!player.getInventory().insertStack(newStack))
 						{
-							player.setStackInHand(hand, newStack);
+							player.dropItem(newStack, true);
 						}
-						else
-						{
-							if(!player.getInventory().insertStack(newStack))
-							{
-								player.dropItem(newStack, true);
-							}
-						}
-						((BlockEntityClientSerializable) test).sync();
 					}
-					return ActionResult.success(world.isClient);
-				}
+				}));
 			}
-			else
+			if(test instanceof BlockEntityClientSerializable)
 			{
-				Optional<AspectStorageAbility> optional = AbilityProvider.getProvider(stack).getAbility(AspectStorageAbility.ID, AspectStorageAbility.class);
-				if(optional.isPresent())
-				{
-					AspectStorageAbility<ItemStack> ability = (AspectStorageAbility<ItemStack>) optional.get();
-					if(inventory.canInsert(ability.getAspect(this.aspect), direction))
-					{
-						if(!world.isClient)
-						{
-							inventory.addAspect(ability.getAspects().stream().findFirst().get());
-							stack.decrement(1);
-							ItemStack newStack = new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM);
-							if(stack.isEmpty())
-							{
-								player.setStackInHand(hand, newStack);
-							}
-							else
-							{
-								if(!player.getInventory().insertStack(newStack))
-								{
-									player.dropItem(newStack, true);
-								}
-							}
-							((BlockEntityClientSerializable) test).sync();
-						}
-						return ActionResult.success(world.isClient);
-					}
-				}
+				((BlockEntityClientSerializable)test).sync();
 			}
+			return ActionResult.CONSUME;
 		}
 		return ActionResult.PASS;
 	}
