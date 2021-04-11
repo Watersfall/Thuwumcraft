@@ -14,6 +14,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PipeEntity;
 import org.jetbrains.annotations.Nullable;
@@ -103,31 +104,20 @@ public class PipeBlock extends Block implements BlockEntityProvider
 	public BlockState getPlacementState(ItemPlacementContext context)
 	{
 		BlockState state = super.getPlacementState(context);
-		BlockState up = context.getWorld().getBlockState(context.getBlockPos().up());
-		BlockState down = context.getWorld().getBlockState(context.getBlockPos().down());
-		BlockState east = context.getWorld().getBlockState(context.getBlockPos().east());
-		BlockState west = context.getWorld().getBlockState(context.getBlockPos().west());
-		BlockState north = context.getWorld().getBlockState(context.getBlockPos().north());
-		BlockState south = context.getWorld().getBlockState(context.getBlockPos().south());
-		if(up.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK)
-			state = state.with(UP, true);
-		if(down.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK || down.getBlock() == AlchemyBlocks.JAR_BLOCK)
-			state = state.with(DOWN, true);
-		if(east.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK)
-			state = state.with(EAST, true);
-		if(west.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK)
-			state = state.with(WEST, true);
-		if(north.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK)
-			state = state.with(NORTH, true);
-		if(south.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK)
-			state = state.with(SOUTH, true);
+		for(Direction direction : Direction.values())
+		{
+			if(AspectContainer.API.find(context.getWorld(), context.getBlockPos().offset(direction), null) != null)
+			{
+				state = state.with(getPropertyFromDirection(direction), true);
+			}
+		}
 		return state;
 	}
 
 	@Override
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos)
 	{
-		if(neighborState.getBlock() == AlchemyBlocks.ASPECT_PIPE_BLOCK || (neighborState.getBlock() == AlchemyBlocks.JAR_BLOCK && direction == Direction.DOWN))
+		if(AspectContainer.API.find((World)world, neighborPos, direction.getOpposite()) != null)
 		{
 			return state.with(getPropertyFromDirection(direction), true);
 		}

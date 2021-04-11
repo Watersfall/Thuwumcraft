@@ -17,6 +17,7 @@ import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.aspect.AspectStack;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.inventory.BasicInventory;
 import net.watersfall.alchemy.inventory.BetterAspectInventory;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectInventory, BasicInventory, NamedScreenHandlerFactory
+public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectInventory, BasicInventory, NamedScreenHandlerFactory, AspectContainer
 {
 	private final DefaultedList<ItemStack> items;
 	private final HashMap<Aspect, AspectStack> aspects;
@@ -141,5 +142,38 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
 		return new EssentiaSmelteryHandler(syncId, inv, this, this, properties);
+	}
+
+	@Override
+	public AspectStack insert(AspectStack stack)
+	{
+		return AspectStack.EMPTY;
+	}
+
+	@Override
+	public AspectStack extract(AspectStack stack)
+	{
+		if(stack.isEmpty())
+		{
+			return stack;
+		}
+		else if(this.aspects.containsKey(stack.getAspect()))
+		{
+			AspectStack currentStack = this.aspects.get(stack.getAspect());
+			int extract = Math.min(currentStack.getCount(), stack.getCount());
+			if(extract > 0)
+			{
+				currentStack.decrement(extract);
+				this.aspectCount -= extract;
+				return new AspectStack(stack.getAspect(), extract);
+			}
+		}
+		return AspectStack.EMPTY;
+	}
+
+	@Override
+	public int getSuction()
+	{
+		return 1;
 	}
 }

@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
@@ -59,14 +58,16 @@ import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.api.abilities.block.AspectContainer;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
 import net.watersfall.alchemy.api.tag.AlchemyEntityTags;
+import net.watersfall.alchemy.block.AlchemyBlocks;
+import net.watersfall.alchemy.block.PipeBlock;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
@@ -91,7 +92,6 @@ public class AlchemyMod implements ModInitializer
 {
 	public static final String MOD_ID = "waters_alchemy_mod";
 	private static Tag<Item> INGREDIENT_TAG;
-	public static final BlockApiLookup<AspectContainer, Direction> API = BlockApiLookup.get(AlchemyMod.getId("aspect_container"), AspectContainer.class, Direction.class);
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
@@ -327,6 +327,21 @@ public class AlchemyMod implements ModInitializer
 		AlchemyBiomes.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
+		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {
+			if((direction == null || state.get(PipeBlock.getPropertyFromDirection(direction))) && entity != null)
+			{
+				return (AspectContainer)entity;
+			}
+			return null;
+		}, AlchemyBlocks.ASPECT_PIPE_BLOCK);
+		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
+			if(direction == null || direction == Direction.UP)
+			{
+				return (AspectContainer)entity;
+			}
+			return null;
+		}, AlchemyBlockEntities.JAR_ENTITY);
+		AspectContainer.API.registerForBlockEntities((entity, direction) -> (AspectContainer)entity, AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY);
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());
