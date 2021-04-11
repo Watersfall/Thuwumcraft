@@ -168,7 +168,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 		{
 			Optional<AspectStack> optional = jar.aspects.values().stream().findFirst();
 			AspectStack stack;
-			if(optional.isPresent())
+			if(optional.isPresent() && optional.get().getCount() < MAX_COUNT)
 			{
 				stack = followPipe(world, pos.up(), Direction.DOWN, optional.get().getAspect(), jar);
 			}
@@ -178,7 +178,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 			}
 			if(stack != null && !stack.isEmpty())
 			{
-				jar.addAspect(stack);
+				jar.insert(stack);
 				jar.sync();
 			}
 			jar.visited.clear();
@@ -197,8 +197,10 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 		{
 			if(optional.get().getAspect() == stack.getAspect())
 			{
-				optional.get().increment(stack.getCount());
-				return AspectStack.EMPTY;
+				int increment = Math.min(MAX_COUNT - optional.get().getCount(), stack.getCount());
+				optional.get().increment(increment);
+				stack.decrement(increment);
+				return stack;
 			}
 		}
 		else
