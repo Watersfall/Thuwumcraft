@@ -2,12 +2,14 @@
 	"block.cauldron.add_ingredient": {
 		"sounds": [
 			"waters_alchemy_mod:swirl"
-		]
+		],
+		"subtitle": "sound.waters_alchemy_mod.water_swirl"
 	},
 	"item.magic_dust.use": {
 		"sounds": [
 			"waters_alchemy_mod:magic"
-		]
+		],
+		"subtitle": "sound.waters_alchemy_mod.magic"
 	},
 	"block.cauldron.bubble": {
 		"sounds": [
@@ -17,11 +19,13 @@
 			"waters_alchemy_mod:bubble/4",
 			"waters_alchemy_mod:bubble/5",
 			"waters_alchemy_mod:bubble/6"
-		]
+		],
+		"subtitle": "sound.waters_alchemy_mod.bubble"
 	},
 	"item.research_book.open": {
 		"sounds": [
 			"waters_alchemy_mod:research/open_book"
-		]
+		],
+		"subtitle": "sound.waters_alchemy_mod.page_flip"
 	}
 }

@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -31,6 +31,7 @@ import java.util.Optional;
 
 public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectInventory, BasicInventory, NamedScreenHandlerFactory, AspectContainer
 {
+	public static final TranslatableText TITLE = new TranslatableText("screen.waters_alchemy_mod.essentia_smeltery");
 	private final DefaultedList<ItemStack> items;
 	private final HashMap<Aspect, AspectStack> aspects;
 	private int aspectCount;
@@ -180,7 +181,7 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 	@Override
 	public Text getDisplayName()
 	{
-		return new LiteralText("text");
+		return TITLE;
 	}
 
 	@Nullable
