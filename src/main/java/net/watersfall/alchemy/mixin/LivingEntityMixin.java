@@ -4,6 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -19,7 +21,7 @@ import net.minecraft.world.World;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
-import net.watersfall.alchemy.item.AlchemistArmorItem;
+import net.watersfall.alchemy.entity.AlchemyAttributes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,6 +45,8 @@ public abstract class LivingEntityMixin extends Entity
 	@Shadow public abstract Iterable<ItemStack> getArmorItems();
 
 	@Shadow public int deathTime;
+
+	@Shadow public abstract double getAttributeValue(EntityAttribute attribute);
 
 	public LivingEntityMixin(EntityType<?> type, World world)
 	{
@@ -142,6 +146,12 @@ public abstract class LivingEntityMixin extends Entity
 		}
 	}
 
+	@Inject(method = "createLivingAttributes", at = @At("RETURN"))
+	private static void addMagicResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info)
+	{
+		info.getReturnValue().add(AlchemyAttributes.MAGIC_RESISTANCE, 0);
+	}
+
 	@ModifyVariable(
 			method = "applyDamage",
 			at = @At(
@@ -165,15 +175,8 @@ public abstract class LivingEntityMixin extends Entity
 		}
 		if(source.isMagic())
 		{
-			float damage = 1F;
-			for(ItemStack stack : this.getArmorItems())
-			{
-				if(stack.getItem() instanceof AlchemistArmorItem)
-				{
-					damage -= ((AlchemistArmorItem)stack.getItem()).getResistance();
-				}
-			}
-			amount = amount * damage;
+			double resistance = this.getAttributeValue(AlchemyAttributes.MAGIC_RESISTANCE) / 100;
+			amount = amount * (float)(1 - resistance);
 		}
 		return amount;
 	}

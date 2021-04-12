@@ -4,10 +4,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
-import net.watersfall.alchemy.item.AlchemistArmorItem;
+import net.watersfall.alchemy.entity.AlchemyAttributes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -43,15 +42,8 @@ public abstract class PlayerEntityMixin extends LivingEntity
 		}
 		if(source.isMagic())
 		{
-			float damage = 1F;
-			for(ItemStack stack : this.getArmorItems())
-			{
-				if(stack.getItem() instanceof AlchemistArmorItem)
-				{
-					damage -= ((AlchemistArmorItem)stack.getItem()).getResistance();
-				}
-			}
-			amount = amount * damage;
+			double resistance = this.getAttributeValue(AlchemyAttributes.MAGIC_RESISTANCE) / 100;
+			amount = amount * (float)(1 - resistance);
 		}
 		return amount;
 	}
