@@ -62,6 +62,7 @@ public class AlchemyItems
 	public static final Item BRASS_INGOT;
 	public static final BlockItem POTION_SPRAYER_ITEM;
 	public static final BlockItem ESSENTIA_SMELTERY_ITEM;
+	public static final BlockItem ESSENTIA_REFINERY;
 	public static final List<Item> ITEMS;
 
 	static
@@ -115,6 +116,7 @@ public class AlchemyItems
 		BRASS_INGOT = register(AlchemyMod.getId("brass_ingot"), new Item(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		POTION_SPRAYER_ITEM = register(AlchemyMod.getId("potion_sprayer"), new BlockItem(AlchemyBlocks.POTION_SPRAYER_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		ESSENTIA_SMELTERY_ITEM = register(AlchemyMod.getId("essentia_smeltery"), new BlockItem(AlchemyBlocks.ESSENTIA_SMELTERY, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		ESSENTIA_REFINERY = register(AlchemyMod.getId("essentia_refinery"), new BlockItem(AlchemyBlocks.ESSENTIA_REFINERY_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

@@ -1,6 +1,5 @@
 package net.watersfall.alchemy.item;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -98,10 +97,6 @@ public class GlassPhialItem extends Item
 						}
 					}
 				}));
-			}
-			if(test instanceof BlockEntityClientSerializable)
-			{
-				((BlockEntityClientSerializable)test).sync();
 			}
 			return ActionResult.CONSUME;
 		}

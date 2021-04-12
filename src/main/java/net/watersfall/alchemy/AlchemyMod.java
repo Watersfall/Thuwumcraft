@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.OreBlock;
 import net.minecraft.entity.Entity;
@@ -65,9 +66,10 @@ import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
 import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.api.sound.AlchemySounds;
+import net.watersfall.alchemy.api.tag.AlchemyBlockTags;
 import net.watersfall.alchemy.api.tag.AlchemyEntityTags;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.block.PipeBlock;
+import net.watersfall.alchemy.block.EssentiaSmeltery;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
@@ -328,11 +330,7 @@ public class AlchemyMod implements ModInitializer
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {
-			if((direction == null || state.get(PipeBlock.getPropertyFromDirection(direction))) && entity != null)
-			{
-				return (AspectContainer)entity;
-			}
-			return null;
+			return (AspectContainer)entity;
 		}, AlchemyBlocks.ASPECT_PIPE_BLOCK);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			if(direction == null || direction == Direction.UP)
@@ -341,7 +339,22 @@ public class AlchemyMod implements ModInitializer
 			}
 			return null;
 		}, AlchemyBlockEntities.JAR_ENTITY);
-		AspectContainer.API.registerForBlockEntities((entity, direction) -> (AspectContainer)entity, AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY);
+		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
+			if(direction == null)
+			{
+				return (AspectContainer)entity;
+			}
+			World world = entity.getWorld();
+			BlockState state = world.getBlockState(entity.getPos().offset(direction));
+			if(state.isIn(AlchemyBlockTags.ESSENTIA_REFINERIES) || state.getBlock() instanceof EssentiaSmeltery)
+			{
+				return (AspectContainer)entity;
+			}
+			return null;
+		}, AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY);
+		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
+			return (AspectContainer)entity;
+		}, AlchemyBlockEntities.ESSENTIA_REFINERY);
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());

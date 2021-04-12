@@ -1,10 +1,12 @@
 package net.watersfall.alchemy.block.entity;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.minecraft.block.entity.BlockEntityType;
 
 public class AlchemyBlockEntities
 {
@@ -22,6 +24,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<AspectCraftingEntity> ASPECT_CRAFTING_ENTITY;
 	public static final BlockEntityType<PotionSprayerEntity> POTION_SPRAYER;
 	public static final BlockEntityType<EssentiaSmelteryEntity> ESSENTIA_SMELTERY_ENTITY;
+	public static final BlockEntityType<EssentiaRefineryBlockEntity> ESSENTIA_REFINERY;
 
 	static
 	{
@@ -39,6 +42,7 @@ public class AlchemyBlockEntities
 		ASPECT_CRAFTING_ENTITY = FabricBlockEntityTypeBuilder.create(AspectCraftingEntity::new, AlchemyBlocks.ASPECT_CRAFTING_BLOCK).build(null);
 		POTION_SPRAYER = FabricBlockEntityTypeBuilder.create(PotionSprayerEntity::new, AlchemyBlocks.POTION_SPRAYER_BLOCK).build(null);
 		ESSENTIA_SMELTERY_ENTITY = FabricBlockEntityTypeBuilder.create(EssentiaSmelteryEntity::new, AlchemyBlocks.ESSENTIA_SMELTERY).build(null);
+		ESSENTIA_REFINERY = register("essentia_refinery", EssentiaRefineryBlockEntity::new, AlchemyBlocks.ESSENTIA_REFINERY_BLOCK);
 	}
 
 	public static void register()
@@ -57,5 +61,10 @@ public class AlchemyBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("aspect_crafting_entity"), ASPECT_CRAFTING_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("potion_sprayer_entity"), POTION_SPRAYER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId("essentia_smeltery_entity"), ESSENTIA_SMELTERY_ENTITY);
+	}
+
+	public static <T extends BlockEntity> BlockEntityType<T> register(String id, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks)
+	{
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, AlchemyMod.getId(id), FabricBlockEntityTypeBuilder.create(factory, blocks).build(null));
 	}
 }

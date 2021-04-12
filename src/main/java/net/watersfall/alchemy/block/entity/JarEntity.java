@@ -200,12 +200,14 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 				int increment = Math.min(MAX_COUNT - optional.get().getCount(), stack.getCount());
 				optional.get().increment(increment);
 				stack.decrement(increment);
+				this.sync();
 				return stack;
 			}
 		}
 		else
 		{
 			this.addAspect(stack);
+			this.sync();
 			return AspectStack.EMPTY;
 		}
 		return AspectStack.EMPTY;
@@ -225,6 +227,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 			{
 				int extract = Math.min(stack.getCount(), optional.get().getCount());
 				optional.get().decrement(extract);
+				this.sync();
 				return new AspectStack(stack.getAspect(), extract);
 			}
 		}

@@ -12,6 +12,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
@@ -75,6 +76,47 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 		this.aspects = new HashMap<>();
 	}
 
+	private static AspectStack insertAbove(World world, BlockPos pos, AspectStack stack, EssentiaSmelteryEntity entity)
+	{
+		if(stack.isEmpty())
+		{
+			AspectContainer container = AspectContainer.API.find(world, pos, null);
+			if(container != null)
+			{
+				for(Aspect aspect : Aspects.ASPECTS.values())
+				{
+					AspectStack extract = new AspectStack(aspect, 1);
+					if(!entity.getAspect(aspect).isEmpty())
+					{
+						AspectStack check = insertAbove(world, pos.up(), extract, entity);
+						if(check.isEmpty())
+						{
+							return check;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			AspectContainer container = AspectContainer.API.find(world, pos, Direction.DOWN);
+			if(container != null)
+			{
+				AspectStack remove = stack.copy();
+				if(container.insert(stack).isEmpty())
+				{
+					entity.extract(remove);
+					return AspectStack.EMPTY;
+				}
+				else
+				{
+					insertAbove(world, pos.up(), stack, entity);
+				}
+			}
+		}
+		return AspectStack.EMPTY;
+	}
+
 	public static void tick(World world, BlockPos pos, BlockState state, EssentiaSmelteryEntity entity)
 	{
 		ItemStack stack = entity.getStack(0);
@@ -91,6 +133,10 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 					stack.decrement(1);
 				}
 			}
+		}
+		if(world.getTime() % 10 == 0)
+		{
+			AspectStack remove = insertAbove(world, pos, AspectStack.EMPTY, entity);
 		}
 	}
 

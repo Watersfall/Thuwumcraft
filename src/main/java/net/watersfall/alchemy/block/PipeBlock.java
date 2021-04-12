@@ -106,7 +106,7 @@ public class PipeBlock extends Block implements BlockEntityProvider
 		BlockState state = super.getPlacementState(context);
 		for(Direction direction : Direction.values())
 		{
-			if(AspectContainer.API.find(context.getWorld(), context.getBlockPos().offset(direction), null) != null)
+			if(AspectContainer.API.find(context.getWorld(), context.getBlockPos().offset(direction), direction.getOpposite()) != null)
 			{
 				state = state.with(getPropertyFromDirection(direction), true);
 			}

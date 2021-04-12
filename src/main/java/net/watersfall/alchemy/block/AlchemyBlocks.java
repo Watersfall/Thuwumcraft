@@ -24,6 +24,7 @@ public class AlchemyBlocks
 	public static final AspectCraftingBlock ASPECT_CRAFTING_BLOCK;
 	public static final PotionSprayerBlock POTION_SPRAYER_BLOCK;
 	public static final EssentiaSmeltery ESSENTIA_SMELTERY;
+	public static final EssentiaRefineryBlock ESSENTIA_REFINERY_BLOCK;
 
 	static
 	{
@@ -43,6 +44,7 @@ public class AlchemyBlocks
 		ASPECT_CRAFTING_BLOCK = register(AlchemyMod.getId("aspect_crafting_block"), new AspectCraftingBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
 		POTION_SPRAYER_BLOCK = register(AlchemyMod.getId("potion_sprayer"), new PotionSprayerBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
 		ESSENTIA_SMELTERY = register(AlchemyMod.getId("essentia_smeltery"), new EssentiaSmeltery(FabricBlockSettings.copyOf(Blocks.FURNACE)));
+		ESSENTIA_REFINERY_BLOCK = register(AlchemyMod.getId("essentia_refinery"), new EssentiaRefineryBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)
