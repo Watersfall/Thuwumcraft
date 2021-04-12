@@ -63,6 +63,10 @@ public class AlchemyItems
 	public static final BlockItem POTION_SPRAYER_ITEM;
 	public static final BlockItem ESSENTIA_SMELTERY_ITEM;
 	public static final BlockItem ESSENTIA_REFINERY;
+	public static final AlchemistArmorItem ALCHEMIST_HOOD;
+	public static final AlchemistArmorItem ALCHEMIST_ROBE;
+	public static final AlchemistArmorItem ALCHEMIST_LEGGINGS;
+	public static final AlchemistArmorItem ALCHEMIST_SHOES;
 	public static final List<Item> ITEMS;
 
 	static
@@ -117,6 +121,10 @@ public class AlchemyItems
 		POTION_SPRAYER_ITEM = register(AlchemyMod.getId("potion_sprayer"), new BlockItem(AlchemyBlocks.POTION_SPRAYER_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		ESSENTIA_SMELTERY_ITEM = register(AlchemyMod.getId("essentia_smeltery"), new BlockItem(AlchemyBlocks.ESSENTIA_SMELTERY, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		ESSENTIA_REFINERY = register(AlchemyMod.getId("essentia_refinery"), new BlockItem(AlchemyBlocks.ESSENTIA_REFINERY_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		ALCHEMIST_HOOD = register(AlchemyMod.getId("alchemist_hood"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
+		ALCHEMIST_ROBE = register(AlchemyMod.getId("alchemist_robe"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
+		ALCHEMIST_LEGGINGS = register(AlchemyMod.getId("alchemist_leggings"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.LEGS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
+		ALCHEMIST_SHOES = register(AlchemyMod.getId("alchemist_shoes"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

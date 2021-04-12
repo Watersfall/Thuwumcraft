@@ -1,25 +1,25 @@
 package net.watersfall.alchemy.mixin;
 
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
-import net.watersfall.alchemy.api.abilities.Ability;
-import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
 import net.minecraft.network.packet.s2c.play.RemoveEntityStatusEffectS2CPacket;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.effect.AlchemyStatusEffects;
+import net.watersfall.alchemy.item.AlchemistArmorItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +39,10 @@ public abstract class LivingEntityMixin extends Entity
 	@Shadow public abstract boolean hasStatusEffect(StatusEffect effect);
 
 	@Shadow public abstract boolean damage(DamageSource source, float amount);
+
+	@Shadow public abstract Iterable<ItemStack> getArmorItems();
+
+	@Shadow public int deathTime;
 
 	public LivingEntityMixin(EntityType<?> type, World world)
 	{
@@ -158,6 +162,18 @@ public abstract class LivingEntityMixin extends Entity
 			{
 				amount = amount * 2.0F;
 			}
+		}
+		if(source.isMagic())
+		{
+			float damage = 1F;
+			for(ItemStack stack : this.getArmorItems())
+			{
+				if(stack.getItem() instanceof AlchemistArmorItem)
+				{
+					damage -= ((AlchemistArmorItem)stack.getItem()).getResistance();
+				}
+			}
+			amount = amount * damage;
 		}
 		return amount;
 	}

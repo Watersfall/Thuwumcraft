@@ -1,0 +1,16 @@
+{
+	"type": "waters_alchemy_mod:cauldron_item",
+	"catalyst": {
+		"item": "minecraft:leather_boots"
+	},
+	"water_use": 50,
+	"inputs": [
+		{
+			"item": "waters_alchemy_mod:magic_dust"
+		}
+	],
+	"output": "waters_alchemy_mod:alchemist_shoes",
+	"research": [
+		"waters_alchemy_mod:alchemy/alchemist_robes"
+	]
+}

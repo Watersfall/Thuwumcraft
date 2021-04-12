@@ -1,0 +1,28 @@
+{
+	"icon": "minecraft:leather",
+	"category": "waters_alchemy_mod:alchemy",
+	"x": 0,
+	"y": -8,
+	"complete_requirements": {
+		"inventory_consumed": [
+			"minecraft:leather",
+			"waters_alchemy_mod:magic_dust"
+		]
+	},
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:alchemy/potion_brewing"
+		]
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"waters_alchemy_mod:cauldron_item/alchemist_hood",
+				"waters_alchemy_mod:cauldron_item/alchemist_robes",
+				"waters_alchemy_mod:cauldron_item/alchemist_leggings",
+				"waters_alchemy_mod:cauldron_item/alchemist_shoes"
+			],
+			"requires_complete": true
+		}
+	]
+}
