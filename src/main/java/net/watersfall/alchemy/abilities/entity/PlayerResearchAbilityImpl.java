@@ -91,7 +91,7 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	@Override
 	public boolean hasResearch(Identifier id)
 	{
-		return hasResearch(Research.REGISTRY.get(id));
+		return this.research.contains(id);
 	}
 
 	public boolean hasResearch(Research research)
