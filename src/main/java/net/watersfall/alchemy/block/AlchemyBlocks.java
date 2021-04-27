@@ -25,6 +25,8 @@ public class AlchemyBlocks
 	public static final PotionSprayerBlock POTION_SPRAYER_BLOCK;
 	public static final EssentiaSmeltery ESSENTIA_SMELTERY;
 	public static final EssentiaRefineryBlock ESSENTIA_REFINERY_BLOCK;
+	public static final ArcaneLampBlock ARCANE_LAMP_BLOCK;
+	public static final ArcaneLightBlock ARCANE_LIGHT_BLOCK;
 
 	static
 	{
@@ -45,6 +47,8 @@ public class AlchemyBlocks
 		POTION_SPRAYER_BLOCK = register(AlchemyMod.getId("potion_sprayer"), new PotionSprayerBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
 		ESSENTIA_SMELTERY = register(AlchemyMod.getId("essentia_smeltery"), new EssentiaSmeltery(FabricBlockSettings.copyOf(Blocks.FURNACE)));
 		ESSENTIA_REFINERY_BLOCK = register(AlchemyMod.getId("essentia_refinery"), new EssentiaRefineryBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
+		ARCANE_LAMP_BLOCK = register(AlchemyMod.getId("arcane_lamp"), new ArcaneLampBlock(FabricBlockSettings.copyOf(Blocks.LANTERN)));
+		ARCANE_LIGHT_BLOCK = register(AlchemyMod.getId("arcane_light"), new ArcaneLightBlock(FabricBlockSettings.of(Material.AIR).nonOpaque().collidable(false).dropsNothing().noCollision().luminance(15)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

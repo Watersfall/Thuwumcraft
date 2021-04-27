@@ -25,6 +25,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<PotionSprayerEntity> POTION_SPRAYER;
 	public static final BlockEntityType<EssentiaSmelteryEntity> ESSENTIA_SMELTERY_ENTITY;
 	public static final BlockEntityType<EssentiaRefineryBlockEntity> ESSENTIA_REFINERY;
+	public static final BlockEntityType<ArcaneLampEntity> ARCANE_LAMP_ENTITY;
 
 	static
 	{
@@ -43,6 +44,7 @@ public class AlchemyBlockEntities
 		POTION_SPRAYER = FabricBlockEntityTypeBuilder.create(PotionSprayerEntity::new, AlchemyBlocks.POTION_SPRAYER_BLOCK).build(null);
 		ESSENTIA_SMELTERY_ENTITY = FabricBlockEntityTypeBuilder.create(EssentiaSmelteryEntity::new, AlchemyBlocks.ESSENTIA_SMELTERY).build(null);
 		ESSENTIA_REFINERY = register("essentia_refinery", EssentiaRefineryBlockEntity::new, AlchemyBlocks.ESSENTIA_REFINERY_BLOCK);
+		ARCANE_LAMP_ENTITY = register("arcane_lamp_entity", ArcaneLampEntity::new, AlchemyBlocks.ARCANE_LAMP_BLOCK);
 	}
 
 	public static void register()

@@ -79,6 +79,7 @@ public class AlchemyItems
 	public static final ArmorItem FORTRESS_CHESTPLATE;
 	public static final ArmorItem FORTRESS_LEGGINGS;
 	public static final SpeedBootsItem BOOTS_OF_BLINDING_SPEED;
+	public static final BlockItem ARCANE_LAMP_ITEM;
 	public static final List<Item> ITEMS;
 
 	static
@@ -145,6 +146,7 @@ public class AlchemyItems
 		FORTRESS_CHESTPLATE = register(AlchemyMod.getId("fortress_chestplate"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.CHEST, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		FORTRESS_LEGGINGS = register(AlchemyMod.getId("fortress_leggings"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.LEGS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		BOOTS_OF_BLINDING_SPEED = register(AlchemyMod.getId("boots_of_blinding_speed"), new SpeedBootsItem(AlchemyArmorMaterials.MAGIC, 0.5F));
+		ARCANE_LAMP_ITEM = register(AlchemyMod.getId("arcane_lamp"), new BlockItem(AlchemyBlocks.ARCANE_LAMP_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
