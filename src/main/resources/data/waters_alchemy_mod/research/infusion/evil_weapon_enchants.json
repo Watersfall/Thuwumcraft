@@ -1,0 +1,13 @@
+{
+	"icon": "minecraft:enchanting_table",
+	"category": "waters_alchemy_mod:infusion",
+	"x": -6,
+	"y": 11,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:infusion/magical_sword",
+			"waters_alchemy_mod:infusion/magical_battleaxe",
+			"waters_alchemy_mod:infusion/magical_bow"
+		]
+	}
+}

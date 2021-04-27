@@ -45,7 +45,7 @@ import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
-import net.watersfall.alchemy.item.AlchemyArmorMaterials;
+import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.recipe.CauldronItemRecipe;

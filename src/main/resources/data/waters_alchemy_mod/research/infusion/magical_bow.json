@@ -1,0 +1,11 @@
+{
+	"icon": "minecraft:bow",
+	"category": "waters_alchemy_mod:infusion",
+	"x": -9,
+	"y": 9,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:infusion/tool_infusion"
+		]
+	}
+}

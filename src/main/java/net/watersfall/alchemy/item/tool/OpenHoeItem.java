@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.tool;
 
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ToolMaterial;

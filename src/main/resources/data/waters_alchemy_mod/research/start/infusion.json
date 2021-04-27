@@ -3,6 +3,14 @@
 	"category": "waters_alchemy_mod:starter",
 	"x": -4,
 	"y": 4,
+	"complete_requirements":
+	{
+		"inventory_consumed": [
+			"waters_alchemy_mod:phial/air",
+			"minecraft:feather",
+			"minecraft:stone"
+		]
+	},
 	"research_requirements": {
 		"research": [
 			"waters_alchemy_mod:start/gadgets"

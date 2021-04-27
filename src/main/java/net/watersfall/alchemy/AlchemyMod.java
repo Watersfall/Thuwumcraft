@@ -74,7 +74,7 @@ import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
 import net.watersfall.alchemy.item.AlchemyItems;
-import net.watersfall.alchemy.item.SpecialPickaxeItem;
+import net.watersfall.alchemy.item.tool.SpecialPickaxeItem;
 import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.PedestalRecipe;

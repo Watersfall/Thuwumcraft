@@ -1,0 +1,11 @@
+{
+	"icon": "waters_alchemy_mod:pedestal",
+	"category": "waters_alchemy_mod:infusion",
+	"x": 3,
+	"y": 5,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:infusion/tool_infusion"
+		]
+	}
+}

@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.armor;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
@@ -7,13 +7,16 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Lazy;
+import net.watersfall.alchemy.item.AlchemyItems;
 
 import java.util.function.Supplier;
 
 public enum AlchemyArmorMaterials implements ArmorMaterial
 {
 	GOGGLES("goggles", 15, new int[]{1,1,1,1}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0, () -> Ingredient.ofItems(Items.GOLD_INGOT)),
-	THUWUMIUM("thuwumium", 20, new int[]{2,5,6,3}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0, 0, () -> Ingredient.ofItems(AlchemyItems.THUWUMIUM_INGOT));
+	THUWUMIUM("thuwumium", 20, new int[]{2,5,6,3}, 25, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0, 0, () -> Ingredient.ofItems(AlchemyItems.THUWUMIUM_INGOT)),
+	FORTRESS("fortress", 35, new int[]{4, 6, 7, 3}, 30, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3, 0, () -> Ingredient.ofItems(AlchemyItems.THUWUMIUM_INGOT)),
+	MAGIC("magic", 15, new int[]{2, 3, 5, 3}, 45, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 1, 0, () -> Ingredient.ofItems(Items.LEATHER));
 
 	private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
 	private final String name;

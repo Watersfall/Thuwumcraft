@@ -1,9 +1,10 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.tool;
 
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
+import net.watersfall.alchemy.item.AlchemyItems;
 
 import java.util.function.Supplier;
 

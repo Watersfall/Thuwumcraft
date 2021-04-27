@@ -1,14 +1,15 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.tool;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.item.AlchemyItems;
 
 public class SpecialAxeItem extends AxeItem
 {
-	protected SpecialAxeItem()
+	public SpecialAxeItem()
 	{
 		super(AlchemyToolMaterials.MAGIC, 5.0F, -3.0F, (new Item.Settings()).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
 	}

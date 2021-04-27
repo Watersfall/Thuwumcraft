@@ -11,6 +11,10 @@ import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.item.AspectItem;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.watersfall.alchemy.item.armor.AlchemistArmorItem;
+import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
+import net.watersfall.alchemy.item.armor.SpeedBootsItem;
+import net.watersfall.alchemy.item.tool.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,10 @@ public class AlchemyItems
 	public static final MagicDustItem MAGIC_DUST;
 	public static final SpecialPickaxeItem SPECIAL_PICKAXE_ITEM;
 	public static final SpecialAxeItem SPECIAL_AXE_ITEM;
+	public static final SpecialHoeItem SPECIAL_HOE_ITEM;
+	public static final SpecialSwordItem SPECIAL_SWORD_ITEM;
+	public static final SpecialBattleaxeItem SPECIAL_BATTLEAXE_ITEM;
+	public static final SpecialBowItem SPECIAL_BOW_ITEM;
 	public static final Item JAR_ITEM;
 	public static final GlassPhialItem EMPTY_PHIAL_ITEM;
 	public static final Item PHIAL_SHELF_ITEM;
@@ -67,6 +75,10 @@ public class AlchemyItems
 	public static final AlchemistArmorItem ALCHEMIST_ROBE;
 	public static final AlchemistArmorItem ALCHEMIST_LEGGINGS;
 	public static final AlchemistArmorItem ALCHEMIST_SHOES;
+	public static final ArmorItem FORTRESS_HELMET;
+	public static final ArmorItem FORTRESS_CHESTPLATE;
+	public static final ArmorItem FORTRESS_LEGGINGS;
+	public static final SpeedBootsItem BOOTS_OF_BLINDING_SPEED;
 	public static final List<Item> ITEMS;
 
 	static
@@ -89,6 +101,10 @@ public class AlchemyItems
 		MAGIC_DUST = register(AlchemyMod.getId("magic_dust"), new MagicDustItem());
 		SPECIAL_PICKAXE_ITEM =register(AlchemyMod.getId("magic_pickaxe"), new SpecialPickaxeItem());
 		SPECIAL_AXE_ITEM = register(AlchemyMod.getId("magic_axe"), new SpecialAxeItem());
+		SPECIAL_HOE_ITEM = register(AlchemyMod.getId("magic_hoe"), new SpecialHoeItem());
+		SPECIAL_SWORD_ITEM = register(AlchemyMod.getId("magic_sword"), new SpecialSwordItem());
+		SPECIAL_BATTLEAXE_ITEM = register(AlchemyMod.getId("magic_battleaxe"), new SpecialBattleaxeItem());
+		SPECIAL_BOW_ITEM = register(AlchemyMod.getId("magic_bow"), new SpecialBowItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		JAR_ITEM = register(AlchemyMod.getId("jar"), new BlockItem(AlchemyBlocks.JAR_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
 		EMPTY_PHIAL_ITEM = register(AlchemyMod.getId("phial/empty"), new GlassPhialItem(Aspect.EMPTY));
 		PHIAL_SHELF_ITEM = register(AlchemyMod.getId("phial_shelf"), new BlockItem(AlchemyBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP)));
@@ -125,6 +141,10 @@ public class AlchemyItems
 		ALCHEMIST_ROBE = register(AlchemyMod.getId("alchemist_robe"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
 		ALCHEMIST_LEGGINGS = register(AlchemyMod.getId("alchemist_leggings"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.LEGS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
 		ALCHEMIST_SHOES = register(AlchemyMod.getId("alchemist_shoes"), new AlchemistArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.FEET, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP), 0.15F));
+		FORTRESS_HELMET = register(AlchemyMod.getId("fortress_helmet"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.HEAD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		FORTRESS_CHESTPLATE = register(AlchemyMod.getId("fortress_chestplate"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.CHEST, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		FORTRESS_LEGGINGS = register(AlchemyMod.getId("fortress_leggings"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.LEGS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		BOOTS_OF_BLINDING_SPEED = register(AlchemyMod.getId("boots_of_blinding_speed"), new SpeedBootsItem(AlchemyArmorMaterials.MAGIC, 0.5F));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

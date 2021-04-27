@@ -1,10 +1,11 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.tool;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.item.AlchemyItems;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.alchemy.item.armor;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;

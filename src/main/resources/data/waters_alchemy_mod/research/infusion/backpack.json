@@ -1,0 +1,11 @@
+{
+	"icon": "minecraft:gold_ingot",
+	"category": "waters_alchemy_mod:infusion",
+	"x": 2,
+	"y": -5,
+	"research_requirements": {
+		"research": [
+			"waters_alchemy_mod:infusion/trinkets"
+		]
+	}
+}
