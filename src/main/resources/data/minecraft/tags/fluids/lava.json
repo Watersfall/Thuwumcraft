@@ -1,0 +1,8 @@
+{
+	"replace": false,
+	"values":
+	[
+		"waters_alchemy_mod:dimensional_fluid",
+		"waters_alchemy_mod:dimensional_fluid_flowing"
+	]
+}

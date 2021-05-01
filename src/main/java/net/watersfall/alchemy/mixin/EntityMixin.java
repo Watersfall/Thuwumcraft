@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
+import net.watersfall.alchemy.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityClientSerializable;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
@@ -74,6 +75,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 			{
 				this.addAbility(new PlayerResearchAbilityImpl());
 			}
+			this.addAbility(new PlayerUnknownAbilityImpl());
 		}
 	}
 

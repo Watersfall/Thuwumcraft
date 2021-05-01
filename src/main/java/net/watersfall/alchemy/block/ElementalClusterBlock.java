@@ -1,7 +1,18 @@
 package net.watersfall.alchemy.block;
 
 import net.minecraft.block.AmethystClusterBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import net.watersfall.alchemy.api.aspect.Aspect;
+import net.watersfall.alchemy.particle.AlchemyParticles;
+import net.watersfall.alchemy.world.biome.AlchemyBiomes;
+
+import java.util.Random;
 
 public class ElementalClusterBlock extends AmethystClusterBlock
 {
@@ -16,5 +27,19 @@ public class ElementalClusterBlock extends AmethystClusterBlock
 	public Aspect getAspect()
 	{
 		return this.aspect;
+	}
+
+	@Override
+	public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random)
+	{
+		if(random.nextInt(7) == 0)
+		{
+			if(world.getRegistryManager().get(Registry.BIOME_KEY).getKey(world.getBiome(pos)).get() == AlchemyBiomes.MAGIC_FOREST_BIOME_KEY)
+			{
+				Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(AlchemyParticles.MAGIC_FOREST, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0, 0);
+				Vec3d color = Vec3d.unpackRgb(aspect.getColor());
+				particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+			}
+		}
 	}
 }

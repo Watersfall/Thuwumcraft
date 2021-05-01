@@ -2,23 +2,22 @@ package net.watersfall.alchemy.world.feature;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.decorator.BiasedRangedDecoratorConfig;
+import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspects;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.world.config.DecoratedRockConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeLayersConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeSizeConfig;
-import net.watersfall.alchemy.world.feature.NetherGeodeFeature;
 
 public class AlchemyFeatures
 {
@@ -30,12 +29,13 @@ public class AlchemyFeatures
 	public static final ConfiguredFeature<?, ?> BASALT_DELTA_GEODE;
 	public static final ConfiguredFeature<?, ?> MAGIC_FOREST_TREES;
 	public static final ConfiguredFeature<?, ?> MOSSY_ASPECT_ROCKS;
+	public static final ConfiguredFeature<?, ?> DIMENSIONAL_LAKE;
 
 	static
 	{
 		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
 		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
-
+		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE_BIASED_TO_BOTTOM.configure(new BiasedRangedDecoratorConfig(YOffset.getBottom(), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8);
 		EARTH_CRYSTAL_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 						new GeodeLayerConfig(
 								new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),
@@ -149,5 +149,6 @@ public class AlchemyFeatures
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("nether_geode"), NETHER_GEODE);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("magic_forest_trees"), MAGIC_FOREST_TREES);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("mossy_aspect_rocks"), MOSSY_ASPECT_ROCKS);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("dimensional_lake"), DIMENSIONAL_LAKE);
 	}
 }

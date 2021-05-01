@@ -60,6 +60,7 @@ import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -73,6 +74,7 @@ import net.watersfall.alchemy.block.EssentiaSmeltery;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
 import net.watersfall.alchemy.block.entity.PedestalEntity;
 import net.watersfall.alchemy.effect.AlchemyStatusEffects;
+import net.watersfall.alchemy.fluid.AlchemyFluids;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.tool.SpecialPickaxeItem;
 import net.watersfall.alchemy.multiblock.type.AlchemicalFurnaceType;
@@ -305,6 +307,7 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.ENTITY_REGISTRY.register(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerResearchAbilityImpl::new);
 	}
 
 	private static void registerMultiBlocks()
@@ -318,6 +321,7 @@ public class AlchemyMod implements ModInitializer
 		AlchemyStatusEffects.register();
 		AlchemyRecipes.register();
 		AlchemyBlockEntities.register();
+		AlchemyFluids.register();
 		registerEvents();
 		registerAspects();
 		registerSounds();
@@ -364,6 +368,9 @@ public class AlchemyMod implements ModInitializer
 		BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.BASALT_DELTA_GEODE).get());
+		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
+				GenerationStep.Feature.UNDERGROUND_DECORATION,
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.DIMENSIONAL_LAKE).get());
 		VillageAdditions.register();
 	}
 }

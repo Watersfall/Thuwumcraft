@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.fluid.AlchemyFluids;
 
 public class AlchemyBlocks
 {
@@ -27,6 +28,7 @@ public class AlchemyBlocks
 	public static final EssentiaRefineryBlock ESSENTIA_REFINERY_BLOCK;
 	public static final ArcaneLampBlock ARCANE_LAMP_BLOCK;
 	public static final ArcaneLightBlock ARCANE_LIGHT_BLOCK;
+	public static final FluidBlock DIMENSIONAL_FLUID_BLOCK;
 
 	static
 	{
@@ -49,6 +51,7 @@ public class AlchemyBlocks
 		ESSENTIA_REFINERY_BLOCK = register(AlchemyMod.getId("essentia_refinery"), new EssentiaRefineryBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
 		ARCANE_LAMP_BLOCK = register(AlchemyMod.getId("arcane_lamp"), new ArcaneLampBlock(FabricBlockSettings.copyOf(Blocks.LANTERN)));
 		ARCANE_LIGHT_BLOCK = register(AlchemyMod.getId("arcane_light"), new ArcaneLightBlock(FabricBlockSettings.of(Material.AIR).nonOpaque().collidable(false).dropsNothing().noCollision().luminance(15)));
+		DIMENSIONAL_FLUID_BLOCK = register(AlchemyMod.getId("dimensional_fluid"), new CustomFluidBlock(AlchemyFluids.DIMENSIONAL_STILL, FabricBlockSettings.copyOf(Blocks.WATER)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

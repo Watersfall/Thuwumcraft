@@ -1,15 +1,36 @@
 package net.watersfall.alchemy.client;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.render.*;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -18,18 +39,23 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.abilities.chunk.VisAbilityImpl;
-import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
-import net.watersfall.alchemy.client.accessor.ArmorFeatureRendererAccessor;
+import net.watersfall.alchemy.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.client.gui.RecipeTabType;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
@@ -38,38 +64,37 @@ import net.watersfall.alchemy.api.research.Research;
 import net.watersfall.alchemy.api.research.ResearchCategory;
 import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.block.entity.AlchemyBlockEntities;
+import net.watersfall.alchemy.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.alchemy.client.gui.*;
 import net.watersfall.alchemy.client.gui.element.ItemElement;
 import net.watersfall.alchemy.client.gui.element.RecipeElement;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
+import net.watersfall.alchemy.client.particle.MagicForestParticle;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
+import net.watersfall.alchemy.fluid.AlchemyFluids;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
+import net.watersfall.alchemy.particle.AlchemyParticles;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
 import net.watersfall.alchemy.recipe.AspectIngredient;
 import net.watersfall.alchemy.recipe.CauldronItemRecipe;
 import net.watersfall.alchemy.recipe.PedestalRecipe;
 import net.watersfall.alchemy.screen.AlchemyScreenHandlers;
 import net.watersfall.alchemy.util.StatusEffectHelper;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.client.color.world.BiomeColors;
+import net.watersfall.alchemy.world.AlchemyWorlds;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class AlchemyModClient implements ClientModInitializer
 {
+	private static final Identifier UNKNOWN_VIGNETTE = AlchemyMod.getId("textures/misc/unknown_vignette.png");
+
 	private static void registerEvents()
 	{
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
@@ -93,6 +118,42 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			}
 		}));
+		HudRenderCallback.EVENT.register((matrices, delta) -> {
+			MinecraftClient client = MinecraftClient.getInstance();
+			PlayerEntity player = client.player;
+			if(player.world.getRegistryKey() == AlchemyWorlds.THE_UNKNOWN)
+			{
+				AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+				provider.getAbility(PlayerUnknownAbility.ID, PlayerUnknownAbility.class).ifPresent(ability -> {
+					if(ability.isTemporary())
+					{
+						int height = client.getWindow().getScaledHeight();
+						int width = client.getWindow().getScaledWidth();
+						float color = (ability.getTicksInUnknown()) / 150F;
+						RenderSystem.enableBlend();
+						RenderSystem.setShaderColor(color, color, color, 1F);
+						RenderSystem.disableDepthTest();
+						RenderSystem.depthMask(false);
+						RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+						RenderSystem.setShader(GameRenderer::getPositionTexShader);
+						RenderSystem.setShaderTexture(0, UNKNOWN_VIGNETTE);
+						Tessellator tessellator = Tessellator.getInstance();
+						BufferBuilder bufferBuilder = tessellator.getBuffer();
+						bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+						bufferBuilder.vertex(0.0D, height, -90.0D).texture(0.0F, 1.0F).next();
+						bufferBuilder.vertex(width, height, -90.0D).texture(1.0F, 1.0F).next();
+						bufferBuilder.vertex(width, 0.0D, -90.0D).texture(1.0F, 0.0F).next();
+						bufferBuilder.vertex(0.0D, 0.0D, -90.0D).texture(0.0F, 0.0F).next();
+						tessellator.draw();
+						RenderSystem.depthMask(true);
+						RenderSystem.enableDepthTest();
+						RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+						RenderSystem.defaultBlendFunc();
+						RenderSystem.disableBlend();
+					}
+				});
+			}
+		});
 	}
 
 	private void preRegisterArmorTextures(Identifier name, boolean hasOverlay)
@@ -114,6 +175,57 @@ public class AlchemyModClient implements ClientModInitializer
 		ArmorFeatureRendererAccessor.getArmorTextureCache().put(key, value);
 	}
 
+	public static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier textureFluidId, final int color)
+	{
+		final Identifier stillSpriteId = new Identifier(textureFluidId.getNamespace(), "block/" + textureFluidId.getPath() + "_still");
+		final Identifier flowingSpriteId = new Identifier(textureFluidId.getNamespace(), "block/" + textureFluidId.getPath() + "_flow");
+
+		// If they're not already present, add the sprites to the block atlas
+		ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+			registry.register(stillSpriteId);
+			registry.register(flowingSpriteId);
+		});
+
+		final Identifier fluidId = Registry.FLUID.getId(still);
+		final Identifier listenerId = new Identifier(fluidId.getNamespace(), fluidId.getPath() + "_reload_listener");
+
+		final Sprite[] fluidSprites = { null, null };
+
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+			@Override
+			public Identifier getFabricId() {
+				return listenerId;
+			}
+
+			/**
+			 * Get the sprites from the block atlas when resources are reloaded
+			 */
+			@Override
+			public void apply(ResourceManager resourceManager) {
+				final Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+				fluidSprites[0] = atlas.apply(stillSpriteId);
+				fluidSprites[1] = atlas.apply(flowingSpriteId);
+			}
+		});
+
+		// The FluidRenderer gets the sprites and color from a FluidRenderHandler during rendering
+		final FluidRenderHandler renderHandler = new FluidRenderHandler()
+		{
+			@Override
+			public Sprite[] getFluidSprites(BlockRenderView view, BlockPos pos, FluidState state) {
+				return fluidSprites;
+			}
+
+			@Override
+			public int getFluidColor(BlockRenderView view, BlockPos pos, FluidState state) {
+				return color;
+			}
+		};
+
+		FluidRenderHandlerRegistry.INSTANCE.register(still, renderHandler);
+		FluidRenderHandlerRegistry.INSTANCE.register(flowing, renderHandler);
+	}
+
 	@Override
 	public void onInitializeClient()
 	{
@@ -121,6 +233,11 @@ public class AlchemyModClient implements ClientModInitializer
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
 				AlchemyBlocks.BREWING_CAULDRON_BLOCK
 		);
+		ColorProviderRegistry.BLOCK.register(
+				((state, world, pos, tintIndex) -> 0x000000),
+				AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK
+		);
+		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
@@ -210,6 +327,20 @@ public class AlchemyModClient implements ClientModInitializer
 			provider.removeAbility(VisAbility.ID);
 			provider.addAbility(AbilityProvider.CHUNK_REGISTRY.create(VisAbility.ID, buf));
 		});
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("unknown_ability_packet"), (client, handler, buf, responder) -> {
+			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
+			client.execute(() -> {
+				if(client.player != null)
+				{
+					AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
+					Optional<PlayerUnknownAbility> optional = provider.getAbility(PlayerUnknownAbility.ID, PlayerUnknownAbility.class);
+					if(optional.isPresent())
+					{
+						optional.get().fromPacket(buf2);
+					}
+				}
+			});
+		});
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
 			int offsetX = x + (width / 2) - 50;
@@ -288,5 +419,7 @@ public class AlchemyModClient implements ClientModInitializer
 			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);
 		});
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
+		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
 	}
 }

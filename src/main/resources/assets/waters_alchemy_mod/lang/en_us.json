@@ -44,6 +44,9 @@
 	"item.waters_alchemy_mod.alchemist_robe": "Alchemist's Robe",
 	"item.waters_alchemy_mod.alchemist_leggings": "Alchemist's Pants",
 	"item.waters_alchemy_mod.alchemist_shoes": "Alchemist's Shoes",
+	"item.waters_alchemy_mod.eye_of_the_unknown": "?????",
+	"item.waters_alchemy_mod.eye_of_the_known": "Eye of the Unknown",
+	"item.waters_alchemy_mod.dimensional_fluid_bucket": "Dimensional Fluid Bucket",
 	"itemGroup.waters_alchemy_mod.alchemy_mod_group": "Thuwumcraft",
 	"itemGroup.waters_alchemy_mod.aspect_group": "Aspects",
 	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
@@ -126,5 +129,7 @@
 	"sound.waters_alchemy_mod.water_swirl": "Water swirls",
 	"sound.waters_alchemy_mod.bubble": "Cauldron bubbles",
 	"sound.waters_alchemy_mod.page_flip": "Page flips",
-	"sound.waters_alchemy_mod.magic": "Magic happens"
+	"sound.waters_alchemy_mod.magic": "Magic happens",
+	"advancements.waters_alchemy_mod.the_unknown.root.title": "The Unknown",
+	"advancements.waters_alchemy_mod.the_unknown.root.description": "Find an Unknown portal, deep underground, and leap into it"
 }

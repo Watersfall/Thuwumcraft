@@ -1,0 +1,16 @@
+{
+	"type": "waters_alchemy_mod:the_unknown",
+	"generator": {
+		"type": "minecraft:noise",
+		"seed": -12,
+		"settings": "waters_alchemy_mod:the_unknown",
+		"biome_source": {
+			"seed": -12,
+			"biomes": [
+				"waters_alchemy_mod:the_unknown"
+			],
+			"type": "fixed",
+			"biome": "waters_alchemy_mod:the_unknown"
+		}
+	}
+}

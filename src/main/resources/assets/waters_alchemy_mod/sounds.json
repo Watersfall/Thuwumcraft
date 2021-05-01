@@ -27,5 +27,17 @@
 			"waters_alchemy_mod:research/open_book"
 		],
 		"subtitle": "sound.waters_alchemy_mod.page_flip"
+	},
+	"dimension.the_unknown.ringing": {
+		"sounds": [
+			"waters_alchemy_mod:ringing"
+		],
+		"subtitle": "sound.waters_alchemy_mod.ringing"
+	},
+	"dimension.the_unknown.static": {
+		"sounds": [
+			"waters_alchemy_mod:static"
+		],
+		"subtitle": "sound.waters_alchemy_mod.static"
 	}
 }
