@@ -85,6 +85,8 @@ import net.watersfall.alchemy.research.ResearchLoader;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.watersfall.alchemy.world.biome.AlchemyBiomes;
 import net.watersfall.alchemy.world.feature.AlchemyFeatures;
+import net.watersfall.alchemy.world.feature.structure.AlchemyStructureFeatures;
+import net.watersfall.alchemy.world.structure.AlchemyStructurePieceTypes;
 import net.watersfall.alchemy.world.village.VillageAdditions;
 
 import java.util.HashSet;
@@ -251,6 +253,10 @@ public class AlchemyMod implements ModInitializer
 			}
 		});
 		LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
+			if(id.getNamespace().equalsIgnoreCase("waters_alchemy_mod"))
+			{
+				System.out.println("test");
+			}
 			if(id.getPath().startsWith("entities/"))
 			{
 				String[] path = id.getPath().split("/");
@@ -331,6 +337,8 @@ public class AlchemyMod implements ModInitializer
 		AlchemyFeatures.register();
 		AlchemyEntityTags.register();
 		AlchemyBiomes.register();
+		AlchemyStructurePieceTypes.register();
+		AlchemyStructureFeatures.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {

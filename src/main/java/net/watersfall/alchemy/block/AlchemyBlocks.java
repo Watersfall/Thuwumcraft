@@ -29,6 +29,8 @@ public class AlchemyBlocks
 	public static final ArcaneLampBlock ARCANE_LAMP_BLOCK;
 	public static final ArcaneLightBlock ARCANE_LIGHT_BLOCK;
 	public static final FluidBlock DIMENSIONAL_FLUID_BLOCK;
+	public static final Block DEEPSLATE_GRASS;
+	public static final Block GLOWING_DEEPSLATE;
 
 	static
 	{
@@ -52,6 +54,8 @@ public class AlchemyBlocks
 		ARCANE_LAMP_BLOCK = register(AlchemyMod.getId("arcane_lamp"), new ArcaneLampBlock(FabricBlockSettings.copyOf(Blocks.LANTERN)));
 		ARCANE_LIGHT_BLOCK = register(AlchemyMod.getId("arcane_light"), new ArcaneLightBlock(FabricBlockSettings.of(Material.AIR).nonOpaque().collidable(false).dropsNothing().noCollision().luminance(15)));
 		DIMENSIONAL_FLUID_BLOCK = register(AlchemyMod.getId("dimensional_fluid"), new CustomFluidBlock(AlchemyFluids.DIMENSIONAL_STILL, FabricBlockSettings.copyOf(Blocks.WATER)));
+		DEEPSLATE_GRASS = register(AlchemyMod.getId("deepslate_grass"), new Block(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK)));
+		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new Block(FabricBlockSettings.copyOf(Blocks.CHISELED_DEEPSLATE).luminance(15)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

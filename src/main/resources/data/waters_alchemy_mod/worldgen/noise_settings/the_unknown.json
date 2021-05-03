@@ -20,7 +20,11 @@
 	},
 	"structures": {
 		"structures": {
-
+			"waters_alchemy_mod:unknown_pillar": {
+				"spacing": 4,
+				"separation": 2,
+				"salt": 12
+			}
 		}
 	},
 	"noise": {

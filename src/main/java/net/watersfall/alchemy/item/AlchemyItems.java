@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.item;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -11,7 +12,6 @@ import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.item.AspectItem;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.watersfall.alchemy.fluid.AlchemyFluids;
 import net.watersfall.alchemy.item.armor.AlchemistArmorItem;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
@@ -84,6 +84,8 @@ public class AlchemyItems
 	public static final BlockItem ARCANE_LAMP_ITEM;
 	public static final BucketItem DIMENSIONAL_FLUID_BUCKET;
 	public static final EyeOfTheUnknownItem EYE_OF_THE_UNKNOWN_ITEM;
+	public static final BlockItem DEEPSLATE_GRASS;
+	public static final BlockItem GLOWING_DEEPSLATE;
 	public static final List<Item> ITEMS;
 
 	static
@@ -153,6 +155,8 @@ public class AlchemyItems
 		ARCANE_LAMP_ITEM = register(AlchemyMod.getId("arcane_lamp"), new BlockItem(AlchemyBlocks.ARCANE_LAMP_BLOCK, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		DIMENSIONAL_FLUID_BUCKET = register(AlchemyMod.getId("dimensional_fluid_bucket"), new BucketItem(AlchemyFluids.DIMENSIONAL_STILL, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		EYE_OF_THE_UNKNOWN_ITEM = register(AlchemyMod.getId("eye_of_the_unknown"), new EyeOfTheUnknownItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.EPIC)));
+		DEEPSLATE_GRASS = register(AlchemyMod.getId("deepslate_grass"), new BlockItem(AlchemyBlocks.DEEPSLATE_GRASS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new BlockItem(AlchemyBlocks.GLOWING_DEEPSLATE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

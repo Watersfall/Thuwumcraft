@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.structure.pool;
+package net.watersfall.alchemy.world.structure.pool;
 
 import com.mojang.datafixers.util.Either;
 import net.minecraft.structure.Structure;

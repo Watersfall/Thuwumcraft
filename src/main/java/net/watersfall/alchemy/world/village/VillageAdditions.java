@@ -8,7 +8,7 @@ import net.minecraft.structure.processor.StructureProcessorLists;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.structure.pool.SpecialSinglePoolElement;
+import net.watersfall.alchemy.world.structure.pool.SpecialSinglePoolElement;
 
 import java.util.HashMap;
 import java.util.List;

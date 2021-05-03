@@ -4,13 +4,17 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.BiasedRangedDecoratorConfig;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
+import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.trunk.BendingTrunkPlacer;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.block.AlchemyBlocks;
@@ -18,6 +22,8 @@ import net.watersfall.alchemy.world.config.DecoratedRockConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeLayersConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeSizeConfig;
+
+import java.util.ArrayList;
 
 public class AlchemyFeatures
 {
@@ -30,6 +36,8 @@ public class AlchemyFeatures
 	public static final ConfiguredFeature<?, ?> MAGIC_FOREST_TREES;
 	public static final ConfiguredFeature<?, ?> MOSSY_ASPECT_ROCKS;
 	public static final ConfiguredFeature<?, ?> DIMENSIONAL_LAKE;
+	public static final ConfiguredFeature<?, ?> LOST_TREE;
+	public static final ConfiguredFeature<?, ?> THE_LOST_FOREST_TREES;
 
 	static
 	{
@@ -140,6 +148,27 @@ public class AlchemyFeatures
 		MOSSY_ASPECT_ROCKS = DECORATED_ROCK_FEATURE.configure(new DecoratedRockConfig(
 				new SimpleBlockStateProvider(Blocks.MOSSY_COBBLESTONE.getDefaultState())
 		)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(2);
+		LOST_TREE = Feature.TREE.configure(new OpenTreeFeatureConfig(
+				new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()),
+				new BendingTrunkPlacer(4, 2, 0, 3, UniformIntDistribution.of(1, 1)),
+				new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()),
+				new RandomSpreadFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), UniformIntDistribution.of(2), 50),
+				new SimpleBlockStateProvider(AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState()),
+				new TwoLayersFeatureSize(1, 0, 1),
+				new ArrayList<>(),
+				false,
+				false
+		));
+		THE_LOST_FOREST_TREES = Feature.RANDOM_SELECTOR.configure(
+				new RandomFeatureConfig(
+						ImmutableList.of(
+								ConfiguredFeatures.HUGE_RED_MUSHROOM.withChance(0.05F),
+								ConfiguredFeatures.HUGE_BROWN_MUSHROOM.withChance(0.05F)
+						),
+						LOST_TREE
+				)
+		).decorate(ConfiguredFeatures.Decorators.field_29534)
+		.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
 	}
 
 	public static void register()
@@ -150,5 +179,7 @@ public class AlchemyFeatures
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("magic_forest_trees"), MAGIC_FOREST_TREES);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("mossy_aspect_rocks"), MOSSY_ASPECT_ROCKS);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("dimensional_lake"), DIMENSIONAL_LAKE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("lost_tree"), LOST_TREE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("the_lost_forest_trees"), THE_LOST_FOREST_TREES);
 	}
 }

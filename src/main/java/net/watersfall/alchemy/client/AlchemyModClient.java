@@ -24,6 +24,7 @@ import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.render.*;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -237,6 +238,14 @@ public class AlchemyModClient implements ClientModInitializer
 				((state, world, pos, tintIndex) -> 0x000000),
 				AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK
 		);
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D),
+				AlchemyBlocks.DEEPSLATE_GRASS
+		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
+				AlchemyBlocks.DEEPSLATE_GRASS
+		);
 		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
@@ -256,6 +265,9 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				AlchemyBlocks.CUSTOM_SPAWNER,
 				AlchemyBlocks.CHILD_BLOCK);
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
+				AlchemyBlocks.DEEPSLATE_GRASS
+		);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
 		ClientChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
 			PacketByteBuf buf = PacketByteBufs.create();

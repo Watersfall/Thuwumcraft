@@ -5,8 +5,9 @@
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 		"AnvilScreenHandlerMixin", "CampfireBlockMixin", "ChunkSerializerMixin", "CraftingScreenHandlerMixin",
-		"EntityMixin", "ItemStackMixin", "LakeFeatureMixin", "LivingEntityMixin", "PlayerAdvancementTrackerMixin",
-		"PlayerEntityMixin", "ReadOnlyChunkMixin", "ServerPlayerEntityMixin", "ServerWorldMixin", "WorldChunkMixin"
+		"EntityMixin", "FeatureMixin", "ItemStackMixin", "LakeFeatureMixin", "LivingEntityMixin",
+		"PlayerAdvancementTrackerMixin", "PlayerEntityMixin", "ReadOnlyChunkMixin", "ServerPlayerEntityMixin",
+		"ServerWorldMixin", "WorldChunkMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
