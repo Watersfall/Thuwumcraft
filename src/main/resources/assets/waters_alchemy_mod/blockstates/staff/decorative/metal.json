@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"half=lower": {
+			"model": "waters_alchemy_mod:block/staff_bottom"
+		},
+		"half=upper": {
+			"model": "waters_alchemy_mod:block/staff_top"
+		}
+	}
+}

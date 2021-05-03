@@ -24,6 +24,13 @@
 		"waters_alchemy_mod:cluster/disorder_crystal_cluster": "#000000",
 		"waters_alchemy_mod:cluster/disorder_crystal_large": "#000000",
 		"waters_alchemy_mod:cluster/disorder_crystal_medium": "#000000",
-		"waters_alchemy_mod:cluster/disorder_crystal_small": "#000000"
+		"waters_alchemy_mod:cluster/disorder_crystal_small": "#000000",
+		"waters_alchemy_mod:staff/decorative/fire": "#ff7033",
+		"waters_alchemy_mod:staff/decorative/water": "#0080FF",
+		"waters_alchemy_mod:staff/decorative/earth": "#33ff33",
+		"waters_alchemy_mod:staff/decorative/air": "#ffff80",
+		"waters_alchemy_mod:staff/decorative/order": "#ffffff",
+		"waters_alchemy_mod:staff/decorative/disorder": "#000000",
+		"waters_alchemy_mod:staff/decorative/metal": "#dddddd"
 	}
 }

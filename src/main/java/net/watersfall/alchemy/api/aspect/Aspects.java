@@ -10,16 +10,16 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
 import net.watersfall.alchemy.api.item.AspectItems;
-import net.watersfall.alchemy.block.BuddingElementalBlock;
-import net.watersfall.alchemy.block.ElementalBlock;
-import net.watersfall.alchemy.block.ElementalClusterBlock;
+import net.watersfall.alchemy.block.*;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.CrystalItem;
 import net.watersfall.alchemy.item.GlassPhialItem;
+import net.watersfall.alchemy.item.StaffBlockItem;
 
 import java.util.HashMap;
 
@@ -34,6 +34,8 @@ public class Aspects
 	public static final HashMap<Aspect, ElementalClusterBlock> ASPECT_TO_LARGE_CLUSTER = new HashMap<>();
 	public static final HashMap<Aspect, ElementalBlock> ASPECT_TO_CLUSTER_BLOCK = new HashMap<>();
 	public static final HashMap<Aspect, BuddingElementalBlock> ASPECT_TO_BUDDING_CLUSTER = new HashMap<>();
+	public static final HashMap<Aspect, StaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
+	public static final HashMap<Aspect, StaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
 	public static final Aspect AIR = new Aspect(AlchemyMod.getId("air"), 0xffff00, AspectItems.AIR);
 	public static final Aspect EARTH = new Aspect(AlchemyMod.getId("earth"), 0x00ff00, AspectItems.EARTH);
@@ -50,9 +52,15 @@ public class Aspects
 		Item crystal = new CrystalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), aspect);
 		ASPECT_TO_PHIAL.put(aspect, item);
 		ASPECT_TO_CRYSTAL.put(aspect, crystal);
+		StaffBlock staff = new StaffBlock(aspect, FabricBlockSettings.copyOf(Blocks.TALL_GRASS).sounds(BlockSoundGroup.WOOD).luminance(15));
+		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
+		StaffBlockItem staffItem = new StaffBlockItem(aspect, staff, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
+		Registry.register(Registry.BLOCK, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staff);
+		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staffItem);
 		if(aspect.isPrimitive())
 		{
 			registerClusters(aspect);
@@ -73,6 +81,15 @@ public class Aspects
 					((stack, tintIndex) -> aspect.getColor()),
 					crystal
 			);
+			ColorProviderRegistry.ITEM.register(
+					((stack, tintIndex) -> tintIndex == 1 ? aspect.getColor() : -1),
+					staffItem
+			);
+			ColorProviderRegistry.BLOCK.register(
+					(state, world, pos, tintIndex) -> ((StaffBlock)state.getBlock()).getAspect().getColor(),
+					staff
+			);
+			BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), staff);
 		}
 		return aspect;
 	}
