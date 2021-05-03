@@ -79,10 +79,10 @@ public class Aspects
 
 	private static void registerClusters(Aspect aspect)
 	{
-		ElementalClusterBlock cluster = new ElementalClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER), aspect);
-		ElementalClusterBlock large = new ElementalClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD), aspect);
-		ElementalClusterBlock medium = new ElementalClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD), aspect);
-		ElementalClusterBlock small = new ElementalClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD), aspect);
+		ElementalClusterBlock cluster = new ElementalClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(9), aspect);
+		ElementalClusterBlock large = new ElementalClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD).luminance(7), aspect);
+		ElementalClusterBlock medium = new ElementalClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD).luminance(5), aspect);
+		ElementalClusterBlock small = new ElementalClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD).luminance(4), aspect);
 		ElementalBlock block = new ElementalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK), aspect);
 		BuddingElementalBlock budding = new BuddingElementalBlock(FabricBlockSettings.copyOf(Blocks.BUDDING_AMETHYST), aspect);
 		BlockItem clusterItem = new BlockItem(cluster, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));

@@ -1,0 +1,29 @@
+{
+	"replace": false,
+	"colors": {
+		"waters_alchemy_mod:cluster/fire_crystal_cluster": "#ff7033",
+		"waters_alchemy_mod:cluster/fire_crystal_large": "#ff7033",
+		"waters_alchemy_mod:cluster/fire_crystal_medium": "#ff7033",
+		"waters_alchemy_mod:cluster/fire_crystal_small": "#ff7033",
+		"waters_alchemy_mod:cluster/water_crystal_cluster": "#0080FF",
+		"waters_alchemy_mod:cluster/water_crystal_large": "#0080FF",
+		"waters_alchemy_mod:cluster/water_crystal_medium": "#0080FF",
+		"waters_alchemy_mod:cluster/water_crystal_small": "#0080FF",
+		"waters_alchemy_mod:cluster/earth_crystal_cluster": "#33ff33",
+		"waters_alchemy_mod:cluster/earth_crystal_large": "#33ff33",
+		"waters_alchemy_mod:cluster/earth_crystal_medium": "#33ff33",
+		"waters_alchemy_mod:cluster/earth_crystal_small": "#33ff33",
+		"waters_alchemy_mod:cluster/air_crystal_cluster": "#ffff80",
+		"waters_alchemy_mod:cluster/air_crystal_large": "#ffff80",
+		"waters_alchemy_mod:cluster/air_crystal_medium": "#ffff80",
+		"waters_alchemy_mod:cluster/air_crystal_small": "#ffff80",
+		"waters_alchemy_mod:cluster/order_crystal_cluster": "#ffffff",
+		"waters_alchemy_mod:cluster/order_crystal_large": "#ffffff",
+		"waters_alchemy_mod:cluster/order_crystal_medium": "#ffffff",
+		"waters_alchemy_mod:cluster/order_crystal_small": "#ffffff",
+		"waters_alchemy_mod:cluster/disorder_crystal_cluster": "#000000",
+		"waters_alchemy_mod:cluster/disorder_crystal_large": "#000000",
+		"waters_alchemy_mod:cluster/disorder_crystal_medium": "#000000",
+		"waters_alchemy_mod:cluster/disorder_crystal_small": "#000000"
+	}
+}
