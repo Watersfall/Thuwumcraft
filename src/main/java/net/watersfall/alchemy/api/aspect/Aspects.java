@@ -19,7 +19,7 @@ import net.watersfall.alchemy.block.*;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.CrystalItem;
 import net.watersfall.alchemy.item.GlassPhialItem;
-import net.watersfall.alchemy.item.StaffBlockItem;
+import net.watersfall.alchemy.item.DecorativeStaffBlockItem;
 
 import java.util.HashMap;
 
@@ -34,8 +34,8 @@ public class Aspects
 	public static final HashMap<Aspect, ElementalClusterBlock> ASPECT_TO_LARGE_CLUSTER = new HashMap<>();
 	public static final HashMap<Aspect, ElementalBlock> ASPECT_TO_CLUSTER_BLOCK = new HashMap<>();
 	public static final HashMap<Aspect, BuddingElementalBlock> ASPECT_TO_BUDDING_CLUSTER = new HashMap<>();
-	public static final HashMap<Aspect, StaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
-	public static final HashMap<Aspect, StaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
+	public static final HashMap<Aspect, DecorativeStaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
+	public static final HashMap<Aspect, DecorativeStaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
 	public static final Aspect AIR = new Aspect(AlchemyMod.getId("air"), 0xffff00, AspectItems.AIR);
 	public static final Aspect EARTH = new Aspect(AlchemyMod.getId("earth"), 0x00ff00, AspectItems.EARTH);
@@ -52,9 +52,9 @@ public class Aspects
 		Item crystal = new CrystalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), aspect);
 		ASPECT_TO_PHIAL.put(aspect, item);
 		ASPECT_TO_CRYSTAL.put(aspect, crystal);
-		StaffBlock staff = new StaffBlock(aspect, FabricBlockSettings.copyOf(Blocks.TALL_GRASS).sounds(BlockSoundGroup.WOOD).luminance(15));
+		DecorativeStaffBlock staff = new DecorativeStaffBlock(aspect, FabricBlockSettings.copyOf(Blocks.TALL_GRASS).sounds(BlockSoundGroup.WOOD).luminance(15));
 		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
-		StaffBlockItem staffItem = new StaffBlockItem(aspect, staff, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
 		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
@@ -86,7 +86,7 @@ public class Aspects
 					staffItem
 			);
 			ColorProviderRegistry.BLOCK.register(
-					(state, world, pos, tintIndex) -> ((StaffBlock)state.getBlock()).getAspect().getColor(),
+					(state, world, pos, tintIndex) -> ((DecorativeStaffBlock)state.getBlock()).getAspect().getColor(),
 					staff
 			);
 			BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), staff);

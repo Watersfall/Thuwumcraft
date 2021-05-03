@@ -18,13 +18,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class StaffBlock extends TallPlantBlock
+public class DecorativeStaffBlock extends TallPlantBlock
 {
 	public static final VoxelShape OUTLINE_SHAPE = Block.createCuboidShape(7, 0, 7, 9, 16, 9);
 	private final Aspect aspect;
 	private String translationKey;
 
-	public StaffBlock(Aspect aspect, Settings settings)
+	public DecorativeStaffBlock(Aspect aspect, Settings settings)
 	{
 		super(settings);
 		this.aspect = aspect;

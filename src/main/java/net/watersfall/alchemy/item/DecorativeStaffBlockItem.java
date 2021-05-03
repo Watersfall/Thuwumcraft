@@ -10,12 +10,12 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.BlockItem;
 import net.watersfall.alchemy.api.aspect.Aspect;
 
-public class StaffBlockItem extends BlockItem
+public class DecorativeStaffBlockItem extends BlockItem
 {
 	private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 	private final Aspect aspect;
 
-	public StaffBlockItem(Aspect aspect, Block block, Settings settings)
+	public DecorativeStaffBlockItem(Aspect aspect, Block block, Settings settings)
 	{
 		super(block, settings);
 		this.aspect = aspect;
