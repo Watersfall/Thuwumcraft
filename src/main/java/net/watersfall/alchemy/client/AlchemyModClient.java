@@ -202,7 +202,7 @@ public class AlchemyModClient implements ClientModInitializer
 			 * Get the sprites from the block atlas when resources are reloaded
 			 */
 			@Override
-			public void apply(ResourceManager resourceManager) {
+			public void reload(ResourceManager resourceManager) {
 				final Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 				fluidSprites[0] = atlas.apply(stillSpriteId);
 				fluidSprites[1] = atlas.apply(flowingSpriteId);
@@ -354,7 +354,7 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		});
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
-			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1];
+			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
 			int offsetX = x + (width / 2) - 50;
 			//TODO make a special recipe type enum or some other solution to this
 			if(recipe instanceof ShapedRecipe)
@@ -369,7 +369,7 @@ public class AlchemyModClient implements ClientModInitializer
 					{
 						if(recipeX < recipe1.getWidth() && recipeY < recipe1.getHeight())
 						{
-							items[o] = new ItemElement(recipe.getPreviewInputs().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+							items[o] = new ItemElement(recipe.getIngredients().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
 							input++;
 						}
 						else
@@ -382,9 +382,9 @@ public class AlchemyModClient implements ClientModInitializer
 			}
 			else
 			{
-				for(int o = 0; o < recipe.getPreviewInputs().size(); o++)
+				for(int o = 0; o < recipe.getIngredients().size(); o++)
 				{
-					items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+					items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
 				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
@@ -392,16 +392,16 @@ public class AlchemyModClient implements ClientModInitializer
 		}));
 		RecipeTabType.REGISTRY.register(AlchemyRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
-			ItemElement[] items = new ItemElement[recipe.getPreviewInputs().size() + 1 + recipe.getAspects().size()];
+			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
 			Point origin = new Point(x + width / 2 - 32, y + height / 2 - 64);
-			items[0] = new ItemElement(recipe.getPreviewInputs().get(0).getMatchingStacksClient(), origin.x, origin.y);
-			int total = recipe.getPreviewInputs().size();
+			items[0] = new ItemElement(recipe.getIngredients().get(0).getMatchingStacksClient(), origin.x, origin.y);
+			int total = recipe.getIngredients().size();
 			for(int o = 1; o < total; o++)
 			{
 				double angle = Math.PI * 2  / (total - 1) * o;
 				int circleX = origin.x + (int)(40 * Math.cos(angle));
 				int circleY = origin.y + (int)(40 * Math.sin(angle));
-				items[o] = new ItemElement(recipe.getPreviewInputs().get(o).getMatchingStacksClient(), circleX, circleY);
+				items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), circleX, circleY);
 			}
 			int startX = x + width / 2 - (recipe.getAspects().size() * 20) / 2;
 			if(!recipe.getAspects().isEmpty())

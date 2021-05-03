@@ -2,9 +2,9 @@ package net.watersfall.alchemy.world.feature;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.UniformIntDistribution;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.decorator.BiasedRangedDecoratorConfig;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
@@ -143,16 +143,16 @@ public class AlchemyFeatures
 						),
 						ConfiguredFeatures.OAK
 				))
-				.decorate(ConfiguredFeatures.Decorators.field_29534)
+				.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
 				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
 		MOSSY_ASPECT_ROCKS = DECORATED_ROCK_FEATURE.configure(new DecoratedRockConfig(
 				new SimpleBlockStateProvider(Blocks.MOSSY_COBBLESTONE.getDefaultState())
 		)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(2);
 		LOST_TREE = Feature.TREE.configure(new OpenTreeFeatureConfig(
 				new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()),
-				new BendingTrunkPlacer(4, 2, 0, 3, UniformIntDistribution.of(1, 1)),
+				new BendingTrunkPlacer(4, 2, 0, 3, UniformIntProvider.create(1, 1)),
 				new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()),
-				new RandomSpreadFoliagePlacer(UniformIntDistribution.of(3), UniformIntDistribution.of(0), UniformIntDistribution.of(2), 50),
+				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 50),
 				new SimpleBlockStateProvider(AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),
 				new ArrayList<>(),
@@ -167,7 +167,7 @@ public class AlchemyFeatures
 						),
 						LOST_TREE
 				)
-		).decorate(ConfiguredFeatures.Decorators.field_29534)
+		).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
 		.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
 	}
 

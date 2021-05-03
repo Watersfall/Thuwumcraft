@@ -36,7 +36,7 @@ public class GrindingRecipe extends ShapelessRecipe
 	}
 
 	@Override
-	public DefaultedList<ItemStack> getRemainingStacks(CraftingInventory inventory)
+	public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory)
 	{
 		DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
 		for(int i = 0; i < defaultedList.size(); ++i)

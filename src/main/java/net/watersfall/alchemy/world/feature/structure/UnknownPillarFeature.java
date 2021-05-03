@@ -42,9 +42,9 @@ public class UnknownPillarFeature extends StructureFeature<DefaultFeatureConfig>
 
 	public static class Start extends StructureStart<DefaultFeatureConfig>
 	{
-		public Start(StructureFeature<DefaultFeatureConfig> feature, ChunkPos chunkPos, BlockBox blockBox, int i, long l)
+		public Start(StructureFeature<DefaultFeatureConfig> feature, ChunkPos chunkPos, int i, long l)
 		{
-			super(feature, chunkPos, blockBox, i, l);
+			super(feature, chunkPos, i, l);
 		}
 
 		@Override
@@ -54,7 +54,7 @@ public class UnknownPillarFeature extends StructureFeature<DefaultFeatureConfig>
 			int z = chunkPos.getStartZ() + random.nextInt(16);
 			int y = chunkGenerator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG, heightLimitView);
 			BlockPos pos = new BlockPos(x, y, z);
-			this.children.add(new UnknownPillarGenerator.Piece(manager, pos));
+			this.children.add(UnknownPillarGenerator.Piece.of(manager, pos));
 			this.setBoundingBoxFromChildren();
 		}
 

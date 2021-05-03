@@ -73,9 +73,9 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 	}
 
 	@Override
-	public DefaultedList<ItemStack> getRemainingStacks(CraftingInventory inventory)
+	public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory)
 	{
-		return recipe.getRemainingStacks(inventory);
+		return recipe.getRemainder(inventory);
 	}
 
 	@Override
@@ -103,9 +103,9 @@ public class ResearchUnlockedShapedRecipe implements ResearchRequiredCraftingRec
 	}
 
 	@Override
-	public DefaultedList<Ingredient> getPreviewInputs()
+	public DefaultedList<Ingredient> getIngredients()
 	{
-		return this.recipe.getPreviewInputs();
+		return this.recipe.getIngredients();
 	}
 
 	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapedRecipe>

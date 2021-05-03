@@ -181,7 +181,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			ArrayList<StatusEffectInstance> list = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
 			{
-				list.add(StatusEffectInstance.fromNbt(buf.readCompoundTag()));
+				list.add(StatusEffectInstance.fromNbt(buf.readNbt()));
 			}
 			return new CauldronIngredient(id, stack, list, color);
 		}
@@ -194,7 +194,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			buf.writeInt(recipe.getColor());
 			for(int i = 0; i < recipe.getEffects().size(); i++)
 			{
-				buf.writeCompoundTag(recipe.getEffects().get(i).writeNbt(new NbtCompound()));
+				buf.writeNbt(recipe.getEffects().get(i).writeNbt(new NbtCompound()));
 			}
 		}
 

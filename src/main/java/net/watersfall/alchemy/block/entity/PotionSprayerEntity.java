@@ -81,7 +81,7 @@ public class PotionSprayerEntity extends BlockEntity implements BrewingCauldronI
 	{
 		super.readNbt(tag);
 		Inventories.readNbt(tag, contents);
-		potion.readTags(tag.getList("potion", NbtType.COMPOUND));
+		potion.readNbtList(tag.getList("potion", NbtType.COMPOUND));
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class PotionSprayerEntity extends BlockEntity implements BrewingCauldronI
 	{
 		super.writeNbt(tag);
 		Inventories.writeNbt(tag, contents);
-		tag.put("potion", potion.getTags());
+		tag.put("potion", potion.toNbtList());
 		return tag;
 	}
 }

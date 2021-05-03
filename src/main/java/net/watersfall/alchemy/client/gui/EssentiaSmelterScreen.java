@@ -14,9 +14,19 @@ public class EssentiaSmelterScreen extends HandledScreen<EssentiaSmelteryHandler
 {
 	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/essentia_smeltery.png");
 
+	private int x, y;
+
 	public EssentiaSmelterScreen(EssentiaSmelteryHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
+	}
+
+	@Override
+	protected void init()
+	{
+		super.init();
+		this.x = this.field_2776;
+		this.y = this.field_2800;
 	}
 
 	@Override

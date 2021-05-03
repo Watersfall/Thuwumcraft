@@ -1,4 +1,5 @@
 {
+	"min_surface_level": 0,
 	"bedrock_roof_position": -10,
 	"bedrock_floor_position": -10,
 	"sea_level": 16,

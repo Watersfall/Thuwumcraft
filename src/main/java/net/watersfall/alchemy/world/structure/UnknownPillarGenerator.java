@@ -2,10 +2,7 @@ package net.watersfall.alchemy.world.structure;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.SimpleStructurePiece;
-import net.minecraft.structure.Structure;
-import net.minecraft.structure.StructureManager;
-import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.*;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
@@ -21,6 +18,7 @@ import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.watersfall.alchemy.AlchemyMod;
 
 import java.util.Random;
+import java.util.function.Function;
 
 public class UnknownPillarGenerator
 {
@@ -32,29 +30,41 @@ public class UnknownPillarGenerator
 		private Structure noChestStructure;
 		private Structure chestStructure;
 
-		public Piece(StructureManager manager, BlockPos pos)
+		public static Piece of(StructureManager manager, BlockPos pos)
 		{
-			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, 0);
-			this.pos = pos;
-			init(manager);
+			StructurePlacementData placementData = (new StructurePlacementData())
+					.setRotation(BlockRotation.NONE)
+					.setMirror(BlockMirror.NONE)
+					.addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+			return new Piece(manager, NO_CHEST, "", placementData, pos);
 		}
 
-		public Piece(ServerWorld world, NbtCompound tag)
+		public static StructurePiece of(ServerWorld serverWorld, NbtCompound nbtCompound)
 		{
-			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, tag);
+			return new Piece(nbtCompound, serverWorld, (identifier -> {
+				return new StructurePlacementData()
+						.setRotation(BlockRotation.NONE)
+						.setMirror(BlockMirror.NONE)
+						.addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
+			}));
+		}
+
+		public Piece(StructureManager structureManager, Identifier identifier, String template, StructurePlacementData structurePlacementData, BlockPos blockPos)
+		{
+			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, 0, structureManager, identifier, template, structurePlacementData, blockPos);
+			init(structureManager);
+		}
+
+		public Piece(NbtCompound nbtCompound, ServerWorld world, Function<Identifier, StructurePlacementData> function)
+		{
+			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, nbtCompound, world, function);
 			init(world.getStructureManager());
 		}
 
 		private void init(StructureManager manager)
 		{
-			this.structure = manager.getStructure(NO_CHEST);
-			this.noChestStructure = this.structure;
-			this.chestStructure = manager.getStructure(CHEST);
-			StructurePlacementData placementData = (new StructurePlacementData())
-					.setRotation(BlockRotation.NONE)
-					.setMirror(BlockMirror.NONE)
-					.addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
-			this.setStructureData(this.structure, this.pos, placementData);
+			chestStructure = manager.getStructure(CHEST);
+			noChestStructure = manager.getStructure(NO_CHEST);
 		}
 
 		@Override

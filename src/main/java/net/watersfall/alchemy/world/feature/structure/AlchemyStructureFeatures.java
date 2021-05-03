@@ -14,7 +14,7 @@ public class AlchemyStructureFeatures
 {
 	public static final StructureFeature<DefaultFeatureConfig> UNKNOWN_PILLAR = new UnknownPillarFeature(DefaultFeatureConfig.CODEC);
 	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_UNKNOWN_PILLAR = UNKNOWN_PILLAR.configure(DefaultFeatureConfig.DEFAULT);
-	public static final RegistryKey<ConfiguredStructureFeature<?, ?>> CONFIGURED_UNKNOWN_PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_WORLDGEN, AlchemyMod.getId("unknown_pillar"));
+	public static final RegistryKey<ConfiguredStructureFeature<?, ?>> CONFIGURED_UNKNOWN_PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY, AlchemyMod.getId("unknown_pillar"));
 
 	public static void register()
 	{

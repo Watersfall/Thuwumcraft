@@ -6,7 +6,7 @@ import net.watersfall.alchemy.AlchemyMod;
 
 public class AlchemyStructurePieceTypes
 {
-	public static final StructurePieceType UNKNOWN_PILLAR = UnknownPillarGenerator.Piece::new;
+	public static final StructurePieceType UNKNOWN_PILLAR = UnknownPillarGenerator.Piece::of;
 
 	public static void register()
 	{

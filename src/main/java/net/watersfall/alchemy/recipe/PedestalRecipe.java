@@ -195,7 +195,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	}
 
 	@Override
-	public DefaultedList<Ingredient> getPreviewInputs()
+	public DefaultedList<Ingredient> getIngredients()
 	{
 		DefaultedList<Ingredient> list = DefaultedList.of();
 		list.add(this.catalyst);

@@ -2,7 +2,6 @@ package net.watersfall.alchemy.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -11,11 +10,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.accessor.ShapelessRecipeAccessor;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCraftingRecipe, CraftingRecipe
@@ -56,9 +53,9 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 	}
 
 	@Override
-	public DefaultedList<ItemStack> getRemainingStacks(CraftingInventory inventory)
+	public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory)
 	{
-		return recipe.getRemainingStacks(inventory);
+		return recipe.getRemainder(inventory);
 	}
 
 	@Override
@@ -106,9 +103,9 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 	}
 
 	@Override
-	public DefaultedList<Ingredient> getPreviewInputs()
+	public DefaultedList<Ingredient> getIngredients()
 	{
-		return this.recipe.getPreviewInputs();
+		return this.recipe.getIngredients();
 	}
 
 	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapelessRecipe>

@@ -151,7 +151,7 @@ public class CustomMobSpawnerLogic
 		tag.putInt("max_nearby_entites", maxNearbyEntities);
 		tag.putInt("spawn_range", spawnRange);
 		if(this.entry != null)
-			tag.put("mob", entry.serialize());
+			tag.put("mob", entry.toNbt());
 		return tag;
 	}
 

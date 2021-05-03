@@ -7,5 +7,5 @@ import net.watersfall.alchemy.AlchemyMod;
 
 public class AlchemyWorlds
 {
-	public static final RegistryKey<World> THE_UNKNOWN = RegistryKey.of(Registry.DIMENSION, AlchemyMod.getId("the_unknown"));
+	public static final RegistryKey<World> THE_UNKNOWN = RegistryKey.of(Registry.WORLD_KEY, AlchemyMod.getId("the_unknown"));
 }

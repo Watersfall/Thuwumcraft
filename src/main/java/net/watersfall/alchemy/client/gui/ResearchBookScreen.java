@@ -40,6 +40,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private CategoryTabElement[] categories;
 	public float scale = 0.7F;
 	public int bottomY = 0;
+	private int x, y;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -66,6 +67,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.backgroundWidth = textureWidth;
 		this.backgroundHeight = textureHeight;
 		super.init();
+		this.x = this.field_2776;
+		this.y = this.field_2800;
 		this.children.clear();
 		this.mapX = this.textureWidth / (scale * 2F) - 8;
 		this.mapY = this.textureHeight / (scale * 2F) - 8;
