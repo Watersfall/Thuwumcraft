@@ -86,6 +86,9 @@ public class AlchemyItems
 	public static final EyeOfTheUnknownItem EYE_OF_THE_UNKNOWN_ITEM;
 	public static final BlockItem DEEPSLATE_GRASS;
 	public static final BlockItem GLOWING_DEEPSLATE;
+	public static final CastingStaffItem SNOW_STAFF;
+	public static final CastingStaffItem ICE_STAFF;
+	public static final Item ICE_PROJECTILE_ITEM;
 	public static final List<Item> ITEMS;
 
 	static
@@ -157,6 +160,9 @@ public class AlchemyItems
 		EYE_OF_THE_UNKNOWN_ITEM = register(AlchemyMod.getId("eye_of_the_unknown"), new EyeOfTheUnknownItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.EPIC)));
 		DEEPSLATE_GRASS = register(AlchemyMod.getId("deepslate_grass"), new BlockItem(AlchemyBlocks.DEEPSLATE_GRASS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new BlockItem(AlchemyBlocks.GLOWING_DEEPSLATE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
+		ICE_STAFF = register(AlchemyMod.getId("ice_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.ICE, 10, 20));
+		SNOW_STAFF = register(AlchemyMod.getId("snow_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SNOW, 5, 10));
+		ICE_PROJECTILE_ITEM = register(AlchemyMod.getId("ice_projectile"), new Item(new FabricItemSettings()));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -26,10 +27,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
@@ -74,6 +78,7 @@ import net.watersfall.alchemy.client.item.AspectTooltipData;
 import net.watersfall.alchemy.client.particle.MagicForestParticle;
 import net.watersfall.alchemy.client.renderer.*;
 import net.watersfall.alchemy.client.toast.ResearchToast;
+import net.watersfall.alchemy.entity.AlchemyEntities;
 import net.watersfall.alchemy.fluid.AlchemyFluids;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.particle.AlchemyParticles;
@@ -89,6 +94,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
@@ -353,6 +359,27 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			});
 		});
+		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("spawn_packet"), (client, handler, buf, response) -> {
+			EntityType<?> type = Registry.ENTITY_TYPE.get(buf.readVarInt());
+			UUID uuid = buf.readUuid();
+			int id = buf.readVarInt();
+			double x = buf.readDouble();
+			double y = buf.readDouble();
+			double z = buf.readDouble();
+			float pitch = buf.readFloat();
+			float yaw = buf.readFloat();
+			int owner = buf.readVarInt();
+			Entity entity = type.create(client.world);
+			entity.updatePositionAndAngles(x, y, z, yaw, pitch);
+			entity.updateTrackedPosition(x, y, z);
+			entity.setEntityId(id);
+			entity.setUuid(uuid);
+			if(owner != -1 && entity instanceof ProjectileEntity)
+			{
+				((ProjectileEntity)entity).setOwner(client.world.getEntityById(owner));
+			}
+			client.world.addEntity(id, entity);
+		});
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
 			int offsetX = x + (width / 2) - 50;
@@ -433,5 +460,6 @@ public class AlchemyModClient implements ClientModInitializer
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
+		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
 	}
 }
