@@ -75,8 +75,11 @@ import net.watersfall.alchemy.client.gui.element.ItemElement;
 import net.watersfall.alchemy.client.gui.element.RecipeElement;
 import net.watersfall.alchemy.client.gui.item.AspectTooltipComponent;
 import net.watersfall.alchemy.client.item.AspectTooltipData;
+import net.watersfall.alchemy.client.particle.FireParticle;
 import net.watersfall.alchemy.client.particle.MagicForestParticle;
+import net.watersfall.alchemy.client.particle.WaterParticle;
 import net.watersfall.alchemy.client.renderer.*;
+import net.watersfall.alchemy.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.entity.AlchemyEntities;
 import net.watersfall.alchemy.fluid.AlchemyFluids;
@@ -460,6 +463,11 @@ public class AlchemyModClient implements ClientModInitializer
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.WATER, WaterParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.FIRE, FireParticle.Factory::new);
 		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.WATER_ENTITY, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.FIRE_ENTITY, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.SAND_ENTITY, WaterEntityRenderer::new);
 	}
 }

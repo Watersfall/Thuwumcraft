@@ -88,7 +88,10 @@ public class AlchemyItems
 	public static final BlockItem GLOWING_DEEPSLATE;
 	public static final CastingStaffItem SNOW_STAFF;
 	public static final CastingStaffItem ICE_STAFF;
+	public static final ContinuousCastingStaffItem WATER_STAFF;
 	public static final Item ICE_PROJECTILE_ITEM;
+	public static final ContinuousCastingStaffItem FIRE_STAFF;
+	public static final CastingStaffItem SAND_STAFF;
 	public static final List<Item> ITEMS;
 
 	static
@@ -162,7 +165,10 @@ public class AlchemyItems
 		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new BlockItem(AlchemyBlocks.GLOWING_DEEPSLATE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		ICE_STAFF = register(AlchemyMod.getId("ice_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.ICE, 10, 20));
 		SNOW_STAFF = register(AlchemyMod.getId("snow_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SNOW, 5, 10));
+		WATER_STAFF = register(AlchemyMod.getId("water_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.WATER, 10, 1));
+		FIRE_STAFF = register(AlchemyMod.getId("fire_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.FIRE, 10, 1));
 		ICE_PROJECTILE_ITEM = register(AlchemyMod.getId("ice_projectile"), new Item(new FabricItemSettings()));
+		SAND_STAFF = register(AlchemyMod.getId("sand_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SAND, 10, 10));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

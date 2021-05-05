@@ -9,6 +9,8 @@ import net.watersfall.alchemy.AlchemyMod;
 public class AlchemyParticles
 {
 	public static final DefaultParticleType MAGIC_FOREST = register("magic_forest", FabricParticleTypes.simple());
+	public static final DefaultParticleType WATER = register("water", FabricParticleTypes.simple());
+	public static final DefaultParticleType FIRE = register("fire", FabricParticleTypes.simple());
 
 	public static <T extends ParticleType<?>> T register(String name, T particle)
 	{

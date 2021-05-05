@@ -27,7 +27,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.condition.RandomChanceWithLootingLootCondition;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.ItemEntry;
@@ -253,9 +255,15 @@ public class AlchemyMod implements ModInitializer
 			}
 		});
 		LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
-			if(id.getNamespace().equalsIgnoreCase("waters_alchemy_mod"))
+			if(id.equals(LootTables.SIMPLE_DUNGEON_CHEST))
 			{
-				System.out.println("test");
+				FabricLootPoolBuilder pool = FabricLootPoolBuilder.builder()
+						.rolls(ConstantLootNumberProvider.create(1))
+						.withEntry(ItemEntry.builder(AlchemyItems.SNOW_STAFF)
+								.conditionally(RandomChanceLootCondition.builder(0.25F))
+								.build()
+						);
+				supplier.withPool(pool.build());
 			}
 			if(id.getPath().startsWith("entities/"))
 			{
