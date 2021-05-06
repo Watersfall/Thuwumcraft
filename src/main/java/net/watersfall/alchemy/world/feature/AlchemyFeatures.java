@@ -22,6 +22,7 @@ import net.watersfall.alchemy.world.config.DecoratedRockConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeLayersConfig;
 import net.watersfall.alchemy.world.config.NetherGeodeSizeConfig;
+import net.watersfall.alchemy.world.tree.trunk.SilverwoodTrunkPlacer;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class AlchemyFeatures
 	public static final ConfiguredFeature<?, ?> DIMENSIONAL_LAKE;
 	public static final ConfiguredFeature<?, ?> LOST_TREE;
 	public static final ConfiguredFeature<?, ?> THE_LOST_FOREST_TREES;
+	public static final ConfiguredFeature<?, ?> SILVERWOOD_TREE;
 
 	static
 	{
@@ -133,18 +135,6 @@ public class AlchemyFeatures
 				new NetherGeodeSizeConfig(4, 7, 3, 5, 1, 3, -16, 16),
 				0.35D, 0.083D, true, 0.05D, 1
 			)).rangeOf(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
-		MAGIC_FOREST_TREES = Feature.RANDOM_SELECTOR.configure(
-				new RandomFeatureConfig(
-						ImmutableList.of(
-								ConfiguredFeatures.FANCY_OAK_BEES_0002.withChance(0.5F),
-								ConfiguredFeatures.HUGE_BROWN_MUSHROOM.withChance(0.05F),
-								ConfiguredFeatures.HUGE_RED_MUSHROOM.withChance(0.05F),
-								ConfiguredFeatures.OAK.withChance(0.4F)
-						),
-						ConfiguredFeatures.OAK
-				))
-				.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
-				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
 		MOSSY_ASPECT_ROCKS = DECORATED_ROCK_FEATURE.configure(new DecoratedRockConfig(
 				new SimpleBlockStateProvider(Blocks.MOSSY_COBBLESTONE.getDefaultState())
 		)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(2);
@@ -159,6 +149,19 @@ public class AlchemyFeatures
 				false,
 				false
 		));
+		SILVERWOOD_TREE = Feature.TREE.configure(new OpenTreeFeatureConfig(
+				new SimpleBlockStateProvider(AlchemyBlocks.SILVERWOOD_LOG.getDefaultState()),
+				new SilverwoodTrunkPlacer(7, 2, 2),
+				new SimpleBlockStateProvider(AlchemyBlocks.SILVERWOOD_LEAVES.getDefaultState()),
+				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 100),
+				new SimpleBlockStateProvider(AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState()),
+				new TwoLayersFeatureSize(1, 0, 1),
+				new ArrayList<>(),
+				false,
+				false
+		))
+				.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
+				.decorate(Decorator.CHANCE.configure(new ChanceDecoratorConfig(100)));
 		THE_LOST_FOREST_TREES = Feature.RANDOM_SELECTOR.configure(
 				new RandomFeatureConfig(
 						ImmutableList.of(
@@ -168,7 +171,19 @@ public class AlchemyFeatures
 						LOST_TREE
 				)
 		).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
-		.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
+				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
+		MAGIC_FOREST_TREES = Feature.RANDOM_SELECTOR.configure(
+				new RandomFeatureConfig(
+						ImmutableList.of(
+								ConfiguredFeatures.FANCY_OAK_BEES_0002.withChance(0.5F),
+								ConfiguredFeatures.HUGE_BROWN_MUSHROOM.withChance(0.05F),
+								ConfiguredFeatures.HUGE_RED_MUSHROOM.withChance(0.05F),
+								SILVERWOOD_TREE.withChance(0.5F)
+						),
+						ConfiguredFeatures.OAK
+				))
+				.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_OCEAN_FLOOR_NO_WATER)
+				.decorate(Decorator.COUNT_EXTRA.configure(new CountExtraDecoratorConfig(10, 0.1F, 1)));
 	}
 
 	public static void register()
@@ -181,5 +196,6 @@ public class AlchemyFeatures
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("dimensional_lake"), DIMENSIONAL_LAKE);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("lost_tree"), LOST_TREE);
 		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("the_lost_forest_trees"), THE_LOST_FOREST_TREES);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("silverwood_tree"), SILVERWOOD_TREE);
 	}
 }

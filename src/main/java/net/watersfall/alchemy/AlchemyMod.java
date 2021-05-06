@@ -387,6 +387,9 @@ public class AlchemyMod implements ModInitializer
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.DIMENSIONAL_LAKE).get());
+		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
+				GenerationStep.Feature.VEGETAL_DECORATION,
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.SILVERWOOD_TREE).get());
 		VillageAdditions.register();
 	}
 }

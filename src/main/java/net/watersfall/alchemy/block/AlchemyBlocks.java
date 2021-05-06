@@ -1,10 +1,7 @@
 package net.watersfall.alchemy.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
@@ -34,6 +31,8 @@ public class AlchemyBlocks
 	public static final FluidBlock DIMENSIONAL_FLUID_BLOCK;
 	public static final Block DEEPSLATE_GRASS;
 	public static final Block GLOWING_DEEPSLATE;
+	public static final LeavesBlock SILVERWOOD_LEAVES;
+	public static final PillarBlock SILVERWOOD_LOG;
 
 	static
 	{
@@ -59,6 +58,8 @@ public class AlchemyBlocks
 		DIMENSIONAL_FLUID_BLOCK = register(AlchemyMod.getId("dimensional_fluid"), new CustomFluidBlock(AlchemyFluids.DIMENSIONAL_STILL, FabricBlockSettings.copyOf(Blocks.WATER)));
 		DEEPSLATE_GRASS = register(AlchemyMod.getId("deepslate_grass"), new Block(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK)));
 		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new Block(FabricBlockSettings.copyOf(Blocks.CHISELED_DEEPSLATE).luminance(15)));
+		SILVERWOOD_LEAVES = register(AlchemyMod.getId("silverwood_leaves"), new LeavesBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
+		SILVERWOOD_LOG = register(AlchemyMod.getId("silverwood_log"), new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

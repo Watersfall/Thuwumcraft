@@ -255,6 +255,10 @@ public class AlchemyModClient implements ClientModInitializer
 				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
 				AlchemyBlocks.DEEPSLATE_GRASS
 		);
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> 0x00AAFF,
+				AlchemyBlocks.SILVERWOOD_LEAVES
+		);
 		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
