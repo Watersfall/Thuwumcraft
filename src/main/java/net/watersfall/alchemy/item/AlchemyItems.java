@@ -92,6 +92,7 @@ public class AlchemyItems
 	public static final Item ICE_PROJECTILE_ITEM;
 	public static final ContinuousCastingStaffItem FIRE_STAFF;
 	public static final CastingStaffItem SAND_STAFF;
+	public static final PortableHoleWand WAND_OF_HOLES;
 	public static final List<Item> ITEMS;
 
 	static
@@ -169,6 +170,7 @@ public class AlchemyItems
 		FIRE_STAFF = register(AlchemyMod.getId("fire_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.FIRE, 10, 1));
 		ICE_PROJECTILE_ITEM = register(AlchemyMod.getId("ice_projectile"), new Item(new FabricItemSettings()));
 		SAND_STAFF = register(AlchemyMod.getId("sand_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SAND, 10, 10));
+		WAND_OF_HOLES = register(AlchemyMod.getId("wand_of_holes"), new PortableHoleWand(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

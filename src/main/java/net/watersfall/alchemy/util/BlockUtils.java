@@ -1,8 +1,10 @@
 package net.watersfall.alchemy.util;
 
 import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +19,12 @@ public class BlockUtils
 		float newY = 1F - (float) (result.getPos().y - result.getBlockPos().getY());
 		float newX = DIRECTION_MAP.get(result.getSide()).apply(result);
 		return new Vec2f(newX, newY);
+	}
+
+	public static Vec2f getCoordinatedFromVec3f(Vec3d vec, BlockPos pos, Direction side)
+	{
+		BlockHitResult result = new BlockHitResult(vec, side, pos, false);
+		return getCoordinatesFromHitResult(result);
 	}
 
 	static

@@ -1,13 +1,15 @@
 package net.watersfall.alchemy.multiblock.component;
 
-import net.minecraft.util.shape.VoxelShape;
-import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
-import net.watersfall.alchemy.api.multiblock.MultiBlock;
-import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+import net.watersfall.alchemy.api.multiblock.MultiBlock;
+import net.watersfall.alchemy.api.multiblock.MultiBlockComponent;
+import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
+import net.watersfall.alchemy.block.AlchemyBlocks;
 import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceComponent implements MultiBlockComponent
@@ -68,20 +70,28 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 	@Override
 	public VoxelShape getOutline()
 	{
-		int index = this.multiBlock.getWorld().getBlockState(this.multiBlock.getPos()).get(AlchemicalFurnaceBlock.DIRECTION).getId() - 2;
-		index *= 4;
-		for(int i = 0; i < this.multiBlock.getComponents().length; i++)
+		if(this.multiBlock != null)
 		{
-			if(this.multiBlock.getComponents()[i] != this)
+			BlockState state = this.multiBlock.getWorld().getBlockState(this.multiBlock.getPos());
+			if(state.isOf(AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK))
 			{
-				index++;
-			}
-			else
-			{
-				break;
+				int index = state.get(AlchemicalFurnaceBlock.DIRECTION).getId() - 2;
+				index *= 4;
+				for(int i = 0; i < this.multiBlock.getComponents().length; i++)
+				{
+					if(this.multiBlock.getComponents()[i] != this)
+					{
+						index++;
+					}
+					else
+					{
+						break;
+					}
+				}
+				return AlchemicalFurnaceMultiBlock.SHAPES[index];
 			}
 		}
-		return AlchemicalFurnaceMultiBlock.SHAPES[index];
+		return AlchemicalFurnaceMultiBlock.SHAPES[0];
 	}
 
 	@Override

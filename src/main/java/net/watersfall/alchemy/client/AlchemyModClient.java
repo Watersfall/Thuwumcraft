@@ -267,6 +267,7 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
@@ -277,7 +278,8 @@ public class AlchemyModClient implements ClientModInitializer
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				AlchemyBlocks.CUSTOM_SPAWNER,
-				AlchemyBlocks.CHILD_BLOCK);
+				AlchemyBlocks.CHILD_BLOCK
+		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
 				AlchemyBlocks.DEEPSLATE_GRASS
 		);

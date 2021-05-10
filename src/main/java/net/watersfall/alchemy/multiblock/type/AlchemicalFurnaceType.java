@@ -3,24 +3,19 @@ package net.watersfall.alchemy.multiblock.type;
 import net.minecraft.block.AbstractFurnaceBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.watersfall.alchemy.AlchemyMod;
-import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
+import net.minecraft.world.World;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
-import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.alchemy.api.multiblock.MultiBlockType;
 import net.watersfall.alchemy.block.AlchemicalFurnaceBlock;
 import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.api.multiblock.MultiBlockType;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceFuelComponent;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceInputComponent;
 import net.watersfall.alchemy.multiblock.component.AlchemicalFurnaceOutputComponent;
 import net.watersfall.alchemy.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -52,10 +47,10 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 	@Override
 	public BlockPos[] matches(PlayerEntity player, World world, BlockPos pos)
 	{
-		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-		PlayerResearchAbility ability = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
-		Research research = Research.REGISTRY.get(AlchemyMod.getId("test_research_6"));
-		if(!ability.hasResearch(research))
+		//AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		//PlayerResearchAbility ability = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
+		//Research research = Research.REGISTRY.get(AlchemyMod.getId("test_research_6"));
+		//if(!ability.hasResearch(research))
 		{
 			//return MultiBlockType.MISSING;
 		}
