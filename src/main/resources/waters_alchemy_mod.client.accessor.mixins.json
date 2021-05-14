@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "net.watersfall.alchemy.client.accessor",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_16",
 	"client": [
 		"ArmorFeatureRendererAccessor"
 	],

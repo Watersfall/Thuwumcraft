@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "net.watersfall.alchemy.accessor",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_16",
 	"mixins": [
 		"ShapedRecipeAccessor",
 		"ShapelessRecipeAccessor"
