@@ -381,16 +381,18 @@ public class AlchemyModClient implements ClientModInitializer
 			float pitch = buf.readFloat();
 			float yaw = buf.readFloat();
 			int owner = buf.readVarInt();
-			Entity entity = type.create(client.world);
-			entity.updatePositionAndAngles(x, y, z, yaw, pitch);
-			entity.updateTrackedPosition(x, y, z);
-			entity.setEntityId(id);
-			entity.setUuid(uuid);
-			if(owner != -1 && entity instanceof ProjectileEntity)
-			{
-				((ProjectileEntity)entity).setOwner(client.world.getEntityById(owner));
-			}
-			client.world.addEntity(id, entity);
+			client.execute(() -> {
+				Entity entity = type.create(client.world);
+				entity.updatePositionAndAngles(x, y, z, yaw, pitch);
+				entity.updateTrackedPosition(x, y, z);
+				entity.setEntityId(id);
+				entity.setUuid(uuid);
+				if(owner != -1 && entity instanceof ProjectileEntity)
+				{
+					((ProjectileEntity)entity).setOwner(client.world.getEntityById(owner));
+				}
+				client.world.addEntity(id, entity);
+			});
 		});
 		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];

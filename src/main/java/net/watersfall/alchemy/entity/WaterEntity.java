@@ -97,8 +97,26 @@ public class WaterEntity extends Entity
 		}
 		if(!world.isClient)
 		{
-			world.getOtherEntities(this, this.getBoundingBox(), (entity) -> !entity.isSpectator() && entity.getId() != owner.getId()).forEach(Entity::extinguish);
+			world.getOtherEntities(this, this.getBoundingBox(), this::checkIfValidEntity).forEach(Entity::extinguish);
 		}
+	}
+
+	private boolean checkIfValidEntity(Entity entity)
+	{
+		if(entity.isSpectator())
+		{
+			return false;
+		}
+		if(owner != null)
+		{
+			return entity.getId() != owner.getId();
+		}
+		if(ownerUUID != null && entity.getUuid().equals(ownerUUID))
+		{
+			this.owner = entity;
+			return false;
+		}
+		return true;
 	}
 
 	@Override
