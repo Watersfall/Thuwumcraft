@@ -60,9 +60,11 @@ import net.watersfall.alchemy.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
+import net.watersfall.alchemy.abilities.item.WandAbilityImpl;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
+import net.watersfall.alchemy.api.abilities.item.WandAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -322,6 +324,7 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerResearchAbilityImpl::new);
+		AbilityProvider.ITEM_REGISTRY.register(WandAbility.ID, WandAbilityImpl::new);
 	}
 
 	private static void registerMultiBlocks()

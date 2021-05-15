@@ -312,12 +312,15 @@ public class AlchemyModClient implements ClientModInitializer
 		}
 		registerEvents();
 		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
-			Entity entity = handler.getWorld().getEntityById(buf.readInt());
-			if(entity instanceof AbilityProvider)
-			{
-				AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
-				provider.fromPacket(buf);
-			}
+			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
+			client.execute(() -> {
+				Entity entity = handler.getWorld().getEntityById(buf2.readInt());
+				if(entity instanceof AbilityProvider)
+				{
+					AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
+					provider.fromPacket(buf2);
+				}
+			});
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet_player"), ((client, handler, buf, responseSender) -> {

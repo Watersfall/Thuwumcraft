@@ -17,6 +17,8 @@ import net.watersfall.alchemy.item.armor.AlchemistArmorItem;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.item.armor.SpeedBootsItem;
 import net.watersfall.alchemy.item.tool.*;
+import net.watersfall.alchemy.item.wand.WandItem;
+import net.watersfall.alchemy.spell.SpellAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,7 @@ public class AlchemyItems
 	public static final ContinuousCastingStaffItem FIRE_STAFF;
 	public static final CastingStaffItem SAND_STAFF;
 	public static final PortableHoleWand WAND_OF_HOLES;
+	public static final WandItem WAND;
 	public static final List<Item> ITEMS;
 
 	static
@@ -164,13 +167,14 @@ public class AlchemyItems
 		EYE_OF_THE_UNKNOWN_ITEM = register(AlchemyMod.getId("eye_of_the_unknown"), new EyeOfTheUnknownItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.EPIC)));
 		DEEPSLATE_GRASS = register(AlchemyMod.getId("deepslate_grass"), new BlockItem(AlchemyBlocks.DEEPSLATE_GRASS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 		GLOWING_DEEPSLATE = register(AlchemyMod.getId("glowing_deepslate"), new BlockItem(AlchemyBlocks.GLOWING_DEEPSLATE, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
-		ICE_STAFF = register(AlchemyMod.getId("ice_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.ICE, 10, 20));
-		SNOW_STAFF = register(AlchemyMod.getId("snow_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SNOW, 5, 10));
-		WATER_STAFF = register(AlchemyMod.getId("water_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.WATER, 10, 1));
-		FIRE_STAFF = register(AlchemyMod.getId("fire_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.FIRE, 10, 1));
+		ICE_STAFF = register(AlchemyMod.getId("ice_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.ICE, 10, 20));
+		SNOW_STAFF = register(AlchemyMod.getId("snow_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.SNOW, 5, 10));
+		WATER_STAFF = register(AlchemyMod.getId("water_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.WATER, 10, 1));
+		FIRE_STAFF = register(AlchemyMod.getId("fire_staff"), new ContinuousCastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.FIRE, 10, 1));
 		ICE_PROJECTILE_ITEM = register(AlchemyMod.getId("ice_projectile"), new Item(new FabricItemSettings()));
-		SAND_STAFF = register(AlchemyMod.getId("sand_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), CastingStaffItem.SpellAction.SAND, 10, 10));
+		SAND_STAFF = register(AlchemyMod.getId("sand_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.SAND, 10, 10));
 		WAND_OF_HOLES = register(AlchemyMod.getId("wand_of_holes"), new PortableHoleWand(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		WAND = register(AlchemyMod.getId("wand"), new WandItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

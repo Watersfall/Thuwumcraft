@@ -39,5 +39,11 @@
 			"waters_alchemy_mod:static"
 		],
 		"subtitle": "sound.waters_alchemy_mod.static"
+	},
+	"spell.pocket_sand": {
+		"sounds": [
+			"waters_alchemy_mod:pocket_sand"
+		],
+		"subtitle": "sound.waters_alchemy_mod.spell.pocket_sand"
 	}
 }

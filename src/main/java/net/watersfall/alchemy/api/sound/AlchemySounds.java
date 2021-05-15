@@ -11,4 +11,5 @@ public class AlchemySounds
 	public static final SoundEvent BOOK_OPEN_SOUND = new SoundEvent(AlchemyMod.getId("item.research_book.open"));
 	public static final SoundEvent RINGING_SOUND = new SoundEvent(AlchemyMod.getId("dimension.the_unknown.ringing"));
 	public static final SoundEvent STATIC_SOUND = new SoundEvent(AlchemyMod.getId("dimension.the_unknown.static"));
+	public static final SoundEvent POCKET_SAND = new SoundEvent(AlchemyMod.getId("spell.pocket_sand"));
 }

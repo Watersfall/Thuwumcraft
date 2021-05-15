@@ -10,6 +10,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
+import net.watersfall.alchemy.abilities.item.WandAbilityImpl;
 import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.item.AlchemyItems;
@@ -45,6 +46,10 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		else if(item != null && item.asItem() == Items.NETHERITE_CHESTPLATE)
 		{
 			this.addAbility(new RunedShieldAbilityItem(10, 10 ,10));
+		}
+		else if(item != null && item.asItem() == AlchemyItems.WAND)
+		{
+			this.addAbility(new WandAbilityImpl());
 		}
 	}
 
