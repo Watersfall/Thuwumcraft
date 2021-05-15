@@ -10,17 +10,10 @@ import net.watersfall.alchemy.spell.SpellActionInstance;
 public interface WandAbility extends Ability<ItemStack>
 {
 	public static final Identifier ID = new Identifier("waters_alchemy_mod", "wand_ability");
-
 	@Override
 	default Identifier getId()
 	{
 		return ID;
-	}
-
-	@Override
-	default public boolean copyable()
-	{
-		return true;
 	}
 
 	WandCapMaterial getWandCap();

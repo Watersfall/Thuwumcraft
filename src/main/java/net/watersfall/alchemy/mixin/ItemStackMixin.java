@@ -15,6 +15,7 @@ import net.watersfall.alchemy.api.abilities.Ability;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.GlassPhialItem;
+import net.watersfall.alchemy.item.wand.WandItem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,7 +48,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		{
 			this.addAbility(new RunedShieldAbilityItem(10, 10 ,10));
 		}
-		else if(item != null && item.asItem() == AlchemyItems.WAND)
+		else if(item != null && item.asItem() instanceof WandItem)
 		{
 			this.addAbility(new WandAbilityImpl());
 		}
