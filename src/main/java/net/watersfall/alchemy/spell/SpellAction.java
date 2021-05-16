@@ -80,18 +80,25 @@ public interface SpellAction
 	public static class Registry
 	{
 		private final HashMap<Identifier, SpellAction> map = new HashMap<>();
+		private final HashMap<SpellAction, Identifier> map2 = new HashMap<>();
 
 		private Registry(){}
 
 		public final SpellAction register(Identifier id, SpellAction action)
 		{
 			map.put(id, action);
+			map2.put(action, id);
 			return action;
 		}
 
 		public final SpellAction get(Identifier id)
 		{
 			return map.get(id);
+		}
+
+		public final Identifier getId(SpellAction action)
+		{
+			return map2.get(action);
 		}
 	}
 }

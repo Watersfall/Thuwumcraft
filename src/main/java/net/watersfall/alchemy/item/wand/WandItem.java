@@ -12,6 +12,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.item.WandAbility;
+import net.watersfall.alchemy.spell.SpellAction;
+import net.watersfall.alchemy.spell.SpellActionInstance;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -29,7 +31,14 @@ public class WandItem extends Item
 		ItemStack stack = user.getStackInHand(hand);
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(ability -> {
-			ability.getSpell().cast(stack, world, user);
+			if(user.isSneaking())
+			{
+				ability.setSpell(new SpellActionInstance(SpellAction.FIRE, 0, 0));
+			}
+			else
+			{
+				ability.getSpell().cast(stack, world, user);
+			}
 		});
 		return TypedActionResult.success(stack);
 	}
@@ -40,9 +49,9 @@ public class WandItem extends Item
 		super.appendTooltip(stack, world, tooltip, context);
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(ability -> {
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText("Wood")));
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText("Iron")));
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText("Sand")));
+			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
+			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
+			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(SpellAction.REGISTRY.getId(ability.getSpell().action()).toString())));
 		});
 	}
 }

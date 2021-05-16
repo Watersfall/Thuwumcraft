@@ -53,21 +53,21 @@ public class WandAbilityImpl implements WandAbility
 	public void setWandCap(WandCapMaterial cap)
 	{
 		this.cap = cap;
-		tag.putString("cap", "IRON");
+		tag.putString("cap", cap.getId().toString());
 	}
 
 	@Override
 	public void setWandCore(WandCoreMaterial core)
 	{
 		this.core = core;
-		tag.putString("core", "WOOD");
+		tag.putString("core", core.getId().toString());
 	}
 
 	@Override
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		tag.putString("spell", "waters_alchemy_mod:sand");
+		tag.putString("spell", SpellAction.REGISTRY.getId(spell.action()).toString());
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class WandAbilityImpl implements WandAbility
 	public void fromNbt(NbtCompound tag, ItemStack itemStack)
 	{
 		this.tag = tag;
-		this.cap = WandCapMaterials.valueOf(tag.getString("cap"));
-		this.core = WandCoreMaterials.valueOf(tag.getString("core"));
+		this.cap = WandCapMaterial.REGISTRY.get(new Identifier(tag.getString("cap")));
+		this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
 		SpellAction action = SpellAction.REGISTRY.get(new Identifier(tag.getString("spell")));
 		this.spell = new SpellActionInstance(action, 0, 0);
 	}
