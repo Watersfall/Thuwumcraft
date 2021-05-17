@@ -13,6 +13,8 @@ public interface WandCapMaterial
 
 	Identifier getId();
 
+	int getColor();
+
 	public static class Registry
 	{
 		private final Map<Identifier, WandCapMaterial> map = new HashMap<>();

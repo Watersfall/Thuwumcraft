@@ -61,6 +61,7 @@ import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
+import net.watersfall.alchemy.api.abilities.item.WandAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.client.gui.RecipeTabType;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
@@ -83,6 +84,7 @@ import net.watersfall.alchemy.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.alchemy.client.toast.ResearchToast;
 import net.watersfall.alchemy.entity.AlchemyEntities;
 import net.watersfall.alchemy.fluid.AlchemyFluids;
+import net.watersfall.alchemy.item.AlchemyItems;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.particle.AlchemyParticles;
 import net.watersfall.alchemy.recipe.AlchemyRecipes;
@@ -258,6 +260,30 @@ public class AlchemyModClient implements ClientModInitializer
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> 0x00AAFF,
 				AlchemyBlocks.SILVERWOOD_LEAVES
+		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> {
+					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+					Optional<WandAbility> optional = provider.getAbility(WandAbility.ID, WandAbility.class);
+					if(optional.isPresent())
+					{
+						WandAbility ability = optional.get();
+						if(tintIndex == 0)
+						{
+							return ability.getWandCore().getColor();
+						}
+						else if(tintIndex == 1)
+						{
+							return ability.getWandCap().getColor();
+						}
+						else
+						{
+							return ability.getSpell().spell().color();
+						}
+					}
+					return 0;
+				},
+				AlchemyItems.WAND
 		);
 		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);

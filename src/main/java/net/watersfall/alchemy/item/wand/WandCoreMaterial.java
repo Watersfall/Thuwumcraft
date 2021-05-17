@@ -13,6 +13,8 @@ public interface WandCoreMaterial
 
 	Identifier getId();
 
+	int getColor();
+
 	public static class Registry
 	{
 		private final Map<Identifier, WandCoreMaterial> map = new HashMap<>();

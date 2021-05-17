@@ -8,7 +8,7 @@ import net.watersfall.alchemy.item.wand.WandCapMaterial;
 import net.watersfall.alchemy.item.wand.WandCapMaterials;
 import net.watersfall.alchemy.item.wand.WandCoreMaterial;
 import net.watersfall.alchemy.item.wand.WandCoreMaterials;
-import net.watersfall.alchemy.spell.SpellAction;
+import net.watersfall.alchemy.spell.Spell;
 import net.watersfall.alchemy.spell.SpellActionInstance;
 
 public class WandAbilityImpl implements WandAbility
@@ -23,7 +23,7 @@ public class WandAbilityImpl implements WandAbility
 		this.tag = new NbtCompound();
 		setWandCap(WandCapMaterials.IRON);
 		setWandCore(WandCoreMaterials.WOOD);
-		setSpell(new SpellActionInstance(SpellAction.SAND, 0, 0));
+		setSpell(new SpellActionInstance(Spell.SAND, 0, 0));
 	}
 
 	public WandAbilityImpl(NbtCompound tag, ItemStack stack)
@@ -67,7 +67,7 @@ public class WandAbilityImpl implements WandAbility
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		tag.putString("spell", SpellAction.REGISTRY.getId(spell.action()).toString());
+		tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class WandAbilityImpl implements WandAbility
 		this.tag = tag;
 		this.cap = WandCapMaterial.REGISTRY.get(new Identifier(tag.getString("cap")));
 		this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
-		SpellAction action = SpellAction.REGISTRY.get(new Identifier(tag.getString("spell")));
+		Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
 		this.spell = new SpellActionInstance(action, 0, 0);
 	}
 }

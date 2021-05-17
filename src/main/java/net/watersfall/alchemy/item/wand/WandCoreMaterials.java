@@ -5,15 +5,17 @@ import net.watersfall.alchemy.AlchemyMod;
 
 public enum WandCoreMaterials implements WandCoreMaterial
 {
-	WOOD(AlchemyMod.getId("wood"), 50);
+	WOOD(AlchemyMod.getId("wood"), 50, 0x54321A);
 
 	private final double maxVis;
 	private final Identifier id;
+	private final int color;
 
-	WandCoreMaterials(Identifier id, double maxVis)
+	WandCoreMaterials(Identifier id, double maxVis, int color)
 	{
 		this.id = id;
 		this.maxVis = maxVis;
+		this.color = color;
 		WandCoreMaterial.REGISTRY.register(id, this);
 	}
 
@@ -27,6 +29,12 @@ public enum WandCoreMaterials implements WandCoreMaterial
 	public Identifier getId()
 	{
 		return id;
+	}
+
+	@Override
+	public int getColor()
+	{
+		return color;
 	}
 
 
