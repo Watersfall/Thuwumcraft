@@ -22,7 +22,11 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Mixin(ItemStack.class)
@@ -33,6 +37,8 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Shadow private NbtCompound tag;
 
 	@Shadow @Nullable public abstract NbtCompound getTag();
+
+	private final Map<Identifier, Ability<ItemStack>> abilities = new HashMap<>();
 
 	@Inject(method = "<init>(Lnet/minecraft/item/ItemConvertible;I)V", at = @At("TAIL"))
 	public void addData(ItemConvertible item, int count, CallbackInfo info)
@@ -54,10 +60,17 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		}
 	}
 
+	@Inject(method = "<init>(Lnet/minecraft/nbt/NbtCompound;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;postProcessNbt(Lnet/minecraft/nbt/NbtCompound;)Z"))
+	public void  addData(NbtCompound tag, CallbackInfo info)
+	{
+		this.fromNbt(this.tag);
+	}
+
 	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
 		this.getOrCreateTag().put(ability.getId().toString(), ability.toNbt(new NbtCompound(), (ItemStack)(Object)this));
+		this.abilities.put(ability.getId(), ability);
 	}
 
 	@Override
@@ -75,15 +88,13 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
-		if(this.getTag() != null && this.getTag().contains(id.toString()))
+		if(this.abilities.containsKey(id))
 		{
-			NbtCompound tag = this.tag.getCompound(id.toString());
-			Ability<ItemStack> ability = AbilityProvider.ITEM_REGISTRY.create(id, tag, (ItemStack)(Object)this);
+			Ability<ItemStack> ability = this.abilities.get(id);
 			if(clazz.isInstance(ability))
 			{
 				return Optional.of(clazz.cast(ability));
 			}
-
 		}
 		return Optional.empty();
 	}
@@ -94,19 +105,25 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 
 	}
 
+	@Inject(method = "copy", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/nbt/NbtCompound;copy()Lnet/minecraft/nbt/NbtCompound;"), locals = LocalCapture.CAPTURE_FAILHARD)
+	public void copy(CallbackInfoReturnable<ItemStack> info, ItemStack to)
+	{
+		this.copy(to, true);
+	}
+
+	@Inject(method = "setTag", at = @At("TAIL"))
+	public void setTag(NbtCompound tag, CallbackInfo info)
+	{
+		this.abilities.clear();
+		this.fromNbt(tag);
+	}
+
 	@Override
 	public void copy(ItemStack to, boolean alive)
 	{
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(to);
-		AbilityProvider.ITEM_REGISTRY.getIds().forEach((key) -> {
-			if(this.tag.contains(key.toString()))
-			{
-				Ability<ItemStack> ability = (AbilityProvider.ITEM_REGISTRY.create(key, this.tag.getCompound(key.toString()), (ItemStack)(Object)this));
-				if(ability.copyable())
-				{
-					provider.addAbility(ability);
-				}
-			}
+		this.abilities.forEach((id, ability) -> {
+			provider.addAbility(ability);
 		});
 	}
 
@@ -119,7 +136,15 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public void fromNbt(NbtCompound tag)
 	{
-
+		if(tag != null)
+		{
+			AbilityProvider.ITEM_REGISTRY.getIds().forEach(id -> {
+				if(tag.contains(id.toString()))
+				{
+					this.addAbility(AbilityProvider.ITEM_REGISTRY.create(id, tag.getCompound(id.toString()), (ItemStack)(Object)this));
+				}
+			});
+		}
 	}
 
 	@Override
