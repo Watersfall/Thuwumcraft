@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
@@ -26,6 +27,7 @@ import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.Sprite;
@@ -62,6 +64,7 @@ import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.alchemy.api.abilities.item.WandAbility;
+import net.watersfall.alchemy.api.abilities.item.WandFocusAbility;
 import net.watersfall.alchemy.api.aspect.AspectInventory;
 import net.watersfall.alchemy.api.client.gui.RecipeTabType;
 import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
@@ -95,6 +98,7 @@ import net.watersfall.alchemy.screen.AlchemyScreenHandlers;
 import net.watersfall.alchemy.util.StatusEffectHelper;
 import net.watersfall.alchemy.world.AlchemyWorlds;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -106,6 +110,8 @@ import java.util.function.Function;
 public class AlchemyModClient implements ClientModInitializer
 {
 	private static final Identifier UNKNOWN_VIGNETTE = AlchemyMod.getId("textures/misc/unknown_vignette.png");
+	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.waters_alchemy_mod.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
+	public static boolean wandFocusKeyPressed = false;
 
 	private static void registerEvents()
 	{
@@ -238,6 +244,26 @@ public class AlchemyModClient implements ClientModInitializer
 		FluidRenderHandlerRegistry.INSTANCE.register(flowing, renderHandler);
 	}
 
+	private void checkKeys(MinecraftClient client)
+	{
+		if(client.player != null)
+		{
+			if(WAND_FOCUS_KEY.isPressed())
+			{
+				ItemStack main = client.player.getMainHandStack();
+				if(!wandFocusKeyPressed && main.getItem() == AlchemyItems.WAND)
+				{
+					client.openScreen(new FocusChangeScreen(main));
+					wandFocusKeyPressed = true;
+				}
+			}
+			else if(wandFocusKeyPressed)
+			{
+				wandFocusKeyPressed = false;
+			}
+		}
+	}
+
 	@Override
 	public void onInitializeClient()
 	{
@@ -278,13 +304,35 @@ public class AlchemyModClient implements ClientModInitializer
 						}
 						else
 						{
-							return ability.getSpell().spell().color();
+							if(ability.getSpell() != null && ability.getSpell().spell() != null)
+							{
+								return ability.getSpell().spell().color();
+							}
+							return 0xFFFFFF;
 						}
 					}
 					return 0;
 				},
 				AlchemyItems.WAND
 		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> {
+					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+					Optional<WandFocusAbility> optional = provider.getAbility(WandFocusAbility.ID, WandFocusAbility.class);
+					if(optional.isPresent())
+					{
+						WandFocusAbility ability = optional.get();
+						if(ability.getSpell() != null)
+						{
+							return ability.getSpell().spell().color();
+						}
+					}
+					return 0xFFFFFF;
+				},
+				AlchemyItems.WAND_FOCUS
+		);
+		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
+		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
 		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);

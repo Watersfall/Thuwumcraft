@@ -8,6 +8,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.alchemy.AlchemyMod;
+import net.watersfall.alchemy.abilities.item.WandFocusAbilityImpl;
+import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.aspect.Aspect;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.item.AspectItem;
@@ -17,7 +19,9 @@ import net.watersfall.alchemy.item.armor.AlchemistArmorItem;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.item.armor.SpeedBootsItem;
 import net.watersfall.alchemy.item.tool.*;
+import net.watersfall.alchemy.item.wand.WandFocusItem;
 import net.watersfall.alchemy.item.wand.WandItem;
+import net.watersfall.alchemy.spell.Spell;
 import net.watersfall.alchemy.spell.SpellAction;
 
 import java.util.ArrayList;
@@ -96,6 +100,7 @@ public class AlchemyItems
 	public static final CastingStaffItem SAND_STAFF;
 	public static final PortableHoleWand WAND_OF_HOLES;
 	public static final WandItem WAND;
+	public static final WandFocusItem WAND_FOCUS;
 	public static final List<Item> ITEMS;
 
 	static
@@ -175,6 +180,7 @@ public class AlchemyItems
 		SAND_STAFF = register(AlchemyMod.getId("sand_staff"), new CastingStaffItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1), SpellAction.SAND, 10, 10));
 		WAND_OF_HOLES = register(AlchemyMod.getId("wand_of_holes"), new PortableHoleWand(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		WAND = register(AlchemyMod.getId("wand"), new WandItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		WAND_FOCUS = register(AlchemyMod.getId("wand_focus"), new WandFocusItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
@@ -197,6 +203,12 @@ public class AlchemyItems
 			{
 				stack.add(item.getDefaultStack());
 			}
+		});
+		Spell.REGISTRY.getSpells().forEach(spell -> {
+			ItemStack focus = new ItemStack(WAND_FOCUS, 1);
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(focus);
+			provider.addAbility(new WandFocusAbilityImpl(spell, focus));
+			stack.add(focus);
 		});
 		Aspects.ASPECT_TO_CLUSTER_BLOCK.values().forEach((item) -> {
 			stack.add(BlockItem.BLOCK_ITEMS.get(item).getDefaultStack());

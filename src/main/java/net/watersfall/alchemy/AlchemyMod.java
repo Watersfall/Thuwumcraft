@@ -61,10 +61,12 @@ import net.watersfall.alchemy.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.alchemy.abilities.item.PhialStorageAbility;
 import net.watersfall.alchemy.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.alchemy.abilities.item.WandAbilityImpl;
+import net.watersfall.alchemy.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
 import net.watersfall.alchemy.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.alchemy.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.alchemy.api.abilities.item.WandAbility;
+import net.watersfall.alchemy.api.abilities.item.WandFocusAbility;
 import net.watersfall.alchemy.api.aspect.Aspects;
 import net.watersfall.alchemy.api.lookup.AspectContainer;
 import net.watersfall.alchemy.api.multiblock.MultiBlockRegistry;
@@ -150,6 +152,46 @@ public class AlchemyMod implements ModInitializer
 			buf2.writeInt(pos.z);
 			provider.toPacket(buf2);
 			responseSender.sendPacket(getId("chunk_packet"), buf2);
+		});
+		ServerPlayNetworking.registerGlobalReceiver(getId("focus_click"), (server, player, handler, buf, responseSender) -> {
+			int index = buf.readInt();
+			ItemStack hand = player.getMainHandStack();
+			ItemStack other = player.getInventory().getStack(index);
+			AbilityProvider<ItemStack> handProvider = AbilityProvider.getProvider(hand);
+			AbilityProvider<ItemStack> otherProvider = AbilityProvider.getProvider(other);
+			handProvider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
+				otherProvider.getAbility(WandFocusAbility.ID, WandFocusAbility.class).ifPresent(focus -> {
+					if(wand.getSpell() != null && wand.getSpell().spell() != null)
+					{
+						ItemStack newFocus = new ItemStack(AlchemyItems.WAND_FOCUS);
+						AbilityProvider<ItemStack> newFocusProvider = AbilityProvider.getProvider(newFocus);
+						newFocusProvider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), newFocus));
+						player.getInventory().setStack(index, newFocus);
+					}
+					else
+					{
+						player.getInventory().setStack(index, ItemStack.EMPTY);
+					}
+					wand.setSpell(focus.getSpell());
+				});
+			});
+		});
+		ServerPlayNetworking.registerGlobalReceiver(getId("focus_remove_click"), (server, player, handler, buf, responseSender) -> {
+			ItemStack hand = player.getMainHandStack();
+			AbilityProvider<ItemStack> handProvider = AbilityProvider.getProvider(hand);
+			handProvider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
+				if(wand.getSpell() != null && wand.getSpell().spell() != null)
+				{
+					ItemStack stack = new ItemStack(AlchemyItems.WAND_FOCUS);
+					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+					provider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), stack));
+					if(!player.giveItemStack(stack))
+					{
+						player.dropItem(stack, true);
+					}
+					wand.setSpell(null);
+				}
+			});
 		});
 	}
 
@@ -325,6 +367,7 @@ public class AlchemyMod implements ModInitializer
 		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerResearchAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandAbility.ID, WandAbilityImpl::new);
+		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
 	}
 
 	private static void registerMultiBlocks()

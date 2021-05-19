@@ -23,7 +23,7 @@ public class WandAbilityImpl implements WandAbility
 		this.tag = new NbtCompound();
 		setWandCap(WandCapMaterials.IRON);
 		setWandCore(WandCoreMaterials.WOOD);
-		setSpell(new SpellActionInstance(Spell.SAND, 0, 0));
+		setSpell(null);
 	}
 
 	public WandAbilityImpl(NbtCompound tag, ItemStack stack)
@@ -67,7 +67,14 @@ public class WandAbilityImpl implements WandAbility
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		if(spell == null)
+		{
+			tag.putString("spell", "");
+		}
+		else
+		{
+			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		}
 	}
 
 	@Override

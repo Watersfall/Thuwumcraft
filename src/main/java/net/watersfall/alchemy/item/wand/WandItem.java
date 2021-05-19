@@ -42,7 +42,7 @@ public class WandItem extends Item
 		if(optional.isPresent())
 		{
 			WandAbility ability = optional.get();
-			if(ability.getSpell() != null)
+			if(ability.getSpell() != null && ability.getSpell().spell() != null)
 			{
 				if(ability.getSpell().spell().type() == CastingType.SINGLE)
 				{
@@ -60,8 +60,15 @@ public class WandItem extends Item
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
 	{
-		user.setCurrentHand(hand);
-		return TypedActionResult.success(user.getStackInHand(hand));
+		ItemStack stack = user.getStackInHand(hand);
+		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+		Optional<WandAbility> ability = provider.getAbility(WandAbility.ID, WandAbility.class);
+		if(ability.isPresent() && ability.get().getSpell() != null && ability.get().getSpell().spell() != null)
+		{
+			user.setCurrentHand(hand);
+			return TypedActionResult.success(stack);
+		}
+		return TypedActionResult.pass(stack);
 	}
 
 	@Override
@@ -73,15 +80,18 @@ public class WandItem extends Item
 		{
 			WandAbility ability = optional.get();
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
-			if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
+			if(ability.getSpell() != null && ability.getSpell().spell() != null)
 			{
-				int castingTime = ability.getSpell().spell().castingTime();
-				int cooldown = ability.getSpell().spell().cooldown();
-				if(currentTick >= castingTime && currentTick % cooldown == 0)
+				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
 				{
-					if(user instanceof PlayerEntity)
+					int castingTime = ability.getSpell().spell().castingTime();
+					int cooldown = ability.getSpell().spell().cooldown();
+					if(currentTick >= castingTime && currentTick % cooldown == 0)
 					{
-						ability.getSpell().cast(stack, world, (PlayerEntity)user);
+						if(user instanceof PlayerEntity)
+						{
+							ability.getSpell().cast(stack, world, (PlayerEntity)user);
+						}
 					}
 				}
 			}
@@ -96,9 +106,12 @@ public class WandItem extends Item
 		if(optional.isPresent())
 		{
 			WandAbility ability = optional.get();
-			if(ability.getSpell().spell().type() == CastingType.SINGLE)
+			if(ability.getSpell() != null && ability.getSpell().spell() != null)
 			{
-				ability.getSpell().cast(stack, world, (PlayerEntity)user);
+				if(ability.getSpell().spell().type() == CastingType.SINGLE)
+				{
+					ability.getSpell().cast(stack, world, (PlayerEntity)user);
+				}
 			}
 			((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().cooldown());
 		}
@@ -114,14 +127,17 @@ public class WandItem extends Item
 		{
 			WandAbility ability = optional.get();
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
-			if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
+			if(ability.getSpell() != null && ability.getSpell().spell() != null)
 			{
-				int castingTime = ability.getSpell().spell().castingTime();
-				if(currentTick >= castingTime)
+				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
 				{
-					if(user instanceof PlayerEntity)
+					int castingTime = ability.getSpell().spell().castingTime();
+					if(currentTick >= castingTime)
 					{
-						((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().castingTime());
+						if(user instanceof PlayerEntity)
+						{
+							((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().castingTime());
+						}
 					}
 				}
 			}
@@ -136,7 +152,14 @@ public class WandItem extends Item
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(ability -> {
 			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
 			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
+			if(ability.getSpell() == null || ability.getSpell().spell() == null)
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.spell.none")));
+			}
+			else
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
+			}
 		});
 	}
 }

@@ -51,6 +51,9 @@
 	"item.waters_alchemy_mod.wand.core": "Core",
 	"item.waters_alchemy_mod.wand.cap": "Cap",
 	"item.waters_alchemy_mod.wand.spell": "Spell",
+	"item.waters_alchemy_mod.wand.spell.none": "None",
+	"item.waters_alchemy_mod.wand.spell.remove": "Remove Focus",
+	"item.waters_alchemy_mod.wand_focus": "Wand Focus",
 	"itemGroup.waters_alchemy_mod.alchemy_mod_group": "Thuwumcraft",
 	"itemGroup.waters_alchemy_mod.aspect_group": "Aspects",
 	"text.waters_alchemy_mod.tooltip.poison_applied": "Applied Effects",
@@ -136,5 +139,6 @@
 	"sound.waters_alchemy_mod.page_flip": "Page flips",
 	"sound.waters_alchemy_mod.magic": "Magic happens",
 	"advancements.waters_alchemy_mod.the_unknown.root.title": "The Unknown",
-	"advancements.waters_alchemy_mod.the_unknown.root.description": "Find an Unknown portal, deep underground, and leap into it"
+	"advancements.waters_alchemy_mod.the_unknown.root.description": "Find an Unknown portal, deep underground, and leap into it",
+	"key.waters_alchemy_mod.wand_focus": "Change Wand Focus"
 }
