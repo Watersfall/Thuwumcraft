@@ -150,8 +150,22 @@ public class WandItem extends Item
 		super.appendTooltip(stack, world, tooltip, context);
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(ability -> {
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
-			tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
+			if(ability.getWandCore() != null)
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
+			}
+			else
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.core.none")));
+			}
+			if(ability.getWandCap() != null)
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
+			}
+			else
+			{
+				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.cap.none")));
+			}
 			if(ability.getSpell() == null || ability.getSpell().spell() == null)
 			{
 				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.spell.none")));

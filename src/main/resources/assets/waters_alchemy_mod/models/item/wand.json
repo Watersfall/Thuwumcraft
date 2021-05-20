@@ -2,7 +2,14 @@
 	"parent": "minecraft:item/handheld",
 	"textures": {
 		"layer0": "waters_alchemy_mod:item/wand/core",
-		"layer1": "waters_alchemy_mod:item/wand/cap",
-		"layer2": "waters_alchemy_mod:item/wand/spell"
-	}
+		"layer1": "waters_alchemy_mod:item/wand/cap"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"waters_alchemy_mod:has_focus": 1
+			},
+			"model": "waters_alchemy_mod:item/wand_with_focus"
+		}
+	]
 }

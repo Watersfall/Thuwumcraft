@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.api.util.NbtType;
@@ -267,6 +268,19 @@ public class AlchemyModClient implements ClientModInitializer
 	@Override
 	public void onInitializeClient()
 	{
+		FabricModelPredicateProviderRegistry.register(AlchemyItems.WAND, AlchemyMod.getId("has_focus"), ((stack, world, entity, seed) -> {
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			Optional<WandAbility> optional = provider.getAbility(WandAbility.ID, WandAbility.class);
+			if(optional.isPresent())
+			{
+				WandAbility ability = optional.get();
+				if(ability.getSpell() != null && ability.getSpell().spell() != null)
+				{
+					return 1;
+				}
+			}
+			return 0;
+		}));
 		ColorProviderRegistry.BLOCK.register(
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
 				AlchemyBlocks.BREWING_CAULDRON_BLOCK
@@ -296,11 +310,11 @@ public class AlchemyModClient implements ClientModInitializer
 						WandAbility ability = optional.get();
 						if(tintIndex == 0)
 						{
-							return ability.getWandCore().getColor();
+							return ability.getWandCore() != null ? ability.getWandCore().getColor() : 0;
 						}
 						else if(tintIndex == 1)
 						{
-							return ability.getWandCap().getColor();
+							return ability.getWandCap() != null ? ability.getWandCap().getColor() : 0;
 						}
 						else
 						{
