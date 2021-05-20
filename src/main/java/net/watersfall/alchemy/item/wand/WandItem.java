@@ -66,7 +66,7 @@ public class WandItem extends Item
 		if(ability.isPresent() && ability.get().getSpell() != null && ability.get().getSpell().spell() != null)
 		{
 			user.setCurrentHand(hand);
-			return TypedActionResult.success(stack);
+			return TypedActionResult.consume(stack);
 		}
 		return TypedActionResult.pass(stack);
 	}
