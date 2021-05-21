@@ -66,6 +66,15 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		this.fromNbt(this.tag);
 	}
 
+	@Inject(method = "writeNbt", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/NbtCompound;put(Ljava/lang/String;Lnet/minecraft/nbt/NbtElement;)Lnet/minecraft/nbt/NbtElement;", shift = At.Shift.AFTER))
+	public void writeData(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir)
+	{
+		NbtCompound tag = nbt.getCompound("tag");
+		this.abilities.forEach((k, v) -> {
+			tag.put(k.toString(), v.toNbt(new NbtCompound(), (ItemStack)(Object)this));
+		});
+	}
+
 	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
@@ -130,7 +139,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public NbtCompound toNbt(NbtCompound tag)
 	{
-		return tag;
+		return tag.copyFrom(this.tag);
 	}
 
 	@Override
