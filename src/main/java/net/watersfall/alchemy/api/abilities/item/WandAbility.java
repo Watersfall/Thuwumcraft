@@ -3,6 +3,7 @@ package net.watersfall.alchemy.api.abilities.item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.Ability;
+import net.watersfall.alchemy.item.wand.CapRechargeType;
 import net.watersfall.alchemy.item.wand.WandCapMaterial;
 import net.watersfall.alchemy.item.wand.WandCoreMaterial;
 import net.watersfall.alchemy.spell.SpellActionInstance;
@@ -22,11 +23,17 @@ public interface WandAbility extends Ability<ItemStack>
 
 	SpellActionInstance getSpell();
 
+	double getVis();
+
 	void setWandCap(WandCapMaterial cap);
 
 	void setWandCore(WandCoreMaterial core);
 
 	void setSpell(SpellActionInstance spell);
 
+	void setVis(double vis);
+
 	boolean canCast();
+
+	boolean canCharge(CapRechargeType type);
 }

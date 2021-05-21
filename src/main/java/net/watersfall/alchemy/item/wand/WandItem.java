@@ -1,6 +1,7 @@
 package net.watersfall.alchemy.item.wand;
 
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -12,12 +13,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.watersfall.alchemy.api.abilities.AbilityProvider;
+import net.watersfall.alchemy.api.abilities.chunk.VisAbility;
 import net.watersfall.alchemy.api.abilities.item.WandAbility;
 import net.watersfall.alchemy.spell.CastingType;
 import net.watersfall.alchemy.spell.Spell;
 import org.jetbrains.annotations.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +95,10 @@ public class WandItem extends Item
 						if(user instanceof PlayerEntity)
 						{
 							ability.getSpell().cast(stack, world, (PlayerEntity)user);
+							if(!world.isClient)
+							{
+								ability.setVis(ability.getVis() - ability.getSpell().spell().visCost());
+							}
 						}
 					}
 				}
@@ -111,6 +119,10 @@ public class WandItem extends Item
 				if(ability.getSpell().spell().type() == CastingType.SINGLE)
 				{
 					ability.getSpell().cast(stack, world, (PlayerEntity)user);
+					if(!world.isClient)
+					{
+						ability.setVis(ability.getVis() - ability.getSpell().spell().visCost());
+					}
 				}
 			}
 			((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().cooldown());
@@ -152,6 +164,11 @@ public class WandItem extends Item
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(ability -> {
 			if(ability.getWandCore() != null)
 			{
+				String vis = new DecimalFormat("#.##").format(ability.getVis());
+				tooltip.add(new LiteralText("Vis: " + vis + "/" + ability.getWandCore().getMaxVis()));
+			}
+			if(ability.getWandCore() != null)
+			{
 				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
 			}
 			else
@@ -175,5 +192,30 @@ public class WandItem extends Item
 				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
 			}
 		});
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
+	{
+		super.inventoryTick(stack, world, entity, slot, selected);
+		if(!world.isClient && world.getTime() % 100 == 0)
+		{
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
+				if(wand.getWandCore() != null && wand.canCharge(CapRechargeType.ENVIRONMENTAL))
+				{
+					Chunk chunk = entity.getEntityWorld().getChunk(entity.getBlockPos());
+					AbilityProvider<Chunk> chunkProvider = AbilityProvider.getProvider(chunk);
+					chunkProvider.getAbility(VisAbility.ID, VisAbility.class).ifPresent(chunkVis -> {
+						if(chunkVis.getVis() > 0)
+						{
+							chunkVis.setVis(chunkVis.getVis() - 1);
+							chunkVis.sync(chunk);
+							wand.setVis(wand.getVis() + 1);
+						}
+					});
+				}
+			});
+		}
 	}
 }

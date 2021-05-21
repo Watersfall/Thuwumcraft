@@ -4,10 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.alchemy.api.abilities.item.WandAbility;
-import net.watersfall.alchemy.item.wand.WandCapMaterial;
-import net.watersfall.alchemy.item.wand.WandCapMaterials;
-import net.watersfall.alchemy.item.wand.WandCoreMaterial;
-import net.watersfall.alchemy.item.wand.WandCoreMaterials;
+import net.watersfall.alchemy.item.wand.*;
 import net.watersfall.alchemy.spell.Spell;
 import net.watersfall.alchemy.spell.SpellActionInstance;
 
@@ -16,6 +13,7 @@ public class WandAbilityImpl implements WandAbility
 	private WandCapMaterial cap;
 	private WandCoreMaterial core;
 	private SpellActionInstance spell;
+	private double vis;
 	private NbtCompound tag;
 
 	public WandAbilityImpl()
@@ -24,6 +22,7 @@ public class WandAbilityImpl implements WandAbility
 		setWandCap(WandCapMaterials.IRON);
 		setWandCore(WandCoreMaterials.WOOD);
 		setSpell(null);
+		setVis(getWandCore().getMaxVis());
 	}
 
 	public WandAbilityImpl(NbtCompound tag, ItemStack stack)
@@ -47,6 +46,12 @@ public class WandAbilityImpl implements WandAbility
 	public SpellActionInstance getSpell()
 	{
 		return spell;
+	}
+
+	@Override
+	public double getVis()
+	{
+		return vis;
 	}
 
 	@Override
@@ -78,9 +83,26 @@ public class WandAbilityImpl implements WandAbility
 	}
 
 	@Override
+	public void setVis(double vis)
+	{
+		this.vis = vis;
+		tag.putDouble("vis", vis);
+	}
+
+	@Override
 	public boolean canCast()
 	{
-		return this.getWandCore() != null && this.getWandCap() != null && this.getSpell() != null && this.getSpell().spell() != null;
+		return this.getWandCore() != null
+				&& this.getWandCap() != null
+				&& this.getSpell() != null
+				&& this.getSpell().spell() != null
+				&& this.getVis() >= this.getSpell().spell().visCost();
+	}
+
+	@Override
+	public boolean canCharge(CapRechargeType type)
+	{
+		return type == getWandCap().getRechargeType() && getVis() < getWandCore().getMaxVis();
 	}
 
 	@Override
@@ -97,5 +119,6 @@ public class WandAbilityImpl implements WandAbility
 		this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
 		Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
 		this.spell = new SpellActionInstance(action, 0, 0);
+		this.vis = tag.getDouble("vis");
 	}
 }
