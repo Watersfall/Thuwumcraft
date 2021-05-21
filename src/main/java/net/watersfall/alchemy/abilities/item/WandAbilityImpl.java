@@ -78,6 +78,12 @@ public class WandAbilityImpl implements WandAbility
 	}
 
 	@Override
+	public boolean canCast()
+	{
+		return this.getWandCore() != null && this.getWandCap() != null && this.getSpell() != null && this.getSpell().spell() != null;
+	}
+
+	@Override
 	public NbtCompound toNbt(NbtCompound tag, ItemStack itemStack)
 	{
 		return this.tag;

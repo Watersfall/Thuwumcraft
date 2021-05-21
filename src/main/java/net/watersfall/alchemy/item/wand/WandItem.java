@@ -42,7 +42,7 @@ public class WandItem extends Item
 		if(optional.isPresent())
 		{
 			WandAbility ability = optional.get();
-			if(ability.getSpell() != null && ability.getSpell().spell() != null)
+			if(ability.canCast())
 			{
 				if(ability.getSpell().spell().type() == CastingType.SINGLE)
 				{
@@ -63,7 +63,7 @@ public class WandItem extends Item
 		ItemStack stack = user.getStackInHand(hand);
 		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 		Optional<WandAbility> ability = provider.getAbility(WandAbility.ID, WandAbility.class);
-		if(ability.isPresent() && ability.get().getSpell() != null && ability.get().getSpell().spell() != null)
+		if(ability.isPresent() && ability.get().canCast())
 		{
 			user.setCurrentHand(hand);
 			return TypedActionResult.consume(stack);
@@ -80,7 +80,7 @@ public class WandItem extends Item
 		{
 			WandAbility ability = optional.get();
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
-			if(ability.getSpell() != null && ability.getSpell().spell() != null)
+			if(ability.canCast())
 			{
 				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
 				{
@@ -106,7 +106,7 @@ public class WandItem extends Item
 		if(optional.isPresent())
 		{
 			WandAbility ability = optional.get();
-			if(ability.getSpell() != null && ability.getSpell().spell() != null)
+			if(ability.canCast())
 			{
 				if(ability.getSpell().spell().type() == CastingType.SINGLE)
 				{
@@ -127,7 +127,7 @@ public class WandItem extends Item
 		{
 			WandAbility ability = optional.get();
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
-			if(ability.getSpell() != null && ability.getSpell().spell() != null)
+			if(ability.canCast())
 			{
 				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
 				{

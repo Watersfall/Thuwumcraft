@@ -27,4 +27,6 @@ public interface WandAbility extends Ability<ItemStack>
 	void setWandCore(WandCoreMaterial core);
 
 	void setSpell(SpellActionInstance spell);
+
+	boolean canCast();
 }
