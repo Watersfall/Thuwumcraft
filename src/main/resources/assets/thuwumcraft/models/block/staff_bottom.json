@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "waters_alchemy_mod:block/staff",
-		"particle": "waters_alchemy_mod:block/staff"
+		"0": "thuwumcraft:block/staff",
+		"particle": "thuwumcraft:block/staff"
 	},
 	"elements": [
 		{

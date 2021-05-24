@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RemoveWandFocusElement extends ItemElement
 {
-	private static final List<Text> tooltip = List.of(new TranslatableText("item.waters_alchemy_mod.wand.spell.remove"));
+	private static final List<Text> tooltip = List.of(new TranslatableText("item.thuwumcraft.wand.spell.remove"));
 
 	public RemoveWandFocusElement(int x, int y)
 	{

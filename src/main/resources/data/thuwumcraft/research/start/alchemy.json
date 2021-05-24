@@ -1,25 +1,25 @@
 {
 	"icon": "minecraft:cauldron",
-	"category": "waters_alchemy_mod:starter",
+	"category": "thuwumcraft:starter",
 	"x": 0,
 	"y": 0,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:start/crystals",
-			"waters_alchemy_mod:start/book"
+			"thuwumcraft:start/crystals",
+			"thuwumcraft:start/book"
 		]
 	},
 	"complete_requirements": {
 		"inventory_required": [
 			"minecraft:cauldron",
-			"waters_alchemy_mod:witchy_spoon"
+			"thuwumcraft:witchy_spoon"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
 				"minecraft:cauldron",
-				"waters_alchemy_mod:witchy_spoon"
+				"thuwumcraft:witchy_spoon"
 			],
 			"requires_complete": false
 		}

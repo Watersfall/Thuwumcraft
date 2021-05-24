@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:nekomancy_recipe",
+	"type": "thuwumcraft:nekomancy_recipe",
 	"pattern": [
 		"LLL",
 		"LXL",
@@ -10,7 +10,7 @@
 			"item": "minecraft:spider_eye"
 		},
 		"L": {
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		}
 	},
 	"result": {
@@ -18,11 +18,11 @@
 	},
 	"shards": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 8
 		},
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 8
 		}
 	]

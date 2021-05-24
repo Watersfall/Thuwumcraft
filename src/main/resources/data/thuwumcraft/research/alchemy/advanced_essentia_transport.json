@@ -1,11 +1,11 @@
 {
-	"icon": "waters_alchemy_mod:aspect_pipe",
-	"category": "waters_alchemy_mod:alchemy",
+	"icon": "thuwumcraft:aspect_pipe",
+	"category": "thuwumcraft:alchemy",
 	"x": 6,
 	"y": -5,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/pipes"
+			"thuwumcraft:alchemy/pipes"
 		]
 	}
 }

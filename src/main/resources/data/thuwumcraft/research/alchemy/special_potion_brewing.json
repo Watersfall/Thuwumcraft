@@ -1,6 +1,6 @@
 {
 	"icon": "minecraft:lingering_potion",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": -8,
 	"y": -4,
 	"complete_requirements": {
@@ -17,24 +17,24 @@
 	},
 	"readable_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/potion_brewing"
+			"thuwumcraft:alchemy/potion_brewing"
 		]
 	},
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/potion_brewing"
+			"thuwumcraft:alchemy/potion_brewing"
 		]
 	},
 	"visibility_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/basic_alchemy"
+			"thuwumcraft:alchemy/basic_alchemy"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:research_required_shapeless_recipe/throw_bottle",
-				"waters_alchemy_mod:research_required_shapeless_recipe/lingering_bottle"
+				"thuwumcraft:research_required_shapeless_recipe/throw_bottle",
+				"thuwumcraft:research_required_shapeless_recipe/lingering_bottle"
 			],
 			"requires_complete": true
 		}

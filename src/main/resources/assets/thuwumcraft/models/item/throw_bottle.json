@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "waters_alchemy_mod:item/throw_bottle"
+    "layer0": "thuwumcraft:item/throw_bottle"
   }
 }

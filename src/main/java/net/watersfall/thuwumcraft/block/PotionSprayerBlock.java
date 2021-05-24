@@ -30,7 +30,7 @@ import java.util.Random;
 public class PotionSprayerBlock extends Block implements BlockEntityProvider
 {
 	public static final BooleanProperty TRIGGERED = Properties.TRIGGERED;
-	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.waters_alchemy_mod.potion_sprayer");
+	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.thuwumcraft.potion_sprayer");
 
 	public PotionSprayerBlock(Settings settings)
 	{

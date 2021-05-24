@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "waters_alchemy_mod:block/staff",
-		"1": "waters_alchemy_mod:block/staff_overlay",
-		"particle": "waters_alchemy_mod:block/staff"
+		"0": "thuwumcraft:block/staff",
+		"1": "thuwumcraft:block/staff_overlay",
+		"particle": "thuwumcraft:block/staff"
 	},
 	"elements": [
 		{

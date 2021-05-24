@@ -1,11 +1,11 @@
-package net.watersfall.alchemy.item.tool;
+package net.watersfall.thuwumcraft.item.tool;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.watersfall.alchemy.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.AlchemyItems;
 
 public class SpecialBattleaxeItem extends OpenAxeItem
 {

@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:redstone"
@@ -15,9 +15,9 @@
 		"item": "minecraft:coal"
 	},
 	"output": {
-		"item": "waters_alchemy_mod:magical_coal_0"
+		"item": "thuwumcraft:magical_coal_0"
 	},
 	"research": [
-		"waters_alchemy_mod:test_research_1"
+		"thuwumcraft:test_research_1"
 	]
 }

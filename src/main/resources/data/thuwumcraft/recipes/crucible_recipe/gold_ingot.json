@@ -1,20 +1,20 @@
 {
-	"type": "waters_alchemy_mod:crucible_recipe",
+	"type": "thuwumcraft:crucible_recipe",
 	"catalyst": {
 		"item": "minecraft:iron_ingot"
 	},
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 10
 		},
 		{
-			"aspect": "waters_alchemy_mod:earth",
+			"aspect": "thuwumcraft:earth",
 			"count": 20
 		}
 	],
 	"output": "minecraft:gold_ingot",
 	"research": [
-		"waters_alchemy_mod:test_research_6"
+		"thuwumcraft:test_research_6"
 	]
 }

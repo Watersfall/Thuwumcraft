@@ -1,9 +1,9 @@
-package net.watersfall.alchemy.client.mixin;
+package net.watersfall.thuwumcraft.client.mixin;
 
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.watersfall.alchemy.api.client.item.MultiTooltipComponent;
+import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;

@@ -32,7 +32,7 @@ public class StatusEffectHelper
 	public static final String AMPLIFIER = "amplifier";
 	public static final String USES = "waters_effects_uses";
 
-	public static final Text NO_EFFECT = new TranslatableText("text.waters_alchemy_mod.tooltip.no_effect").formatted(Formatting.GRAY);
+	public static final Text NO_EFFECT = new TranslatableText("text.thuwumcraft.tooltip.no_effect").formatted(Formatting.GRAY);
 	public static final Text APPLIED_EFFECTS = new TranslatableText("potion.whenDrank").append(" ").formatted(Formatting.GRAY);
 
 	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory, RecipeManager manager, World world)

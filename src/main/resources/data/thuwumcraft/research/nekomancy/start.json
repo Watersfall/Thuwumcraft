@@ -1,18 +1,18 @@
 {
-	"icon": "waters_alchemy_mod:custom_spawner",
-	"category": "waters_alchemy_mod:nekomancy",
+	"icon": "thuwumcraft:custom_spawner",
+	"category": "thuwumcraft:nekomancy",
 	"x": 0,
 	"y": -6,
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:necromancy_skull",
-			"waters_alchemy_mod:necromancy_arm",
-			"waters_alchemy_mod:necromancy_leg",
-			"waters_alchemy_mod:necromancy_ribcage",
-			"waters_alchemy_mod:necromancy_heart"
+			"thuwumcraft:necromancy_skull",
+			"thuwumcraft:necromancy_arm",
+			"thuwumcraft:necromancy_leg",
+			"thuwumcraft:necromancy_ribcage",
+			"thuwumcraft:necromancy_heart"
 		],
 		"inventory_required": [
-			"waters_alchemy_mod:nekomancy_table"
+			"thuwumcraft:nekomancy_table"
 		]
 	}
 }

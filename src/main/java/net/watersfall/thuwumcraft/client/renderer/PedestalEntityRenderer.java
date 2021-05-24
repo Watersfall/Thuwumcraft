@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.client.renderer;
+package net.watersfall.thuwumcraft.client.renderer;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.RenderLayer;
@@ -10,7 +10,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
-import net.watersfall.alchemy.block.entity.PedestalEntity;
+import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
@@ -18,7 +18,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
-import net.watersfall.alchemy.client.util.RenderHelper;
+import net.watersfall.thuwumcraft.client.util.RenderHelper;
 
 public class PedestalEntityRenderer implements BlockEntityRenderer<PedestalEntity>
 {

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 public class WandWorkbenchEntity extends BlockEntity implements NamedScreenHandlerFactory, BasicInventory
 {
 	private final DefaultedList<ItemStack> list;
-	private static final TranslatableText title = new TranslatableText("container.waters_alchemy_mod.wand_workbench");
+	private static final TranslatableText title = new TranslatableText("container.thuwumcraft.wand_workbench");
 
 	public WandWorkbenchEntity(BlockPos pos, BlockState state)
 	{

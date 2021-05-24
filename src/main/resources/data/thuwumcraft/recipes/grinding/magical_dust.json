@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:grinding",
+	"type": "thuwumcraft:grinding",
 	"inputs": [
 		{
 			"item": "minecraft:amethyst_shard"
@@ -9,27 +9,27 @@
 		},
 		[
 			{
-				"item": "waters_alchemy_mod:crystal/air"
+				"item": "thuwumcraft:crystal/air"
 			},
 			{
-				"item": "waters_alchemy_mod:crystal/water"
+				"item": "thuwumcraft:crystal/water"
 			},
 			{
-				"item": "waters_alchemy_mod:crystal/fire"
+				"item": "thuwumcraft:crystal/fire"
 			},
 			{
-				"item": "waters_alchemy_mod:crystal/earth"
+				"item": "thuwumcraft:crystal/earth"
 			},
 			{
-				"item": "waters_alchemy_mod:crystal/order"
+				"item": "thuwumcraft:crystal/order"
 			},
 			{
-				"item": "waters_alchemy_mod:crystal/disorder"
+				"item": "thuwumcraft:crystal/disorder"
 			}
 		],
 		{
 			"item": "minecraft:glass_bottle"
 		}
 	],
-	"output": "waters_alchemy_mod:magic_dust"
+	"output": "thuwumcraft:magic_dust"
 }

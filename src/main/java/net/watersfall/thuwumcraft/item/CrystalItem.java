@@ -29,7 +29,7 @@ public class CrystalItem extends Item
 	@Override
 	public String getTranslationKey()
 	{
-		return "item.waters_alchemy_mod.crystal";
+		return "item.thuwumcraft.crystal";
 	}
 
 	public Aspect getAspect()

@@ -1,15 +1,15 @@
 {
 	"textures": [
-		"waters_alchemy_mod:magic_forest_0",
-		"waters_alchemy_mod:magic_forest_1",
-		"waters_alchemy_mod:magic_forest_2",
-		"waters_alchemy_mod:magic_forest_3",
-		"waters_alchemy_mod:magic_forest_4",
-		"waters_alchemy_mod:magic_forest_5",
-		"waters_alchemy_mod:magic_forest_4",
-		"waters_alchemy_mod:magic_forest_3",
-		"waters_alchemy_mod:magic_forest_2",
-		"waters_alchemy_mod:magic_forest_1",
-		"waters_alchemy_mod:magic_forest_0"
+		"thuwumcraft:magic_forest_0",
+		"thuwumcraft:magic_forest_1",
+		"thuwumcraft:magic_forest_2",
+		"thuwumcraft:magic_forest_3",
+		"thuwumcraft:magic_forest_4",
+		"thuwumcraft:magic_forest_5",
+		"thuwumcraft:magic_forest_4",
+		"thuwumcraft:magic_forest_3",
+		"thuwumcraft:magic_forest_2",
+		"thuwumcraft:magic_forest_1",
+		"thuwumcraft:magic_forest_0"
 	]
 }

@@ -113,11 +113,11 @@ public class GlassPhialItem extends Item
 	{
 		if(this.aspect == Aspect.EMPTY)
 		{
-			return "item.waters_alchemy_mod.phial.empty";
+			return "item.thuwumcraft.phial.empty";
 		}
 		else
 		{
-			return "item.waters_alchemy_mod.phial";
+			return "item.thuwumcraft.phial";
 		}
 	}
 

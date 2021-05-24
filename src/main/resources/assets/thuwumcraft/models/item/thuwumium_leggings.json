@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/thuwumium_leggings"
+		"layer0": "thuwumcraft:item/thuwumium_leggings"
 	}
 }

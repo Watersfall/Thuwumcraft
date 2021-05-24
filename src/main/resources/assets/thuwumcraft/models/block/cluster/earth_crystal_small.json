@@ -1,7 +1,7 @@
  {
-  	"parent": "waters_alchemy_mod:block/cluster/crystal_base",
+  	"parent": "thuwumcraft:block/cluster/crystal_base",
   	"textures": {
-  		"cross": "waters_alchemy_mod:block/cluster/earth_crystal_small",
-  		"base": "waters_alchemy_mod:block/cluster/earth_crystal_base"
+  		"cross": "thuwumcraft:block/cluster/earth_crystal_small",
+  		"base": "thuwumcraft:block/cluster/earth_crystal_base"
   	}
   }

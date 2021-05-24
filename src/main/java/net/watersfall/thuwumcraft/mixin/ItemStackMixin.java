@@ -78,7 +78,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		});
 		if(!abilitiesTag.isEmpty())
 		{
-			tag.put("waters_alchemy_mod:abilities", abilitiesTag);
+			tag.put("thuwumcraft:abilities", abilitiesTag);
 			nbt.put("tag", tag);
 		}
 	}
@@ -86,7 +86,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
-		NbtCompound tag = this.getOrCreateSubTag("waters_alchemy_mod:abilities");
+		NbtCompound tag = this.getOrCreateSubTag("thuwumcraft:abilities");
 		tag.put(ability.getId().toString(), ability.toNbt(new NbtCompound(), (ItemStack)(Object)this));
 		this.abilities.put(ability.getId(), ability);
 	}
@@ -146,7 +146,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		});
 		if(!this.abilities.isEmpty())
 		{
-			to.getOrCreateTag().put("waters_alchemy_mod:abilities", provider.toNbt(new NbtCompound()));
+			to.getOrCreateTag().put("thuwumcraft:abilities", provider.toNbt(new NbtCompound()));
 		}
 	}
 
@@ -164,7 +164,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	{
 		if(tag != null)
 		{
-			NbtCompound abilitiesTag = tag.getCompound("waters_alchemy_mod:abilities");
+			NbtCompound abilitiesTag = tag.getCompound("thuwumcraft:abilities");
 			if(!abilitiesTag.isEmpty())
 			{
 				abilitiesTag.getKeys().forEach(key -> {

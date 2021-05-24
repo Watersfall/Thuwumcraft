@@ -2,7 +2,7 @@
 	"multipart": [
 		{
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/center"
+				"model": "thuwumcraft:block/pipe/center"
 			}
 		},
 		{
@@ -10,7 +10,7 @@
 				"north": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/north"
+				"model": "thuwumcraft:block/pipe/north"
 			}
 		},
 		{
@@ -18,7 +18,7 @@
 				"south": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/south"
+				"model": "thuwumcraft:block/pipe/south"
 			}
 		},
 		{
@@ -26,7 +26,7 @@
 				"east": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/east"
+				"model": "thuwumcraft:block/pipe/east"
 			}
 		},
 		{
@@ -34,7 +34,7 @@
 				"west": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/west"
+				"model": "thuwumcraft:block/pipe/west"
 			}
 		},
 		{
@@ -42,7 +42,7 @@
 				"up": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/up"
+				"model": "thuwumcraft:block/pipe/up"
 			}
 		},
 		{
@@ -50,7 +50,7 @@
 				"down": "true"
 			},
 			"apply": {
-				"model": "waters_alchemy_mod:block/pipe/down"
+				"model": "thuwumcraft:block/pipe/down"
 			}
 		}
 	]

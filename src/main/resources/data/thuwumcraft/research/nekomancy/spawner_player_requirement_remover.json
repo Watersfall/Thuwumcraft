@@ -1,25 +1,25 @@
 {
 	"icon": "minecraft:copper_ingot",
-	"category": "waters_alchemy_mod:nekomancy",
+	"category": "thuwumcraft:nekomancy",
 	"x": 0,
 	"y": 9,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:nekomancy/spawner_mob_count_1",
-			"waters_alchemy_mod:nekomancy/spawner_player_range_1",
-			"waters_alchemy_mod:nekomancy/spawner_speed_upgrade_1"
+			"thuwumcraft:nekomancy/spawner_mob_count_1",
+			"thuwumcraft:nekomancy/spawner_player_range_1",
+			"thuwumcraft:nekomancy/spawner_speed_upgrade_1"
 		]
 	},
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:custom_spawner",
+			"thuwumcraft:custom_spawner",
 			"minecraft:diamond"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:pedestal_crafting/spawner_remove_player_requirement"
+				"thuwumcraft:pedestal_crafting/spawner_remove_player_requirement"
 			],
 			"requires_complete": true
 		}

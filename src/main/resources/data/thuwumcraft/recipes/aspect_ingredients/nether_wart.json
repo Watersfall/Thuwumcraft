@@ -1,9 +1,9 @@
 {
-	"type": "waters_alchemy_mod:aspect_ingredient",
+	"type": "thuwumcraft:aspect_ingredient",
 	"item": "minecraft:nether_wart",
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 5
 		}
 	]

@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:research_unlocked_shapeless_recipe",
+	"type": "thuwumcraft:research_unlocked_shapeless_recipe",
 	"ingredients": [
 		{
 			"item": "minecraft:glass_bottle"
@@ -30,10 +30,10 @@
 		}
 	],
 	"result": {
-		"item": "waters_alchemy_mod:lingering_bottle",
+		"item": "thuwumcraft:lingering_bottle",
 		"count": 8
 	},
 	"research": [
-		"waters_alchemy_mod:special_potion_brewing"
+		"thuwumcraft:special_potion_brewing"
 	]
 }

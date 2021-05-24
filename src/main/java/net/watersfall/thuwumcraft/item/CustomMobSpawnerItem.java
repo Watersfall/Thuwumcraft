@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.thuwumcraft.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
@@ -6,7 +6,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.world.CustomMobSpawnerLogic;
+import net.watersfall.thuwumcraft.world.CustomMobSpawnerLogic;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

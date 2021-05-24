@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:iron_bars"
@@ -21,10 +21,10 @@
 		}
 	],
 	"catalyst": {
-		"item": "waters_alchemy_mod:spawn_egg_base"
+		"item": "thuwumcraft:spawn_egg_base"
 	},
 	"output": {
-		"item": "waters_alchemy_mod:custom_spawner",
+		"item": "thuwumcraft:custom_spawner",
 		"nbt": "{delay:7200,min_delay:3600,max_delay:7200,min_spawn_count:1,max_spawn_count:1,max_nearby_entities:1,player_range:32}",
 		"replace": true
 	}

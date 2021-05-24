@@ -1,24 +1,24 @@
 {
 	"icon": "minecraft:ghast_tear",
-	"category": "waters_alchemy_mod:nekomancy",
+	"category": "thuwumcraft:nekomancy",
 	"x": -5,
 	"y": 6,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:nekomancy/basic_spawner_augmentation"
+			"thuwumcraft:nekomancy/basic_spawner_augmentation"
 		]
 	},
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:custom_spawner",
+			"thuwumcraft:custom_spawner",
 			"minecraft:diamond"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:pedestal_crafting/spawner_mob_count_2",
-				"waters_alchemy_mod:pedestal_crafting/spawner_mob_count_3"
+				"thuwumcraft:pedestal_crafting/spawner_mob_count_2",
+				"thuwumcraft:pedestal_crafting/spawner_mob_count_3"
 			],
 			"requires_complete": true
 		}

@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item.armor;
+package net.watersfall.thuwumcraft.item.armor;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.watersfall.alchemy.entity.AlchemyAttributes;
+import net.watersfall.thuwumcraft.entity.AlchemyAttributes;
 
 import java.util.UUID;
 

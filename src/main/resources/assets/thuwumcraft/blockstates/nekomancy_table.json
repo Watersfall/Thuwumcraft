@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "waters_alchemy_mod:block/nekomancy_table"
+			"model": "thuwumcraft:block/nekomancy_table"
 		}
 	}
 }

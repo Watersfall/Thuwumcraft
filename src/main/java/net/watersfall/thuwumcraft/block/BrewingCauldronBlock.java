@@ -98,13 +98,13 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
 						if(!optional.isPresent())
 						{
-							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
 							return ActionResult.FAIL;
 						}
 						ItemStack stack = optional.get().craft(entity, typeRecipe, world);
 						if(inputStack == stack)
 						{
-							player.sendMessage(new TranslatableText("block.waters_alchemy_mod.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+							player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
 							return ActionResult.FAIL;
 						}
 						else

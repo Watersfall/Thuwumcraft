@@ -23,6 +23,6 @@
 		}
 	},
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/ladle"
+		"layer0": "thuwumcraft:item/ladle"
 	}
 }

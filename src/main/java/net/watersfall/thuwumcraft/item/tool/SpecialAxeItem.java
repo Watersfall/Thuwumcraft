@@ -1,11 +1,11 @@
-package net.watersfall.alchemy.item.tool;
+package net.watersfall.thuwumcraft.item.tool;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.AlchemyItems;
 
 public class SpecialAxeItem extends AxeItem
 {

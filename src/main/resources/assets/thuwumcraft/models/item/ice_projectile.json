@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "waters_alchemy_mod:item/ice_projectile",
-		"1": "waters_alchemy_mod:item/ice_projectile_overlay",
-		"particle": "waters_alchemy_mod:item/ice_projectile"
+		"0": "thuwumcraft:item/ice_projectile",
+		"1": "thuwumcraft:item/ice_projectile_overlay",
+		"particle": "thuwumcraft:item/ice_projectile"
 	},
 	"elements": [
 		{

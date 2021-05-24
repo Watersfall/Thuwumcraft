@@ -1,47 +1,47 @@
 {
 	"icon": [
 		{
-			"item": "waters_alchemy_mod:cluster/fire_crystal_cluster"
+			"item": "thuwumcraft:cluster/fire_crystal_cluster"
 		},
 		{
-			"item": "waters_alchemy_mod:cluster/air_crystal_cluster"
+			"item": "thuwumcraft:cluster/air_crystal_cluster"
 		},
 		{
-			"item": "waters_alchemy_mod:cluster/water_crystal_cluster"
+			"item": "thuwumcraft:cluster/water_crystal_cluster"
 		},
 		{
-			"item": "waters_alchemy_mod:cluster/earth_crystal_cluster"
+			"item": "thuwumcraft:cluster/earth_crystal_cluster"
 		},
 		{
-			"item": "waters_alchemy_mod:cluster/order_crystal_cluster"
+			"item": "thuwumcraft:cluster/order_crystal_cluster"
 		},
 		{
-			"item": "waters_alchemy_mod:cluster/disorder_crystal_cluster"
+			"item": "thuwumcraft:cluster/disorder_crystal_cluster"
 		}
 	],
-	"category": "waters_alchemy_mod:starter",
+	"category": "thuwumcraft:starter",
 	"x": 4,
 	"y": -4,
 	"complete_requirements": {
 		"inventory_consumed": [
 			[
 				{
-					"item": "waters_alchemy_mod:crystal/air"
+					"item": "thuwumcraft:crystal/air"
 				},
 				{
-					"item": "waters_alchemy_mod:crystal/water"
+					"item": "thuwumcraft:crystal/water"
 				},
 				{
-					"item": "waters_alchemy_mod:crystal/fire"
+					"item": "thuwumcraft:crystal/fire"
 				},
 				{
-					"item": "waters_alchemy_mod:crystal/earth"
+					"item": "thuwumcraft:crystal/earth"
 				},
 				{
-					"item": "waters_alchemy_mod:crystal/order"
+					"item": "thuwumcraft:crystal/order"
 				},
 				{
-					"item": "waters_alchemy_mod:crystal/disorder"
+					"item": "thuwumcraft:crystal/disorder"
 				}
 			]
 		]
@@ -49,7 +49,7 @@
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:grinding/magical_dust"
+				"thuwumcraft:grinding/magical_dust"
 			],
 			"requires_complete": true
 		}

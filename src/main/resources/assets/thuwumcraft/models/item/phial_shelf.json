@@ -1,5 +1,5 @@
 {
-	"parent": "waters_alchemy_mod:block/phial_shelf",
+	"parent": "thuwumcraft:block/phial_shelf",
 	"display": {
 		"gui": {
 			"rotation": [ 30, 45, 0 ],

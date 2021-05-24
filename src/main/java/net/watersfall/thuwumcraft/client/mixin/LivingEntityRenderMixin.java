@@ -1,8 +1,8 @@
-package net.watersfall.alchemy.client.mixin;
+package net.watersfall.thuwumcraft.client.mixin;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.math.Vec3f;
-import net.watersfall.alchemy.effect.AlchemyStatusEffects;
+import net.watersfall.thuwumcraft.effect.AlchemyStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;

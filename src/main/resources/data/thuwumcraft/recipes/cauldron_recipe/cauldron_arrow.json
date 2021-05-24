@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_recipe",
+	"type": "thuwumcraft:cauldron_recipe",
 	"items": [
 		{
 			"item": "minecraft:arrow"

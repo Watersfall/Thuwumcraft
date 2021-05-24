@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "waters_alchemy_mod:block/pedestal_side",
-		"1": "waters_alchemy_mod:block/pedestal_top",
-		"2": "waters_alchemy_mod:block/pedestal_bottom",
-		"particle": "waters_alchemy_mod:block/pedestal_bottom"
+		"0": "thuwumcraft:block/pedestal_side",
+		"1": "thuwumcraft:block/pedestal_top",
+		"2": "thuwumcraft:block/pedestal_bottom",
+		"particle": "thuwumcraft:block/pedestal_bottom"
 	},
 	"elements": [
 		{

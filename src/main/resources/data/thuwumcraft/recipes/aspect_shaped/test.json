@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:aspect_shaped",
+	"type": "thuwumcraft:aspect_shaped",
 	"pattern": [
 		"  Y",
 		" X ",
@@ -14,10 +14,10 @@
 		}
 	},
 	"result": {
-		"item": "waters_alchemy_mod:witchy_spoon"
+		"item": "thuwumcraft:witchy_spoon"
 	},
 	"research": [
-		"waters_alchemy_mod:beginner_brewing"
+		"thuwumcraft:beginner_brewing"
 	],
 	"crystals": [
 		{

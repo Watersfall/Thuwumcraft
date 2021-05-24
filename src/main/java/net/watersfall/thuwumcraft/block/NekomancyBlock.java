@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class NekomancyBlock extends Block
 {
-	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.waters_alchemy_mod.nekomancy_table");
+	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.thuwumcraft.nekomancy_table");
 
 	public NekomancyBlock(Settings settings)
 	{

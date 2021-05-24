@@ -1,28 +1,28 @@
  {
 	 "variants": {
 		 "facing=down": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium",
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium",
 			 "x": 180
 		 },
 		 "facing=east": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium",
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium",
 			 "x": 90,
 			 "y": 90
 		 },
 		 "facing=north": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium",
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium",
 			 "x": 90
 		 },
 		 "facing=south": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium",
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium",
 			 "x": 90,
 			 "y": 180
 		 },
 		 "facing=up": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium"
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium"
 		 },
 		 "facing=west": {
-			 "model": "waters_alchemy_mod:block/cluster/air_crystal_medium",
+			 "model": "thuwumcraft:block/cluster/air_crystal_medium",
 			 "x": 90,
 			 "y": 270
 		 }

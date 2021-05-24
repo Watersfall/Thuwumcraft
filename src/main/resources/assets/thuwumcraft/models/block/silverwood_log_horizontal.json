@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:block/cube_column_horizontal",
 	"textures": {
-		"end": "waters_alchemy_mod:block/silverwood_log_top",
-		"side": "waters_alchemy_mod:block/silverwood_log"
+		"end": "thuwumcraft:block/silverwood_log_top",
+		"side": "thuwumcraft:block/silverwood_log"
 	}
 }

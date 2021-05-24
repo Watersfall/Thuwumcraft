@@ -1,15 +1,15 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/wand/core",
-		"layer1": "waters_alchemy_mod:item/wand/cap"
+		"layer0": "thuwumcraft:item/wand/core",
+		"layer1": "thuwumcraft:item/wand/cap"
 	},
 	"overrides": [
 		{
 			"predicate": {
-				"waters_alchemy_mod:has_focus": 1
+				"thuwumcraft:has_focus": 1
 			},
-			"model": "waters_alchemy_mod:item/wand_with_focus"
+			"model": "thuwumcraft:item/wand_with_focus"
 		}
 	]
 }

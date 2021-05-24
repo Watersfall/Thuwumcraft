@@ -1,18 +1,18 @@
 {
 	"variants": {
 		"facing=south": {
-			"model": "waters_alchemy_mod:block/phial_shelf"
+			"model": "thuwumcraft:block/phial_shelf"
 		},
 		"facing=north": {
-			"model": "waters_alchemy_mod:block/phial_shelf",
+			"model": "thuwumcraft:block/phial_shelf",
 			"y": 180
 		},
 		"facing=east": {
-			"model": "waters_alchemy_mod:block/phial_shelf",
+			"model": "thuwumcraft:block/phial_shelf",
 			"y": 270
 		},
 		"facing=west": {
-			"model": "waters_alchemy_mod:block/phial_shelf",
+			"model": "thuwumcraft:block/phial_shelf",
 			"y": 90
 		}
 	}

@@ -1,11 +1,11 @@
 {
-	"icon": "waters_alchemy_mod:magic_hoe",
-	"category": "waters_alchemy_mod:infusion",
+	"icon": "thuwumcraft:magic_hoe",
+	"category": "thuwumcraft:infusion",
 	"x": -3,
 	"y": 5,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:infusion/tool_infusion"
+			"thuwumcraft:infusion/tool_infusion"
 		]
 	}
 }

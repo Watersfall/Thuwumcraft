@@ -1,12 +1,12 @@
 {
 	"icon": "minecraft:wither_rose",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": -4,
 	"y": 2,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/ingredient_purification",
-			"waters_alchemy_mod:alchemy/crucible"
+			"thuwumcraft:alchemy/ingredient_purification",
+			"thuwumcraft:alchemy/crucible"
 		]
 	}
 }

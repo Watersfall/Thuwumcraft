@@ -7,7 +7,7 @@ import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 
 public interface VisAbility extends Ability<Chunk>, AbilityClientSerializable<Chunk>
 {
-	public static final Identifier ID = new Identifier("waters_alchemy_mod", "vis_ability");
+	public static final Identifier ID = new Identifier("thuwumcraft", "vis_ability");
 
 	int getVis();
 

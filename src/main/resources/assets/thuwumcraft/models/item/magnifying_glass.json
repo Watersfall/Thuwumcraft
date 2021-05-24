@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/magnifying_glass"
+		"layer0": "thuwumcraft:item/magnifying_glass"
 	}
 }

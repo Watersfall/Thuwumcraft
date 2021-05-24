@@ -1,6 +1,6 @@
  {
   	"parent": "minecraft:block/cube_all",
   	"textures": {
-  		"all": "waters_alchemy_mod:block/cluster/earth_crystal_block"
+  		"all": "thuwumcraft:block/cluster/earth_crystal_block"
   	}
   }

@@ -6,10 +6,10 @@
 	],
 	"key": {
 		"X": {
-			"item": "waters_alchemy_mod:thuwumium_ingot"
+			"item": "thuwumcraft:thuwumium_ingot"
 		}
 	},
 	"result": {
-		"item": "waters_alchemy_mod:thuwumium_helmet"
+		"item": "thuwumcraft:thuwumium_helmet"
 	}
 }

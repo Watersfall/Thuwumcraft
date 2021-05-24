@@ -1,21 +1,21 @@
 {
-	"type": "waters_alchemy_mod:aspect_ingredient",
+	"type": "thuwumcraft:aspect_ingredient",
 	"item": "minecraft:blaze_powder",
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 10
 		},
 		{
-			"aspect": "waters_alchemy_mod:water",
+			"aspect": "thuwumcraft:water",
 			"count": 5
 		},
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 7
 		},
 		{
-			"aspect": "waters_alchemy_mod:earth",
+			"aspect": "thuwumcraft:earth",
 			"count": 15
 		}
 	]

@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "waters_alchemy_mod:block/child_block"
+			"model": "thuwumcraft:block/child_block"
 		}
 	}
 }

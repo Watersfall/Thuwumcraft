@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "waters_alchemy_mod:block/aspect_crafting_block"
+			"model": "thuwumcraft:block/aspect_crafting_block"
 		}
 	}
 }

@@ -1,11 +1,11 @@
 {
 	"icon": "minecraft:iron_ingot",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": 0,
 	"y": 6,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/crucible"
+			"thuwumcraft:alchemy/crucible"
 		]
 	}
 }

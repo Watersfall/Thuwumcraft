@@ -1,6 +1,6 @@
 {
 	"icon": "minecraft:iron_sword",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": -8,
 	"y": -8,
 	"complete_requirements": {
@@ -13,17 +13,17 @@
 	},
 	"readable_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/potion_brewing"
+			"thuwumcraft:alchemy/potion_brewing"
 		]
 	},
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/potion_brewing"
+			"thuwumcraft:alchemy/potion_brewing"
 		]
 	},
 	"visibility_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/basic_alchemy"
+			"thuwumcraft:alchemy/basic_alchemy"
 		]
 	}
 }

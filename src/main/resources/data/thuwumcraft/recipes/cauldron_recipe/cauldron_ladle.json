@@ -1,8 +1,8 @@
 {
-	"type": "waters_alchemy_mod:cauldron_recipe",
+	"type": "thuwumcraft:cauldron_recipe",
 	"items": [
 		{
-			"item": "waters_alchemy_mod:ladle"
+			"item": "thuwumcraft:ladle"
 		}
 	],
 	"water_use": 0,

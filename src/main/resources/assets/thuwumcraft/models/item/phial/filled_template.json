@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/phial/filled",
-		"layer1": "waters_alchemy_mod:item/phial/empty"
+		"layer0": "thuwumcraft:item/phial/filled",
+		"layer1": "thuwumcraft:item/phial/empty"
 	}
 }

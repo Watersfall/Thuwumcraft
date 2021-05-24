@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:amethyst_shard"
@@ -15,10 +15,10 @@
 		}
 	],
 	"catalyst": {
-		"item": "waters_alchemy_mod:custom_spawner"
+		"item": "thuwumcraft:custom_spawner"
 	},
 	"output": {
-		"item": "waters_alchemy_mod:custom_spawner",
+		"item": "thuwumcraft:custom_spawner",
 		"nbt": "{min_delay:2400,max_delay:4800}",
 		"replace": false
 	}

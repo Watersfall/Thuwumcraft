@@ -1,10 +1,10 @@
 {
 	"variants": {
 		"half=lower": {
-			"model": "waters_alchemy_mod:block/staff_bottom"
+			"model": "thuwumcraft:block/staff_bottom"
 		},
 		"half=upper": {
-			"model": "waters_alchemy_mod:block/staff_top"
+			"model": "thuwumcraft:block/staff_top"
 		}
 	}
 }

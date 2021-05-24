@@ -1,13 +1,13 @@
 {
 	"display": {
 		"icon": {
-			"item": "waters_alchemy_mod:eye_of_the_unknown"
+			"item": "thuwumcraft:eye_of_the_unknown"
 		},
 		"title": {
-			"translate": "advancements.waters_alchemy_mod.the_unknown.root.title"
+			"translate": "advancements.thuwumcraft.the_unknown.root.title"
 		},
 		"description": {
-			"translate": "advancements.waters_alchemy_mod.the_unknown.root.description"
+			"translate": "advancements.thuwumcraft.the_unknown.root.description"
 		},
 		"frame": "task",
 		"show_toast": true,
@@ -19,7 +19,7 @@
 		"entered_unknown": {
 			"trigger": "minecraft:changed_dimension",
 			"conditions": {
-				"to": "waters_alchemy_mod:the_unknown"
+				"to": "thuwumcraft:the_unknown"
 			}
 		}
 	},

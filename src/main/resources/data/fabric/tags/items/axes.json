@@ -1,7 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"waters_alchemy_mod:magic_axe",
-		"waters_alchemy_mod:thuwumium_axe"
+		"thuwumcraft:magic_axe",
+		"thuwumcraft:thuwumium_axe"
 	]
 }

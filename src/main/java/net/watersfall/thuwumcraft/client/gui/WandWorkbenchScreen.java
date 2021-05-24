@@ -20,12 +20,12 @@ import net.watersfall.thuwumcraft.spell.Spell;
 public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 {
 	private static final Identifier BACKGROUND_TEXTURE = AlchemyMod.getId("textures/gui/container/wand_workbench.png");
-	private static final TranslatableText WAND_CORE = new TranslatableText("item.waters_alchemy_mod.wand.core");
-	private static final TranslatableText WAND_CAP = new TranslatableText("item.waters_alchemy_mod.wand.cap");
-	private static final TranslatableText WAND_RECHARGE_TYPE = new TranslatableText("item.waters_alchemy_mod.wand_cap.recharge_type");
-	private static final TranslatableText WAND_VIS_CAPACITY = new TranslatableText("item.waters_alchemy_mod.wand_core.vis_capacity");
-	private static final TranslatableText WAND_SPELL = new TranslatableText("item.waters_alchemy_mod.wand_focus");
-	private static final TranslatableText WAND_SPELL_NONE = new TranslatableText("item.waters_alchemy_mod.wand.spell.none");
+	private static final TranslatableText WAND_CORE = new TranslatableText("item.thuwumcraft.wand.core");
+	private static final TranslatableText WAND_CAP = new TranslatableText("item.thuwumcraft.wand.cap");
+	private static final TranslatableText WAND_RECHARGE_TYPE = new TranslatableText("item.thuwumcraft.wand_cap.recharge_type");
+	private static final TranslatableText WAND_VIS_CAPACITY = new TranslatableText("item.thuwumcraft.wand_core.vis_capacity");
+	private static final TranslatableText WAND_SPELL = new TranslatableText("item.thuwumcraft.wand_focus");
+	private static final TranslatableText WAND_SPELL_NONE = new TranslatableText("item.thuwumcraft.wand.spell.none");
 	private int x, y;
 	private final TextRenderer text;
 
@@ -67,7 +67,7 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 		provider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
 			if(wand.getWandCore() == null)
 			{
-				text.draw(matrices, WAND_CORE.copy().append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.core.none")), this.x + 90, this.y + 20, 0);
+				text.draw(matrices, WAND_CORE.copy().append(": ").append(new TranslatableText("item.thuwumcraft.wand.core.none")), this.x + 90, this.y + 20, 0);
 			}
 			else
 			{
@@ -76,7 +76,7 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 			}
 			if(wand.getWandCap() == null)
 			{
-				text.draw(matrices, WAND_CAP.copy().append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.cap.none")), this.x + 90, this.y + 29, 0);
+				text.draw(matrices, WAND_CAP.copy().append(": ").append(new TranslatableText("item.thuwumcraft.wand.cap.none")), this.x + 90, this.y + 29, 0);
 			}
 			else
 			{

@@ -1,15 +1,15 @@
 {
 	"variants": {
 		"axis=x": {
-			"model": "waters_alchemy_mod:block/silverwood_log_horizontal",
+			"model": "thuwumcraft:block/silverwood_log_horizontal",
 			"x": 90,
 			"y": 90
 		},
 		"axis=y": {
-			"model": "waters_alchemy_mod:block/silverwood_log"
+			"model": "thuwumcraft:block/silverwood_log"
 		},
 		"axis=z": {
-			"model": "waters_alchemy_mod:block/silverwood_log_horizontal",
+			"model": "thuwumcraft:block/silverwood_log_horizontal",
 			"x": 90
 		}
 	}

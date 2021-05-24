@@ -1,9 +1,9 @@
 {
-	"type": "waters_alchemy_mod:aspect_ingredient",
+	"type": "thuwumcraft:aspect_ingredient",
 	"item": "minecraft:dirt",
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:earth",
+			"aspect": "thuwumcraft:earth",
 			"count": 5
 		}
 	]

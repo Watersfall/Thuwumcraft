@@ -10,7 +10,7 @@ import net.watersfall.thuwumcraft.spell.SpellActionInstance;
 
 public interface WandAbility extends Ability<ItemStack>
 {
-	public static final Identifier ID = new Identifier("waters_alchemy_mod", "wand_ability");
+	public static final Identifier ID = new Identifier("thuwumcraft", "wand_ability");
 	@Override
 	default Identifier getId()
 	{

@@ -1,11 +1,11 @@
 {
-	"icon": "waters_alchemy_mod:research_book",
-	"category": "waters_alchemy_mod:starter",
+	"icon": "thuwumcraft:research_book",
+	"category": "thuwumcraft:starter",
 	"x": 4,
 	"y": 4,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:start/gadgets"
+			"thuwumcraft:start/gadgets"
 		]
 	}
 }

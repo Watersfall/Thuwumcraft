@@ -1,16 +1,16 @@
 {
-	"type": "waters_alchemy_mod:cauldron_item",
+	"type": "thuwumcraft:cauldron_item",
 	"catalyst": {
 		"item": "minecraft:coal"
 	},
 	"water_use": 50,
 	"inputs": [
 		{
-			"item": "waters_alchemy_mod:magic_dust"
+			"item": "thuwumcraft:magic_dust"
 		}
 	],
-	"output": "waters_alchemy_mod:magical_coal_0",
+	"output": "thuwumcraft:magical_coal_0",
 	"research": [
-		"waters_alchemy_mod:test_research_1"
+		"thuwumcraft:test_research_1"
 	]
 }

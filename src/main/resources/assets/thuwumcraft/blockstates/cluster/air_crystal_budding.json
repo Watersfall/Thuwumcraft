@@ -1,7 +1,7 @@
  {
   "variants": {
    "": {
-	   "model": "waters_alchemy_mod:block/cluster/air_crystal_budding"
+	   "model": "thuwumcraft:block/cluster/air_crystal_budding"
    }
   }
  }

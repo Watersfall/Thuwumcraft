@@ -29,7 +29,7 @@ public class WandFocusItem extends Item
 		provider.getAbility(WandFocusAbility.ID, WandFocusAbility.class).ifPresent(ability -> {
 			if(ability.getSpell() != null)
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
 			}
 		});
 	}

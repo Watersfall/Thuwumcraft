@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/sand_staff"
+		"layer0": "thuwumcraft:item/sand_staff"
 	}
 }

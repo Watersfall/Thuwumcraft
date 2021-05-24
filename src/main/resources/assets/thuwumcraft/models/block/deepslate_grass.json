@@ -4,7 +4,7 @@
 		"particle": "block/deepslate",
 		"bottom": "block/deepslate",
 		"top": "block/grass_block_top",
-		"side": "waters_alchemy_mod:block/deepslate_grass",
+		"side": "thuwumcraft:block/deepslate_grass",
 		"overlay": "block/grass_block_side_overlay"
 	},
 	"elements": [

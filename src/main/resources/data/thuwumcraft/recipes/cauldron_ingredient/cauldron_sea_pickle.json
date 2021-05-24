@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_ingredient",
+	"type": "thuwumcraft:cauldron_ingredient",
 	"item": "minecraft:sea_pickle",
 	"color": {
 		"r": 64,

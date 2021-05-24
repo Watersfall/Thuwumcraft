@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "waters_alchemy_mod:block/alchemical_furnace_front",
-		"1": "waters_alchemy_mod:block/alchemical_furnace_back",
-		"2": "waters_alchemy_mod:block/alchemical_furnace_side",
-		"3": "waters_alchemy_mod:block/alchemical_furnace_top",
-		"particle": "waters_alchemy_mod:block/alchemical_furnace_front"
+		"0": "thuwumcraft:block/alchemical_furnace_front",
+		"1": "thuwumcraft:block/alchemical_furnace_back",
+		"2": "thuwumcraft:block/alchemical_furnace_side",
+		"3": "thuwumcraft:block/alchemical_furnace_top",
+		"particle": "thuwumcraft:block/alchemical_furnace_front"
 	},
 	"elements": [
 		{

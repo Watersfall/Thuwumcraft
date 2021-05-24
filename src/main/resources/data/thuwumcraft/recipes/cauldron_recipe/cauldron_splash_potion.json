@@ -1,14 +1,14 @@
 {
-	"type": "waters_alchemy_mod:cauldron_recipe",
+	"type": "thuwumcraft:cauldron_recipe",
 	"items": [
 		{
-			"item": "waters_alchemy_mod:throw_bottle"
+			"item": "thuwumcraft:throw_bottle"
 		}
 	],
 	"water_use": 333,
 	"action": "create_potion",
 	"output": "minecraft:splash_potion",
 	"research": [
-		"waters_alchemy_mod:special_potion_brewing"
+		"thuwumcraft:special_potion_brewing"
 	]
 }

@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.item;
+package net.watersfall.thuwumcraft.item;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -15,9 +15,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.alchemy.api.abilities.AbilityProvider;
-import net.watersfall.alchemy.api.sound.AlchemySounds;
-import net.watersfall.alchemy.screen.ResearchBookHandler;
+import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.screen.ResearchBookHandler;
 
 public class ResearchBookItem extends Item
 {

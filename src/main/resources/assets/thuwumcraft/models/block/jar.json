@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "waters_alchemy_mod:block/jar",
-		"particle": "waters_alchemy_mod:block/jar"
+		"0": "thuwumcraft:block/jar",
+		"particle": "thuwumcraft:block/jar"
 	},
 	"elements": [
 		{

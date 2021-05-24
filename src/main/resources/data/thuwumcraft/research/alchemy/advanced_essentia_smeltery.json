@@ -1,12 +1,12 @@
 {
 	"icon": "minecraft:furnace",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": 9,
 	"y": 2,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/essentia_smeltery",
-			"waters_alchemy_mod:alchemy/advanced_jars"
+			"thuwumcraft:alchemy/essentia_smeltery",
+			"thuwumcraft:alchemy/advanced_jars"
 		]
 	}
 }

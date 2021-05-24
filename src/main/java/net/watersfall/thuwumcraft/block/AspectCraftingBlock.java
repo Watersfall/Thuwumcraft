@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AspectCraftingBlock extends Block implements BlockEntityProvider
 {
-	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.waters_alchemy_mod.crystal_crafting_table");
+	public static final TranslatableText SCREEN_NAME = new TranslatableText("screen.thuwumcraft.crystal_crafting_table");
 
 	public AspectCraftingBlock(Settings settings)
 	{

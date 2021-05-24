@@ -1,39 +1,39 @@
 {
 	"icon":  [
 		{
-			"item": "waters_alchemy_mod:thuwumium_ingot"
+			"item": "thuwumcraft:thuwumium_ingot"
 		},
 		{
-			"item": "waters_alchemy_mod:brass_ingot"
+			"item": "thuwumcraft:brass_ingot"
 		}
 	],
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": 0,
 	"y": 0,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/basic_alchemy"
+			"thuwumcraft:alchemy/basic_alchemy"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:cauldron_item/brass_ingot",
-				"waters_alchemy_mod:cauldron_item/thuwumium_ingot"
+				"thuwumcraft:cauldron_item/brass_ingot",
+				"thuwumcraft:cauldron_item/thuwumium_ingot"
 			],
 			"requires_complete": false
 		},
 		{
 			"recipes": [
-				"waters_alchemy_mod:thuwumium_pickaxe",
-				"waters_alchemy_mod:thuwumium_axe",
-				"waters_alchemy_mod:thuwumium_shovel",
-				"waters_alchemy_mod:thuwumium_hoe",
-				"waters_alchemy_mod:thuwumium_sword",
-				"waters_alchemy_mod:thuwumium_helmet",
-				"waters_alchemy_mod:thuwumium_chestplate",
-				"waters_alchemy_mod:thuwumium_leggings",
-				"waters_alchemy_mod:thuwumium_boots"
+				"thuwumcraft:thuwumium_pickaxe",
+				"thuwumcraft:thuwumium_axe",
+				"thuwumcraft:thuwumium_shovel",
+				"thuwumcraft:thuwumium_hoe",
+				"thuwumcraft:thuwumium_sword",
+				"thuwumcraft:thuwumium_helmet",
+				"thuwumcraft:thuwumium_chestplate",
+				"thuwumcraft:thuwumium_leggings",
+				"thuwumcraft:thuwumium_boots"
 			],
 			"requires_complete": true
 		}

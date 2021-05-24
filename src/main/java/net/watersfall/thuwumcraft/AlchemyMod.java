@@ -102,7 +102,7 @@ import java.util.Set;
 
 public class AlchemyMod implements ModInitializer
 {
-	public static final String MOD_ID = "waters_alchemy_mod";
+	public static final String MOD_ID = "thuwumcraft";
 	private static Tag<Item> INGREDIENT_TAG;
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)

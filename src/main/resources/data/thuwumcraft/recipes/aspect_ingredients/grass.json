@@ -1,9 +1,9 @@
 {
-	"type": "waters_alchemy_mod:aspect_ingredient",
+	"type": "thuwumcraft:aspect_ingredient",
 	"item": "minecraft:grass_block",
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:water",
+			"aspect": "thuwumcraft:water",
 			"count": 5
 		}
 	]

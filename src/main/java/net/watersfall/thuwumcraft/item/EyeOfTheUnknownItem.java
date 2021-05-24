@@ -27,7 +27,7 @@ public class EyeOfTheUnknownItem extends Item
 				return text;
 			}
 		}
-		return new TranslatableText("item.waters_alchemy_mod.eye_of_the_known");
+		return new TranslatableText("item.thuwumcraft.eye_of_the_known");
 	}
 
 	public Text getClientName(ItemStack stack)
@@ -36,7 +36,7 @@ public class EyeOfTheUnknownItem extends Item
 		{
 			if(MinecraftClient.getInstance().getNetworkHandler().getAdvancementHandler().getManager().get(AlchemyMod.getId("into_the_unknown")) == null)
 			{
-				return new TranslatableText("item.waters_alchemy_mod.eye_of_the_unknown");
+				return new TranslatableText("item.thuwumcraft.eye_of_the_unknown");
 			}
 		}
 		return null;

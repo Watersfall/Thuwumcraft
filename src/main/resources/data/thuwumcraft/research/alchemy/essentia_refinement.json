@@ -1,11 +1,11 @@
 {
 	"icon": "minecraft:furnace",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": 9,
 	"y": -3,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/pipes"
+			"thuwumcraft:alchemy/pipes"
 		]
 	}
 }

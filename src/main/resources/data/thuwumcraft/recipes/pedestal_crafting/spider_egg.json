@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:spider_eye"
@@ -8,48 +8,48 @@
 			"item": "minecraft:spider_eye"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		}
 	],
 	"catalyst": {
-		"item": "waters_alchemy_mod:spawn_egg_base"
+		"item": "thuwumcraft:spawn_egg_base"
 	},
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:earth",
+			"aspect": "thuwumcraft:earth",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:water",
+			"aspect": "thuwumcraft:water",
 			"count": 20
 		}
 	],

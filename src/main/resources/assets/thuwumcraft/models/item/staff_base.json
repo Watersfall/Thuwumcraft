@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/staff",
-		"layer1": "waters_alchemy_mod:item/staff_overlay"
+		"layer0": "thuwumcraft:item/staff",
+		"layer1": "thuwumcraft:item/staff_overlay"
 	}
 }

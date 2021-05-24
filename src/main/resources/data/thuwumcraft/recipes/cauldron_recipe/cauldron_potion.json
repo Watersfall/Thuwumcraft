@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:cauldron_recipe",
+	"type": "thuwumcraft:cauldron_recipe",
 	"items": [
 		{
 			"item": "minecraft:glass_bottle"
@@ -9,6 +9,6 @@
 	"action": "create_potion",
 	"output": "minecraft:potion",
 	"research": [
-		"waters_alchemy_mod:beginner_brewing"
+		"thuwumcraft:beginner_brewing"
 	]
 }

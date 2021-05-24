@@ -1,8 +1,8 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/wand/core",
-		"layer1": "waters_alchemy_mod:item/wand/cap",
-		"layer2": "waters_alchemy_mod:item/wand/spell"
+		"layer0": "thuwumcraft:item/wand/core",
+		"layer1": "thuwumcraft:item/wand/cap",
+		"layer2": "thuwumcraft:item/wand/spell"
 	}
 }

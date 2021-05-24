@@ -1,10 +1,10 @@
 {
   "variants": {
     "powered=true": {
-      "model": "waters_alchemy_mod:block/brewing_cauldron"
+      "model": "thuwumcraft:block/brewing_cauldron"
     },
     "powered=false": {
-      "model": "waters_alchemy_mod:block/brewing_cauldron"
+      "model": "thuwumcraft:block/brewing_cauldron"
     }
   }
 }

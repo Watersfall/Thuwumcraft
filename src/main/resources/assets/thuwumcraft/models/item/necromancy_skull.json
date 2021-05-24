@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/necromancy_skull"
+		"layer0": "thuwumcraft:item/necromancy_skull"
 	}
 }

@@ -1,6 +1,6 @@
  {
    	"parent": "minecraft:item/generated",
    	"textures": {
-   		"layer0": "waters_alchemy_mod:block/cluster/order_crystal_medium"
+   		"layer0": "thuwumcraft:block/cluster/order_crystal_medium"
    	}
    }

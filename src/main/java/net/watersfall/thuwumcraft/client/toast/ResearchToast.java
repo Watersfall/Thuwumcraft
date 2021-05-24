@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.client.toast;
+package net.watersfall.thuwumcraft.client.toast;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.toast.Toast;
@@ -6,7 +6,7 @@ import net.minecraft.client.toast.ToastManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.watersfall.alchemy.api.research.Research;
+import net.watersfall.thuwumcraft.api.research.Research;
 
 public class ResearchToast implements Toast
 {

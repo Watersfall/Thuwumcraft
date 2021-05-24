@@ -1,19 +1,19 @@
 {
 	"icon": "minecraft:cauldron",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": 0,
 	"y": -4,
 	"complete_requirements": {
 		"inventory_required": [
 			"minecraft:cauldron",
-			"waters_alchemy_mod:witchy_spoon"
+			"thuwumcraft:witchy_spoon"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
 				"minecraft:cauldron",
-				"waters_alchemy_mod:witchy_spoon"
+				"thuwumcraft:witchy_spoon"
 			],
 			"requires_complete": false
 		}

@@ -1,24 +1,24 @@
 {
 	"icon": "minecraft:diamond",
-	"category": "waters_alchemy_mod:nekomancy",
+	"category": "thuwumcraft:nekomancy",
 	"x": 0,
 	"y": 6,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:nekomancy/basic_spawner_augmentation"
+			"thuwumcraft:nekomancy/basic_spawner_augmentation"
 		]
 	},
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:custom_spawner",
+			"thuwumcraft:custom_spawner",
 			"minecraft:diamond"
 		]
 	},
 	"tabs": [
 		{
 			"recipes": [
-				"waters_alchemy_mod:pedestal_crafting/spawner_fast",
-				"waters_alchemy_mod:pedestal_crafting/spawner_faster"
+				"thuwumcraft:pedestal_crafting/spawner_fast",
+				"thuwumcraft:pedestal_crafting/spawner_faster"
 			],
 			"requires_complete": true
 		}

@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/thuwumium_sword"
+		"layer0": "thuwumcraft:item/thuwumium_sword"
 	}
 }

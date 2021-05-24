@@ -1,5 +1,5 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:redstone"
@@ -13,18 +13,18 @@
 	],
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 10
 		},
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 20
 		}
 	],
 	"catalyst": {
-		"item": "waters_alchemy_mod:magical_coal_1"
+		"item": "thuwumcraft:magical_coal_1"
 	},
 	"output": {
-		"item": "waters_alchemy_mod:magical_coal_2"
+		"item": "thuwumcraft:magical_coal_2"
 	}
 }

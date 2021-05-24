@@ -1,6 +1,6 @@
 {
 	"icon": "minecraft:potion",
-	"category": "waters_alchemy_mod:alchemy",
+	"category": "thuwumcraft:alchemy",
 	"x": -4,
 	"y": -4,
 	"complete_requirements": {
@@ -10,12 +10,12 @@
 	},
 	"readable_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/basic_alchemy"
+			"thuwumcraft:alchemy/basic_alchemy"
 		]
 	},
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:alchemy/basic_alchemy"
+			"thuwumcraft:alchemy/basic_alchemy"
 		]
 	},
 	"tabs": [

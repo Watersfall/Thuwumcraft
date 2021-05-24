@@ -1,19 +1,19 @@
 {
-	"type": "waters_alchemy_mod:cauldron_item",
+	"type": "thuwumcraft:cauldron_item",
 	"catalyst": {
 		"item": "minecraft:iron_ingot"
 	},
 	"water_use": 50,
 	"inputs": [
 		{
-			"item": "waters_alchemy_mod:magic_dust"
+			"item": "thuwumcraft:magic_dust"
 		},
 		{
 			"item": "minecraft:amethyst_shard"
 		}
 	],
-	"output": "waters_alchemy_mod:thuwumium_ingot",
+	"output": "thuwumcraft:thuwumium_ingot",
 	"research": [
-		"waters_alchemy_mod:basic_alchemy"
+		"thuwumcraft:basic_alchemy"
 	]
 }

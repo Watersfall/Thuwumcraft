@@ -1,11 +1,11 @@
 {
-	"icon": "waters_alchemy_mod:thuwumium_axe",
-	"category": "waters_alchemy_mod:infusion",
+	"icon": "thuwumcraft:thuwumium_axe",
+	"category": "thuwumcraft:infusion",
 	"x": -6,
 	"y": 9,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:infusion/tool_infusion"
+			"thuwumcraft:infusion/tool_infusion"
 		]
 	}
 }

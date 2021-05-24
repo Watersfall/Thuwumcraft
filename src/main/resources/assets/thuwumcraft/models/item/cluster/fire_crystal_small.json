@@ -1,6 +1,6 @@
  {
    	"parent": "minecraft:item/generated",
    	"textures": {
-   		"layer0": "waters_alchemy_mod:block/cluster/fire_crystal_small"
+   		"layer0": "thuwumcraft:block/cluster/fire_crystal_small"
    	}
    }

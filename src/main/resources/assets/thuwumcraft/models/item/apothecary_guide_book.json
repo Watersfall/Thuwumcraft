@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/apothecary_guide_book"
+		"layer0": "thuwumcraft:item/apothecary_guide_book"
 	}
 }

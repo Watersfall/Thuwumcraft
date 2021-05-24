@@ -1,49 +1,49 @@
 {
 	"block.cauldron.add_ingredient": {
 		"sounds": [
-			"waters_alchemy_mod:swirl"
+			"thuwumcraft:swirl"
 		],
-		"subtitle": "sound.waters_alchemy_mod.water_swirl"
+		"subtitle": "sound.thuwumcraft.water_swirl"
 	},
 	"item.magic_dust.use": {
 		"sounds": [
-			"waters_alchemy_mod:magic"
+			"thuwumcraft:magic"
 		],
-		"subtitle": "sound.waters_alchemy_mod.magic"
+		"subtitle": "sound.thuwumcraft.magic"
 	},
 	"block.cauldron.bubble": {
 		"sounds": [
-			"waters_alchemy_mod:bubble/1",
-			"waters_alchemy_mod:bubble/2",
-			"waters_alchemy_mod:bubble/3",
-			"waters_alchemy_mod:bubble/4",
-			"waters_alchemy_mod:bubble/5",
-			"waters_alchemy_mod:bubble/6"
+			"thuwumcraft:bubble/1",
+			"thuwumcraft:bubble/2",
+			"thuwumcraft:bubble/3",
+			"thuwumcraft:bubble/4",
+			"thuwumcraft:bubble/5",
+			"thuwumcraft:bubble/6"
 		],
-		"subtitle": "sound.waters_alchemy_mod.bubble"
+		"subtitle": "sound.thuwumcraft.bubble"
 	},
 	"item.research_book.open": {
 		"sounds": [
-			"waters_alchemy_mod:research/open_book"
+			"thuwumcraft:research/open_book"
 		],
-		"subtitle": "sound.waters_alchemy_mod.page_flip"
+		"subtitle": "sound.thuwumcraft.page_flip"
 	},
 	"dimension.the_unknown.ringing": {
 		"sounds": [
-			"waters_alchemy_mod:ringing"
+			"thuwumcraft:ringing"
 		],
-		"subtitle": "sound.waters_alchemy_mod.ringing"
+		"subtitle": "sound.thuwumcraft.ringing"
 	},
 	"dimension.the_unknown.static": {
 		"sounds": [
-			"waters_alchemy_mod:static"
+			"thuwumcraft:static"
 		],
-		"subtitle": "sound.waters_alchemy_mod.static"
+		"subtitle": "sound.thuwumcraft.static"
 	},
 	"spell.pocket_sand": {
 		"sounds": [
-			"waters_alchemy_mod:pocket_sand"
+			"thuwumcraft:pocket_sand"
 		],
-		"subtitle": "sound.waters_alchemy_mod.spell.pocket_sand"
+		"subtitle": "sound.thuwumcraft.spell.pocket_sand"
 	}
 }

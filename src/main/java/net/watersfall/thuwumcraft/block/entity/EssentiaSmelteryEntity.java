@@ -31,7 +31,7 @@ import java.util.Optional;
 
 public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectInventory, BasicInventory, NamedScreenHandlerFactory, AspectContainer
 {
-	public static final TranslatableText TITLE = new TranslatableText("screen.waters_alchemy_mod.essentia_smeltery");
+	public static final TranslatableText TITLE = new TranslatableText("screen.thuwumcraft.essentia_smeltery");
 	private final DefaultedList<ItemStack> items;
 	private final HashMap<Aspect, AspectStack> aspects;
 	private int aspectCount;

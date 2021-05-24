@@ -1,16 +1,16 @@
 {
 	"icon": "minecraft:blaze_powder",
-	"category": "waters_alchemy_mod:nekomancy",
+	"category": "thuwumcraft:nekomancy",
 	"x": 4,
 	"y": 1,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:nekomancy/spawn_egg_crafting"
+			"thuwumcraft:nekomancy/spawn_egg_crafting"
 		]
 	},
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:spawn_egg_base",
+			"thuwumcraft:spawn_egg_base",
 			"minecraft:blaze_rod",
 			"minecraft:magma_cream",
 			"minecraft:ghast_tear"

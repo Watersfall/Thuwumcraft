@@ -1,46 +1,46 @@
 {
-	"type": "waters_alchemy_mod:pedestal_crafting",
+	"type": "thuwumcraft:pedestal_crafting",
 	"inputs": [
 		{
 			"item": "minecraft:rotten_flesh"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_leg"
+			"item": "thuwumcraft:necromancy_leg"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_skull"
+			"item": "thuwumcraft:necromancy_skull"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_arm"
+			"item": "thuwumcraft:necromancy_arm"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_arm"
+			"item": "thuwumcraft:necromancy_arm"
 		},
 		{
-			"item": "waters_alchemy_mod:necromancy_heart"
+			"item": "thuwumcraft:necromancy_heart"
 		}
 	],
 	"catalyst": {
-		"item": "waters_alchemy_mod:spawn_egg_base"
+		"item": "thuwumcraft:spawn_egg_base"
 	},
 	"aspects": [
 		{
-			"aspect": "waters_alchemy_mod:air",
+			"aspect": "thuwumcraft:air",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:earth",
+			"aspect": "thuwumcraft:earth",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:fire",
+			"aspect": "thuwumcraft:fire",
 			"count": 20
 		},
 		{
-			"aspect": "waters_alchemy_mod:water",
+			"aspect": "thuwumcraft:water",
 			"count": 20
 		}
 	],

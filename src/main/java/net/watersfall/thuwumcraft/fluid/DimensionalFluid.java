@@ -1,4 +1,4 @@
-package net.watersfall.alchemy.fluid;
+package net.watersfall.thuwumcraft.fluid;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,8 +14,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.watersfall.alchemy.block.AlchemyBlocks;
-import net.watersfall.alchemy.item.AlchemyItems;
+import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.item.AlchemyItems;
 
 public abstract class DimensionalFluid extends FlowableFluid
 {

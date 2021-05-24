@@ -15,7 +15,7 @@ import java.util.Set;
 
 public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSerializable<Entity>
 {
-	public static final Identifier ID = new Identifier("waters_alchemy_mod", "player_research_ability");
+	public static final Identifier ID = new Identifier("thuwumcraft", "player_research_ability");
 
 	Set<Identifier> getResearch();
 

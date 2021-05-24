@@ -1,16 +1,16 @@
 {
 	"icon": "minecraft:ender_pearl",
-	"category": "waters_alchemy_mod:nekomancy",
+	"category": "thuwumcraft:nekomancy",
 	"x": 8,
 	"y": 1,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:nekomancy/nether_mob_egg_crafting"
+			"thuwumcraft:nekomancy/nether_mob_egg_crafting"
 		]
 	},
 	"complete_requirements": {
 		"inventory_consumed": [
-			"waters_alchemy_mod:spawn_egg_base",
+			"thuwumcraft:spawn_egg_base",
 			"minecraft:ender_pearl",
 			"minecraft:shulker_shell"
 		]

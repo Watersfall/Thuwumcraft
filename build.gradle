@@ -53,7 +53,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 loom {
-    accessWidener "src/main/resources/waters_alchemy_mod.accesswidener"
+    accessWidener "src/main/resources/thuwumcraft.accesswidener"
 }
 
 jar {

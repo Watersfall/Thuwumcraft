@@ -1,18 +1,18 @@
 {
 	"variants": {
 		"facing=south": {
-			"model": "waters_alchemy_mod:block/alchemical_furnace"
+			"model": "thuwumcraft:block/alchemical_furnace"
 		},
 		"facing=north": {
-			"model": "waters_alchemy_mod:block/alchemical_furnace",
+			"model": "thuwumcraft:block/alchemical_furnace",
 			"y": 180
 		},
 		"facing=east": {
-			"model": "waters_alchemy_mod:block/alchemical_furnace",
+			"model": "thuwumcraft:block/alchemical_furnace",
 			"y": 270
 		},
 		"facing=west": {
-			"model": "waters_alchemy_mod:block/alchemical_furnace",
+			"model": "thuwumcraft:block/alchemical_furnace",
 			"y": 90
 		}
 	}

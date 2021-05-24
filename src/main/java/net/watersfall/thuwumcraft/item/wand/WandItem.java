@@ -169,27 +169,27 @@ public class WandItem extends Item
 			}
 			if(ability.getWandCore() != null)
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
 			}
 			else
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.core").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.core.none")));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.core").append(": ").append(new TranslatableText("item.thuwumcraft.wand.core.none")));
 			}
 			if(ability.getWandCap() != null)
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
 			}
 			else
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.cap").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.cap.none")));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.cap").append(": ").append(new TranslatableText("item.thuwumcraft.wand.cap.none")));
 			}
 			if(ability.getSpell() == null || ability.getSpell().spell() == null)
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new TranslatableText("item.waters_alchemy_mod.wand.spell.none")));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new TranslatableText("item.thuwumcraft.wand.spell.none")));
 			}
 			else
 			{
-				tooltip.add(new TranslatableText("item.waters_alchemy_mod.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
 			}
 		});
 	}

@@ -111,7 +111,7 @@ import java.util.function.Function;
 public class AlchemyModClient implements ClientModInitializer
 {
 	private static final Identifier UNKNOWN_VIGNETTE = AlchemyMod.getId("textures/misc/unknown_vignette.png");
-	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.waters_alchemy_mod.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
+	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
 	private static void registerEvents()

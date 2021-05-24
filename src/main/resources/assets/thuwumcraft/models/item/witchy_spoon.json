@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "waters_alchemy_mod:item/witchy_spoon"
+    "layer0": "thuwumcraft:item/witchy_spoon"
   }
 }

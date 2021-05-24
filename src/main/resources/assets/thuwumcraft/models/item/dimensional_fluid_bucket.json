@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/dimensional_fluid_bucket"
+		"layer0": "thuwumcraft:item/dimensional_fluid_bucket"
 	}
 }

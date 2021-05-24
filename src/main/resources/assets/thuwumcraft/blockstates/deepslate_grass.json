@@ -1,7 +1,7 @@
 {
 	"variants": {
 		"": {
-			"model": "waters_alchemy_mod:block/deepslate_grass"
+			"model": "thuwumcraft:block/deepslate_grass"
 		}
 	}
 }

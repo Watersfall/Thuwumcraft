@@ -382,7 +382,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 	@Override
 	public Text getDisplayName()
 	{
-		return new TranslatableText("container.waters_alchemy_mod.alchemical_furnace");
+		return new TranslatableText("container.thuwumcraft.alchemical_furnace");
 	}
 
 	private Inventory getInventory(int side)

@@ -10,10 +10,10 @@
 			"item": "minecraft:stick"
 		},
 		"X": {
-			"item": "waters_alchemy_mod:thuwumium_ingot"
+			"item": "thuwumcraft:thuwumium_ingot"
 		}
 	},
 	"result": {
-		"item": "waters_alchemy_mod:thuwumium_axe"
+		"item": "thuwumcraft:thuwumium_axe"
 	}
 }

@@ -1,8 +1,8 @@
-package net.watersfall.alchemy.api.client.gui;
+package net.watersfall.thuwumcraft.api.client.gui;
 
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.watersfall.alchemy.client.gui.element.RecipeElement;
+import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
 
 import java.util.HashMap;
 

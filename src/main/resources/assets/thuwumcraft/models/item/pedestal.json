@@ -1,5 +1,5 @@
 {
-	"parent": "waters_alchemy_mod:block/pedestal",
+	"parent": "thuwumcraft:block/pedestal",
 	"display": {
 		"gui": {
 			"rotation": [ 30, 45, 0 ],

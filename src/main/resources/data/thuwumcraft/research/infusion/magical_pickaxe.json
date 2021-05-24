@@ -1,11 +1,11 @@
 {
-	"icon": "waters_alchemy_mod:magic_pickaxe",
-	"category": "waters_alchemy_mod:infusion",
+	"icon": "thuwumcraft:magic_pickaxe",
+	"category": "thuwumcraft:infusion",
 	"x": -9,
 	"y": 5,
 	"research_requirements": {
 		"research": [
-			"waters_alchemy_mod:infusion/tool_infusion"
+			"thuwumcraft:infusion/tool_infusion"
 		]
 	}
 }

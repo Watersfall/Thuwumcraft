@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "waters_alchemy_mod:item/wand_of_holes"
+		"layer0": "thuwumcraft:item/wand_of_holes"
 	}
 }
