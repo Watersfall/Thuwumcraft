@@ -38,7 +38,8 @@ public interface BasicInventory extends Inventory
 	default ItemStack removeStack(int slot, int amount)
 	{
 		ItemStack currentStack = getContents().get(slot);
-		ItemStack returnStack = new ItemStack(currentStack.getItem(), amount);
+		ItemStack returnStack = currentStack.copy();
+		returnStack.setCount(amount);
 		currentStack.decrement(amount);
 		return returnStack;
 	}

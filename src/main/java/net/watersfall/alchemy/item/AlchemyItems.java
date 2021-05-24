@@ -19,8 +19,7 @@ import net.watersfall.alchemy.item.armor.AlchemistArmorItem;
 import net.watersfall.alchemy.item.armor.AlchemyArmorMaterials;
 import net.watersfall.alchemy.item.armor.SpeedBootsItem;
 import net.watersfall.alchemy.item.tool.*;
-import net.watersfall.alchemy.item.wand.WandFocusItem;
-import net.watersfall.alchemy.item.wand.WandItem;
+import net.watersfall.alchemy.item.wand.*;
 import net.watersfall.alchemy.spell.Spell;
 import net.watersfall.alchemy.spell.SpellAction;
 
@@ -101,6 +100,8 @@ public class AlchemyItems
 	public static final PortableHoleWand WAND_OF_HOLES;
 	public static final WandItem WAND;
 	public static final WandFocusItem WAND_FOCUS;
+	public static final WandCoreItem WOOD_CORE;
+	public static final WandCapItem IRON_CAP;
 	public static final List<Item> ITEMS;
 
 	static
@@ -181,6 +182,8 @@ public class AlchemyItems
 		WAND_OF_HOLES = register(AlchemyMod.getId("wand_of_holes"), new PortableHoleWand(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		WAND = register(AlchemyMod.getId("wand"), new WandItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		WAND_FOCUS = register(AlchemyMod.getId("wand_focus"), new WandFocusItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		WOOD_CORE = register(AlchemyMod.getId("wood_core"), new WandCoreItem(WandCoreMaterials.WOOD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		IRON_CAP = register(AlchemyMod.getId("iron_cap"), new WandCapItem(WandCapMaterials.IRON, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

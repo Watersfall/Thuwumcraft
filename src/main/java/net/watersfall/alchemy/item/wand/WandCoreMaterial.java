@@ -1,11 +1,12 @@
 package net.watersfall.alchemy.item.wand;
 
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public interface WandCoreMaterial
+public interface WandCoreMaterial extends WandComponent
 {
 	public static final Registry REGISTRY = new Registry();
 
@@ -30,6 +31,18 @@ public interface WandCoreMaterial
 		public final WandCoreMaterial get(Identifier id)
 		{
 			return map.get(id);
+		}
+
+		public final WandCoreMaterial getByItem(Item item)
+		{
+			for(WandCoreMaterial material : map.values())
+			{
+				if(material.getItemStack().isOf(item))
+				{
+					return material;
+				}
+			}
+			return null;
 		}
 	}
 }

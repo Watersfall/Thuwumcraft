@@ -11,4 +11,9 @@ public class WandCoreItem extends Item
 		super(settings);
 		this.material = material;
 	}
+
+	public WandCoreMaterial getMaterial()
+	{
+		return this.material;
+	}
 }

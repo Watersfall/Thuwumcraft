@@ -58,14 +58,28 @@ public class WandAbilityImpl implements WandAbility
 	public void setWandCap(WandCapMaterial cap)
 	{
 		this.cap = cap;
-		tag.putString("cap", cap.getId().toString());
+		if(cap == null)
+		{
+			tag.putString("cap", "");
+		}
+		else
+		{
+			tag.putString("cap", cap.getId().toString());
+		}
 	}
 
 	@Override
 	public void setWandCore(WandCoreMaterial core)
 	{
 		this.core = core;
-		tag.putString("core", core.getId().toString());
+		if(core == null)
+		{
+			tag.putString("core", "");
+		}
+		else
+		{
+			tag.putString("core", core.getId().toString());
+		}
 	}
 
 	@Override
@@ -102,7 +116,7 @@ public class WandAbilityImpl implements WandAbility
 	@Override
 	public boolean canCharge(CapRechargeType type)
 	{
-		return type == getWandCap().getRechargeType() && getVis() < getWandCore().getMaxVis();
+		return getWandCap() != null && getWandCore() != null && type == getWandCap().getRechargeType() && getVis() < getWandCore().getMaxVis();
 	}
 
 	@Override

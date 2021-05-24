@@ -14,6 +14,7 @@ public class AlchemyScreenHandlers
 	public static final ScreenHandlerType<AspectCraftingHandler> ASPECT_CRAFTING_HANDLER;
 	public static final ScreenHandlerType<PotionSprayerHandler> POTION_SPRAYER_HANDLER;
 	public static final ScreenHandlerType<EssentiaSmelteryHandler> ESSENTIA_SMELTERY_HANDLER;
+	public static final ScreenHandlerType<WandWorkbenchHandler> WAND_WORKBENCH;
 
 	static
 	{
@@ -24,5 +25,6 @@ public class AlchemyScreenHandlers
 		ASPECT_CRAFTING_HANDLER = ScreenHandlerRegistry.registerExtended(getId("aspect_crafting_handler"), AspectCraftingHandler::new);
 		POTION_SPRAYER_HANDLER = ScreenHandlerRegistry.registerSimple(getId("potion_sprayer_handler"), PotionSprayerHandler::new);
 		ESSENTIA_SMELTERY_HANDLER = ScreenHandlerRegistry.registerSimple(getId("essentia_smeltery_handler"), EssentiaSmelteryHandler::new);
+		WAND_WORKBENCH = ScreenHandlerRegistry.registerSimple(getId("wand_workbench"), WandWorkbenchHandler::new);
 	}
 }

@@ -34,6 +34,7 @@ public class AlchemyBlocks
 	public static final LeavesBlock SILVERWOOD_LEAVES;
 	public static final PillarBlock SILVERWOOD_LOG;
 	public static final PortableHoleBlock PORTABLE_HOLE_BLOCK;
+	public static final WandWorkbenchBlock WAND_WORKBENCH;
 
 	static
 	{
@@ -62,6 +63,7 @@ public class AlchemyBlocks
 		SILVERWOOD_LEAVES = register(AlchemyMod.getId("silverwood_leaves"), new LeavesBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
 		SILVERWOOD_LOG = register(AlchemyMod.getId("silverwood_log"), new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)));
 		PORTABLE_HOLE_BLOCK = register(AlchemyMod.getId("portable_hole"), new PortableHoleBlock(FabricBlockSettings.copyOf(Blocks.AIR).luminance(5)));
+		WAND_WORKBENCH = register(AlchemyMod.getId("wand_workbench"), new WandWorkbenchBlock(FabricBlockSettings.of(Material.WOOD)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

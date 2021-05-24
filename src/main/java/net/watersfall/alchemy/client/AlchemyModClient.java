@@ -363,6 +363,7 @@ public class AlchemyModClient implements ClientModInitializer
 		ScreenRegistry.register(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, AspectCraftingScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
 		ScreenRegistry.register(AlchemyScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
+		ScreenRegistry.register(AlchemyScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				AlchemyBlocks.CUSTOM_SPAWNER,

@@ -27,6 +27,7 @@ public class AlchemyBlockEntities
 	public static final BlockEntityType<EssentiaRefineryBlockEntity> ESSENTIA_REFINERY;
 	public static final BlockEntityType<ArcaneLampEntity> ARCANE_LAMP_ENTITY;
 	public static final BlockEntityType<PortableHoleBlockEntity> PORTABLE_HOLE_ENTITY;
+	public static final BlockEntityType<WandWorkbenchEntity> WAND_WORKBENCH;
 
 	static
 	{
@@ -47,6 +48,7 @@ public class AlchemyBlockEntities
 		ESSENTIA_REFINERY = register("essentia_refinery", EssentiaRefineryBlockEntity::new, AlchemyBlocks.ESSENTIA_REFINERY_BLOCK);
 		ARCANE_LAMP_ENTITY = register("arcane_lamp_entity", ArcaneLampEntity::new, AlchemyBlocks.ARCANE_LAMP_BLOCK);
 		PORTABLE_HOLE_ENTITY = register("portable_hole", PortableHoleBlockEntity::new, AlchemyBlocks.PORTABLE_HOLE_BLOCK);
+		WAND_WORKBENCH = register("wand_workbench", WandWorkbenchEntity::new, AlchemyBlocks.WAND_WORKBENCH);
 	}
 
 	public static void register()
