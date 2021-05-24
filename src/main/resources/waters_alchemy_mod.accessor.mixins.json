@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "net.watersfall.alchemy.accessor",
+	"package": "net.watersfall.thuwumcraft.accessor",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
 		"ShapedRecipeAccessor",
