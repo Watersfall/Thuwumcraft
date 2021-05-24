@@ -2,7 +2,7 @@ package net.watersfall.thuwumcraft.block;
 
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
@@ -87,7 +87,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 		{
 			ItemStack inputStack = new ItemStack(item);
 			entity.setInput(inputStack);
-			Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
+			Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
 			if(typeOptional.isPresent())
 			{
 				CauldronIngredientRecipe typeRecipe = typeOptional.get();
@@ -95,7 +95,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 				{
 					if(!world.isClient)
 					{
-						Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
+						Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
 						if(!optional.isPresent())
 						{
 							player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
@@ -126,7 +126,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 					return ActionResult.success(world.isClient);
 				}
 			}
-			Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_ITEM_RECIPE, entity, world);
+			Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, entity, world);
 			if(itemOptional.isPresent())
 			{
 				CauldronItemRecipe recipe = itemOptional.get();

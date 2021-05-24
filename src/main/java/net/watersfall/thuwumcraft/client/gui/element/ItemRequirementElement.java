@@ -11,13 +11,13 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.List;
 
 public class ItemRequirementElement extends ItemElement
 {
-	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 	private static final TranslatableText CONSUMED_TEXT = new TranslatableText("consumed");
 
 	private final boolean consumed;

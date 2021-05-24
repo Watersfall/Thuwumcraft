@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.block.entity.CrucibleEntity;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CrucibleRecipe;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +43,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 			if(!stack.isEmpty())
 			{
 				entity.setCurrentInput(stack);
-				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.CRUCIBLE_RECIPE, entity, world);
+				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CRUCIBLE_RECIPE, entity, world);
 				if(crucibleOptional.isPresent())
 				{
 					CrucibleRecipe recipe = crucibleOptional.get();
@@ -63,7 +63,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 						return ActionResult.success(world.isClient);
 					}
 				}
-				Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, entity, world);
+				Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, entity, world);
 				if(aspectOptional.isPresent())
 				{
 					if(!world.isClient)

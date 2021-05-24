@@ -27,7 +27,7 @@ public class PotionSprayerEntity extends BlockEntity implements BrewingCauldronI
 
 	public PotionSprayerEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.POTION_SPRAYER, pos, state);
+		super(ThuwumcraftBlockEntities.POTION_SPRAYER, pos, state);
 		contents = DefaultedList.ofSize(3, ItemStack.EMPTY);
 	}
 

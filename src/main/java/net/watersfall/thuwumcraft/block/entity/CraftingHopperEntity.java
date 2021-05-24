@@ -35,7 +35,7 @@ public class CraftingHopperEntity extends BlockEntity
 
 	public CraftingHopperEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.CRAFTING_HOPPER, pos, state);
+		super(ThuwumcraftBlockEntities.CRAFTING_HOPPER, pos, state);
 	}
 
 	private Inventory getExtractInventory(World world, BlockPos pos, Direction direction)

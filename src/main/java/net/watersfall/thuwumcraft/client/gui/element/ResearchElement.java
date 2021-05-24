@@ -12,7 +12,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class ResearchElement extends ItemElement
 {
-	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 	private static final Identifier FONT_ID = new Identifier("minecraft", "alt");
 	private static final Style STYLE = Style.EMPTY.withFont(FONT_ID);
 

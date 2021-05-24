@@ -41,7 +41,7 @@ public class AspectCraftingHandler extends ScreenHandler
 
 	public AspectCraftingHandler(int syncId, PlayerInventory playerInventory, AspectCraftingEntity inventory, ScreenHandlerContext context, BlockPos pos)
 	{
-		super(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.ASPECT_CRAFTING_HANDLER, syncId);
 		this.context = context;
 		this.player = playerInventory.player;
 

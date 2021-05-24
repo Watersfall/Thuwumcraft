@@ -21,7 +21,7 @@ public class AspectCraftingEntity extends BlockEntity
 
 	public AspectCraftingEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.ASPECT_CRAFTING_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ASPECT_CRAFTING_ENTITY, pos, state);
 		this.contents = DefaultedList.ofSize(16, ItemStack.EMPTY);
 		handlers = new HashSet<>();
 	}

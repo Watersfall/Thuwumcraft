@@ -8,7 +8,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ResearchScreen extends Screen
 {
-	public static final Identifier BACKGROUND = AlchemyMod.getId("textures/gui/research/research_page.png");
+	public static final Identifier BACKGROUND = Thuwumcraft.getId("textures/gui/research/research_page.png");
 
 	private final PlayerResearchAbility ability = AbilityProvider.getProvider(MinecraftClient.getInstance().player)
 			.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();

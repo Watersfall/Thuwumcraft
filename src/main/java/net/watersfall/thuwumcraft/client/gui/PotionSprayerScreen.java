@@ -7,12 +7,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.screen.PotionSprayerHandler;
 
 public class PotionSprayerScreen extends HandledScreen<PotionSprayerHandler>
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/potion_sprayer.png");
+	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/potion_sprayer.png");
 
 	public PotionSprayerScreen(PotionSprayerHandler handler, PlayerInventory inventory, Text title)
 	{

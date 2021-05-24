@@ -4,7 +4,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Lazy;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 
@@ -14,7 +14,7 @@ public enum AlchemyToolMaterials implements ToolMaterial
 		return Ingredient.ofItems(Items.AMETHYST_SHARD);
 	}),
 	THUWUMIUM(512, 7.0F, 2.5F, 2, 25, () -> {
-		return Ingredient.ofItems(AlchemyItems.THUWUMIUM_INGOT);
+		return Ingredient.ofItems(ThuwumcraftItems.THUWUMIUM_INGOT);
 	});
 
 	private final int durability;

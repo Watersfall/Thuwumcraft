@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
@@ -19,8 +19,8 @@ import net.watersfall.thuwumcraft.client.util.PageCounter;
 
 public class ResearchTab extends Screen
 {
-	private static final Identifier BACKGROUND_TEXTURE = AlchemyMod.getId("textures/gui/research/research_tab.png");
-	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier BACKGROUND_TEXTURE = Thuwumcraft.getId("textures/gui/research/research_tab.png");
+	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 
 	private int x;
 	private int y;

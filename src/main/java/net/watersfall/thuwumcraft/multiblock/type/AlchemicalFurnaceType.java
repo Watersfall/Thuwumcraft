@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockType;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceFuelComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceInputComponent;
@@ -94,10 +94,10 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		components[AlchemicalFurnaceMultiBlock.TOP_RIGHT] = new AlchemicalFurnaceComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.TOP_RIGHT]);
 		components[AlchemicalFurnaceMultiBlock.INPUT] = new AlchemicalFurnaceInputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.INPUT]);
 		components[AlchemicalFurnaceMultiBlock.OUTPUT] = new AlchemicalFurnaceOutputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.OUTPUT]);
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], AlchemyBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());
 		MultiBlockRegistry.SERVER_TICKER.add(multiBlock);
 		return multiBlock;
 	}

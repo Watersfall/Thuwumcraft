@@ -25,7 +25,7 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 
 	public AlchemicalFurnaceHandler(int syncId, PlayerInventory playerInventory, Inventory input, Inventory output, Inventory fuel, PropertyDelegate properties)
 	{
-		super(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, syncId);
 		this.input = input;
 		this.output = output;
 		this.properties = properties;

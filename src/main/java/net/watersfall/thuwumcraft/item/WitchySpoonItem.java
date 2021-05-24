@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.item;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
@@ -17,7 +17,7 @@ public class WitchySpoonItem extends Item
 
 	public WitchySpoonItem()
 	{
-		super(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
+		super(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class WitchySpoonItem extends Item
 		BlockState state = context.getWorld().getBlockState(context.getBlockPos());
 		if(state.getBlock() == Blocks.CAULDRON)
 		{
-			context.getWorld().setBlockState(context.getBlockPos(), AlchemyBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
+			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
 		}
-		else if(state.getBlock() == AlchemyBlocks.BREWING_CAULDRON_BLOCK)
+		else if(state.getBlock() == ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK)
 		{
-			context.getWorld().setBlockState(context.getBlockPos(), AlchemyBlocks.CRUCIBLE_BLOCK.getDefaultState());
+			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.CRUCIBLE_BLOCK.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
 		}
 		else

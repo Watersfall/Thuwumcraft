@@ -91,13 +91,13 @@ public class NekomancyRecipe implements Recipe<NekomancerTableInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.NEKOMANCY_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.NEKOMANCY_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.NEKOMANCY_RECIPE;
+		return ThuwumcraftRecipes.NEKOMANCY_RECIPE;
 	}
 
 	@Override

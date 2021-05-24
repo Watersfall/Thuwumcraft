@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class SpecialPickaxeItem extends PickaxeItem
 
 	public SpecialPickaxeItem()
 	{
-		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
+		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
 	}
 
 	@Override

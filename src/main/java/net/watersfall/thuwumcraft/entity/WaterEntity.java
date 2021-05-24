@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public class WaterEntity extends Entity
 
 	public WaterEntity(World world, Entity owner)
 	{
-		super(AlchemyEntities.WATER_ENTITY, world);
+		super(ThuwumcraftEntities.WATER_ENTITY, world);
 		if(owner != null)
 		{
 			this.owner = owner;
@@ -162,6 +162,6 @@ public class WaterEntity extends Entity
 		buf.writeFloat(this.pitch);
 		buf.writeFloat(this.yaw);
 		buf.writeVarInt(-1);
-		return ServerPlayNetworking.createS2CPacket(AlchemyMod.getId("spawn_packet"), buf);
+		return ServerPlayNetworking.createS2CPacket(Thuwumcraft.getId("spawn_packet"), buf);
 	}
 }

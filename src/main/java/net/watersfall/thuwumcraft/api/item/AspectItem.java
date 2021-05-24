@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 
 /**
@@ -12,7 +12,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
  */
 public class AspectItem extends Item
 {
-	private static final ItemGroup ASPECT_GROUP = FabricItemGroupBuilder.build(AlchemyMod.getId("aspect_group"), () -> Aspects.AIR.getItem().getDefaultStack());
+	private static final ItemGroup ASPECT_GROUP = FabricItemGroupBuilder.build(Thuwumcraft.getId("aspect_group"), () -> Aspects.AIR.getItem().getDefaultStack());
 
 	public AspectItem()
 	{

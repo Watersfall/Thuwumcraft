@@ -93,13 +93,13 @@ public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.CRUCIBLE_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.CRUCIBLE_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.CRUCIBLE_RECIPE;
+		return ThuwumcraftRecipes.CRUCIBLE_RECIPE;
 	}
 
 	public static class Serializer implements RecipeSerializer<CrucibleRecipe>

@@ -75,7 +75,7 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE;
+		return ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE;
 	}
 
 	public Ingredient getInput()

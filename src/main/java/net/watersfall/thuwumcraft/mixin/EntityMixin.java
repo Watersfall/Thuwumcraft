@@ -13,7 +13,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.Ability;
@@ -156,11 +156,11 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 		PacketByteBuf buf = this.toPacket(PacketByteBufs.create());
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet"), buf);
+			ServerPlayNetworking.send((ServerPlayerEntity)entity, Thuwumcraft.getId("abilities_packet"), buf);
 		}
 		for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 		{
-			ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+			ServerPlayNetworking.send(player, Thuwumcraft.getId("abilities_packet"), buf);
 		}
 	}
 

@@ -10,7 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.EssentiaSmelteryEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,6 +42,6 @@ public class EssentiaSmeltery extends AbstractFurnaceBlock implements BlockEntit
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY, EssentiaSmelteryEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY, EssentiaSmelteryEntity::tick);
 	}
 }

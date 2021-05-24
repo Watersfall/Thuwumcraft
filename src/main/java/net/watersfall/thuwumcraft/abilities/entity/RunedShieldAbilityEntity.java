@@ -9,7 +9,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.common.RunedShieldAbility;
@@ -19,7 +19,7 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 	private int shieldAmount;
 	private int maxShieldAmount;
 	private int rechargeRate;
-	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
+	public static final Identifier ID = Thuwumcraft.getId("runed_shield_ability");
 
 	public RunedShieldAbilityEntity(NbtCompound tag, Entity entity)
 	{
@@ -140,11 +140,11 @@ public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, Abi
 		provider.toPacket(buf);
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			ServerPlayNetworking.send((ServerPlayerEntity)entity, AlchemyMod.getId("abilities_packet"), buf);
+			ServerPlayNetworking.send((ServerPlayerEntity)entity, Thuwumcraft.getId("abilities_packet"), buf);
 		}
 		for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 		{
-			ServerPlayNetworking.send(player, AlchemyMod.getId("abilities_packet"), buf);
+			ServerPlayNetworking.send(player, Thuwumcraft.getId("abilities_packet"), buf);
 		}
 	}
 }

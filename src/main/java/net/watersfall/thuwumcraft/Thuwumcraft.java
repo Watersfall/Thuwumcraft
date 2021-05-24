@@ -75,24 +75,24 @@ import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyBlockTags;
 import net.watersfall.thuwumcraft.api.tag.AlchemyEntityTags;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
-import net.watersfall.thuwumcraft.effect.AlchemyStatusEffects;
-import net.watersfall.thuwumcraft.fluid.AlchemyFluids;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
+import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.tool.SpecialPickaxeItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
-import net.watersfall.thuwumcraft.world.biome.AlchemyBiomes;
-import net.watersfall.thuwumcraft.world.feature.AlchemyFeatures;
-import net.watersfall.thuwumcraft.world.feature.structure.AlchemyStructureFeatures;
-import net.watersfall.thuwumcraft.world.structure.AlchemyStructurePieceTypes;
+import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
+import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
+import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
+import net.watersfall.thuwumcraft.world.structure.ThuwumcraftStructurePieceTypes;
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
 
 import java.util.HashSet;
@@ -100,7 +100,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public class AlchemyMod implements ModInitializer
+public class Thuwumcraft implements ModInitializer
 {
 	public static final String MOD_ID = "thuwumcraft";
 	private static Tag<Item> INGREDIENT_TAG;
@@ -108,7 +108,7 @@ public class AlchemyMod implements ModInitializer
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
 		Set<Item> set = new HashSet<>();
-		server.getRecipeManager().listAllOfType(AlchemyRecipes.CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.getInput().getItem()));
+		server.getRecipeManager().listAllOfType(ThuwumcraftRecipes.CAULDRON_INGREDIENTS).forEach((item) -> set.add(item.getInput().getItem()));
 		return set;
 	}
 
@@ -163,7 +163,7 @@ public class AlchemyMod implements ModInitializer
 				otherProvider.getAbility(WandFocusAbility.ID, WandFocusAbility.class).ifPresent(focus -> {
 					if(wand.getSpell() != null && wand.getSpell().spell() != null)
 					{
-						ItemStack newFocus = new ItemStack(AlchemyItems.WAND_FOCUS);
+						ItemStack newFocus = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
 						AbilityProvider<ItemStack> newFocusProvider = AbilityProvider.getProvider(newFocus);
 						newFocusProvider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), newFocus));
 						player.getInventory().setStack(index, newFocus);
@@ -182,7 +182,7 @@ public class AlchemyMod implements ModInitializer
 			handProvider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
 				if(wand.getSpell() != null && wand.getSpell().spell() != null)
 				{
-					ItemStack stack = new ItemStack(AlchemyItems.WAND_FOCUS);
+					ItemStack stack = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
 					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 					provider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), stack));
 					if(!player.giveItemStack(stack))
@@ -230,13 +230,13 @@ public class AlchemyMod implements ModInitializer
 			}
 		});
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
-		DispenserBlock.registerBehavior(AlchemyItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
+		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
 			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
 			{
 				World world = pointer.getWorld();
 				PedestalEntity entity = (PedestalEntity) world.getBlockEntity(pointer.getBlockPos().offset(direction));
-				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(AlchemyRecipes.PEDESTAL_RECIPE, entity, world);
+				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL_RECIPE, entity, world);
 				recipeOptional.ifPresent(entity::beginCraft);
 			}
 			return stack;
@@ -245,8 +245,8 @@ public class AlchemyMod implements ModInitializer
 			Block block = state.getBlock();
 			ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
 			Item item = stack.getItem();
-			if(item == AlchemyItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock)
-					|| (item == AlchemyItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
+			if(item == ThuwumcraftItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock)
+					|| (item == ThuwumcraftItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
 			{
 				BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
 				if(breakPos.equals(pos))
@@ -303,7 +303,7 @@ public class AlchemyMod implements ModInitializer
 			{
 				FabricLootPoolBuilder pool = FabricLootPoolBuilder.builder()
 						.rolls(ConstantLootNumberProvider.create(1))
-						.withEntry(ItemEntry.builder(AlchemyItems.SNOW_STAFF)
+						.withEntry(ItemEntry.builder(ThuwumcraftItems.SNOW_STAFF)
 								.conditionally(RandomChanceLootCondition.builder(0.25F))
 								.build()
 						);
@@ -315,11 +315,11 @@ public class AlchemyMod implements ModInitializer
 				Optional<EntityType<?>> optional = EntityType.get(path[path.length - 1]);
 				if(optional.isPresent())
 				{
-					generateNecromancyDrop(AlchemyItems.NECROMANCY_SKULL, supplier, AlchemyEntityTags.DROPS_HEAD);
-					generateNecromancyDrop(AlchemyItems.NECROMANCY_ARM, supplier, AlchemyEntityTags.DROPS_ARM);
-					generateNecromancyDrop(AlchemyItems.NECROMANCY_LEG, supplier, AlchemyEntityTags.DROPS_LEG);
-					generateNecromancyDrop(AlchemyItems.NECROMANCY_HEART, supplier, AlchemyEntityTags.DROPS_HEART);
-					generateNecromancyDrop(AlchemyItems.NECROMANCY_RIBCAGE, supplier, AlchemyEntityTags.DROPS_RIBCAGE);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_SKULL, supplier, AlchemyEntityTags.DROPS_HEAD);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_ARM, supplier, AlchemyEntityTags.DROPS_ARM);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_LEG, supplier, AlchemyEntityTags.DROPS_LEG);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_HEART, supplier, AlchemyEntityTags.DROPS_HEART);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_RIBCAGE, supplier, AlchemyEntityTags.DROPS_RIBCAGE);
 				}
 			}
 		}));
@@ -378,33 +378,33 @@ public class AlchemyMod implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		AlchemyStatusEffects.register();
-		AlchemyRecipes.register();
-		AlchemyBlockEntities.register();
-		AlchemyFluids.register();
+		ThuwumcraftStatusEffects.register();
+		ThuwumcraftRecipes.register();
+		ThuwumcraftBlockEntities.register();
+		ThuwumcraftFluids.register();
 		registerEvents();
 		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
 		registerNetwork();
-		AlchemyFeatures.register();
+		ThuwumcraftFeatures.register();
 		AlchemyEntityTags.register();
-		AlchemyBiomes.register();
-		AlchemyStructurePieceTypes.register();
-		AlchemyStructureFeatures.register();
+		ThuwumcraftBiomes.register();
+		ThuwumcraftStructurePieceTypes.register();
+		ThuwumcraftStructureFeatures.register();
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {
 			return (AspectContainer)entity;
-		}, AlchemyBlocks.ASPECT_PIPE_BLOCK);
+		}, ThuwumcraftBlocks.ASPECT_PIPE_BLOCK);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			if(direction == null || direction == Direction.UP)
 			{
 				return (AspectContainer)entity;
 			}
 			return null;
-		}, AlchemyBlockEntities.JAR_ENTITY);
+		}, ThuwumcraftBlockEntities.JAR_ENTITY);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			if(direction == null)
 			{
@@ -417,25 +417,25 @@ public class AlchemyMod implements ModInitializer
 				return (AspectContainer)entity;
 			}
 			return null;
-		}, AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY);
+		}, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			return (AspectContainer)entity;
-		}, AlchemyBlockEntities.ESSENTIA_REFINERY);
+		}, ThuwumcraftBlockEntities.ESSENTIA_REFINERY);
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.EARTH_CRYSTAL_GEODE).get());
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE).get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.NETHER_GEODE).get());
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.NETHER_GEODE).get());
 		BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.BASALT_DELTA_GEODE).get());
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.BASALT_DELTA_GEODE).get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.DIMENSIONAL_LAKE).get());
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.DIMENSIONAL_LAKE).get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.VEGETAL_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(AlchemyFeatures.SILVERWOOD_TREE).get());
+				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE).get());
 		VillageAdditions.register();
 	}
 }

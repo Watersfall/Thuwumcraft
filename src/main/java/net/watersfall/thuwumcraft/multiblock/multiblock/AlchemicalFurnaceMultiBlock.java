@@ -22,7 +22,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.thuwumcraft.api.multiblock.*;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.thuwumcraft.block.entity.ChildBlockEntity;
 import net.watersfall.thuwumcraft.item.MagicalCoalItem;
@@ -176,7 +176,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
-			if(block == AlchemyBlocks.CHILD_BLOCK || block == AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK)
+			if(block == ThuwumcraftBlocks.CHILD_BLOCK || block == ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK)
 			{
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState().with(FurnaceBlock.FACING, direction));
 			}

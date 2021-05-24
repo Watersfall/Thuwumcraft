@@ -7,7 +7,7 @@ import net.minecraft.structure.pool.StructurePoolElement;
 import net.minecraft.structure.processor.StructureProcessorLists;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.world.structure.pool.SpecialSinglePoolElement;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class VillageAdditions
 {
 	public static void register()
 	{
-		addStructure(new Identifier("village/plains/houses"), AlchemyMod.getId("village/plains/wizard_towers/wizard_tower_0"), 10);
+		addStructure(new Identifier("village/plains/houses"), Thuwumcraft.getId("village/plains/wizard_towers/wizard_tower_0"), 10);
 	}
 
 	private static void addStructure(Identifier poolId, Identifier addId, int weight)

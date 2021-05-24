@@ -12,7 +12,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
@@ -87,7 +87,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.ASPECT_SHAPED_SERIALIZER;
+		return ThuwumcraftRecipes.ASPECT_SHAPED_SERIALIZER;
 	}
 
 	@Override
@@ -123,13 +123,13 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, JsonObject json)
 		{
-			ResearchUnlockedShapedRecipe recipe = AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, json);
+			ResearchUnlockedShapedRecipe recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, json);
 			JsonArray array = JsonHelper.getArray(json, "crystals");
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < array.size(); i++)
 			{
 				JsonObject object = array.get(i).getAsJsonObject();
-				Item crystal = Aspects.ASPECT_TO_CRYSTAL.get(Aspects.getAspectById(AlchemyMod.getId(object.get("aspect").getAsString())));
+				Item crystal = Aspects.ASPECT_TO_CRYSTAL.get(Aspects.getAspectById(Thuwumcraft.getId(object.get("aspect").getAsString())));
 				int count = object.get("count").getAsInt();
 				list.add(new ItemStack(crystal, count));
 			}
@@ -140,7 +140,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			ResearchUnlockedShapedRecipe recipe = AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, buf);
+			ResearchUnlockedShapedRecipe recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, buf);
 			int size = buf.readInt();
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < size; i++)
@@ -154,7 +154,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public void write(PacketByteBuf buf, AspectCraftingShapedRecipe recipe)
 		{
-			AlchemyRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.write(buf, recipe.recipe);
+			ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.write(buf, recipe.recipe);
 			buf.writeInt(recipe.aspects.size());
 			for(int i = 0; i < recipe.aspects.size(); i++)
 			{

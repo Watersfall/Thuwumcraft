@@ -22,14 +22,14 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.AlchemyMod;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 public class IceProjectileEntity extends ThrownItemEntity
 {
 	public IceProjectileEntity(World world, LivingEntity owner)
 	{
-		super(AlchemyEntities.ICE_PROJECTILE, owner, world);
+		super(ThuwumcraftEntities.ICE_PROJECTILE, owner, world);
 	}
 
 	public IceProjectileEntity(EntityType<IceProjectileEntity> type, World world)
@@ -40,7 +40,7 @@ public class IceProjectileEntity extends ThrownItemEntity
 	@Override
 	protected Item getDefaultItem()
 	{
-		return AlchemyItems.ICE_PROJECTILE_ITEM;
+		return ThuwumcraftItems.ICE_PROJECTILE_ITEM;
 	}
 
 
@@ -126,6 +126,6 @@ public class IceProjectileEntity extends ThrownItemEntity
 		{
 			buf.writeVarInt(this.getOwner().getId());
 		}
-		return ServerPlayNetworking.createS2CPacket(AlchemyMod.getId("spawn_packet"), buf);
+		return ServerPlayNetworking.createS2CPacket(Thuwumcraft.getId("spawn_packet"), buf);
 	}
 }

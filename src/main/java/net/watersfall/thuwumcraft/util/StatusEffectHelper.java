@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.util;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffect;
@@ -37,9 +37,9 @@ public class StatusEffectHelper
 
 	public static Set<StatusEffectInstance> getEffects(BrewingCauldronInventory inventory, RecipeManager manager, World world)
 	{
-		Optional<CauldronIngredient> optional1 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(0), world);
-		Optional<CauldronIngredient> optional2 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(1), world);
-		Optional<CauldronIngredient> optional3 = manager.getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, inventory.withInput(2), world);
+		Optional<CauldronIngredient> optional1 = manager.getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, inventory.withInput(0), world);
+		Optional<CauldronIngredient> optional2 = manager.getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, inventory.withInput(1), world);
+		Optional<CauldronIngredient> optional3 = manager.getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, inventory.withInput(2), world);
 		if(!optional1.isPresent() || !optional2.isPresent())
 		{
 			return INVALID_RECIPE;

@@ -15,7 +15,7 @@ public class PipeEntity extends BlockEntity implements AspectContainer
 
 	public PipeEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.ASPECT_PIPE_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ASPECT_PIPE_ENTITY, pos, state);
 		this.stack = AspectStack.EMPTY;
 	}
 

@@ -14,32 +14,32 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 public abstract class DimensionalFluid extends FlowableFluid
 {
 	@Override
 	public Fluid getFlowing()
 	{
-		return AlchemyFluids.DIMENSIONAL_FLOWING;
+		return ThuwumcraftFluids.DIMENSIONAL_FLOWING;
 	}
 
 	@Override
 	public Fluid getStill()
 	{
-		return AlchemyFluids.DIMENSIONAL_STILL;
+		return ThuwumcraftFluids.DIMENSIONAL_STILL;
 	}
 
 	@Override
 	public Item getBucketItem()
 	{
-		return AlchemyItems.DIMENSIONAL_FLUID_BUCKET;
+		return ThuwumcraftItems.DIMENSIONAL_FLUID_BUCKET;
 	}
 
 	public BlockState toBlockState(FluidState state)
 	{
-		return AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+		return ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
 	}
 
 	public boolean matchesType(Fluid fluid)

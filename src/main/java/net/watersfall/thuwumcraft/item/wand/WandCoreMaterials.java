@@ -2,14 +2,14 @@ package net.watersfall.thuwumcraft.item.wand;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 
 public enum WandCoreMaterials implements WandCoreMaterial
 {
-	WOOD(AlchemyMod.getId("wood"), 50, 0x54321A, () -> new ItemStack(AlchemyItems.WOOD_CORE));
+	WOOD(Thuwumcraft.getId("wood"), 50, 0x54321A, () -> new ItemStack(ThuwumcraftItems.WOOD_CORE));
 
 	private final double maxVis;
 	private final Identifier id;

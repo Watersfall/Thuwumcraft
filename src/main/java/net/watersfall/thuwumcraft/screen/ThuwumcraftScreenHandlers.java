@@ -3,9 +3,9 @@ package net.watersfall.thuwumcraft.screen;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.screen.ScreenHandlerType;
 
-import static net.watersfall.thuwumcraft.AlchemyMod.getId;
+import static net.watersfall.thuwumcraft.Thuwumcraft.getId;
 
-public class AlchemyScreenHandlers
+public class ThuwumcraftScreenHandlers
 {
 	public static final ScreenHandlerType<ApothecaryGuideHandler> APOTHECARY_GUIDE_HANDLER;
 	public static final ScreenHandlerType<AlchemicalFurnaceHandler> ALCHEMICAL_FURNACE_HANDLER;

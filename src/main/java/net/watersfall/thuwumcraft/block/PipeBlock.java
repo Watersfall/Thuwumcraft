@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.PipeEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -137,7 +137,7 @@ public class PipeBlock extends Block implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.ASPECT_PIPE_ENTITY, PipeEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.ASPECT_PIPE_ENTITY, PipeEntity::tick);
 	}
 
 	private byte generateIndex(BlockState state)

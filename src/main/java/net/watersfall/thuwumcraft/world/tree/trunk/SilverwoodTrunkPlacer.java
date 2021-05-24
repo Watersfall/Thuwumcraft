@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
 import net.minecraft.world.gen.trunk.TrunkPlacer;
 import net.minecraft.world.gen.trunk.TrunkPlacerType;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 
 public class SilverwoodTrunkPlacer extends TrunkPlacer
 {
-	public static final BlockState LOG = AlchemyBlocks.SILVERWOOD_LOG.getDefaultState();
+	public static final BlockState LOG = ThuwumcraftBlocks.SILVERWOOD_LOG.getDefaultState();
 
 	public static final boolean[][] UNDERGROUND_LAYER = new boolean[][]{
 			{false, false, true, false, false},
@@ -64,7 +64,7 @@ public class SilverwoodTrunkPlacer extends TrunkPlacer
 	@Override
 	protected TrunkPlacerType<?> getType()
 	{
-		return AlchemyTrunkTypes.SILVERWOOD_TRUNK;
+		return ThuwumcraftTrunkTypes.SILVERWOOD_TRUNK;
 	}
 
 	@Override

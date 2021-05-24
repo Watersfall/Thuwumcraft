@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 
 public class VisAbilityImpl implements VisAbility
@@ -92,7 +92,7 @@ public class VisAbilityImpl implements VisAbility
 			this.toPacket(buf);
 			for(ServerPlayerEntity entity : PlayerLookup.tracking(world, chunk.getPos().getStartPos()))
 			{
-				ServerPlayNetworking.send(entity, AlchemyMod.getId("vis_packet"), buf);
+				ServerPlayNetworking.send(entity, Thuwumcraft.getId("vis_packet"), buf);
 			}
 		}
 	}

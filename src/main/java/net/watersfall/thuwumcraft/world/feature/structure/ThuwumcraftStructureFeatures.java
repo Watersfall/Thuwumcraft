@@ -8,17 +8,17 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyStructureFeatures
+public class ThuwumcraftStructureFeatures
 {
 	public static final StructureFeature<DefaultFeatureConfig> UNKNOWN_PILLAR = new UnknownPillarFeature(DefaultFeatureConfig.CODEC);
 	public static final ConfiguredStructureFeature<?, ?> CONFIGURED_UNKNOWN_PILLAR = UNKNOWN_PILLAR.configure(DefaultFeatureConfig.DEFAULT);
-	public static final RegistryKey<ConfiguredStructureFeature<?, ?>> CONFIGURED_UNKNOWN_PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY, AlchemyMod.getId("unknown_pillar"));
+	public static final RegistryKey<ConfiguredStructureFeature<?, ?>> CONFIGURED_UNKNOWN_PILLAR_KEY = RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY, Thuwumcraft.getId("unknown_pillar"));
 
 	public static void register()
 	{
-		FabricStructureBuilder.create(AlchemyMod.getId("unknown_pillar"), UNKNOWN_PILLAR)
+		FabricStructureBuilder.create(Thuwumcraft.getId("unknown_pillar"), UNKNOWN_PILLAR)
 				.step(GenerationStep.Feature.SURFACE_STRUCTURES)
 				.defaultConfig(4, 2, 12)
 				.adjustsSurface()

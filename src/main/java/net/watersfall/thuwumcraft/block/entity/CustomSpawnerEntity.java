@@ -16,7 +16,7 @@ public class CustomSpawnerEntity extends BlockEntity
 
 	public CustomSpawnerEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.CUSTOM_SPAWNER_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.CUSTOM_SPAWNER_ENTITY, pos, state);
 	}
 
 	public void readNbt(NbtCompound tag)

@@ -20,7 +20,7 @@ public class PortableHoleBlockEntity extends BlockEntity
 
 	public PortableHoleBlockEntity(BlockPos pos, BlockState state, BlockState original, BlockEntity originalEntity)
 	{
-		super(AlchemyBlockEntities.PORTABLE_HOLE_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, pos, state);
 		this.original = original;
 		this.originalEntity = originalEntity;
 	}

@@ -1,6 +1,6 @@
 package net.watersfall.thuwumcraft.screen;
 
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -22,7 +22,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 
 	public ApothecaryGuideHandler(int syncId, PlayerInventory playerInventory, Inventory inventory)
 	{
-		super(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, syncId);
 		checkSize(inventory, 1);
 		this.inventory = inventory;
 		this.addSlot(new IngredientSlot(inventory, 0, 26, 35));
@@ -45,7 +45,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 	@Override
 	public ScreenHandlerType<?> getType()
 	{
-		return AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER;
+		return ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER;
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		@Override
 		public boolean canInsert(ItemStack stack)
 		{
-			return super.canInsert(stack) && stack.isIn(AlchemyMod.getIngredientTag());
+			return super.canInsert(stack) && stack.isIn(Thuwumcraft.getIngredientTag());
 		}
 
 		@Override

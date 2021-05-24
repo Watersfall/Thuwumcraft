@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.NekomancerTableInventory;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.NekomancyRecipe;
 import net.watersfall.thuwumcraft.screen.slot.CrystalSlot;
 import net.watersfall.thuwumcraft.screen.slot.NekomancyOutputSlot;
@@ -31,7 +31,7 @@ public class NekomancyTableHandler extends ScreenHandler
 
 	public NekomancyTableHandler(int syncId, PlayerInventory playerInventory, NekomancerTableInventory inventory)
 	{
-		super(AlchemyScreenHandlers.NEKOMANCY_TABLE_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.NEKOMANCY_TABLE_HANDLER, syncId);
 		this.inventory = inventory;
 
 		//This inventory
@@ -75,7 +75,7 @@ public class NekomancyTableHandler extends ScreenHandler
 		World world = player.getEntityWorld();
 		if(!world.isClient)
 		{
-			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.NEKOMANCY_RECIPE, inventory, world);
+			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY_RECIPE, inventory, world);
 			if(optional.isPresent())
 			{
 				this.slots.get(0).setStack(optional.get().getOutput().copy());
@@ -93,7 +93,7 @@ public class NekomancyTableHandler extends ScreenHandler
 		World world = player.getEntityWorld();
 		if(!world.isClient)
 		{
-			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.NEKOMANCY_RECIPE, inventory, world);
+			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY_RECIPE, inventory, world);
 			if(optional.isPresent())
 			{
 				optional.get().craft(this.inventory);

@@ -11,7 +11,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.VisLiquifierEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,6 +47,6 @@ public class VisLiquifierBlock extends HorizontalFacingBlock implements BlockEnt
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.VIS_LIQUIFIER_ENTITY, VisLiquifierEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.VIS_LIQUIFIER_ENTITY, VisLiquifierEntity::tick);
 	}
 }

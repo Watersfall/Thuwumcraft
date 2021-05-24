@@ -4,9 +4,9 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.registry.Registry;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyRecipes
+public class ThuwumcraftRecipes
 {
 	public static final RecipeType<CauldronIngredient> CAULDRON_INGREDIENTS;
 	public static final RecipeType<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE;
@@ -53,25 +53,25 @@ public class AlchemyRecipes
 
 	public static void register()
 	{
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("grinding"), AlchemyRecipes.GRINDING_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("aspect_ingredient"), ASPECT_INGREDIENTS);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("crucible_recipe"), CRUCIBLE_RECIPE);
-		Registry.register(Registry.RECIPE_TYPE, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_ingredient"), AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_recipe"), AlchemyRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("cauldron_item"), AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("pedestal_crafting"), AlchemyRecipes.PEDESTAL_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("grinding"), AlchemyRecipes.GRINDING_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("aspect_ingredient"), ASPECT_INGREDIENT_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("crucible_recipe"), CRUCIBLE_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
-		Registry.register(Registry.RECIPE_SERIALIZER, AlchemyMod.getId("aspect_shaped"), ASPECT_SHAPED_SERIALIZER);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("cauldron_ingredient"), ThuwumcraftRecipes.CAULDRON_INGREDIENTS);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("cauldron_recipe"), ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("cauldron_item"), ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("pedestal_crafting"), ThuwumcraftRecipes.PEDESTAL_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("grinding"), ThuwumcraftRecipes.GRINDING_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("aspect_ingredient"), ASPECT_INGREDIENTS);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("crucible_recipe"), CRUCIBLE_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("nekomancy_recipe"), NEKOMANCY_RECIPE);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_ingredient"), ThuwumcraftRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_recipe"), ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_item"), ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("pedestal_crafting"), ThuwumcraftRecipes.PEDESTAL_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("grinding"), ThuwumcraftRecipes.GRINDING_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("aspect_ingredient"), ASPECT_INGREDIENT_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("crucible_recipe"), CRUCIBLE_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("research_unlocked_shaped_recipe"), RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("aspect_shaped"), ASPECT_SHAPED_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)

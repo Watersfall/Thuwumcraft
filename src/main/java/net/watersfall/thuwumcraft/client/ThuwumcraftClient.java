@@ -57,7 +57,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
@@ -72,8 +72,8 @@ import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.thuwumcraft.client.gui.*;
 import net.watersfall.thuwumcraft.client.gui.element.ItemElement;
@@ -86,18 +86,18 @@ import net.watersfall.thuwumcraft.client.particle.WaterParticle;
 import net.watersfall.thuwumcraft.client.renderer.*;
 import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
-import net.watersfall.thuwumcraft.entity.AlchemyEntities;
-import net.watersfall.thuwumcraft.fluid.AlchemyFluids;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.entity.ThuwumcraftEntities;
+import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
-import net.watersfall.thuwumcraft.particle.AlchemyParticles;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.screen.AlchemyScreenHandlers;
+import net.watersfall.thuwumcraft.screen.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
-import net.watersfall.thuwumcraft.world.AlchemyWorlds;
+import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -108,9 +108,9 @@ import java.util.UUID;
 import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
-public class AlchemyModClient implements ClientModInitializer
+public class ThuwumcraftClient implements ClientModInitializer
 {
-	private static final Identifier UNKNOWN_VIGNETTE = AlchemyMod.getId("textures/misc/unknown_vignette.png");
+	private static final Identifier UNKNOWN_VIGNETTE = Thuwumcraft.getId("textures/misc/unknown_vignette.png");
 	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
@@ -140,7 +140,7 @@ public class AlchemyModClient implements ClientModInitializer
 		HudRenderCallback.EVENT.register((matrices, delta) -> {
 			MinecraftClient client = MinecraftClient.getInstance();
 			PlayerEntity player = client.player;
-			if(player.world.getRegistryKey() == AlchemyWorlds.THE_UNKNOWN)
+			if(player.world.getRegistryKey() == ThuwumcraftWorlds.THE_UNKNOWN)
 			{
 				AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 				provider.getAbility(PlayerUnknownAbility.ID, PlayerUnknownAbility.class).ifPresent(ability -> {
@@ -252,7 +252,7 @@ public class AlchemyModClient implements ClientModInitializer
 			if(WAND_FOCUS_KEY.isPressed())
 			{
 				ItemStack main = client.player.getMainHandStack();
-				if(!wandFocusKeyPressed && main.getItem() == AlchemyItems.WAND)
+				if(!wandFocusKeyPressed && main.getItem() == ThuwumcraftItems.WAND)
 				{
 					client.openScreen(new FocusChangeScreen(main));
 					wandFocusKeyPressed = true;
@@ -268,7 +268,7 @@ public class AlchemyModClient implements ClientModInitializer
 	@Override
 	public void onInitializeClient()
 	{
-		FabricModelPredicateProviderRegistry.register(AlchemyItems.WAND, AlchemyMod.getId("has_focus"), ((stack, world, entity, seed) -> {
+		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.WAND, Thuwumcraft.getId("has_focus"), ((stack, world, entity, seed) -> {
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 			Optional<WandAbility> optional = provider.getAbility(WandAbility.ID, WandAbility.class);
 			if(optional.isPresent())
@@ -283,23 +283,23 @@ public class AlchemyModClient implements ClientModInitializer
 		}));
 		ColorProviderRegistry.BLOCK.register(
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
-				AlchemyBlocks.BREWING_CAULDRON_BLOCK
+				ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK
 		);
 		ColorProviderRegistry.BLOCK.register(
 				((state, world, pos, tintIndex) -> 0x000000),
-				AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK
+				ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK
 		);
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D),
-				AlchemyBlocks.DEEPSLATE_GRASS
+				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
-				AlchemyBlocks.DEEPSLATE_GRASS
+				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> 0x00AAFF,
-				AlchemyBlocks.SILVERWOOD_LEAVES
+				ThuwumcraftBlocks.SILVERWOOD_LEAVES
 		);
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {
@@ -327,7 +327,7 @@ public class AlchemyModClient implements ClientModInitializer
 					}
 					return 0;
 				},
-				AlchemyItems.WAND
+				ThuwumcraftItems.WAND
 		);
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {
@@ -343,41 +343,41 @@ public class AlchemyModClient implements ClientModInitializer
 					}
 					return 0xFFFFFF;
 				},
-				AlchemyItems.WAND_FOCUS
+				ThuwumcraftItems.WAND_FOCUS
 		);
 		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
 		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
-		setupFluidRendering(AlchemyFluids.DIMENSIONAL_STILL, AlchemyFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.JAR_ENTITY, JarEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(AlchemyBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.ASPECT_CRAFTING_HANDLER, AspectCraftingScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
-		ScreenRegistry.register(AlchemyScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(AlchemyBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
+		setupFluidRendering(ThuwumcraftFluids.DIMENSIONAL_STILL, ThuwumcraftFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.JAR_ENTITY, JarEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.NEKOMANCY_TABLE_HANDLER, NekomancyTableScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.ASPECT_CRAFTING_HANDLER, AspectCraftingScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
+		BlockRenderLayerMap.INSTANCE.putBlock(ThuwumcraftBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-				AlchemyBlocks.CUSTOM_SPAWNER,
-				AlchemyBlocks.CHILD_BLOCK
+				ThuwumcraftBlocks.CUSTOM_SPAWNER,
+				ThuwumcraftBlocks.CHILD_BLOCK
 		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
-				AlchemyBlocks.DEEPSLATE_GRASS
+				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
 		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
 		ClientChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeInt(chunk.getPos().x);
 			buf.writeInt(chunk.getPos().z);
-			ClientPlayNetworking.send(AlchemyMod.getId("chunk_packet"), buf);
+			ClientPlayNetworking.send(Thuwumcraft.getId("chunk_packet"), buf);
 		});
 		HudRenderCallback.EVENT.register((matrices, value) -> {
 			World world = MinecraftClient.getInstance().world;
@@ -391,7 +391,7 @@ public class AlchemyModClient implements ClientModInitializer
 		{
 			MultiTooltipComponent.REGISTRY.register(item, (stack) -> {
 				RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
-				Optional<AspectIngredient> ingredientOptional = manager.getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, new AspectInventory.Impl(stack), MinecraftClient.getInstance().world);
+				Optional<AspectIngredient> ingredientOptional = manager.getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, new AspectInventory.Impl(stack), MinecraftClient.getInstance().world);
 				if(ingredientOptional.isPresent())
 				{
 					return new AspectTooltipComponent(new AspectTooltipData(ingredientOptional.get().getAspects()));
@@ -400,7 +400,7 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		}
 		registerEvents();
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
 			client.execute(() -> {
 				Entity entity = handler.getWorld().getEntityById(buf2.readInt());
@@ -412,7 +412,7 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		}));
 
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("abilities_packet_player"), ((client, handler, buf, responseSender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet_player"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = new PacketByteBuf(buf.copy());
 			client.execute(() -> {
 				buf2.readInt();
@@ -421,7 +421,7 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		}));
 
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_click"), ((client, handler, buf, responseSender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("research_click"), ((client, handler, buf, responseSender) -> {
 			Identifier id = buf.readIdentifier();
 			client.getToastManager().add(new ResearchToast(Research.REGISTRY.get(id)));
 			AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
@@ -431,22 +431,22 @@ public class AlchemyModClient implements ClientModInitializer
 			});
 		}));
 
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("research_packet"), (client, handler, buf, responseSender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("research_packet"), (client, handler, buf, responseSender) -> {
 			ResearchCategory.REGISTRY.fromPacket(buf);
 			Research.REGISTRY.fromPacket(buf);
 		});
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("chunk_packet"), (client, handler, buf, responseSender) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("chunk_packet"), (client, handler, buf, responseSender) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(client.world.getChunk(pos.getStartPos()));
 			provider.fromPacket(buf);
 		});
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("vis_packet"), (client, handler, buf, responder) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("vis_packet"), (client, handler, buf, responder) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(client.world.getChunk(pos.getStartPos()));
 			provider.removeAbility(VisAbility.ID);
 			provider.addAbility(AbilityProvider.CHUNK_REGISTRY.create(VisAbility.ID, buf));
 		});
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("unknown_ability_packet"), (client, handler, buf, responder) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("unknown_ability_packet"), (client, handler, buf, responder) -> {
 			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
 			client.execute(() -> {
 				if(client.player != null)
@@ -460,7 +460,7 @@ public class AlchemyModClient implements ClientModInitializer
 				}
 			});
 		});
-		ClientPlayNetworking.registerGlobalReceiver(AlchemyMod.getId("spawn_packet"), (client, handler, buf, response) -> {
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("spawn_packet"), (client, handler, buf, response) -> {
 			EntityType<?> type = Registry.ENTITY_TYPE.get(buf.readVarInt());
 			UUID uuid = buf.readUuid();
 			int id = buf.readVarInt();
@@ -520,7 +520,7 @@ public class AlchemyModClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
 			return new RecipeElement(items, true);
 		}));
-		RecipeTabType.REGISTRY.register(AlchemyRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
+		RecipeTabType.REGISTRY.register(ThuwumcraftRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
 			Point origin = new Point(x + width / 2 - 32, y + height / 2 - 64);
@@ -545,7 +545,7 @@ public class AlchemyModClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
 			return new RecipeElement(items, false);
 		}));
-		RecipeTabType.REGISTRY.register(AlchemyRecipes.CAULDRON_ITEM_RECIPE, ((recipe2, x, y, width, height) -> {
+		RecipeTabType.REGISTRY.register(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, ((recipe2, x, y, width, height) -> {
 			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
 			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];
 			int offsetX = x + (width / 2) - 50;
@@ -558,16 +558,16 @@ public class AlchemyModClient implements ClientModInitializer
 			return new RecipeElement(items, true);
 		}));
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
-			preRegisterArmorTextures(AlchemyMod.getId(item.getName()), false);
+			preRegisterArmorTextures(Thuwumcraft.getId(item.getName()), false);
 		});
-		AbilityProvider.CHUNK_REGISTRY.registerPacket(AlchemyMod.getId("vis_ability"), VisAbilityImpl::new);
+		AbilityProvider.CHUNK_REGISTRY.registerPacket(Thuwumcraft.getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
-		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.WATER, WaterParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(AlchemyParticles.FIRE, FireParticle.Factory::new);
-		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.WATER_ENTITY, WaterEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.FIRE_ENTITY, WaterEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(AlchemyEntities.SAND_ENTITY, WaterEntityRenderer::new);
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.WATER, WaterParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.FIRE, FireParticle.Factory::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WATER_ENTITY, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.FIRE_ENTITY, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_ENTITY, WaterEntityRenderer::new);
 	}
 }

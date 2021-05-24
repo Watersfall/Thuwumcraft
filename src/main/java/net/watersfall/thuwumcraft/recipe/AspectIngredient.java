@@ -76,13 +76,13 @@ public class AspectIngredient implements Recipe<AspectInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.ASPECT_INGREDIENT_SERIALIZER;
+		return ThuwumcraftRecipes.ASPECT_INGREDIENT_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.ASPECT_INGREDIENTS;
+		return ThuwumcraftRecipes.ASPECT_INGREDIENTS;
 	}
 
 	public List<AspectStack> getAspects()

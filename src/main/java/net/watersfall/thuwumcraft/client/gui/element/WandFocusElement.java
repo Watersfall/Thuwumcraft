@@ -8,7 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class WandFocusElement implements Element, Drawable, TooltipElement
 		{
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeInt(index);
-			ClientPlayNetworking.send(AlchemyMod.getId("focus_click"), buf);
+			ClientPlayNetworking.send(Thuwumcraft.getId("focus_click"), buf);
 			return true;
 		}
 		return false;

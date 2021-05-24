@@ -3,8 +3,8 @@ package net.watersfall.thuwumcraft.block;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -51,9 +51,9 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 			PedestalEntity entity = (PedestalEntity)entityCheck;
 			if(!entity.isMain() && !entity.isCrafting())
 			{
-				if(playerStack.getItem() == AlchemyItems.WITCHY_SPOON_ITEM)
+				if(playerStack.getItem() == ThuwumcraftItems.WITCHY_SPOON_ITEM)
 				{
-					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.PEDESTAL_RECIPE, entity, world);
+					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL_RECIPE, entity, world);
 					if(recipeOptional.isPresent())
 					{
 						PedestalRecipe recipe = recipeOptional.get();

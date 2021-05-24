@@ -11,12 +11,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.research.Research;
 
 public class ResearchButton implements Element, Drawable
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/research/research_page.png");
+	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/research/research_page.png");
 	private final TranslatableText title = new TranslatableText("research.complete");
 	private final int width = 112;
 	private final int height = 16;
@@ -62,7 +62,7 @@ public class ResearchButton implements Element, Drawable
 		{
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeIdentifier(research.getId());
-			ClientPlayNetworking.send(AlchemyMod.getId("research_click"), buf);
+			ClientPlayNetworking.send(Thuwumcraft.getId("research_click"), buf);
 			return true;
 		}
 		return false;

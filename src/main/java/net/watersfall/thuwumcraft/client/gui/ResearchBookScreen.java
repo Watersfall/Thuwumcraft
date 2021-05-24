@@ -14,7 +14,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
@@ -28,9 +28,9 @@ import java.util.*;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
-	private static final Identifier BORDER = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_screen.png");
-	private static final Identifier BACKGROUND = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_background.png");
-	private static final Identifier ICONS = new Identifier(AlchemyMod.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier BORDER = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_screen.png");
+	private static final Identifier BACKGROUND = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_background.png");
+	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 	private final int textureWidth = 431;
 	private final int textureHeight = 256;
 	private final PlayerResearchAbility ability;

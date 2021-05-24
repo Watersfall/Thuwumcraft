@@ -7,7 +7,7 @@ import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.research.Research;
 
 import java.io.IOException;
@@ -45,6 +45,6 @@ public class ResearchLoader implements IdentifiableResourceReloadListener
 	@Override
 	public Identifier getFabricId()
 	{
-		return AlchemyMod.getId("research");
+		return Thuwumcraft.getId("research");
 	}
 }

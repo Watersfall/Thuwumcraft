@@ -28,7 +28,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 
 	public JarEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.JAR_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.JAR_ENTITY, pos, state);
 		this.aspects = new HashMap<>();
 		input = ItemStack.EMPTY;
 	}

@@ -9,7 +9,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.UUID;
 
@@ -22,7 +22,7 @@ public class SpeedBootsItem extends ArmorItem
 
 	public SpeedBootsItem(ArmorMaterial material, float boost)
 	{
-		super(material, EquipmentSlot.FEET, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
+		super(material, EquipmentSlot.FEET, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
 		Multimap<EntityAttribute, EntityAttributeModifier> attributes = super.getAttributeModifiers(slot);
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		attributes.entries().forEach(builder::put);

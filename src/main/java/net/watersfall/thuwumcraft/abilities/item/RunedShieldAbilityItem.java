@@ -3,13 +3,13 @@ package net.watersfall.thuwumcraft.abilities.item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.common.RunedShieldAbility;
 
 public class RunedShieldAbilityItem implements RunedShieldAbility<ItemStack>
 {
 	private NbtCompound tag;
-	public static final Identifier ID = AlchemyMod.getId("runed_shield_ability");
+	public static final Identifier ID = Thuwumcraft.getId("runed_shield_ability");
 
 	public RunedShieldAbilityItem(NbtCompound tag, ItemStack stack)
 	{

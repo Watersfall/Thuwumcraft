@@ -17,9 +17,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,7 +52,7 @@ public class JarBlock extends Block implements BlockEntityProvider
 			if(entity != null)
 			{
 				entity.setCurrentInput(stack);
-				Optional<AspectIngredient> ingredientOptional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, entity, world);
+				Optional<AspectIngredient> ingredientOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, entity, world);
 				if(ingredientOptional.isPresent())
 				{
 					if(!world.isClient)
@@ -98,6 +98,6 @@ public class JarBlock extends Block implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.JAR_ENTITY, JarEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.JAR_ENTITY, JarEntity::tick);
 	}
 }

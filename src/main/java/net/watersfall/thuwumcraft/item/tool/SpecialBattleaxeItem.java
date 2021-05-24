@@ -5,13 +5,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 public class SpecialBattleaxeItem extends OpenAxeItem
 {
 	public SpecialBattleaxeItem()
 	{
-		super(AlchemyToolMaterials.MAGIC, 9, -3.2F, new FabricItemSettings().maxCount(1).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		super(AlchemyToolMaterials.MAGIC, 9, -3.2F, new FabricItemSettings().maxCount(1).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 	}
 
 	@Override

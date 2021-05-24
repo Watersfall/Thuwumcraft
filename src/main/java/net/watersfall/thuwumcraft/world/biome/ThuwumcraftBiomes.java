@@ -13,13 +13,13 @@ import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
-import net.watersfall.thuwumcraft.AlchemyMod;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
-import net.watersfall.thuwumcraft.particle.AlchemyParticles;
-import net.watersfall.thuwumcraft.world.feature.AlchemyFeatures;
-import net.watersfall.thuwumcraft.world.feature.structure.AlchemyStructureFeatures;
+import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
+import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
 
-public class AlchemyBiomes
+public class ThuwumcraftBiomes
 {
 	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> MAGIC_FOREST_BIOME_CONFIG;
 	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> THE_UNKNOWN_BIOME_CONFIG;
@@ -27,9 +27,9 @@ public class AlchemyBiomes
 	public static final Biome MAGIC_FOREST_BIOME;
 	public static final Biome THE_UNKNOWN_BIOME;
 	public static final Biome THE_LOST_FOREST_BIOME;
-	public static final RegistryKey<Biome> MAGIC_FOREST_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, AlchemyMod.getId("magic_forest"));
-	public static final RegistryKey<Biome> THE_LOST_FOREST_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, AlchemyMod.getId("the_lost_forest"));
-	public static final RegistryKey<Biome> THE_UNKNOWN_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, AlchemyMod.getId("the_unknown"));
+	public static final RegistryKey<Biome> MAGIC_FOREST_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, Thuwumcraft.getId("magic_forest"));
+	public static final RegistryKey<Biome> THE_LOST_FOREST_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, Thuwumcraft.getId("the_lost_forest"));
+	public static final RegistryKey<Biome> THE_UNKNOWN_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, Thuwumcraft.getId("the_unknown"));
 
 	public static Biome createMagicForest()
 	{
@@ -55,8 +55,8 @@ public class AlchemyBiomes
 		DefaultBiomeFeatures.addSweetBerryBushes(generationSettings);
 		DefaultBiomeFeatures.addPlainsTallGrass(generationSettings);
 		DefaultBiomeFeatures.addPlainsFeatures(generationSettings);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, AlchemyFeatures.MAGIC_FOREST_TREES);
-		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, AlchemyFeatures.MOSSY_ASPECT_ROCKS);
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.MAGIC_FOREST_TREES);
+		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ThuwumcraftFeatures.MOSSY_ASPECT_ROCKS);
 		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.PATCH_WATERLILLY);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
@@ -76,7 +76,7 @@ public class AlchemyBiomes
 						.waterColor(0x8080FF)
 						.waterFogColor(0x8080FF)
 						.grassColorModifier(BiomeEffects.GrassColorModifier.NONE)
-						.particleConfig(new BiomeParticleConfig(AlchemyParticles.MAGIC_FOREST, 0.0025F))
+						.particleConfig(new BiomeParticleConfig(ThuwumcraftParticles.MAGIC_FOREST, 0.0025F))
 						.build()
 				)
 				.build();
@@ -116,8 +116,8 @@ public class AlchemyBiomes
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();
 		generationSettings.surfaceBuilder(THE_LOST_FOREST_BIOME_CONFIG);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, AlchemyFeatures.THE_LOST_FOREST_TREES);
-		generationSettings.structureFeature(AlchemyStructureFeatures.CONFIGURED_UNKNOWN_PILLAR);
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.THE_LOST_FOREST_TREES);
+		generationSettings.structureFeature(ThuwumcraftStructureFeatures.CONFIGURED_UNKNOWN_PILLAR);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())
@@ -156,7 +156,7 @@ public class AlchemyBiomes
 		));
 		THE_UNKNOWN_BIOME = createUnknown();
 		THE_LOST_FOREST_BIOME_CONFIG = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState(),
+				ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState(),
 				Blocks.DEEPSLATE.getDefaultState(),
 				Blocks.DEEPSLATE.getDefaultState()
 		));
@@ -165,9 +165,9 @@ public class AlchemyBiomes
 
 	public static void register()
 	{
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, AlchemyMod.getId("magic_surface"), MAGIC_FOREST_BIOME_CONFIG);
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, AlchemyMod.getId("the_unknown_surface"), THE_UNKNOWN_BIOME_CONFIG);
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, AlchemyMod.getId("the_lost_forest"), THE_LOST_FOREST_BIOME_CONFIG);
+		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("magic_surface"), MAGIC_FOREST_BIOME_CONFIG);
+		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("the_unknown_surface"), THE_UNKNOWN_BIOME_CONFIG);
+		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("the_lost_forest"), THE_LOST_FOREST_BIOME_CONFIG);
 		Registry.register(BuiltinRegistries.BIOME, MAGIC_FOREST_BIOME_KEY.getValue(), MAGIC_FOREST_BIOME);
 		Registry.register(BuiltinRegistries.BIOME, THE_UNKNOWN_BIOME_KEY.getValue(), THE_UNKNOWN_BIOME);
 		Registry.register(BuiltinRegistries.BIOME, THE_LOST_FOREST_BIOME_KEY.getValue(), THE_LOST_FOREST_BIOME);

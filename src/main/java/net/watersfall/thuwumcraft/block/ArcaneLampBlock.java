@@ -39,7 +39,7 @@ public class ArcaneLampBlock extends LanternBlock implements BlockEntityProvider
 					{
 						ArcaneLampEntity entity = (ArcaneLampEntity)test;
 						entity.addLight(testPos);
-						world.setBlockState(testPos, AlchemyBlocks.ARCANE_LIGHT_BLOCK.getDefaultState());
+						world.setBlockState(testPos, ThuwumcraftBlocks.ARCANE_LIGHT_BLOCK.getDefaultState());
 					}
 				}
 			}
@@ -55,7 +55,7 @@ public class ArcaneLampBlock extends LanternBlock implements BlockEntityProvider
 		{
 			ArcaneLampEntity lamp = (ArcaneLampEntity)test;
 			lamp.getLights().forEach(lightPos -> {
-				if(world.getBlockState(lightPos).getBlock() == AlchemyBlocks.ARCANE_LIGHT_BLOCK)
+				if(world.getBlockState(lightPos).getBlock() == ThuwumcraftBlocks.ARCANE_LIGHT_BLOCK)
 				{
 					world.breakBlock(lightPos, false);
 				}

@@ -15,15 +15,15 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.Random;
 import java.util.function.Function;
 
 public class UnknownPillarGenerator
 {
-	private static final Identifier CHEST = AlchemyMod.getId("unknown/deco/pillar_0");
-	private static final Identifier NO_CHEST = AlchemyMod.getId("unknown/deco/pillar_1");
+	private static final Identifier CHEST = Thuwumcraft.getId("unknown/deco/pillar_0");
+	private static final Identifier NO_CHEST = Thuwumcraft.getId("unknown/deco/pillar_1");
 
 	public static class Piece extends SimpleStructurePiece
 	{
@@ -51,13 +51,13 @@ public class UnknownPillarGenerator
 
 		public Piece(StructureManager structureManager, Identifier identifier, String template, StructurePlacementData structurePlacementData, BlockPos blockPos)
 		{
-			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, 0, structureManager, identifier, template, structurePlacementData, blockPos);
+			super(ThuwumcraftStructurePieceTypes.UNKNOWN_PILLAR, 0, structureManager, identifier, template, structurePlacementData, blockPos);
 			init(structureManager);
 		}
 
 		public Piece(NbtCompound nbtCompound, ServerWorld world, Function<Identifier, StructurePlacementData> function)
 		{
-			super(AlchemyStructurePieceTypes.UNKNOWN_PILLAR, nbtCompound, world, function);
+			super(ThuwumcraftStructurePieceTypes.UNKNOWN_PILLAR, nbtCompound, world, function);
 			init(world.getStructureManager());
 		}
 

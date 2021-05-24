@@ -123,13 +123,13 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.CAULDRON_INGREDIENTS_SERIALIZER;
+		return ThuwumcraftRecipes.CAULDRON_INGREDIENTS_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.CAULDRON_INGREDIENTS;
+		return ThuwumcraftRecipes.CAULDRON_INGREDIENTS;
 	}
 
 	public ItemStack getInput()

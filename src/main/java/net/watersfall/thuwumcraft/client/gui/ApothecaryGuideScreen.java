@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Optional;
 //TODO shove this into research book
 public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 {
-	private static final Identifier TEXTURE = new Identifier(AlchemyMod.MOD_ID, "textures/gui/container/apothecary_guide_book.png");
+	private static final Identifier TEXTURE = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/container/apothecary_guide_book.png");
 	private int x, y;
 
 	public ApothecaryGuideScreen(ScreenHandler handler, PlayerInventory inventory, Text title)

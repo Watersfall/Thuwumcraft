@@ -8,12 +8,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.screen.AlchemicalFurnaceHandler;
 
 public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/alchemical_furnace.png");
+	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/alchemical_furnace.png");
 
 	private int x, y;
 

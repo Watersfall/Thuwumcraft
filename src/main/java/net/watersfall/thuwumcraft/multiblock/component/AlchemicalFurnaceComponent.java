@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlock;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockComponent;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceComponent implements MultiBlockComponent
@@ -73,7 +73,7 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 		if(this.multiBlock != null)
 		{
 			BlockState state = this.multiBlock.getWorld().getBlockState(this.multiBlock.getPos());
-			if(state.isOf(AlchemyBlocks.ALCHEMICAL_FURNACE_BLOCK))
+			if(state.isOf(ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK))
 			{
 				int index = state.get(AlchemicalFurnaceBlock.DIRECTION).getId() - 2;
 				index *= 4;

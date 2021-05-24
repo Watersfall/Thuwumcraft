@@ -33,7 +33,7 @@ public class GlassPhialItem extends Item
 
 	public GlassPhialItem(Aspect aspect)
 	{
-		super(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		super(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		this.aspect = aspect;
 	}
 
@@ -61,7 +61,7 @@ public class GlassPhialItem extends Item
 				if((phialStack = container.insert(phialStack)).isEmpty())
 				{
 					stack.decrement(1);
-					ItemStack newStack = new ItemStack(AlchemyItems.EMPTY_PHIAL_ITEM, 1);
+					ItemStack newStack = new ItemStack(ThuwumcraftItems.EMPTY_PHIAL_ITEM, 1);
 					if(!player.getInventory().insertStack(newStack))
 					{
 						player.dropItem(newStack, true);

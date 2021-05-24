@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.screen.WandWorkbenchHandler;
@@ -19,7 +19,7 @@ import net.watersfall.thuwumcraft.spell.Spell;
 
 public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 {
-	private static final Identifier BACKGROUND_TEXTURE = AlchemyMod.getId("textures/gui/container/wand_workbench.png");
+	private static final Identifier BACKGROUND_TEXTURE = Thuwumcraft.getId("textures/gui/container/wand_workbench.png");
 	private static final TranslatableText WAND_CORE = new TranslatableText("item.thuwumcraft.wand.core");
 	private static final TranslatableText WAND_CAP = new TranslatableText("item.thuwumcraft.wand.cap");
 	private static final TranslatableText WAND_RECHARGE_TYPE = new TranslatableText("item.thuwumcraft.wand_cap.recharge_type");

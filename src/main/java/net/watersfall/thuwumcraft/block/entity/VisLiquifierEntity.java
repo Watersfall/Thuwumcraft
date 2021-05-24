@@ -14,7 +14,7 @@ public class VisLiquifierEntity extends BlockEntity
 {
 	public VisLiquifierEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.VIS_LIQUIFIER_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.VIS_LIQUIFIER_ENTITY, pos, state);
 	}
 
 	public static void tick(World world, BlockPos pos, BlockState state, VisLiquifierEntity entity)

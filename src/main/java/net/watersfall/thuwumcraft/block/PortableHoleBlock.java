@@ -9,7 +9,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.PortableHoleBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,6 +53,6 @@ public class PortableHoleBlock extends AirBlock implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, AlchemyBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleBlockEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleBlockEntity::tick);
 	}
 }

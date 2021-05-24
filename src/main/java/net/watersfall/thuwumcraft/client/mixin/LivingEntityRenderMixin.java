@@ -2,7 +2,7 @@ package net.watersfall.thuwumcraft.client.mixin;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.math.Vec3f;
-import net.watersfall.thuwumcraft.effect.AlchemyStatusEffects;
+import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -31,7 +31,7 @@ public abstract class LivingEntityRenderMixin<T extends LivingEntity, M extends 
 	@Inject(method = "render", at = @At("TAIL"))
 	public void render(T livingEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info)
 	{
-		if(livingEntity.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_SHIELD))
+		if(livingEntity.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_SHIELD))
 		{
 			matrices.push();
 			matrices.translate(-1.5f, 1f, -0.4f);

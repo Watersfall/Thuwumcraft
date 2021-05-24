@@ -17,7 +17,7 @@ public class PotionSprayerHandler extends ScreenHandler
 
 	public PotionSprayerHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, Inventory potion)
 	{
-		super(AlchemyScreenHandlers.POTION_SPRAYER_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.POTION_SPRAYER_HANDLER, syncId);
 		this.addSlot(new PotionSprayerSlot(potion, 0, 17, 17));
 		for(int i = 0; i < 3; i++)
 		{

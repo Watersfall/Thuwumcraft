@@ -13,7 +13,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.collection.DefaultedList;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.minecraft.block.BlockState;
@@ -57,7 +57,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 					if(!mutablePos.equals(pos))
 					{
 						loopState = world.getBlockState(mutablePos);
-						if(loopState.getBlock() == AlchemyBlocks.PEDESTAL_BLOCK)
+						if(loopState.getBlock() == ThuwumcraftBlocks.PEDESTAL_BLOCK)
 						{
 							entities.add((PedestalEntity)world.getBlockEntity(mutablePos));
 						}
@@ -83,7 +83,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 					if(!mutablePos.equals(pos))
 					{
 						loopState = world.getBlockState(mutablePos);
-						if(loopState.getBlock() == AlchemyBlocks.JAR_BLOCK)
+						if(loopState.getBlock() == ThuwumcraftBlocks.JAR_BLOCK)
 						{
 							entities.add((JarEntity) world.getBlockEntity(mutablePos));
 						}
@@ -207,13 +207,13 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.PEDESTAL_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.PEDESTAL_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.PEDESTAL_RECIPE;
+		return ThuwumcraftRecipes.PEDESTAL_RECIPE;
 	}
 
 	public List<AspectStack> getAspects()

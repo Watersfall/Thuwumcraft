@@ -117,13 +117,13 @@ public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronIn
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return AlchemyRecipes.CAULDRON_ITEM_RECIPE;
+		return ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE;
 	}
 
 	public Ingredient getCatalyst()

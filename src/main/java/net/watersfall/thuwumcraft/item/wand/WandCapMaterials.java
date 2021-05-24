@@ -2,14 +2,14 @@ package net.watersfall.thuwumcraft.item.wand;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 
 public enum WandCapMaterials implements WandCapMaterial
 {
-	IRON(AlchemyMod.getId("iron"), CapRechargeType.ENVIRONMENTAL, 0xA5A5A5, () -> new ItemStack(AlchemyItems.IRON_CAP));
+	IRON(Thuwumcraft.getId("iron"), CapRechargeType.ENVIRONMENTAL, 0xA5A5A5, () -> new ItemStack(ThuwumcraftItems.IRON_CAP));
 
 	private final CapRechargeType rechargeType;
 	private final Identifier id;

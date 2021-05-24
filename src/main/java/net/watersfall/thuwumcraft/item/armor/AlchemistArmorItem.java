@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.watersfall.thuwumcraft.entity.AlchemyAttributes;
+import net.watersfall.thuwumcraft.entity.ThuwumcraftAttributes;
 
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public class AlchemistArmorItem extends ArmorItem
 		ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 		attributes.entries().forEach(builder::put);
 		UUID uuid = MODIFIERS[slot.getEntitySlotId()];
-		builder.put(AlchemyAttributes.MAGIC_RESISTANCE, new EntityAttributeModifier(uuid, "Magic Resistance", resistance * 100, EntityAttributeModifier.Operation.ADDITION));
+		builder.put(ThuwumcraftAttributes.MAGIC_RESISTANCE, new EntityAttributeModifier(uuid, "Magic Resistance", resistance * 100, EntityAttributeModifier.Operation.ADDITION));
 		this.attributes = builder.build();
 		this.resistance = resistance;
 	}

@@ -9,7 +9,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 
 	public BrewingCauldronEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 			colors[0] = BiomeColors.getWaterColor(this.world, this.getPos());
 			for(int i = 1; i <= this.getIngredientCount(); i++)
 			{
-				Optional<CauldronIngredient> ingredient = this.world.getRecipeManager().getFirstMatch(AlchemyRecipes.CAULDRON_INGREDIENTS, this.withInput(i - 1), world);
+				Optional<CauldronIngredient> ingredient = this.world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, this.withInput(i - 1), world);
 				colors[i] = ingredient.isPresent() ? ingredient.get().getColor() : -1;
 			}
 			this.setColor(RenderHelper.getColor(colors));

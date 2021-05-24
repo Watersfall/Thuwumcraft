@@ -17,7 +17,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.Collection;
 
@@ -147,9 +147,9 @@ public class RenderHelper
 					!MinecraftClient.getInstance().options.hudHidden
 							&& result != null && result.getType() == HitResult.Type.BLOCK
 							&& ((BlockHitResult)result).getBlockPos().equals(entity.getPos()))
-					&& (player.getStackInHand(Hand.MAIN_HAND).getItem() == AlchemyItems.THUWUMIC_MAGNIFYING_GLASS
-							|| player.getStackInHand(Hand.OFF_HAND).getItem() == AlchemyItems.THUWUMIC_MAGNIFYING_GLASS)
-					|| (player.getEquippedStack(EquipmentSlot.HEAD).getItem() == AlchemyItems.GOGGLES
+					&& (player.getStackInHand(Hand.MAIN_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS
+							|| player.getStackInHand(Hand.OFF_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS)
+					|| (player.getEquippedStack(EquipmentSlot.HEAD).getItem() == ThuwumcraftItems.GOGGLES
 							&& entity.getPos().getSquaredDistance(player.getBlockPos()) < 256);
 			if(shouldRender)
 			{

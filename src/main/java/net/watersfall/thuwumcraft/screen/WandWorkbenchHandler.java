@@ -23,7 +23,7 @@ public class WandWorkbenchHandler extends ScreenHandler
 
 	public WandWorkbenchHandler(int syncId, PlayerInventory playerInventory, Inventory wandInventory)
 	{
-		super(AlchemyScreenHandlers.WAND_WORKBENCH, syncId);
+		super(ThuwumcraftScreenHandlers.WAND_WORKBENCH, syncId);
 
 		slot = new WandSlot(wandInventory, 0, 34, 42, () -> core, () -> cap, () -> focus);
 		core = new WandComponentSlot(wandInventory, 1, 9, 17, slot, WandCoreItem.class);

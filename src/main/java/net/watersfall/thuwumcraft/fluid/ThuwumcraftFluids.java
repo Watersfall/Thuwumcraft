@@ -1,9 +1,9 @@
 package net.watersfall.thuwumcraft.fluid;
 
 import net.minecraft.util.registry.Registry;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyFluids
+public class ThuwumcraftFluids
 {
 	public static final DimensionalFluid DIMENSIONAL_STILL;
 	public static final DimensionalFluid DIMENSIONAL_FLOWING;
@@ -16,7 +16,7 @@ public class AlchemyFluids
 
 	public static void register()
 	{
-		Registry.register(Registry.FLUID, AlchemyMod.getId("dimensional_fluid"), DIMENSIONAL_STILL);
-		Registry.register(Registry.FLUID, AlchemyMod.getId("dimensional_fluid_flowing"), DIMENSIONAL_FLOWING);
+		Registry.register(Registry.FLUID, Thuwumcraft.getId("dimensional_fluid"), DIMENSIONAL_STILL);
+		Registry.register(Registry.FLUID, Thuwumcraft.getId("dimensional_fluid_flowing"), DIMENSIONAL_FLOWING);
 	}
 }

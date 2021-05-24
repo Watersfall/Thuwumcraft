@@ -6,7 +6,7 @@ import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 
@@ -25,7 +25,7 @@ public class WandSlot extends Slot
 	@Override
 	public boolean canInsert(ItemStack stack)
 	{
-		return stack.isOf(AlchemyItems.WAND);
+		return stack.isOf(ThuwumcraftItems.WAND);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class WandSlot extends Slot
 				}
 				if(wand.getSpell() != null)
 				{
-					ItemStack stack = AlchemyItems.WAND_FOCUS.getDefaultStack();
+					ItemStack stack = ThuwumcraftItems.WAND_FOCUS.getDefaultStack();
 					AbilityProvider<ItemStack> focusProvider = AbilityProvider.getProvider(stack);
 					focusProvider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), stack));
 					focus.get().setStack(stack);

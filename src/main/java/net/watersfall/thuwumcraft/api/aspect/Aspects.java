@@ -13,10 +13,10 @@ import net.minecraft.item.Item;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.item.AspectItems;
 import net.watersfall.thuwumcraft.block.*;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.item.GlassPhialItem;
 import net.watersfall.thuwumcraft.item.DecorativeStaffBlockItem;
@@ -37,24 +37,24 @@ public class Aspects
 	public static final HashMap<Aspect, DecorativeStaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
 	public static final HashMap<Aspect, DecorativeStaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
-	public static final Aspect AIR = new Aspect(AlchemyMod.getId("air"), 0xffff00, AspectItems.AIR);
-	public static final Aspect EARTH = new Aspect(AlchemyMod.getId("earth"), 0x00ff00, AspectItems.EARTH);
-	public static final Aspect WATER = new Aspect(AlchemyMod.getId("water"), 0x0000ff, AspectItems.WATER);
-	public static final Aspect FIRE = new Aspect(AlchemyMod.getId("fire"), 0xe69836, AspectItems.FIRE);
-	public static final Aspect ORDER = new Aspect(AlchemyMod.getId("order"), 0xdddddd, AspectItems.ORDER);
-	public static final Aspect DISORDER = new Aspect(AlchemyMod.getId("disorder"), 0x222222, AspectItems.DISORDER);
-	public static final Aspect METAL = new Aspect(AlchemyMod.getId("metal"), 0xdddddd, AspectItems.METAL, new Aspect[]{EARTH, ORDER});
+	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xffff00, AspectItems.AIR);
+	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x00ff00, AspectItems.EARTH);
+	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x0000ff, AspectItems.WATER);
+	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xe69836, AspectItems.FIRE);
+	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xdddddd, AspectItems.ORDER);
+	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x222222, AspectItems.DISORDER);
+	public static final Aspect METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, AspectItems.METAL, new Aspect[]{EARTH, ORDER});
 
 	public static Aspect register(Identifier id, Aspect aspect)
 	{
 		ASPECTS.put(id, aspect);
 		GlassPhialItem item = new GlassPhialItem(aspect);
-		Item crystal = new CrystalItem(new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP), aspect);
+		Item crystal = new CrystalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), aspect);
 		ASPECT_TO_PHIAL.put(aspect, item);
 		ASPECT_TO_CRYSTAL.put(aspect, crystal);
 		DecorativeStaffBlock staff = new DecorativeStaffBlock(aspect, FabricBlockSettings.copyOf(Blocks.TALL_GRASS).sounds(BlockSoundGroup.WOOD).luminance(15));
 		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
-		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
@@ -102,12 +102,12 @@ public class Aspects
 		ElementalClusterBlock small = new ElementalClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD).luminance(4), aspect);
 		ElementalBlock block = new ElementalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK), aspect);
 		BuddingElementalBlock budding = new BuddingElementalBlock(FabricBlockSettings.copyOf(Blocks.BUDDING_AMETHYST), aspect);
-		BlockItem clusterItem = new BlockItem(cluster, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		BlockItem largeItem = new BlockItem(large, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		BlockItem mediumItem = new BlockItem(medium, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		BlockItem smallItem = new BlockItem(small, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		BlockItem blockItem = new BlockItem(block, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
-		BlockItem buddingItem = new BlockItem(budding, new FabricItemSettings().group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem clusterItem = new BlockItem(cluster, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem largeItem = new BlockItem(large, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem mediumItem = new BlockItem(medium, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem smallItem = new BlockItem(small, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem blockItem = new BlockItem(block, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
+		BlockItem buddingItem = new BlockItem(budding, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		ASPECT_TO_CLUSTER.put(aspect, cluster);
 		ASPECT_TO_LARGE_CLUSTER.put(aspect, large);
 		ASPECT_TO_MEDIUM_CLUSTER.put(aspect, medium);

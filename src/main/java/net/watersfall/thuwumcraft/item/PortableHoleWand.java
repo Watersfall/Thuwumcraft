@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.util.BlockUtils;
 
 import java.util.ArrayList;
@@ -96,9 +96,9 @@ public class PortableHoleWand extends Item
 			BlockState oldState = world.getBlockState(list.get(i));
 			BlockEntity oldEntity = world.getBlockEntity(list.get(i));
 			world.removeBlockEntity(list.get(i));
-			world.setBlockState(list.get(i), AlchemyBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), 1 << 3 | 1 << 1);
+			world.setBlockState(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), 1 << 3 | 1 << 1);
 			world.removeBlockEntity(list.get(i));
-			world.addBlockEntity(AlchemyBlocks.PORTABLE_HOLE_BLOCK.createBlockEntity(list.get(i), AlchemyBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), oldState, oldEntity));
+			world.addBlockEntity(ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.createBlockEntity(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), oldState, oldEntity));
 		}
 		return ActionResult.CONSUME;
 	}

@@ -22,7 +22,7 @@ public class WandWorkbenchEntity extends BlockEntity implements NamedScreenHandl
 
 	public WandWorkbenchEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.WAND_WORKBENCH, pos, state);
+		super(ThuwumcraftBlockEntities.WAND_WORKBENCH, pos, state);
 		list = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	}
 

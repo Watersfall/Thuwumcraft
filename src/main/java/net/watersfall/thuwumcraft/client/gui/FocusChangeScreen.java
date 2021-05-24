@@ -10,10 +10,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
-import net.watersfall.thuwumcraft.client.AlchemyModClient;
+import net.watersfall.thuwumcraft.client.ThuwumcraftClient;
 import net.watersfall.thuwumcraft.client.gui.element.RemoveWandFocusElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
 import net.watersfall.thuwumcraft.client.gui.element.WandFocusElement;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class FocusChangeScreen extends Screen
 {
-	public static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/focus_change.png");
+	public static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/focus_change.png");
 	private static final int size = 128;
 
 	private int x;
@@ -127,10 +127,10 @@ public class FocusChangeScreen extends Screen
 	{
 		if(!super.keyPressed(keyCode, scanCode, modifiers))
 		{
-			if(AlchemyModClient.WAND_FOCUS_KEY.matchesKey(keyCode, scanCode))
+			if(ThuwumcraftClient.WAND_FOCUS_KEY.matchesKey(keyCode, scanCode))
 			{
 				this.onClose();
-				AlchemyModClient.wandFocusKeyPressed = true;
+				ThuwumcraftClient.wandFocusKeyPressed = true;
 			}
 		}
 		return true;

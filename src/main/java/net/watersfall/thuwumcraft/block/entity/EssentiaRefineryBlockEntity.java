@@ -18,7 +18,7 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 
 	public EssentiaRefineryBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.ESSENTIA_REFINERY, pos, state);
+		super(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, pos, state);
 		stack = AspectStack.EMPTY;
 	}
 

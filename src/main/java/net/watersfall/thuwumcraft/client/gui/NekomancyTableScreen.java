@@ -7,12 +7,12 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.screen.NekomancyTableHandler;
 
 public class NekomancyTableScreen extends HandledScreen<NekomancyTableHandler>
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/nekomancy_table.png");
+	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/nekomancy_table.png");
 
 	public NekomancyTableScreen(NekomancyTableHandler handler, PlayerInventory inventory, Text title)
 	{

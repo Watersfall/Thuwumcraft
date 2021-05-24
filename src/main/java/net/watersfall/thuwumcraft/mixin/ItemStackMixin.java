@@ -13,7 +13,7 @@ import net.watersfall.thuwumcraft.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.thuwumcraft.abilities.item.WandAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.GlassPhialItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
 import org.jetbrains.annotations.Nullable;
@@ -47,7 +47,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	{
 		if(item != null && item.asItem() instanceof GlassPhialItem)
 		{
-			if(item.asItem() != AlchemyItems.EMPTY_PHIAL_ITEM)
+			if(item.asItem() != ThuwumcraftItems.EMPTY_PHIAL_ITEM)
 			{
 				this.addAbility(new PhialStorageAbility(((GlassPhialItem) item.asItem()).getAspect(), 64));
 			}

@@ -93,7 +93,7 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return AlchemyRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class SandEntity extends WaterEntity
 {
 	public SandEntity(World world, Entity owner)
 	{
-		super(AlchemyEntities.SAND_ENTITY, world);
+		super(ThuwumcraftEntities.SAND_ENTITY, world);
 		this.owner = owner;
 	}
 

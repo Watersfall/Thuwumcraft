@@ -5,13 +5,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 public class SpecialHoeItem extends OpenHoeItem
 {
 	public SpecialHoeItem()
 	{
-		super(AlchemyToolMaterials.MAGIC, 2, -3.0F, (new Item.Settings()).group(AlchemyItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
+		super(AlchemyToolMaterials.MAGIC, 2, -3.0F, (new Item.Settings()).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
 	}
 
 	@Override

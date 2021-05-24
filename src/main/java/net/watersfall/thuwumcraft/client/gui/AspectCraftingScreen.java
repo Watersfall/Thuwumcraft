@@ -9,7 +9,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.chunk.Chunk;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
@@ -18,7 +18,7 @@ import net.watersfall.thuwumcraft.screen.AspectCraftingHandler;
 
 public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 {
-	private static final Identifier TEXTURE = AlchemyMod.getId("textures/gui/container/aspect_crafting_table.png");
+	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/aspect_crafting_table.png");
 	private final AspectCraftingEntity entity;
 	private final AbilityProvider<Chunk> provider;
 	private int x, y;

@@ -15,9 +15,9 @@ import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.trunk.BendingTrunkPlacer;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
-import net.watersfall.thuwumcraft.block.AlchemyBlocks;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.world.config.DecoratedRockConfig;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeConfig;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeLayersConfig;
@@ -26,7 +26,7 @@ import net.watersfall.thuwumcraft.world.tree.trunk.SilverwoodTrunkPlacer;
 
 import java.util.ArrayList;
 
-public class AlchemyFeatures
+public class ThuwumcraftFeatures
 {
 	public static final NetherGeodeFeature NETHER_GEODE_FEATURE;
 	public static final DecoratedRockFeature DECORATED_ROCK_FEATURE;
@@ -43,9 +43,9 @@ public class AlchemyFeatures
 
 	static
 	{
-		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
-		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, AlchemyMod.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
-		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(AlchemyBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE_BIASED_TO_BOTTOM.configure(new BiasedRangedDecoratorConfig(YOffset.getBottom(), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8);
+		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
+		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
+		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE_BIASED_TO_BOTTOM.configure(new BiasedRangedDecoratorConfig(YOffset.getBottom(), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8);
 		EARTH_CRYSTAL_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 						new GeodeLayerConfig(
 								new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),
@@ -143,18 +143,18 @@ public class AlchemyFeatures
 				new BendingTrunkPlacer(4, 2, 0, 3, UniformIntProvider.create(1, 1)),
 				new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()),
 				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 50),
-				new SimpleBlockStateProvider(AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState()),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),
 				new ArrayList<>(),
 				false,
 				false
 		));
 		SILVERWOOD_TREE = Feature.TREE.configure(new OpenTreeFeatureConfig(
-				new SimpleBlockStateProvider(AlchemyBlocks.SILVERWOOD_LOG.getDefaultState()),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LOG.getDefaultState()),
 				new SilverwoodTrunkPlacer(7, 2, 2),
-				new SimpleBlockStateProvider(AlchemyBlocks.SILVERWOOD_LEAVES.getDefaultState()),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LEAVES.getDefaultState()),
 				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 100),
-				new SimpleBlockStateProvider(AlchemyBlocks.DEEPSLATE_GRASS.getDefaultState()),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),
 				new ArrayList<>(),
 				false,
@@ -188,14 +188,14 @@ public class AlchemyFeatures
 
 	public static void register()
 	{
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("earth_crystal_geode"), EARTH_CRYSTAL_GEODE);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("basalt_delta_geode"), BASALT_DELTA_GEODE);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("nether_geode"), NETHER_GEODE);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("magic_forest_trees"), MAGIC_FOREST_TREES);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("mossy_aspect_rocks"), MOSSY_ASPECT_ROCKS);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("dimensional_lake"), DIMENSIONAL_LAKE);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("lost_tree"), LOST_TREE);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("the_lost_forest_trees"), THE_LOST_FOREST_TREES);
-		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, AlchemyMod.getId("silverwood_tree"), SILVERWOOD_TREE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("earth_crystal_geode"), EARTH_CRYSTAL_GEODE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("basalt_delta_geode"), BASALT_DELTA_GEODE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("nether_geode"), NETHER_GEODE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("magic_forest_trees"), MAGIC_FOREST_TREES);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("mossy_aspect_rocks"), MOSSY_ASPECT_ROCKS);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("dimensional_lake"), DIMENSIONAL_LAKE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("lost_tree"), LOST_TREE);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("the_lost_forest_trees"), THE_LOST_FOREST_TREES);
+		Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Thuwumcraft.getId("silverwood_tree"), SILVERWOOD_TREE);
 	}
 }

@@ -20,8 +20,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
-import net.watersfall.thuwumcraft.effect.AlchemyStatusEffects;
-import net.watersfall.thuwumcraft.entity.AlchemyAttributes;
+import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
+import net.watersfall.thuwumcraft.entity.ThuwumcraftAttributes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -63,7 +63,7 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		if(!world.isClient)
 		{
-			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_SHIELD))
+			if(this.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_SHIELD))
 			{
 				List<ArrowEntity> entities = world.getEntitiesByType(EntityType.ARROW, this.getBoundingBox().expand(3), this::test);
 				for(int i = 0; i < entities.size(); i++)
@@ -73,7 +73,7 @@ public abstract class LivingEntityMixin extends Entity
 					entities.get(i).setVelocity(velocity.x * -0.1, velocity.y * -0.1, velocity.z * -0.1);
 				}
 			}
-			else if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_ATTRACTION))
+			else if(this.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_ATTRACTION))
 			{
 				List<ArrowEntity> entities = world.getEntitiesByType(EntityType.ARROW, this.getBoundingBox().expand(3), this::test);
 				for(int i = 0; i < entities.size(); i++)
@@ -149,7 +149,7 @@ public abstract class LivingEntityMixin extends Entity
 	@Inject(method = "createLivingAttributes", at = @At("RETURN"))
 	private static void addMagicResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info)
 	{
-		info.getReturnValue().add(AlchemyAttributes.MAGIC_RESISTANCE, 0);
+		info.getReturnValue().add(ThuwumcraftAttributes.MAGIC_RESISTANCE, 0);
 	}
 
 	@ModifyVariable(
@@ -164,18 +164,18 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		if(source.isProjectile())
 		{
-			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_RESISTANCE))
+			if(this.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_RESISTANCE))
 			{
 				amount = amount * 0.5F;
 			}
-			if(this.hasStatusEffect(AlchemyStatusEffects.PROJECTILE_WEAKNESS))
+			if(this.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_WEAKNESS))
 			{
 				amount = amount * 2.0F;
 			}
 		}
 		if(source.isMagic())
 		{
-			double resistance = this.getAttributeValue(AlchemyAttributes.MAGIC_RESISTANCE) / 100;
+			double resistance = this.getAttributeValue(ThuwumcraftAttributes.MAGIC_RESISTANCE) / 100;
 			amount = amount * (float)(1 - resistance);
 		}
 		return amount;

@@ -13,17 +13,17 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyFluidTags;
-import net.watersfall.thuwumcraft.item.AlchemyItems;
-import net.watersfall.thuwumcraft.world.AlchemyWorlds;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 
 public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSerializable<Entity>
 {
-	public static final Identifier ID = AlchemyMod.getId("player_unknown_ability");
+	public static final Identifier ID = Thuwumcraft.getId("player_unknown_ability");
 
 	int getTicksInUnknown();
 
@@ -70,7 +70,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 				if(!entity.getEntityWorld().isClient && this.getTicksInUnknown() == 0)
 				{
 					ServerPlayerEntity player = (ServerPlayerEntity)entity;
-					ServerWorld serverWorld = entity.world.getServer().getWorld(AlchemyWorlds.THE_UNKNOWN);
+					ServerWorld serverWorld = entity.world.getServer().getWorld(ThuwumcraftWorlds.THE_UNKNOWN);
 					player.teleport(serverWorld, entity.getX(), entity.getY(), entity.getZ(), entity.yaw, entity.pitch);
 					this.setShouldPlaySound(true);
 					this.setTemporary(true);
@@ -79,7 +79,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 			}
 			this.setTicksInUnknown(MathHelper.clamp(getTicksInUnknown() - 1, 0, Integer.MAX_VALUE));
 		}
-		else if(entity.getEntityWorld().getRegistryKey() == AlchemyWorlds.THE_UNKNOWN)
+		else if(entity.getEntityWorld().getRegistryKey() == ThuwumcraftWorlds.THE_UNKNOWN)
 		{
 			if(!entity.getEntityWorld().isClient && this.isTemporary() && this.getTicksInUnknown() > 200)
 			{
@@ -95,12 +95,12 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 					pos = world.getSpawnPos();
 				}
 				player.teleport(world, pos.getX(), pos.getY(), pos.getZ(), player.getSpawnAngle(), 0);
-				player.dropItem(AlchemyItems.EYE_OF_THE_UNKNOWN_ITEM);
+				player.dropItem(ThuwumcraftItems.EYE_OF_THE_UNKNOWN_ITEM);
 				this.setTemporary(false);
 				this.sync(entity);
 			}
 			this.setTicksInUnknown(this.getTicksInUnknown() + 1);
-			if(shouldPlaySound() && entity.world.getRegistryKey() == AlchemyWorlds.THE_UNKNOWN)
+			if(shouldPlaySound() && entity.world.getRegistryKey() == ThuwumcraftWorlds.THE_UNKNOWN)
 			{
 				if(entity.world.isClient)
 				{
@@ -141,7 +141,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 		{
 			ServerPlayerEntity player = (ServerPlayerEntity)entity;
 			PacketByteBuf buf = this.toPacket(PacketByteBufs.create());
-			ServerPlayNetworking.send(player, AlchemyMod.getId("unknown_ability_packet"), buf);
+			ServerPlayNetworking.send(player, Thuwumcraft.getId("unknown_ability_packet"), buf);
 		}
 	}
 }

@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"client": [
-			"net.watersfall.thuwumcraft.client.AlchemyModClient"
+			"net.watersfall.thuwumcraft.client.ThuwumcraftClient"
 		],
 		"main": [
-			"net.watersfall.thuwumcraft.AlchemyMod"
+			"net.watersfall.thuwumcraft.Thuwumcraft"
 		]
 	},
 	"mixins": [

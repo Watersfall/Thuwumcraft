@@ -8,7 +8,7 @@ public class ResearchBookHandler extends ScreenHandler
 {
 	public ResearchBookHandler(int syncId, PlayerInventory playerInventory)
 	{
-		super(AlchemyScreenHandlers.RESEARCH_BOOK_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, syncId);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class EyeOfTheUnknownItem extends Item
 {
@@ -34,7 +34,7 @@ public class EyeOfTheUnknownItem extends Item
 	{
 		if(MinecraftClient.getInstance().player != null)
 		{
-			if(MinecraftClient.getInstance().getNetworkHandler().getAdvancementHandler().getManager().get(AlchemyMod.getId("into_the_unknown")) == null)
+			if(MinecraftClient.getInstance().getNetworkHandler().getAdvancementHandler().getManager().get(Thuwumcraft.getId("into_the_unknown")) == null)
 			{
 				return new TranslatableText("item.thuwumcraft.eye_of_the_unknown");
 			}

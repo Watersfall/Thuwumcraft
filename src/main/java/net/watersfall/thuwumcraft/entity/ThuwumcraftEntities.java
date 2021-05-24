@@ -5,9 +5,9 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.registry.Registry;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyEntities
+public class ThuwumcraftEntities
 {
 	public static final EntityType<IceProjectileEntity> ICE_PROJECTILE;
 	public static final EntityType<WaterEntity> WATER_ENTITY;
@@ -18,7 +18,7 @@ public class AlchemyEntities
 	{
 		ICE_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
-				AlchemyMod.getId("ice_projectile_entity"),
+				Thuwumcraft.getId("ice_projectile_entity"),
 				FabricEntityTypeBuilder.<IceProjectileEntity>create(SpawnGroup.MISC, IceProjectileEntity::new)
 					.dimensions(EntityDimensions.fixed(0.25F, 0.25F))
 					.trackRangeBlocks(4)
@@ -27,7 +27,7 @@ public class AlchemyEntities
 		);
 		WATER_ENTITY = Registry.register(
 				Registry.ENTITY_TYPE,
-				AlchemyMod.getId("water_entity"),
+				Thuwumcraft.getId("water_entity"),
 				FabricEntityTypeBuilder.<WaterEntity>create(SpawnGroup.MISC, WaterEntity::new)
 						.dimensions(EntityDimensions.fixed(3.0F, 3.0F))
 						.trackedUpdateRate(10)
@@ -36,7 +36,7 @@ public class AlchemyEntities
 		);
 		FIRE_ENTITY = Registry.register(
 				Registry.ENTITY_TYPE,
-				AlchemyMod.getId("fire_entity"),
+				Thuwumcraft.getId("fire_entity"),
 				FabricEntityTypeBuilder.<FireEntity>create(SpawnGroup.MISC, FireEntity::new)
 						.dimensions(EntityDimensions.fixed(3.0F, 3.0F))
 						.trackedUpdateRate(10)
@@ -45,7 +45,7 @@ public class AlchemyEntities
 		);
 		SAND_ENTITY = Registry.register(
 				Registry.ENTITY_TYPE,
-				AlchemyMod.getId("sand_entity"),
+				Thuwumcraft.getId("sand_entity"),
 				FabricEntityTypeBuilder.<SandEntity>create(SpawnGroup.MISC, SandEntity::new)
 						.dimensions(EntityDimensions.fixed(2, 2))
 						.trackedUpdateRate(10)

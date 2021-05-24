@@ -21,7 +21,7 @@ public class EssentiaSmelteryHandler extends ScreenHandler
 
 	public EssentiaSmelteryHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, BetterAspectInventory aspectInventory, PropertyDelegate properties)
 	{
-		super(AlchemyScreenHandlers.ESSENTIA_SMELTERY_HANDLER, syncId);
+		super(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, syncId);
 		this.addProperties(properties);
 		this.properties = properties;
 		this.addSlot(new Slot(inventory, 0, 56, 17));

@@ -7,7 +7,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
-import net.watersfall.thuwumcraft.AlchemyMod;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class RemoveWandFocusElement extends ItemElement
 		if(isMouseOver(mouseX, mouseY))
 		{
 			PacketByteBuf buf = PacketByteBufs.create();
-			ClientPlayNetworking.send(AlchemyMod.getId("focus_remove_click"), buf);
+			ClientPlayNetworking.send(Thuwumcraft.getId("focus_remove_click"), buf);
 			return true;
 		}
 		return true;

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.AlchemyBlockEntities;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.CustomSpawnerEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +51,6 @@ public class CustomSpawnerBlock extends SpawnerBlock
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? checkType(type, AlchemyBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::clientTick) : checkType(type, AlchemyBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::serverTick);
+		return world.isClient ? checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::clientTick) : checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::serverTick);
 	}
 }

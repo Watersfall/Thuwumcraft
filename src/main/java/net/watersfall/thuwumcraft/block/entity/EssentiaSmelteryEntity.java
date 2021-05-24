@@ -21,7 +21,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.inventory.BasicInventory;
 import net.watersfall.thuwumcraft.inventory.BetterAspectInventory;
-import net.watersfall.thuwumcraft.recipe.AlchemyRecipes;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.screen.EssentiaSmelteryHandler;
 import org.jetbrains.annotations.Nullable;
@@ -72,7 +72,7 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 
 	public EssentiaSmelteryEntity(BlockPos pos, BlockState state)
 	{
-		super(AlchemyBlockEntities.ESSENTIA_SMELTERY_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY, pos, state);
 		this.items = DefaultedList.ofSize(2, ItemStack.EMPTY);
 		this.aspects = new HashMap<>();
 	}
@@ -123,7 +123,7 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 		ItemStack stack = entity.getStack(0);
 		if(!stack.isEmpty())
 		{
-			Optional<AspectIngredient> optional = world.getRecipeManager().getFirstMatch(AlchemyRecipes.ASPECT_INGREDIENTS, new AspectInventory.Impl(stack), world);
+			Optional<AspectIngredient> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, new AspectInventory.Impl(stack), world);
 			if(optional.isPresent())
 			{
 				AspectIngredient ingredient = optional.get();
