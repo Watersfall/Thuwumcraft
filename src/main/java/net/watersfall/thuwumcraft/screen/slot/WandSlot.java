@@ -43,7 +43,7 @@ public class WandSlot extends Slot
 				{
 					cap.get().setStack(wand.getWandCap().getItemStack());
 				}
-				if(wand.getSpell() != null)
+				if(wand.getSpell() != null && wand.getSpell().spell() != null)
 				{
 					ItemStack stack = ThuwumcraftItems.WAND_FOCUS.getDefaultStack();
 					AbilityProvider<ItemStack> focusProvider = AbilityProvider.getProvider(stack);

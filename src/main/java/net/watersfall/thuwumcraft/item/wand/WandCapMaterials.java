@@ -9,7 +9,9 @@ import java.util.function.Supplier;
 
 public enum WandCapMaterials implements WandCapMaterial
 {
-	IRON(Thuwumcraft.getId("iron"), CapRechargeType.ENVIRONMENTAL, 0xA5A5A5, () -> new ItemStack(ThuwumcraftItems.IRON_CAP));
+	IRON(Thuwumcraft.getId("iron"), CapRechargeType.ENVIRONMENTAL, 0xA5A5A5, () -> new ItemStack(ThuwumcraftItems.IRON_CAP)),
+	BRASS(Thuwumcraft.getId("brass"), CapRechargeType.ENVIRONMENTAL, 0xE7AC56, () -> new ItemStack(ThuwumcraftItems.BRASS_CAP)),
+	THUWUMIUM(Thuwumcraft.getId("thuwumium"), CapRechargeType.CHARGER, 0x976CAB, () -> new ItemStack(ThuwumcraftItems.THUWUMIUM_CAP));
 
 	private final CapRechargeType rechargeType;
 	private final Identifier id;

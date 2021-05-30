@@ -336,7 +336,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 					if(optional.isPresent())
 					{
 						WandFocusAbility ability = optional.get();
-						if(ability.getSpell() != null)
+						if(ability.getSpell() != null && ability.getSpell().spell() != null)
 						{
 							return ability.getSpell().spell().color();
 						}

@@ -86,7 +86,7 @@ public class WandAbilityImpl implements WandAbility
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		if(spell == null)
+		if(spell == null || spell.spell() == null)
 		{
 			tag.putString("spell", "");
 		}

@@ -53,6 +53,13 @@ public class WandFocusAbilityImpl implements WandFocusAbility
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		if(spell == null || spell.spell() == null)
+		{
+			tag.putString("spell", "");
+		}
+		else
+		{
+			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		}
 	}
 }

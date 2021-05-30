@@ -101,7 +101,11 @@ public class ThuwumcraftItems
 	public static final WandItem WAND;
 	public static final WandFocusItem WAND_FOCUS;
 	public static final WandCoreItem WOOD_CORE;
+	public static final WandCoreItem GREATWOOD_CORE;
+	public static final WandCoreItem SILVERWOOD_CORE;
 	public static final WandCapItem IRON_CAP;
+	public static final WandCapItem BRASS_CAP;
+	public static final WandCapItem THUWUMIUM_CAP;
 	public static final List<Item> ITEMS;
 
 	static
@@ -183,7 +187,11 @@ public class ThuwumcraftItems
 		WAND = register(Thuwumcraft.getId("wand"), new WandItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		WAND_FOCUS = register(Thuwumcraft.getId("wand_focus"), new WandFocusItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		WOOD_CORE = register(Thuwumcraft.getId("wood_core"), new WandCoreItem(WandCoreMaterials.WOOD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		GREATWOOD_CORE = register(Thuwumcraft.getId("greatwood_core"), new WandCoreItem(WandCoreMaterials.GREATWOOD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		SILVERWOOD_CORE = register(Thuwumcraft.getId("silverwood_core"), new WandCoreItem(WandCoreMaterials.SILVERWOOD, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		IRON_CAP = register(Thuwumcraft.getId("iron_cap"), new WandCapItem(WandCapMaterials.IRON, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		BRASS_CAP = register(Thuwumcraft.getId("brass_cap"), new WandCapItem(WandCapMaterials.BRASS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		THUWUMIUM_CAP = register(Thuwumcraft.getId("thuwumium_cap"), new WandCapItem(WandCapMaterials.THUWUMIUM, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

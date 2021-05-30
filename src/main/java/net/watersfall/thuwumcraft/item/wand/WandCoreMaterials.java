@@ -9,7 +9,9 @@ import java.util.function.Supplier;
 
 public enum WandCoreMaterials implements WandCoreMaterial
 {
-	WOOD(Thuwumcraft.getId("wood"), 50, 0x54321A, () -> new ItemStack(ThuwumcraftItems.WOOD_CORE));
+	WOOD(Thuwumcraft.getId("wood"), 50, 0xA06138, () -> new ItemStack(ThuwumcraftItems.WOOD_CORE)),
+	GREATWOOD(Thuwumcraft.getId("greatwood"), 100, 0x543521, () -> new ItemStack(ThuwumcraftItems.GREATWOOD_CORE)),
+	SILVERWOOD(Thuwumcraft.getId("silverwood"), 200, 0xDBC7BA, () -> new ItemStack(ThuwumcraftItems.SILVERWOOD_CORE));
 
 	private final double maxVis;
 	private final Identifier id;
