@@ -22,7 +22,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.entity.PotionSprayerEntity;
-import net.watersfall.thuwumcraft.screen.PotionSprayerHandler;
+import net.watersfall.thuwumcraft.gui.PotionSprayerHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;

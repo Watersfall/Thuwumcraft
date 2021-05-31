@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen;
+package net.watersfall.thuwumcraft.gui;
 
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.minecraft.entity.player.PlayerEntity;

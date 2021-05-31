@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen;
+package net.watersfall.thuwumcraft.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,8 +9,8 @@ import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.item.wand.WandCapItem;
 import net.watersfall.thuwumcraft.item.wand.WandCoreItem;
 import net.watersfall.thuwumcraft.item.wand.WandFocusItem;
-import net.watersfall.thuwumcraft.screen.slot.WandComponentSlot;
-import net.watersfall.thuwumcraft.screen.slot.WandSlot;
+import net.watersfall.thuwumcraft.gui.slot.WandComponentSlot;
+import net.watersfall.thuwumcraft.gui.slot.WandSlot;
 
 public class WandWorkbenchHandler extends ScreenHandler
 {

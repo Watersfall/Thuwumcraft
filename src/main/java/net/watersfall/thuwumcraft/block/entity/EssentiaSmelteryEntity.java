@@ -23,7 +23,7 @@ import net.watersfall.thuwumcraft.inventory.BasicInventory;
 import net.watersfall.thuwumcraft.inventory.BetterAspectInventory;
 import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
-import net.watersfall.thuwumcraft.screen.EssentiaSmelteryHandler;
+import net.watersfall.thuwumcraft.gui.EssentiaSmelteryHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

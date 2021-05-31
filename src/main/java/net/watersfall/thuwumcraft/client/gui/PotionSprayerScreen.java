@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.screen.PotionSprayerHandler;
+import net.watersfall.thuwumcraft.gui.PotionSprayerHandler;
 
 public class PotionSprayerScreen extends HandledScreen<PotionSprayerHandler>
 {

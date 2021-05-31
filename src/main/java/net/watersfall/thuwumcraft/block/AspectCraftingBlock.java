@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
-import net.watersfall.thuwumcraft.screen.AspectCraftingHandler;
+import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class AspectCraftingBlock extends Block implements BlockEntityProvider

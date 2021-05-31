@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen;
+package net.watersfall.thuwumcraft.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,8 +12,8 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.NekomancerTableInventory;
 import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.NekomancyRecipe;
-import net.watersfall.thuwumcraft.screen.slot.CrystalSlot;
-import net.watersfall.thuwumcraft.screen.slot.NekomancyOutputSlot;
+import net.watersfall.thuwumcraft.gui.slot.CrystalSlot;
+import net.watersfall.thuwumcraft.gui.slot.NekomancyOutputSlot;
 
 import java.util.Optional;
 

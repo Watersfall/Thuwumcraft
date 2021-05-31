@@ -14,7 +14,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.inventory.NekomancerTableInventory;
-import net.watersfall.thuwumcraft.screen.NekomancyTableHandler;
+import net.watersfall.thuwumcraft.gui.NekomancyTableHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class NekomancyBlock extends Block

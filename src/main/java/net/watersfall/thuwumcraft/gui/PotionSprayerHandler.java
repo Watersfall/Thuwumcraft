@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen;
+package net.watersfall.thuwumcraft.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -6,7 +6,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.watersfall.thuwumcraft.screen.slot.PotionSprayerSlot;
+import net.watersfall.thuwumcraft.gui.slot.PotionSprayerSlot;
 
 public class PotionSprayerHandler extends ScreenHandler
 {

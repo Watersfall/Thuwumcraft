@@ -95,7 +95,7 @@ import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.screen.ThuwumcraftScreenHandlers;
+import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import org.jetbrains.annotations.Nullable;

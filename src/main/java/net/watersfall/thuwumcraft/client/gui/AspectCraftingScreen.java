@@ -14,7 +14,7 @@ import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
 import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
-import net.watersfall.thuwumcraft.screen.AspectCraftingHandler;
+import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 
 public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 {

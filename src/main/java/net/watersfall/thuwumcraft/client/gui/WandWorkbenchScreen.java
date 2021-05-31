@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
-import net.watersfall.thuwumcraft.screen.WandWorkbenchHandler;
+import net.watersfall.thuwumcraft.gui.WandWorkbenchHandler;
 import net.watersfall.thuwumcraft.spell.Spell;
 
 public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>

@@ -9,7 +9,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
-import net.watersfall.thuwumcraft.screen.AspectCraftingHandler;
+import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 
 import java.util.HashSet;
 import java.util.Set;

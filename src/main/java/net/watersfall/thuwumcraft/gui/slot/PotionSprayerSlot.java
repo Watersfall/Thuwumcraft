@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen.slot;
+package net.watersfall.thuwumcraft.gui.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;

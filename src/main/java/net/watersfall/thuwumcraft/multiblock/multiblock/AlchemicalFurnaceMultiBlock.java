@@ -27,7 +27,7 @@ import net.watersfall.thuwumcraft.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.thuwumcraft.block.entity.ChildBlockEntity;
 import net.watersfall.thuwumcraft.item.MagicalCoalItem;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceFuelComponent;
-import net.watersfall.thuwumcraft.screen.AlchemicalFurnaceHandler;
+import net.watersfall.thuwumcraft.gui.AlchemicalFurnaceHandler;
 import net.watersfall.thuwumcraft.api.multiblock.component.ItemComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceInputComponent;

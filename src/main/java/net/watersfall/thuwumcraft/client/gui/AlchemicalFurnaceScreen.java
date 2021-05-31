@@ -9,7 +9,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.screen.AlchemicalFurnaceHandler;
+import net.watersfall.thuwumcraft.gui.AlchemicalFurnaceHandler;
 
 public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 {

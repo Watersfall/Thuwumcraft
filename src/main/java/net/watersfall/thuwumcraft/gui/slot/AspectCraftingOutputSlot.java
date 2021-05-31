@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.screen.slot;
+package net.watersfall.thuwumcraft.gui.slot;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -16,7 +16,7 @@ import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
 import net.watersfall.thuwumcraft.recipe.ResearchRequiredCraftingRecipe;
-import net.watersfall.thuwumcraft.screen.AspectCraftingHandler;
+import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 
 import java.util.Optional;
 
