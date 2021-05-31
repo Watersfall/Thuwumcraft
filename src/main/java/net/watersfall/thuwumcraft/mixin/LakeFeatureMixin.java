@@ -10,6 +10,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.BlockSource;
 import net.minecraft.world.gen.feature.LakeFeature;
 import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
@@ -43,9 +44,12 @@ public class LakeFeatureMixin
 							Random random,
 							SingleStateFeatureConfig config,
 							boolean bls[],
+							BlockSource blockSource,
 							int x,
 							int z,
-							int y)
+							int y,
+							BlockState state,
+							BlockPos pos4)
 	{
 		if((context.getWorld().getLunarTime() & 0x100) == 0)
 		{

@@ -67,9 +67,9 @@ public class FocusChangeScreen extends Screen
 			double angle = Math.PI * 2  / (total) * o;
 			int circleX = origin.x + (int)(52 * Math.cos(angle - Math.PI / 2));
 			int circleY = origin.y + (int)(52 * Math.sin(angle - Math.PI / 2));
-			this.addChild(new WandFocusElement(stacks.get(integer), circleX, circleY, integer));
+			this.addDrawableChild(new WandFocusElement(stacks.get(integer), circleX, circleY, integer));
 		}
-		this.addChild(new RemoveWandFocusElement(origin.x, origin.y));
+		this.addDrawableChild(new RemoveWandFocusElement(origin.x, origin.y));
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class FocusChangeScreen extends Screen
 	{
 		this.renderBackground(matrices);
 		super.render(matrices, mouseX, mouseY, delta);
-		this.children.forEach(element -> {
+		this.children().forEach(element -> {
 			if(element instanceof Drawable drawable)
 			{
 				drawable.render(matrices, mouseX, mouseY, delta);
@@ -112,7 +112,7 @@ public class FocusChangeScreen extends Screen
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		this.children.forEach(element -> {
+		this.children().forEach(element -> {
 			if(element.isMouseOver(mouseX, mouseY))
 			{
 				element.mouseClicked(mouseX, mouseY, button);

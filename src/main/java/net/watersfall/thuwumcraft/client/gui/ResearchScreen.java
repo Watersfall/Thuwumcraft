@@ -64,20 +64,20 @@ public class ResearchScreen extends Screen
 		this.researchButton = new ResearchButton(this.research, this.x + 227, this.y + 217);
 		for(int i = 0; i < this.tabs.length; i++)
 		{
-			this.addChild(new RecipeTabElement(tabs[i], this.x + startX, this.y + startY +  i * 24, true));
+			this.addDrawableChild(new RecipeTabElement(tabs[i], this.x + startX, this.y + startY +  i * 24, true));
 		}
 		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size());
 		int i;
 		for(i = 0; i < this.research.getRequiredItems().size(); i++)
 		{
-			this.addChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, false));
+			this.addDrawableChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, false));
 		}
 		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
 		for(i = 0; i < this.research.getConsumedItems().size(); i++)
 		{
-			this.addChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, true));
+			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, true));
 		}
-		this.addChild(researchButton);
+		this.addDrawableChild(researchButton);
 	}
 
 	@Override
@@ -118,30 +118,30 @@ public class ResearchScreen extends Screen
 			}
 			drawText(matrices, lines);
 		}
-		for(int i = 0; i < this.children.size(); i++)
+		for(int i = 0; i < this.children().size(); i++)
 		{
-			if(this.children.get(i) instanceof Drawable)
+			if(this.children().get(i) instanceof Drawable)
 			{
-				if(this.children.get(i) instanceof ItemRequirementElement)
+				if(this.children().get(i) instanceof ItemRequirementElement)
 				{
 					if(!ability.hasResearch(research))
 					{
-						((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+						((Drawable)this.children().get(i)).render(matrices, mouseX, mouseY, delta);
 					}
 				}
 				else
 				{
-					((Drawable)this.children.get(i)).render(matrices, mouseX, mouseY, delta);
+					((Drawable)this.children().get(i)).render(matrices, mouseX, mouseY, delta);
 				}
 			}
 		}
 		if(!childOpen)
 		{
-			for(int i = 0; i < this.children.size(); i++)
+			for(int i = 0; i < this.children().size(); i++)
 			{
-				if(this.children.get(i).isMouseOver(mouseX, mouseY) && this.children.get(i) instanceof TooltipElement)
+				if(this.children().get(i).isMouseOver(mouseX, mouseY) && this.children().get(i) instanceof TooltipElement)
 				{
-					this.renderTooltip(matrices, ((TooltipElement)this.children.get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
+					this.renderTooltip(matrices, ((TooltipElement)this.children().get(i)).getTooltip(mouseX, mouseY), mouseX, mouseY);
 				}
 			}
 		}

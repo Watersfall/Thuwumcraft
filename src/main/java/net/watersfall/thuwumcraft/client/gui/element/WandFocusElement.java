@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -12,7 +14,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 
 import java.util.List;
 
-public class WandFocusElement implements Element, Drawable, TooltipElement
+public class WandFocusElement implements Element, Drawable, TooltipElement, Selectable
 {
 	private int x;
 	private int y;
@@ -56,5 +58,17 @@ public class WandFocusElement implements Element, Drawable, TooltipElement
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public SelectionType getType()
+	{
+		return SelectionType.NONE;
+	}
+
+	@Override
+	public void appendNarrations(NarrationMessageBuilder builder)
+	{
+
 	}
 }

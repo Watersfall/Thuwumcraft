@@ -116,8 +116,8 @@ public class IceProjectileEntity extends ThrownItemEntity
 		buf.writeDouble(this.getPos().x);
 		buf.writeDouble(this.getPos().y);
 		buf.writeDouble(this.getPos().z);
-		buf.writeFloat(this.pitch);
-		buf.writeFloat(this.yaw);
+		buf.writeFloat(this.getPitch());
+		buf.writeFloat(this.getYaw());
 		if(this.getOwner() == null)
 		{
 			buf.writeVarInt(-1);

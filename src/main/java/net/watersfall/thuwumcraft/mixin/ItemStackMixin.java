@@ -62,7 +62,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		}
 	}
 
-	@Inject(method = "<init>(Lnet/minecraft/nbt/NbtCompound;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;postProcessNbt(Lnet/minecraft/nbt/NbtCompound;)Z"))
+	@Inject(method = "<init>(Lnet/minecraft/nbt/NbtCompound;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;postProcessNbt(Lnet/minecraft/nbt/NbtCompound;)V"))
 	public void  addData(NbtCompound tag, CallbackInfo info)
 	{
 		this.fromNbt(this.tag);

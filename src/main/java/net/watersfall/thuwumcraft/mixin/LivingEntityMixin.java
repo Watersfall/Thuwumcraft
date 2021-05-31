@@ -89,7 +89,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "onStatusEffectApplied", at = @At("HEAD"))
-	public void addStatusEffectModifier(StatusEffectInstance effect, CallbackInfo info)
+	public void addStatusEffectModifier(StatusEffectInstance effect, Entity entity, CallbackInfo info)
 	{
 		if(world instanceof ServerWorld)
 		{
@@ -110,7 +110,7 @@ public abstract class LivingEntityMixin extends Entity
 		}
 	}
 
-	@Inject(method = "method_30129", at = @At(value = "JUMP", opcode = 199), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "getEquipment", at = @At(value = "JUMP", opcode = 199), locals = LocalCapture.CAPTURE_FAILHARD)
 	public void checkRunedShield(
 			CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> info,
 			Map<EquipmentSlot, ItemStack> map,

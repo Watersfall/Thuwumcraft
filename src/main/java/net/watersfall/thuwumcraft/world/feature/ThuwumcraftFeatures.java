@@ -2,17 +2,19 @@ package net.watersfall.thuwumcraft.world.feature;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Blocks;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.YOffset;
-import net.minecraft.world.gen.decorator.BiasedRangedDecoratorConfig;
 import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.CountExtraDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
 import net.minecraft.world.gen.foliage.RandomSpreadFoliagePlacer;
+import net.minecraft.world.gen.heightprovider.VeryBiasedToBottomHeightProvider;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.trunk.BendingTrunkPlacer;
 import net.watersfall.thuwumcraft.Thuwumcraft;
@@ -45,7 +47,7 @@ public class ThuwumcraftFeatures
 	{
 		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
 		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
-		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE_BIASED_TO_BOTTOM.configure(new BiasedRangedDecoratorConfig(YOffset.getBottom(), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8);
+		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(VeryBiasedToBottomHeightProvider.create(YOffset.aboveBottom(4), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8));
 		EARTH_CRYSTAL_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 						new GeodeLayerConfig(
 								new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),
@@ -58,10 +60,12 @@ public class ThuwumcraftFeatures
 										Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.EARTH).getDefaultState(),
 										Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.EARTH).getDefaultState(),
 										Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.EARTH).getDefaultState()
-								)
+								),
+								BlockTags.FEATURES_CANNOT_REPLACE.getId(),
+								BlockTags.GEODE_INVALID_BLOCKS.getId()
 						),
 						new GeodeLayerThicknessConfig(1.7D, 2.2D, 3.2D, 4.2D),
-						new GeodeCrackConfig(0.95D, 2.0D, 2), 0.35D, 0.083D, true, 4, 7, 3, 5, 1, 3, -16, 16, 0.05D, 1)).rangeOf(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
+						new GeodeCrackConfig(0.95D, 2.0D, 2), 0.35D, 0.083D, true, UniformIntProvider.create(4, 6), UniformIntProvider.create(3, 4), UniformIntProvider.create(1, 2), -16, 16, 0.05D, 1)).uniformRange(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
 		BASALT_DELTA_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 				new GeodeLayerConfig(
 						new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),
@@ -74,10 +78,12 @@ public class ThuwumcraftFeatures
 								Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 								Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 								Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.FIRE).getDefaultState()
-						)
+						),
+						BlockTags.FEATURES_CANNOT_REPLACE.getId(),
+						BlockTags.GEODE_INVALID_BLOCKS.getId()
 				),
 				new GeodeLayerThicknessConfig(1.7D, 2.2D, 3.2D, 4.2D),
-				new GeodeCrackConfig(0.95D, 2.0D, 2), 0.35D, 0.083D, true, 4, 7, 3, 5, 1, 3, -16, 16, 0.05D, 1)).rangeOf(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
+				new GeodeCrackConfig(0.95D, 2.0D, 2), 0.35D, 0.083D, true, UniformIntProvider.create(4, 6), UniformIntProvider.create(3, 4), UniformIntProvider.create(1, 2), -16, 16, 0.05D, 1)).uniformRange(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
 		NETHER_GEODE = NETHER_GEODE_FEATURE.configure(new NetherGeodeConfig(
 				new NetherGeodeLayersConfig(
 						new GeodeLayerConfig(
@@ -91,7 +97,9 @@ public class ThuwumcraftFeatures
 										Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 										Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 										Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.FIRE).getDefaultState()
-								)
+								),
+								BlockTags.FEATURES_CANNOT_REPLACE.getId(),
+								BlockTags.GEODE_INVALID_BLOCKS.getId()
 						),
 						new SimpleBlockStateProvider(Blocks.BLACKSTONE.getDefaultState()),
 						16
@@ -108,7 +116,9 @@ public class ThuwumcraftFeatures
 									Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 									Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 									Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.FIRE).getDefaultState()
-							)
+							),
+								BlockTags.FEATURES_CANNOT_REPLACE.getId(),
+								BlockTags.GEODE_INVALID_BLOCKS.getId()
 						),
 						new SimpleBlockStateProvider(Blocks.NETHERRACK.getDefaultState()),
 						1
@@ -125,7 +135,9 @@ public class ThuwumcraftFeatures
 										Aspects.ASPECT_TO_LARGE_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 										Aspects.ASPECT_TO_MEDIUM_CLUSTER.get(Aspects.FIRE).getDefaultState(),
 										Aspects.ASPECT_TO_SMALL_CLUSTER.get(Aspects.FIRE).getDefaultState()
-								)
+								),
+								BlockTags.FEATURES_CANNOT_REPLACE.getId(),
+								BlockTags.GEODE_INVALID_BLOCKS.getId()
 						),
 						new SimpleBlockStateProvider(Blocks.LAVA.getDefaultState()),
 						16
@@ -134,7 +146,7 @@ public class ThuwumcraftFeatures
 				new GeodeCrackConfig(0.95D, 2.0D, 2),
 				new NetherGeodeSizeConfig(4, 7, 3, 5, 1, 3, -16, 16),
 				0.35D, 0.083D, true, 0.05D, 1
-			)).rangeOf(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
+			)).uniformRange(YOffset.aboveBottom(6), YOffset.fixed(46)).spreadHorizontally().applyChance(45);
 		MOSSY_ASPECT_ROCKS = DECORATED_ROCK_FEATURE.configure(new DecoratedRockConfig(
 				new SimpleBlockStateProvider(Blocks.MOSSY_COBBLESTONE.getDefaultState())
 		)).decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(2);
@@ -142,6 +154,7 @@ public class ThuwumcraftFeatures
 				new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()),
 				new BendingTrunkPlacer(4, 2, 0, 3, UniformIntProvider.create(1, 1)),
 				new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()),
+				new SimpleBlockStateProvider(Blocks.DARK_OAK_SAPLING.getDefaultState()),
 				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 50),
 				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),
@@ -153,6 +166,7 @@ public class ThuwumcraftFeatures
 				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LOG.getDefaultState()),
 				new SilverwoodTrunkPlacer(7, 2, 2),
 				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LEAVES.getDefaultState()),
+				new SimpleBlockStateProvider(Blocks.DARK_OAK_SAPLING.getDefaultState()),
 				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 100),
 				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),

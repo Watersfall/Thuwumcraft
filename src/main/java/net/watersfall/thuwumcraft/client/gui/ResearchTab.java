@@ -3,6 +3,7 @@ package net.watersfall.thuwumcraft.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -69,15 +70,9 @@ public class ResearchTab extends Screen
 	}
 
 	@Override
-	public void init(MinecraftClient client, int width, int height)
-	{
-		super.init(client, width, height);
-		parent.init(client, width, height);
-	}
-
-	@Override
 	protected void init()
 	{
+		parent.init(client, width, height);
 		super.init();
 		this.x = (width - textureWidth) / 2;
 		this.y = (height - textureHeight) / 2;
@@ -102,8 +97,8 @@ public class ResearchTab extends Screen
 			}
 			count++;
 		}
-		this.addButton(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
-		this.addButton(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.textureHeight - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
+		this.addDrawableChild(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
+		this.addDrawableChild(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.textureHeight - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
 		this.recipePages = new RecipePage[count];
 		count = 0;
 		for(int i = 0; i < recipeElements.length; i++)
@@ -134,15 +129,15 @@ public class ResearchTab extends Screen
 		}
 		matrices.push();
 		matrices.translate(0, 0, 51F);
-		this.buttons.get(0).visible = true;
-		this.buttons.get(1).visible = true;
+		((ButtonWidget)(this.children().get(0))).visible = true;
+		((ButtonWidget)(this.children().get(1))).visible = true;
 		if(page.getValue() <= page.getMin())
 		{
-			this.buttons.get(0).visible = false;
+			((ButtonWidget)(this.children().get(0))).visible = false;
 		}
 		if(page.getValue() >= page.getMax())
 		{
-			this.buttons.get(1).visible = false;
+			((ButtonWidget)(this.children().get(1))).visible = false;
 		}
 		super.render(matrices, mouseX, mouseY, delta);
 		matrices.pop();

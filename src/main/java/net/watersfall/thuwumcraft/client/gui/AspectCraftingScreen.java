@@ -21,7 +21,6 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/aspect_crafting_table.png");
 	private final AspectCraftingEntity entity;
 	private final AbilityProvider<Chunk> provider;
-	private int x, y;
 
 	public AspectCraftingScreen(AspectCraftingHandler handler, PlayerInventory inventory, Text title)
 	{
@@ -36,8 +35,6 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 		this.backgroundWidth = 175;
 		this.backgroundHeight = 201;
 		this.playerInventoryTitleY = 108;
-		this.x = this.field_2776;
-		this.y = this.field_2800;
 		super.init();
 	}
 

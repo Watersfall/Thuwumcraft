@@ -1,7 +1,6 @@
 package net.watersfall.thuwumcraft.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
@@ -24,7 +23,10 @@ import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
@@ -40,7 +42,6 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private CategoryTabElement[] categories;
 	public float scale = 0.7F;
 	public int bottomY = 0;
-	private int x, y;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -54,22 +55,12 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	}
 
 	@Override
-	public void init(MinecraftClient client, int width, int height)
-	{
-		super.init(client, width, height);
-		int scale = (int)client.getWindow().getScaleFactor();
-		this.bottomY = height * scale - (textureHeight * scale) - this.y * scale;
-	}
-
-	@Override
 	protected void init()
 	{
 		this.backgroundWidth = textureWidth;
 		this.backgroundHeight = textureHeight;
 		super.init();
-		this.x = this.field_2776;
-		this.y = this.field_2800;
-		this.children.clear();
+		this.children().clear();
 		this.mapX = this.textureWidth / (scale * 2F) - 8;
 		this.mapY = this.textureHeight / (scale * 2F) - 8;
 		int total = 0;
@@ -89,12 +80,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			categories[i] = new CategoryTabElement(this, tempCat.get(i), x - 24, y + 12 +  i * 24, false);
 		}
 		Research.REGISTRY.getAll().forEach((research -> {
-			this.addChild(new ResearchElement(this, research));
+			this.addDrawableChild(new ResearchElement(this, research));
 		}));
 		for(int i = 0; i < this.categories.length; i++)
 		{
-			this.addChild(categories[i]);
+			this.addDrawableChild(categories[i]);
 		}
+		int scale = (int)client.getWindow().getScaleFactor();
+		this.bottomY = height * scale - (textureHeight * scale) - this.y * scale;
 	}
 
 	@Override
@@ -120,13 +113,13 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.drawBackground(matrices, delta, mouseX, mouseY);
-		this.children.forEach((child) -> {
+		this.children().forEach((child) -> {
 			if(child instanceof Drawable)
 			{
 				((Drawable)child).render(matrices, mouseX, mouseY, delta);
 			}
 		});
-		this.children.forEach(child -> {
+		this.children().forEach(child -> {
 			if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
 			{
 				this.renderTooltip(matrices, ((TooltipElement)child).getTooltip(mouseX, mouseY), mouseX, mouseY);

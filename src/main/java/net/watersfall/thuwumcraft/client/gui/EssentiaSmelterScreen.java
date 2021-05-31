@@ -14,8 +14,6 @@ public class EssentiaSmelterScreen extends HandledScreen<EssentiaSmelteryHandler
 {
 	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/essentia_smeltery.png");
 
-	private int x, y;
-
 	public EssentiaSmelterScreen(EssentiaSmelteryHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
@@ -25,8 +23,6 @@ public class EssentiaSmelterScreen extends HandledScreen<EssentiaSmelteryHandler
 	protected void init()
 	{
 		super.init();
-		this.x = this.field_2776;
-		this.y = this.field_2800;
 	}
 
 	@Override

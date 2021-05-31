@@ -1,4 +1,6 @@
 {
+	"noodle_caves_enabled": false,
+	"ore_veins_enabled": false,
 	"min_surface_level": 0,
 	"bedrock_roof_position": -10,
 	"bedrock_floor_position": -10,

@@ -26,7 +26,6 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 	private static final TranslatableText WAND_VIS_CAPACITY = new TranslatableText("item.thuwumcraft.wand_core.vis_capacity");
 	private static final TranslatableText WAND_SPELL = new TranslatableText("item.thuwumcraft.wand_focus");
 	private static final TranslatableText WAND_SPELL_NONE = new TranslatableText("item.thuwumcraft.wand.spell.none");
-	private int x, y;
 	private final TextRenderer text;
 
 	public WandWorkbenchScreen(WandWorkbenchHandler handler, PlayerInventory inventory, Text title)
@@ -42,8 +41,6 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 		this.backgroundHeight = 180;
 		this.playerInventoryTitleY = 87;
 		super.init();
-		this.x = this.field_2776;
-		this.y = this.field_2800;
 	}
 
 	@Override

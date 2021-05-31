@@ -3,6 +3,8 @@ package net.watersfall.thuwumcraft.client.gui.element;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -11,7 +13,7 @@ import net.minecraft.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemElement implements Element, Drawable, TooltipElement
+public class ItemElement implements Element, Drawable, TooltipElement, Selectable
 {
 	protected final ItemStack[] stacks;
 	protected final int x;
@@ -88,5 +90,17 @@ public class ItemElement implements Element, Drawable, TooltipElement
 			return this.tooltips.get(index);
 		}
 		return new ArrayList<>();
+	}
+
+	@Override
+	public SelectionType getType()
+	{
+		return SelectionType.NONE;
+	}
+
+	@Override
+	public void appendNarrations(NarrationMessageBuilder builder)
+	{
+
 	}
 }

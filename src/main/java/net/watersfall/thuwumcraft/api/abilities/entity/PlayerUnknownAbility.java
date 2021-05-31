@@ -71,7 +71,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 				{
 					ServerPlayerEntity player = (ServerPlayerEntity)entity;
 					ServerWorld serverWorld = entity.world.getServer().getWorld(ThuwumcraftWorlds.THE_UNKNOWN);
-					player.teleport(serverWorld, entity.getX(), entity.getY(), entity.getZ(), entity.yaw, entity.pitch);
+					player.teleport(serverWorld, entity.getX(), entity.getY(), entity.getZ(), entity.getYaw(), entity.getPitch());
 					this.setShouldPlaySound(true);
 					this.setTemporary(true);
 					this.sync(entity);

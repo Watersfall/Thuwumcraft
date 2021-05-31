@@ -20,7 +20,6 @@ import java.util.Optional;
 public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 {
 	private static final Identifier TEXTURE = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/container/apothecary_guide_book.png");
-	private int x, y;
 
 	public ApothecaryGuideScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
@@ -64,7 +63,5 @@ public class ApothecaryGuideScreen extends HandledScreen<ScreenHandler>
 		super.init();
 		// Center the title
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
-		this.x = this.field_2776;
-		this.y = this.field_2800;
 	}
 }

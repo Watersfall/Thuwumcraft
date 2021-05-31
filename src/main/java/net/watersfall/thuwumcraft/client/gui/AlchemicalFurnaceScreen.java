@@ -15,8 +15,6 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 {
 	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/container/alchemical_furnace.png");
 
-	private int x, y;
-
 	public AlchemicalFurnaceScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
@@ -29,8 +27,6 @@ public class AlchemicalFurnaceScreen extends HandledScreen<ScreenHandler>
 	protected void init()
 	{
 		super.init();
-		this.x = this.field_2776;
-		this.y = this.field_2800;
 	}
 
 	@Override

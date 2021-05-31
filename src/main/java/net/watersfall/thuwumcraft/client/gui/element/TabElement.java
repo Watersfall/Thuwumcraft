@@ -5,6 +5,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -13,7 +15,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class TabElement implements Element, Drawable, TooltipElement
+public abstract class TabElement implements Element, Drawable, TooltipElement, Selectable
 {
 	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 
@@ -63,5 +65,17 @@ public abstract class TabElement implements Element, Drawable, TooltipElement
 	public boolean isMouseOver(double mouseX, double mouseY)
 	{
 		return mouseX > x && mouseX < x + 24 && mouseY > y && mouseY < y + 16;
+	}
+
+	@Override
+	public SelectionType getType()
+	{
+		return SelectionType.NONE;
+	}
+
+	@Override
+	public void appendNarrations(NarrationMessageBuilder builder)
+	{
+
 	}
 }

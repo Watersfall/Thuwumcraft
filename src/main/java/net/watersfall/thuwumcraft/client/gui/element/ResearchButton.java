@@ -7,6 +7,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
@@ -14,7 +16,7 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.research.Research;
 
-public class ResearchButton implements Element, Drawable
+public class ResearchButton implements Element, Drawable, Selectable
 {
 	private static final Identifier TEXTURE = Thuwumcraft.getId("textures/gui/research/research_page.png");
 	private final TranslatableText title = new TranslatableText("research.complete");
@@ -87,5 +89,17 @@ public class ResearchButton implements Element, Drawable
 	public boolean isEnabled()
 	{
 		return this.enabled;
+	}
+
+	@Override
+	public SelectionType getType()
+	{
+		return SelectionType.NONE;
+	}
+
+	@Override
+	public void appendNarrations(NarrationMessageBuilder builder)
+	{
+
 	}
 }

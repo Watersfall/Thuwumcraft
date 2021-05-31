@@ -30,7 +30,7 @@ public class WandComponentSlot extends Slot
 	}
 
 	@Override
-	public void onStackChanged(ItemStack originalItem, ItemStack newItem)
+	public void onQuickTransfer(ItemStack originalItem, ItemStack newItem)
 	{
 		if(newItem.isEmpty())
 		{
@@ -80,7 +80,7 @@ public class WandComponentSlot extends Slot
 	{
 		ItemStack original = this.getStack().copy();
 		super.setStack(stack);
-		onStackChanged(original, stack);
+		onQuickTransfer(original, stack);
 	}
 
 	public void setStackNoUpdate(ItemStack stack)

@@ -29,7 +29,7 @@ public class WandSlot extends Slot
 	}
 
 	@Override
-	public void onStackChanged(ItemStack originalItem, ItemStack newItem)
+	public void onQuickTransfer(ItemStack originalItem, ItemStack newItem)
 	{
 		if(originalItem.isEmpty() && !newItem.isEmpty())
 		{
@@ -65,6 +65,6 @@ public class WandSlot extends Slot
 	{
 		ItemStack original = this.getStack().copy();
 		super.setStack(stack);
-		this.onStackChanged(original, stack);
+		this.onQuickTransfer(original, stack);
 	}
 }

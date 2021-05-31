@@ -64,7 +64,7 @@ public class CustomMobSpawnerLogic
 						if (world.isSpaceEmpty(optional.get().createSimpleBoundingBox(x, y, z)) && SpawnRestriction.canSpawn(optional.get(), (ServerWorldAccess) world, SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom()))
 						{
 							Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, world, (entityx) -> {
-								entityx.refreshPositionAndAngles(x, y, z, entityx.yaw, entityx.pitch);
+								entityx.refreshPositionAndAngles(x, y, z, entityx.getYaw(), entityx.getPitch());
 								return entityx;
 							});
 							if (entity == null)

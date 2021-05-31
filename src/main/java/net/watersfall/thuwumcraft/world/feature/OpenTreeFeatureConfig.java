@@ -11,8 +11,8 @@ import java.util.List;
 
 public class OpenTreeFeatureConfig extends TreeFeatureConfig
 {
-	protected OpenTreeFeatureConfig(BlockStateProvider trunkProvider, TrunkPlacer trunkPlacer, BlockStateProvider foliageProvider, FoliagePlacer foliagePlacer, BlockStateProvider dirtProvider, FeatureSize minimumSize, List<TreeDecorator> decorators, boolean ignoreVines, boolean forceDirt)
+	protected OpenTreeFeatureConfig(BlockStateProvider trunkProvider, TrunkPlacer trunkPlacer, BlockStateProvider foliageProvider, BlockStateProvider saplingProvider, FoliagePlacer foliagePlacer, BlockStateProvider dirtProvider, FeatureSize minimumSize, List<TreeDecorator> decorators, boolean ignoreVines, boolean forceDirt)
 	{
-		super(trunkProvider, trunkPlacer, foliageProvider, foliagePlacer, dirtProvider, minimumSize, decorators, ignoreVines, forceDirt);
+		super(trunkProvider, trunkPlacer, foliageProvider, saplingProvider, foliagePlacer, dirtProvider, minimumSize, decorators, ignoreVines, forceDirt);
 	}
 }

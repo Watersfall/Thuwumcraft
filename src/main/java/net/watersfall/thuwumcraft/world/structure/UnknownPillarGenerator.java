@@ -63,8 +63,8 @@ public class UnknownPillarGenerator
 
 		private void init(StructureManager manager)
 		{
-			chestStructure = manager.getStructure(CHEST);
-			noChestStructure = manager.getStructure(NO_CHEST);
+			chestStructure = manager.getStructure(CHEST).get();
+			noChestStructure = manager.getStructure(NO_CHEST).get();
 		}
 
 		@Override

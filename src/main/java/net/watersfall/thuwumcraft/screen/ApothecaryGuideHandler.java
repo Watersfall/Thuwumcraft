@@ -107,7 +107,7 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		}
 
 		@Override
-		public void onStackChanged(ItemStack originalItem, ItemStack itemStack)
+		public void onQuickTransfer(ItemStack originalItem, ItemStack itemStack)
 		{
 
 		}
