@@ -42,6 +42,7 @@ public class ThuwumcraftFeatures
 	public static final ConfiguredFeature<?, ?> LOST_TREE;
 	public static final ConfiguredFeature<?, ?> THE_LOST_FOREST_TREES;
 	public static final ConfiguredFeature<?, ?> SILVERWOOD_TREE;
+	public static final ConfiguredFeature<?, ?> SILVERWOOD_TREE_SAPLING;
 
 	static
 	{
@@ -156,6 +157,18 @@ public class ThuwumcraftFeatures
 				new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()),
 				new SimpleBlockStateProvider(Blocks.DARK_OAK_SAPLING.getDefaultState()),
 				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 50),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
+				new TwoLayersFeatureSize(1, 0, 1),
+				new ArrayList<>(),
+				false,
+				false
+		));
+		SILVERWOOD_TREE_SAPLING = Feature.TREE.configure(new OpenTreeFeatureConfig(
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LOG.getDefaultState()),
+				new SilverwoodTrunkPlacer(7, 2, 2),
+				new SimpleBlockStateProvider(ThuwumcraftBlocks.SILVERWOOD_LEAVES.getDefaultState()),
+				new SimpleBlockStateProvider(Blocks.DARK_OAK_SAPLING.getDefaultState()),
+				new RandomSpreadFoliagePlacer(UniformIntProvider.create(3, 3), UniformIntProvider.create(0, 0), UniformIntProvider.create(2, 2), 100),
 				new SimpleBlockStateProvider(ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState()),
 				new TwoLayersFeatureSize(1, 0, 1),
 				new ArrayList<>(),

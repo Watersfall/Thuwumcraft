@@ -5,6 +5,8 @@ import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.block.sapling.OpenSaplingBlock;
+import net.watersfall.thuwumcraft.block.sapling.SilverwoodSaplingGenerator;
 import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
 
 public class ThuwumcraftBlocks
@@ -35,6 +37,7 @@ public class ThuwumcraftBlocks
 	public static final PillarBlock SILVERWOOD_LOG;
 	public static final PortableHoleBlock PORTABLE_HOLE_BLOCK;
 	public static final WandWorkbenchBlock WAND_WORKBENCH;
+	public static final SaplingBlock SILVERWOOD_SAPLING;
 
 	static
 	{
@@ -64,6 +67,7 @@ public class ThuwumcraftBlocks
 		SILVERWOOD_LOG = register(Thuwumcraft.getId("silverwood_log"), new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)));
 		PORTABLE_HOLE_BLOCK = register(Thuwumcraft.getId("portable_hole"), new PortableHoleBlock(FabricBlockSettings.copyOf(Blocks.AIR).luminance(5)));
 		WAND_WORKBENCH = register(Thuwumcraft.getId("wand_workbench"), new WandWorkbenchBlock(FabricBlockSettings.of(Material.WOOD)));
+		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new OpenSaplingBlock(new SilverwoodSaplingGenerator(), FabricBlockSettings.copyOf(Blocks.OAK_SAPLING)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

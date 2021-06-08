@@ -106,6 +106,7 @@ public class ThuwumcraftItems
 	public static final WandCapItem IRON_CAP;
 	public static final WandCapItem BRASS_CAP;
 	public static final WandCapItem THUWUMIUM_CAP;
+	public static final BlockItem SILVERWOOD_SAPLING;
 	public static final List<Item> ITEMS;
 
 	static
@@ -192,6 +193,7 @@ public class ThuwumcraftItems
 		IRON_CAP = register(Thuwumcraft.getId("iron_cap"), new WandCapItem(WandCapMaterials.IRON, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		BRASS_CAP = register(Thuwumcraft.getId("brass_cap"), new WandCapItem(WandCapMaterials.BRASS, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
 		THUWUMIUM_CAP = register(Thuwumcraft.getId("thuwumium_cap"), new WandCapItem(WandCapMaterials.THUWUMIUM, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new BlockItem(ThuwumcraftBlocks.SILVERWOOD_SAPLING, new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
