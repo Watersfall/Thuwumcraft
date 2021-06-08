@@ -32,7 +32,7 @@ import java.util.Optional;
 @Mixin(Entity.class)
 public abstract class EntityMixin implements AbilityProvider<Entity>
 {
-	@Shadow private int entityId;
+	@Shadow private int id;
 
 	@Shadow public abstract int getId();
 
@@ -120,7 +120,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
-		buf.writeInt(this.entityId);
+		buf.writeInt(this.id);
 		buf.writeInt(this.waters_abilities.size());
 		waters_abilities.values().forEach((value) -> {
 			if(value instanceof AbilityClientSerializable)

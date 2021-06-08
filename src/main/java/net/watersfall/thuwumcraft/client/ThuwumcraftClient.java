@@ -475,7 +475,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 				Entity entity = type.create(client.world);
 				entity.updatePositionAndAngles(x, y, z, yaw, pitch);
 				entity.updateTrackedPosition(x, y, z);
-				entity.setEntityId(id);
+				entity.setId(id);
 				entity.setUuid(uuid);
 				if(owner != -1 && entity instanceof ProjectileEntity)
 				{
