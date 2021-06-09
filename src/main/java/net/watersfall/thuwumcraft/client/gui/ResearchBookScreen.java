@@ -35,7 +35,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
 	private final int textureWidth = 431;
 	private final int textureHeight = 256;
-	private final PlayerResearchAbility ability;
+	private PlayerResearchAbility ability;
 	private float mapX;
 	private float mapY;
 	private ResearchCategory currentCategory;
@@ -112,6 +112,9 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+		ability = optional.get();
 		this.drawBackground(matrices, delta, mouseX, mouseY);
 		this.children().forEach((child) -> {
 			if(child instanceof Drawable)
@@ -131,7 +134,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY)
 	{
 		mapX += (deltaX);
-		mapY += (deltaY);
+		mapY += (deltaY);	
 		mapX = MathHelper.clamp(mapX, 0, this.width / scale);
 		mapY = MathHelper.clamp(mapY, 0, this.height / scale);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
