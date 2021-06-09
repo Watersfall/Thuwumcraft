@@ -3,8 +3,6 @@ package net.watersfall.thuwumcraft.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
-import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -14,11 +12,16 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
+import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
+import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory>
+public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory> implements BookRenderableRecipe
 {
 	private final Ingredient catalyst;
 	private final int waterUse;
@@ -32,6 +35,12 @@ public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronIn
 		this.waterUse = waterUse;
 		this.inputs = ImmutableList.copyOf(inputs);
 		this.output = output;
+	}
+
+	@Override
+	public BookRecipeType getBookType()
+	{
+		return BookRecipeTypes.CAULDRON;
 	}
 
 	@Override

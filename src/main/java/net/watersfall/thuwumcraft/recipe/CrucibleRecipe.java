@@ -16,11 +16,14 @@ import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory>
+public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory> implements BookRenderableRecipe
 {
 	public final Ingredient catalyst;
 	public final List<AspectStack> aspects;
@@ -32,6 +35,12 @@ public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory>
 		this.catalyst = catalyst;
 		this.aspects = aspects;
 		this.output = output;
+	}
+
+	@Override
+	public BookRecipeType getBookType()
+	{
+		return BookRecipeTypes.CAULDRON;
 	}
 
 	@Override

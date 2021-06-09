@@ -7,31 +7,37 @@ import com.google.gson.JsonParser;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.nbt.*;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.collection.DefaultedList;
-import net.watersfall.thuwumcraft.api.aspect.AspectStack;
-import net.watersfall.thuwumcraft.api.aspect.Aspects;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.block.entity.JarEntity;
-import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.api.aspect.Aspects;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.block.entity.JarEntity;
+import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
+public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> implements BookRenderableRecipe
 {
 	private final List<Ingredient> inputs;
 	private final List<AspectStack> aspects;
@@ -104,6 +110,12 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity>
 		this.nbt = nbt;
 		this.nbtReplace = nbtReplace;
 		this.output.setTag(nbt);
+	}
+
+	@Override
+	public BookRecipeType getBookType()
+	{
+		return BookRecipeTypes.INFUSION;
 	}
 
 	@Override

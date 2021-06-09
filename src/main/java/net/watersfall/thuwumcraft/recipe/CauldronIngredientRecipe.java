@@ -3,6 +3,9 @@ package net.watersfall.thuwumcraft.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
 import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory>
+public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCauldronInventory> implements BookRenderableRecipe
 {
 	public static final String ITEMS = "items";
 	public static final String ACTION = "action";
@@ -108,6 +111,12 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 	public CraftingAction getCraftingAction()
 	{
 		return craftingAction;
+	}
+
+	@Override
+	public BookRecipeType getBookType()
+	{
+		return BookRecipeTypes.CAULDRON;
 	}
 
 	public static class Serializer implements RecipeSerializer<CauldronIngredientRecipe>

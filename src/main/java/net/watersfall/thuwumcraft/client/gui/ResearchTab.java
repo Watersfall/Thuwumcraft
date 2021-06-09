@@ -13,6 +13,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipePage;
@@ -81,18 +82,19 @@ public class ResearchTab extends Screen
 		int count = 0;
 		for(int i = 0; i < recipeIds.length; i++)
 		{
-			recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
+			BookRenderableRecipe recipe = (BookRenderableRecipe)recipes[i];
+			recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
 			if(recipeElements[i].twoPage && i + 1 < recipes.length)
 			{
 				i++;
-				recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
+				recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
 				if(!recipeElements[i].twoPage)
 				{
 					count++;
 				}
 				else
 				{
-					recipeElements[i] = RecipeTabType.REGISTRY.get(recipes[i].getType()).generateRecipeLayout(recipes[i], x, offsetY2, textureWidth, textureHeight);
+					recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY2, textureWidth, textureHeight);
 				}
 			}
 			count++;

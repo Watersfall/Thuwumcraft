@@ -45,7 +45,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeManager;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
@@ -68,6 +67,7 @@ import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
@@ -88,14 +88,14 @@ import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
 import net.watersfall.thuwumcraft.entity.ThuwumcraftEntities;
 import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
+import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
 import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import org.jetbrains.annotations.Nullable;
@@ -484,7 +484,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 				client.world.addEntity(id, entity);
 			});
 		});
-		RecipeTabType.REGISTRY.register(RecipeType.CRAFTING, ((recipe, x, y, width, height) -> {
+		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
 			int offsetX = x + (width / 2) - 50;
 			//TODO make a special recipe type enum or some other solution to this
@@ -521,7 +521,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
 			return new RecipeElement(items, true);
 		}));
-		RecipeTabType.REGISTRY.register(ThuwumcraftRecipes.PEDESTAL_RECIPE, ((recipe2, x, y, width, height) -> {
+		RecipeTabType.REGISTRY.register(BookRecipeTypes.INFUSION, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
 			Point origin = new Point(x + width / 2 - 32, y + height / 2 - 64);
@@ -546,7 +546,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
 			return new RecipeElement(items, false);
 		}));
-		RecipeTabType.REGISTRY.register(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, ((recipe2, x, y, width, height) -> {
+		RecipeTabType.REGISTRY.register(BookRecipeTypes.CAULDRON, ((recipe2, x, y, width, height) -> {
 			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
 			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];
 			int offsetX = x + (width / 2) - 50;
