@@ -1,5 +1,5 @@
 {
-	"icon": "thuwumcraft:thuwumium_sword",
+	"icon": "thuwumcraft:magic_sword",
 	"category": "thuwumcraft:infusion",
 	"x": -3,
 	"y": 9,
@@ -7,5 +7,13 @@
 		"research": [
 			"thuwumcraft:infusion/tool_infusion"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"thuwumcraft:pedestal_crafting/magic_sword"
+			],
+			"requires_complete": true
+		}
+	]
 }

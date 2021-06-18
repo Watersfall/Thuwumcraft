@@ -2,5 +2,31 @@
 	"parent": "minecraft:item/handheld",
 	"textures": {
 		"layer0": "thuwumcraft:item/magic_battleaxe"
-	}
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"thuwumcraft:level": 0.24
+			},
+			"model": "thuwumcraft:item/magic_battleaxe_1"
+		},
+		{
+			"predicate": {
+				"thuwumcraft:level": 0.49
+			},
+			"model": "thuwumcraft:item/magic_battleaxe_2"
+		},
+		{
+			"predicate": {
+				"thuwumcraft:level": 0.74
+			},
+			"model": "thuwumcraft:item/magic_battleaxe_3"
+		},
+		{
+			"predicate": {
+				"thuwumcraft:level": 0.99
+			},
+			"model": "thuwumcraft:item/magic_battleaxe_4"
+		}
+	]
 }

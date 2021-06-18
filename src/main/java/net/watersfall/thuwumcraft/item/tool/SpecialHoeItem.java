@@ -3,8 +3,10 @@ package net.watersfall.thuwumcraft.item.tool;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
+import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 public class SpecialHoeItem extends OpenHoeItem
@@ -51,5 +53,14 @@ public class SpecialHoeItem extends OpenHoeItem
 			}
 		}
 		return ActionResult.PASS;
+	}
+
+	@Override
+	public void onCraft(ItemStack stack, World world, PlayerEntity player)
+	{
+		if(stack.getTag() != null && stack.getTag().contains("RepairCost"))
+		{
+			stack.getTag().putInt("RepairCost", 0);
+		}
 	}
 }

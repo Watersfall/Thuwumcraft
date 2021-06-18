@@ -1,5 +1,5 @@
 {
-	"icon": "thuwumcraft:thuwumium_axe",
+	"icon": "thuwumcraft:magic_battleaxe",
 	"category": "thuwumcraft:infusion",
 	"x": -6,
 	"y": 9,
@@ -7,5 +7,13 @@
 		"research": [
 			"thuwumcraft:infusion/tool_infusion"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"thuwumcraft:pedestal_crafting/magic_battleaxe"
+			],
+			"requires_complete": true
+		}
+	]
 }

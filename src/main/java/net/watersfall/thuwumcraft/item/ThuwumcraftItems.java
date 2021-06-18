@@ -46,6 +46,7 @@ public class ThuwumcraftItems
 	public static final SpecialSwordItem SPECIAL_SWORD_ITEM;
 	public static final SpecialBattleaxeItem SPECIAL_BATTLEAXE_ITEM;
 	public static final SpecialBowItem SPECIAL_BOW_ITEM;
+	public static final SpecialShovelItem SPECIAL_SHOVEL_ITEM;
 	public static final Item JAR_ITEM;
 	public static final GlassPhialItem EMPTY_PHIAL_ITEM;
 	public static final Item PHIAL_SHELF_ITEM;
@@ -133,6 +134,7 @@ public class ThuwumcraftItems
 		SPECIAL_SWORD_ITEM = register(Thuwumcraft.getId("magic_sword"), new SpecialSwordItem());
 		SPECIAL_BATTLEAXE_ITEM = register(Thuwumcraft.getId("magic_battleaxe"), new SpecialBattleaxeItem());
 		SPECIAL_BOW_ITEM = register(Thuwumcraft.getId("magic_bow"), new SpecialBowItem(new FabricItemSettings().group(ALCHEMY_MOD_ITEM_GROUP).maxCount(1)));
+		SPECIAL_SHOVEL_ITEM = register(Thuwumcraft.getId("magic_shovel"), new SpecialShovelItem());
 		JAR_ITEM = register(Thuwumcraft.getId("jar"), new BlockItem(ThuwumcraftBlocks.JAR_BLOCK, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));
 		EMPTY_PHIAL_ITEM = register(Thuwumcraft.getId("phial/empty"), new GlassPhialItem(Aspect.EMPTY));
 		PHIAL_SHELF_ITEM = register(Thuwumcraft.getId("phial_shelf"), new BlockItem(ThuwumcraftBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));

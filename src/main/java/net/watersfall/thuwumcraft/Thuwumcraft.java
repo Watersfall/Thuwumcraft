@@ -58,13 +58,11 @@ import net.minecraft.world.gen.GenerationStep;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
-import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
-import net.watersfall.thuwumcraft.abilities.item.RunedShieldAbilityItem;
-import net.watersfall.thuwumcraft.abilities.item.WandAbilityImpl;
-import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
+import net.watersfall.thuwumcraft.abilities.item.*;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
+import net.watersfall.thuwumcraft.api.abilities.item.BerserkerWeapon;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
@@ -368,6 +366,7 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerResearchAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandAbility.ID, WandAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
+		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
 	}
 
 	private static void registerMultiBlocks()

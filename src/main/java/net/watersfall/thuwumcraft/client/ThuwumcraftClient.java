@@ -35,6 +35,7 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.Fluid;
@@ -66,8 +67,8 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
-import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
@@ -85,8 +86,11 @@ import net.watersfall.thuwumcraft.client.particle.MagicForestParticle;
 import net.watersfall.thuwumcraft.client.particle.WaterParticle;
 import net.watersfall.thuwumcraft.client.renderer.*;
 import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
+import net.watersfall.thuwumcraft.client.renderer.entity.WindEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
+import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
 import net.watersfall.thuwumcraft.entity.ThuwumcraftEntities;
+import net.watersfall.thuwumcraft.entity.WindEntity;
 import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
 import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
@@ -111,6 +115,7 @@ import java.util.function.Function;
 public class ThuwumcraftClient implements ClientModInitializer
 {
 	private static final Identifier UNKNOWN_VIGNETTE = Thuwumcraft.getId("textures/misc/unknown_vignette.png");
+	private static final Identifier VANILLA_VIGNETTE = new Identifier("textures/misc/vignette.png");
 	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
@@ -140,6 +145,33 @@ public class ThuwumcraftClient implements ClientModInitializer
 		HudRenderCallback.EVENT.register((matrices, delta) -> {
 			MinecraftClient client = MinecraftClient.getInstance();
 			PlayerEntity player = client.player;
+			if(player.hasStatusEffect(ThuwumcraftStatusEffects.BERSERK))
+			{
+				StatusEffectInstance effect = player.getStatusEffect(ThuwumcraftStatusEffects.BERSERK);
+				int height = client.getWindow().getScaledHeight();
+				int width = client.getWindow().getScaledWidth();
+				float color = (effect.getAmplifier() + 1) / 2F;
+				RenderSystem.enableBlend();
+				RenderSystem.setShaderColor(color, color, color, 1F);
+				RenderSystem.disableDepthTest();
+				RenderSystem.depthMask(false);
+				RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+				RenderSystem.setShader(GameRenderer::getPositionTexShader);
+				RenderSystem.setShaderTexture(0, VANILLA_VIGNETTE);
+				Tessellator tessellator = Tessellator.getInstance();
+				BufferBuilder bufferBuilder = tessellator.getBuffer();
+				bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+				bufferBuilder.vertex(0.0D, height, -90.0D).texture(0.0F, 1.0F).next();
+				bufferBuilder.vertex(width, height, -90.0D).texture(1.0F, 1.0F).next();
+				bufferBuilder.vertex(width, 0.0D, -90.0D).texture(1.0F, 0.0F).next();
+				bufferBuilder.vertex(0.0D, 0.0D, -90.0D).texture(0.0F, 0.0F).next();
+				tessellator.draw();
+				RenderSystem.depthMask(true);
+				RenderSystem.enableDepthTest();
+				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+				RenderSystem.defaultBlendFunc();
+				RenderSystem.disableBlend();
+			}
 			if(player.world.getRegistryKey() == ThuwumcraftWorlds.THE_UNKNOWN)
 			{
 				AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
@@ -481,6 +513,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 				{
 					((ProjectileEntity)entity).setOwner(client.world.getEntityById(owner));
 				}
+				if(owner != 1 && entity instanceof WindEntity wind)
+				{
+					wind.setOwner(client.world.getEntityById(owner));
+				}
 				client.world.addEntity(id, entity);
 			});
 		});
@@ -570,5 +606,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WATER_ENTITY, WaterEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.FIRE_ENTITY, WaterEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_ENTITY, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WIND, WindEntityRenderer::new);
+		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM, Thuwumcraft.getId("level"), ((stack, world, entity, seed) -> {
+			return ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM.getLevel(stack);
+		}));
 	}
 }

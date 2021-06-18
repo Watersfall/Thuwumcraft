@@ -8,6 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.watersfall.thuwumcraft.abilities.item.BerserkerWeaponImpl;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
 import net.watersfall.thuwumcraft.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.thuwumcraft.abilities.item.WandAbilityImpl;
@@ -15,6 +16,7 @@ import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.GlassPhialItem;
+import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -59,6 +61,10 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		else if(item != null && item.asItem() instanceof WandItem)
 		{
 			this.addAbility(new WandAbilityImpl());
+		}
+		else if(item != null && item instanceof SpecialBattleaxeItem)
+		{
+			this.addAbility(new BerserkerWeaponImpl());
 		}
 	}
 

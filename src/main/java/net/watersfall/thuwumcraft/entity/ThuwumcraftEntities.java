@@ -13,6 +13,7 @@ public class ThuwumcraftEntities
 	public static final EntityType<WaterEntity> WATER_ENTITY;
 	public static final EntityType<FireEntity> FIRE_ENTITY;
 	public static final EntityType<SandEntity> SAND_ENTITY;
+	public static final EntityType<WindEntity> WIND;
 
 	static
 	{
@@ -48,6 +49,15 @@ public class ThuwumcraftEntities
 				Thuwumcraft.getId("sand_entity"),
 				FabricEntityTypeBuilder.<SandEntity>create(SpawnGroup.MISC, SandEntity::new)
 						.dimensions(EntityDimensions.fixed(2, 2))
+						.trackedUpdateRate(10)
+						.trackRangeBlocks(4)
+						.build()
+		);
+		WIND = Registry.register(
+				Registry.ENTITY_TYPE,
+				Thuwumcraft.getId("wind_entity"),
+				FabricEntityTypeBuilder.<WindEntity>create(SpawnGroup.MISC, WindEntity::new)
+						.dimensions(EntityDimensions.fixed(0.5F, 0.5F))
 						.trackedUpdateRate(10)
 						.trackRangeBlocks(4)
 						.build()

@@ -161,7 +161,7 @@ public class WaterEntity extends Entity
 		buf.writeDouble(this.getPos().z);
 		buf.writeFloat(this.getPitch());
 		buf.writeFloat(this.getYaw());
-		buf.writeVarInt(-1);
+		buf.writeVarInt(this.owner != null ? this.owner.getId() : -1);
 		return ServerPlayNetworking.createS2CPacket(Thuwumcraft.getId("spawn_packet"), buf);
 	}
 }

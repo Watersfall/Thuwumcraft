@@ -1,5 +1,21 @@
 {
-	"icon": "thuwumcraft:thuwumium_pickaxe",
+	"icon": [
+		{
+			"item": "thuwumcraft:magic_pickaxe"
+		},
+		{
+			"item": "thuwumcraft:magic_axe"
+		},
+		{
+			"item": "thuwumcraft:magic_shovel"
+		},
+		{
+			"item": "thuwumcraft:magic_hoe"
+		},
+		{
+			"item": "thuwumcraft:magic_sword"
+		}
+	],
 	"category": "thuwumcraft:infusion",
 	"x": 0,
 	"y": 7,
@@ -7,5 +23,13 @@
 		"research": [
 			"thuwumcraft:infusion/infusion_start"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"thuwumcraft:pedestal_crafting/magic_shovel"
+			],
+			"requires_complete": true
+		}
+	]
 }

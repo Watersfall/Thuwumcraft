@@ -20,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.item.BeforeActions;
 import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
 import net.watersfall.thuwumcraft.entity.ThuwumcraftAttributes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -179,5 +180,18 @@ public abstract class LivingEntityMixin extends Entity
 			amount = amount * (float)(1 - resistance);
 		}
 		return amount;
+	}
+
+	@Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isSleeping()Z"), cancellable = true)
+	public void beforeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info)
+	{
+		if(source.getAttacker() instanceof LivingEntity entity)
+		{
+			if(((BeforeActions)entity.getMainHandStack().getItem()).beforeHit(entity.getMainHandStack(), (LivingEntity)(Object)this, entity))
+			{
+				info.setReturnValue(false);
+				info.cancel();
+			}
+		}
 	}
 }

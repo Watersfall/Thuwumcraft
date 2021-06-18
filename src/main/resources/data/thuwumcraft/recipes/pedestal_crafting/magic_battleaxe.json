@@ -1,0 +1,45 @@
+{
+	"type": "thuwumcraft:pedestal_crafting",
+	"inputs": [
+		{
+			"item": "minecraft:diamond"
+		},
+		{
+			"item": "minecraft:amethyst_shard"
+		},
+		{
+			"item": "thuwumcraft:thuwumium_axe"
+		},
+		{
+			"item": "thuwumcraft:crystal/disorder"
+		},
+		{
+			"item": "thuwumcraft:crystal/disorder"
+		},
+		{
+			"item": "thuwumcraft:crystal/disorder"
+		},
+		{
+			"item": "thuwumcraft:thuwumium_axe"
+		},
+		{
+			"item": "minecraft:amethyst_shard"
+		}
+	],
+	"aspects": [
+		{
+			"aspect": "thuwumcraft:disorder",
+			"count": 32
+		},
+		{
+			"aspect": "thuwumcraft:metal",
+			"count": 32
+		}
+	],
+	"catalyst": {
+		"item": "thuwumcraft:thuwumium_sword"
+	},
+	"output": {
+		"item": "thuwumcraft:magic_battleaxe"
+	}
+}

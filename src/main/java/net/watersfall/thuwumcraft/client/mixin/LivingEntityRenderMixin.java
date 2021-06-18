@@ -29,9 +29,9 @@ public abstract class LivingEntityRenderMixin<T extends LivingEntity, M extends 
 	}
 
 	@Inject(method = "render", at = @At("TAIL"))
-	public void render(T livingEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info)
+	public void render(T entity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo info)
 	{
-		if(livingEntity.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_SHIELD))
+		if(entity.hasStatusEffect(ThuwumcraftStatusEffects.PROJECTILE_SHIELD))
 		{
 			matrices.push();
 			matrices.translate(-1.5f, 1f, -0.4f);
