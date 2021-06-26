@@ -92,13 +92,6 @@ public class AspectIngredient implements Recipe<AspectInventory>
 
 	public static class Serializer implements RecipeSerializer<AspectIngredient>
 	{
-		private final AspectIngredient.Serializer.RecipeFactory<AspectIngredient> recipeFactory;
-
-		public Serializer(AspectIngredient.Serializer.RecipeFactory<AspectIngredient> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public AspectIngredient read(Identifier id, JsonObject json)
 		{
@@ -139,11 +132,6 @@ public class AspectIngredient implements Recipe<AspectInventory>
 				buf.writeIdentifier(recipe.aspects.get(i).getAspect().getId());
 				buf.writeInt(recipe.aspects.get(i).getCount());
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, Item input, List<AspectStack> aspects);
 		}
 	}
 }

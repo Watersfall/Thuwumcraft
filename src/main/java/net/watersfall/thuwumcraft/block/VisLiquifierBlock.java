@@ -13,6 +13,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.VisLiquifierEntity;
+import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
 public class VisLiquifierBlock extends HorizontalFacingBlock implements BlockEntityProvider
@@ -38,15 +39,9 @@ public class VisLiquifierBlock extends HorizontalFacingBlock implements BlockEnt
 	}
 
 	@Nullable
-	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker)
-	{
-		return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
-	}
-
-	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.VIS_LIQUIFIER_ENTITY, VisLiquifierEntity::tick);
+		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.VIS_LIQUIFIER_ENTITY, VisLiquifierEntity::tick);
 	}
 }

@@ -58,9 +58,8 @@ public class AspectCraftingBlock extends Block implements BlockEntityProvider
 	public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos)
 	{
 		BlockEntity test = world.getBlockEntity(pos);
-		if(test instanceof AspectCraftingEntity)
+		if(test instanceof AspectCraftingEntity entity)
 		{
-			AspectCraftingEntity entity = (AspectCraftingEntity)test;
 			return new ExtendedScreenHandlerFactory()
 			{
 				@Override

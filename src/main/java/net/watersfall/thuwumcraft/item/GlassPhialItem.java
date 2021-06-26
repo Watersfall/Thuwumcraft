@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
@@ -45,14 +44,12 @@ public class GlassPhialItem extends Item
 		BlockEntity test = world.getBlockEntity(pos);
 		ItemStack stack = context.getStack();
 		PlayerEntity player = context.getPlayer();
-		Hand hand = context.getHand();
-		if(test instanceof AspectContainer)
+		if(test instanceof AspectContainer container)
 		{
 			if(world.isClient)
 			{
 				return ActionResult.SUCCESS;
 			}
-			AspectContainer container = (AspectContainer)test;
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 			Optional<PhialStorageAbility> ability = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
 			ability.ifPresent(phial -> {
@@ -80,7 +77,7 @@ public class GlassPhialItem extends Item
 					}
 				}
 			});
-			if(!ability.isPresent())
+			if(ability.isEmpty())
 			{
 				Aspects.ASPECTS.values().forEach((aspect -> {
 					AspectStack check = new AspectStack(aspect, 64);

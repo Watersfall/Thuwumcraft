@@ -21,6 +21,7 @@ import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
 import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
+import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -90,14 +91,9 @@ public class JarBlock extends Block implements BlockEntityProvider
 	}
 
 	@Nullable
-	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
-		return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
-	}
-
-	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.JAR_ENTITY, JarEntity::tick);
+		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.JAR_ENTITY, JarEntity::tick);
 	}
 }

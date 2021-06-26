@@ -28,9 +28,8 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit)
 	{
 		BlockEntity entityTest = world.getBlockEntity(pos);
-		if(entityTest instanceof ChildBlockEntity)
+		if(entityTest instanceof ChildBlockEntity entity)
 		{
-			ChildBlockEntity entity = (ChildBlockEntity)entityTest;
 			if(entity.getComponent() != null)
 			{
 				if(!world.isClient)
@@ -46,9 +45,8 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player)
 	{
 		BlockEntity entityTest = world.getBlockEntity(pos);
-		if(entityTest instanceof ChildBlockEntity)
+		if(entityTest instanceof ChildBlockEntity entity)
 		{
-			ChildBlockEntity entity = (ChildBlockEntity)entityTest;
 			if(entity.getComponent() != null)
 			{
 				if(!world.isClient())
@@ -63,12 +61,10 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos)
 	{
 		BlockEntity entityTest = world.getBlockEntity(pos);
-		if(entityTest instanceof ChildBlockEntity)
+		if(entityTest instanceof ChildBlockEntity entity)
 		{
-			ChildBlockEntity entity = (ChildBlockEntity)entityTest;
-			if(entity.getComponent() instanceof ItemComponent)
+			if(entity.getComponent() instanceof ItemComponent component)
 			{
-				ItemComponent component = (ItemComponent)entity.getComponent();
 				return component.getInventory();
 			}
 		}
@@ -79,9 +75,8 @@ public class ChildBlock extends Block implements BlockEntityProvider, InventoryP
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
 		BlockEntity entityTest = world.getBlockEntity(pos);
-		if(entityTest instanceof ChildBlockEntity)
+		if(entityTest instanceof ChildBlockEntity entity)
 		{
-			ChildBlockEntity entity = (ChildBlockEntity)entityTest;
 			if(entity.getComponent() != null)
 			{
 				return entity.getComponent().getOutline();

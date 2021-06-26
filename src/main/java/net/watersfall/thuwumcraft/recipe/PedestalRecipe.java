@@ -15,7 +15,6 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.SoundCategory;
@@ -240,13 +239,6 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 		private final static String OUTPUT = "output";
 		private final static String ASPECTS = "aspects";
 
-		private final PedestalRecipe.Serializer.RecipeFactory<PedestalRecipe> recipeFactory;
-
-		public Serializer(PedestalRecipe.Serializer.RecipeFactory<PedestalRecipe> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public PedestalRecipe read(Identifier id, JsonObject json)
 		{
@@ -341,11 +333,6 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, List<Ingredient> inputs, List<AspectStack> aspects, Ingredient catalyst, ItemStack output, List<Identifier> research, NbtCompound nbt, boolean nbtReplace);
 		}
 	}
 

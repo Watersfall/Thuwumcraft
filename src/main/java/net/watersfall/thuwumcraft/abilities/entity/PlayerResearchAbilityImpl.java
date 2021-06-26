@@ -27,9 +27,8 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 		this();
 		if(entity != null)
 		{
-			if(entity instanceof ServerPlayerEntity)
+			if(entity instanceof ServerPlayerEntity player)
 			{
-				ServerPlayerEntity player = (ServerPlayerEntity)entity;
 				player.getServerWorld().getServer().getAdvancementLoader().getAdvancements().forEach((advancement -> {
 					if(player.getAdvancementTracker().getProgress(advancement).isDone())
 					{

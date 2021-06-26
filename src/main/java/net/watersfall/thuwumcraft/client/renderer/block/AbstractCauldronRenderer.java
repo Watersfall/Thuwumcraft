@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.renderer;
+package net.watersfall.thuwumcraft.client.renderer.block;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -48,7 +48,7 @@ public abstract class AbstractCauldronRenderer<T extends BlockEntity> implements
 			float scale = newLevel / 1000F * 0.5625F;
 			matrices.scale(0.75F, scale, 0.75F);
 			container.setLastWaterLevel((short) (newLevel));
-			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getTranslucent());
+			VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
 			RenderHelper.drawTexture(builder, matrices, WATER_SPRITE, color, light, overlay);
 			matrices.pop();
 		}

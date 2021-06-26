@@ -8,9 +8,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+
+import java.util.Optional;
 
 public class EyeOfTheUnknownItem extends Item
 {
+	private static final TranslatableText knownName = new TranslatableText("item.thuwumcraft.eye_of_the_known");
+	private static final TranslatableText unknownName = new TranslatableText("item.thuwumcraft.eye_of_the_unknown");
+
 	public EyeOfTheUnknownItem(Settings settings)
 	{
 		super(settings);
@@ -21,24 +28,22 @@ public class EyeOfTheUnknownItem extends Item
 	{
 		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 		{
-			Text text =  getClientName(stack);
-			if(text != null)
-			{
-				return text;
-			}
+			return getClientName(stack);
 		}
-		return new TranslatableText("item.thuwumcraft.eye_of_the_known");
+		return knownName;
 	}
 
 	public Text getClientName(ItemStack stack)
 	{
 		if(MinecraftClient.getInstance().player != null)
 		{
-			if(MinecraftClient.getInstance().getNetworkHandler().getAdvancementHandler().getManager().get(Thuwumcraft.getId("into_the_unknown")) == null)
+			//Todo: A better way of doing this
+			Optional<PlayerResearchAbility> optional = AbilityProvider.getProvider(MinecraftClient.getInstance().player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			if(optional.isPresent() && optional.get().hasAdvancement(Thuwumcraft.getId("the_unknown/root")))
 			{
-				return new TranslatableText("item.thuwumcraft.eye_of_the_unknown");
+				return knownName;
 			}
 		}
-		return null;
+		return unknownName;
 	}
 }

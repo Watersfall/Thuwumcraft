@@ -18,6 +18,7 @@ public class MagicDustItem extends Item
 		super(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).rarity(Rarity.UNCOMMON));
 	}
 
+	//Todo: Behavior map like vanilla cauldron
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context)
 	{

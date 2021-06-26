@@ -14,12 +14,14 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.item.AspectItems;
-import net.watersfall.thuwumcraft.block.*;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.block.BuddingElementalBlock;
+import net.watersfall.thuwumcraft.block.DecorativeStaffBlock;
+import net.watersfall.thuwumcraft.block.ElementalBlock;
+import net.watersfall.thuwumcraft.block.ElementalClusterBlock;
 import net.watersfall.thuwumcraft.item.CrystalItem;
-import net.watersfall.thuwumcraft.item.GlassPhialItem;
 import net.watersfall.thuwumcraft.item.DecorativeStaffBlockItem;
+import net.watersfall.thuwumcraft.item.GlassPhialItem;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.HashMap;
 
@@ -37,13 +39,13 @@ public class Aspects
 	public static final HashMap<Aspect, DecorativeStaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
 	public static final HashMap<Aspect, DecorativeStaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
-	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xffff00, AspectItems.AIR);
-	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x00ff00, AspectItems.EARTH);
-	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x0000ff, AspectItems.WATER);
-	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xe69836, AspectItems.FIRE);
-	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xdddddd, AspectItems.ORDER);
-	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x222222, AspectItems.DISORDER);
-	public static final Aspect METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, AspectItems.METAL, new Aspect[]{EARTH, ORDER});
+	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xffff00);
+	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x00ff00);
+	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x0000ff);
+	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xe69836);
+	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xdddddd);
+	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x222222);
+	public static final Aspect METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, new Aspect[]{EARTH, ORDER});
 
 	public static Aspect register(Identifier id, Aspect aspect)
 	{
@@ -56,9 +58,9 @@ public class Aspects
 		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
 		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
+		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
-		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
 		Registry.register(Registry.BLOCK, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staff);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staffItem);
 		if(aspect.isPrimitive())

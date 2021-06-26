@@ -49,17 +49,13 @@ public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityPro
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
-		switch(state.get(DIRECTION))
+		return switch(state.get(DIRECTION))
 		{
-			case SOUTH:
-				return OUTLINE_SHAPES[0];
-			case NORTH:
-				return OUTLINE_SHAPES[1];
-			case EAST:
-				return OUTLINE_SHAPES[2];
-			default:
-				return OUTLINE_SHAPES[3];
-		}
+			case SOUTH -> OUTLINE_SHAPES[0];
+			case NORTH -> OUTLINE_SHAPES[1];
+			case EAST -> OUTLINE_SHAPES[2];
+			default -> OUTLINE_SHAPES[3];
+		};
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package net.watersfall.thuwumcraft.util;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 
 public class InventoryHelper
 {
@@ -36,5 +38,23 @@ public class InventoryHelper
 			}
 		}
 		return false;
+	}
+
+	public static void useItem(ItemStack stack, PlayerEntity player, Hand hand, int count)
+	{
+		useItem(stack, player, hand, count, ItemStack.EMPTY);
+	}
+
+	public static void useItem(ItemStack stack, PlayerEntity player, Hand hand, int count, ItemStack replacementStack)
+	{
+		stack.decrement(1);
+		if(stack.isEmpty())
+		{
+			player.setStackInHand(hand, replacementStack);
+		}
+		else if(!player.getInventory().insertStack(replacementStack))
+		{
+			player.dropItem(replacementStack, false);
+		}
 	}
 }

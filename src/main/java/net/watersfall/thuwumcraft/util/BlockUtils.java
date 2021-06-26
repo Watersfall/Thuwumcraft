@@ -1,5 +1,8 @@
 package net.watersfall.thuwumcraft.util;
 
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -27,6 +30,11 @@ public class BlockUtils
 		return getCoordinatesFromHitResult(result);
 	}
 
+	public static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker)
+	{
+		return expectedType == givenType ? (BlockEntityTicker<A>)ticker : null;
+	}
+
 	static
 	{
 		DIRECTION_MAP.put(Direction.NORTH, (result) -> 1F - (float) (result.getPos().getX() - result.getBlockPos().getX()));
@@ -34,5 +42,4 @@ public class BlockUtils
 		DIRECTION_MAP.put(Direction.SOUTH, (result) -> (float) (result.getPos().getX() - result.getBlockPos().getX()));
 		DIRECTION_MAP.put(Direction.WEST, (result) -> (float) (result.getPos().getZ() - result.getBlockPos().getZ()));
 	}
-
 }

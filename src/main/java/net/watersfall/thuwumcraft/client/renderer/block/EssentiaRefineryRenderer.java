@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.renderer;
+package net.watersfall.thuwumcraft.client.renderer.block;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.font.TextRenderer;

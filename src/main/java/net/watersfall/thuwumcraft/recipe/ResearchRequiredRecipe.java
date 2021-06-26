@@ -11,6 +11,10 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * For my recipes
+ * @param <T> inventory type
+ */
 public abstract class ResearchRequiredRecipe<T extends Inventory> implements Recipe<T>
 {
 	protected final Identifier id;

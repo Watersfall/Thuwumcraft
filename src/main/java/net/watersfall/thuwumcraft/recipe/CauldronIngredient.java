@@ -149,12 +149,6 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 
 	public static class Serializer implements RecipeSerializer<CauldronIngredient>
 	{
-		private final CauldronIngredient.Serializer.RecipeFactory<CauldronIngredient> recipeFactory;
-		public Serializer(CauldronIngredient.Serializer.RecipeFactory<CauldronIngredient> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public CauldronIngredient read(Identifier id, JsonObject json)
 		{
@@ -196,11 +190,6 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			{
 				buf.writeNbt(recipe.getEffects().get(i).writeNbt(new NbtCompound()));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, ItemStack input, ArrayList<StatusEffectInstance> effects, int color);
 		}
 	}
 }

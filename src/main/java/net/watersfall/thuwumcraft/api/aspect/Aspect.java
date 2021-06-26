@@ -13,22 +13,22 @@ public class Aspect
 	private final boolean primitive;
 	private final Aspect[] components;
 
-	public Aspect(Identifier name, int color, AspectItem item, Aspect[] components)
+	public Aspect(Identifier name, int color, Aspect[] components)
 	{
 		this.name = name;
 		this.color = color;
-		this.item = item;
 		this.primitive = false;
 		this.components = components;
+		this.item = new AspectItem(this);
 	}
 
-	protected Aspect(Identifier name, int color, AspectItem item)
+	protected Aspect(Identifier name, int color)
 	{
 		this.name = name;
 		this.color = color;
-		this.item = item;
 		this.primitive = true;
 		this.components = new Aspect[]{};
+		this.item = new AspectItem(this);
 	}
 
 	/**

@@ -108,7 +108,6 @@ public class NekomancyRecipe implements Recipe<NekomancerTableInventory>
 
 	public static class Serializer implements RecipeSerializer<NekomancyRecipe>
 	{
-
 		@Override
 		public NekomancyRecipe read(Identifier id, JsonObject json)
 		{
@@ -149,11 +148,6 @@ public class NekomancyRecipe implements Recipe<NekomancerTableInventory>
 			{
 				buf.writeItemStack(recipe.crystals.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, ShapedRecipe recipe, List<ItemStack> crystals, ItemStack output);
 		}
 	}
 }

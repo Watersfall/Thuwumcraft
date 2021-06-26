@@ -3,19 +3,18 @@ package net.watersfall.thuwumcraft.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
-import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
-import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
-import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
+import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
+import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
+import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,11 +120,6 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 
 	public static class Serializer implements RecipeSerializer<CauldronIngredientRecipe>
 	{
-		private final CauldronIngredientRecipe.Serializer.RecipeFactory<CauldronIngredientRecipe> recipeFactory;
-		public Serializer(CauldronIngredientRecipe.Serializer.RecipeFactory<CauldronIngredientRecipe> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
 
 		@Override
 		public CauldronIngredientRecipe read(Identifier id, JsonObject json)
@@ -184,11 +178,6 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, Ingredient input, int waterUse, CraftingAction action, int uses, ItemStack output, List<Identifier> research);
 		}
 	}
 

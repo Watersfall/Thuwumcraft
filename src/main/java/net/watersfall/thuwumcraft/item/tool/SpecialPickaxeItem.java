@@ -1,15 +1,22 @@
 package net.watersfall.thuwumcraft.item.tool;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.OreBlock;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.item.BeforeActions;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
 
 import java.util.ArrayList;
 
-public class SpecialPickaxeItem extends PickaxeItem
+public class SpecialPickaxeItem extends PickaxeItem implements BeforeActions
 {
 	public static BlockPos getFurthestOre(World world, Block block, BlockPos pos)
 	{
@@ -48,6 +55,27 @@ public class SpecialPickaxeItem extends PickaxeItem
 	public SpecialPickaxeItem()
 	{
 		super(AlchemyToolMaterials.MAGIC, 1, -2.8F, (new Item.Settings()).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).fireproof());
+	}
+
+	@Override
+	public boolean beforeMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner)
+	{
+		Block block = state.getBlock();
+		if(block instanceof OreBlock)
+		{
+			BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
+			if(breakPos.equals(pos))
+			{
+				return false;
+			}
+			else
+			{
+				world.breakBlock(breakPos, false, miner);
+				BlockEntity entity = world.getBlockEntity(pos);
+				Block.dropStacks(state, world, pos, entity, miner, stack);
+			}
+		}
+		return true;
 	}
 
 	@Override

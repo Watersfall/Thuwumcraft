@@ -12,4 +12,9 @@ public class ElementalBlock extends AmethystBlock
 		super(settings);
 		this.aspect = aspect;
 	}
+
+	public Aspect getAspect()
+	{
+		return aspect;
+	}
 }

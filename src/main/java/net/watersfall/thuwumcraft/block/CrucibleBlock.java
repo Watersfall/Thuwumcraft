@@ -4,6 +4,7 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -14,9 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.block.entity.CrucibleEntity;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CrucibleRecipe;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.util.InventoryHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -51,12 +53,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 					{
 						if(!world.isClient)
 						{
-							stack.decrement(1);
-							stack = recipe.craft(entity);
-							if(!player.getInventory().insertStack(stack))
-							{
-								player.dropItem(stack, true);
-							}
+							InventoryHelper.useItem(stack, player, hand, 1, recipe.craft(entity));
 							entity.markDirty();
 							entity.sync();
 						}
@@ -84,7 +81,29 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
 	{
-
+		super.onEntityCollision(state, world, pos, entity);
+		BlockEntity test = world.getBlockEntity(pos);
+		if(test instanceof CrucibleEntity cauldron)
+		{
+			if(entity instanceof ItemEntity itemEntity)
+			{
+				if(this.isPowered(state))
+				{
+					if(!world.isClient)
+					{
+						cauldron.setCurrentInput(itemEntity.getStack());
+						Optional<AspectIngredient> aspectOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, cauldron, world);
+						aspectOptional.ifPresent(recipe -> {
+							recipe.craft(cauldron);
+							ItemStack stack = itemEntity.getStack();
+							stack.decrement(1);
+							itemEntity.setStack(stack);
+							cauldron.sync();
+						});
+					}
+				}
+			}
+		}
 	}
 
 	@Nullable

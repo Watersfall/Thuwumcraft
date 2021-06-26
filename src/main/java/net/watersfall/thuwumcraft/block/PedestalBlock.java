@@ -1,16 +1,12 @@
 package net.watersfall.thuwumcraft.block;
 
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
-import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
@@ -22,6 +18,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -161,6 +163,6 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return PedestalEntity::tick;
+		return BlockUtils.checkType(type, ThuwumcraftBlockEntities.PEDESTAL_ENTITY, PedestalEntity::tick);
 	}
 }

@@ -54,9 +54,8 @@ public class PotionSprayerBlock extends Block implements BlockEntityProvider
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random)
 	{
 		BlockEntity test = world.getBlockEntity(pos);
-		if(test instanceof PotionSprayerEntity)
+		if(test instanceof PotionSprayerEntity entity)
 		{
-			PotionSprayerEntity entity = (PotionSprayerEntity)test;
 			ItemStack potion = entity.getPotionItem();
 			if(!potion.isEmpty())
 			{
@@ -117,9 +116,8 @@ public class PotionSprayerBlock extends Block implements BlockEntityProvider
 			public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 			{
 				BlockEntity test = world.getBlockEntity(pos);
-				if(test instanceof PotionSprayerEntity)
+				if(test instanceof PotionSprayerEntity entity)
 				{
-					PotionSprayerEntity entity = (PotionSprayerEntity)test;
 					return new PotionSprayerHandler(syncId, inv, entity, entity.getPotionInventory());
 				}
 				return null;

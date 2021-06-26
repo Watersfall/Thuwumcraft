@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
@@ -17,10 +16,9 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -41,12 +39,9 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -57,6 +52,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GenerationStep;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
+import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.abilities.item.*;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
@@ -73,17 +69,16 @@ import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyBlockTags;
 import net.watersfall.thuwumcraft.api.tag.AlchemyEntityTags;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
-import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
+import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
 import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
 import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
-import net.watersfall.thuwumcraft.item.tool.SpecialPickaxeItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
@@ -125,6 +120,9 @@ public class Thuwumcraft implements ModInitializer
 		INGREDIENT_TAG = ingredientTag;
 	}
 
+	/**
+	 * Network
+	 */
 	private static void registerNetwork()
 	{
 		ServerPlayNetworking.registerGlobalReceiver(getId("research_click"), ((server, player, handler, buf, responseSender) -> {
@@ -193,28 +191,29 @@ public class Thuwumcraft implements ModInitializer
 		});
 	}
 
+	/**
+	 * Events
+	 */
 	private static void registerEvents()
 	{
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
 			if(!world.isClient)
 			{
-				if(!player.getStackInHand(hand).isEmpty())
+				ItemStack stack = player.getStackInHand(hand);
+				if(!stack.isEmpty() && stack.getTag() != null)
 				{
-					if(player.getStackInHand(hand).getTag() != null)
+					NbtCompound tag = stack.getTag();
+					if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
 					{
-						NbtCompound tag = player.getStackInHand(hand).getTag();
-						if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
+						if(StatusEffectHelper.hasUses(tag))
 						{
-							if(StatusEffectHelper.hasUses(tag))
+							List<StatusEffectInstance> effects = StatusEffectHelper.getEffectsFromTag(tag);
+							if(effects.size() > 0)
 							{
-								List<StatusEffectInstance> effects = StatusEffectHelper.getEffectsFromTag(tag);
-								if(effects.size() > 0)
-								{
-									effects.forEach(((LivingEntity)entity)::addStatusEffect);
-								}
+								effects.forEach(((LivingEntity)entity)::addStatusEffect);
 							}
-							StatusEffectHelper.decrementUses(tag);
 						}
+						StatusEffectHelper.decrementUses(tag);
 					}
 				}
 			}
@@ -230,46 +229,22 @@ public class Thuwumcraft implements ModInitializer
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
 		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
-			if(pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction)) instanceof PedestalEntity)
+			BlockEntity test = pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction));
+			if(test instanceof PedestalEntity entity)
 			{
 				World world = pointer.getWorld();
-				PedestalEntity entity = (PedestalEntity) world.getBlockEntity(pointer.getBlockPos().offset(direction));
 				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL_RECIPE, entity, world);
 				recipeOptional.ifPresent(entity::beginCraft);
 			}
 			return stack;
 		}));
-		PlayerBlockBreakEvents.BEFORE.register(((world, player, pos, state, blockEntity) -> {
-			Block block = state.getBlock();
-			ItemStack stack = player.getStackInHand(Hand.MAIN_HAND);
-			Item item = stack.getItem();
-			if(item == ThuwumcraftItems.SPECIAL_PICKAXE_ITEM && (block instanceof OreBlock)
-					|| (item == ThuwumcraftItems.SPECIAL_AXE_ITEM && state.isIn(BlockTags.LOGS)))
-			{
-				BlockPos breakPos = SpecialPickaxeItem.getFurthestOre(world, state.getBlock(), pos);
-				if(breakPos.equals(pos))
-				{
-					return true;
-				}
-				else
-				{
-					world.breakBlock(breakPos, false, player);
-					Block.dropStacks(state, world, pos, blockEntity, player, stack);
-					return false;
-				}
-			}
-			return true;
-		}));
 		ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
-			if(entity instanceof AbilityProvider)
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
+			PacketByteBuf buf = PacketByteBufs.create();
+			provider.toPacket(buf);
+			for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
 			{
-				AbilityProvider<Entity> provider = (AbilityProvider<Entity>)entity;
-				PacketByteBuf buf = PacketByteBufs.create();
-				provider.toPacket(buf);
-				for(ServerPlayerEntity player : PlayerLookup.tracking(entity))
-				{
-					ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
-				}
+				ServerPlayNetworking.send(player, getId("abilities_packet"), buf);
 			}
 			if(entity.getType() == EntityType.PLAYER && FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
 			{
@@ -335,6 +310,9 @@ public class Thuwumcraft implements ModInitializer
 		supplier.withPool(pool.build());
 	}
 
+	/**
+	 * Aspects
+	 */
 	private static void registerAspects()
 	{
 		Aspects.register(Aspects.AIR.getId(), Aspects.AIR);
@@ -346,6 +324,9 @@ public class Thuwumcraft implements ModInitializer
 		Aspects.register(Aspects.METAL.getId(), Aspects.METAL);
 	}
 
+	/**
+	 * Sounds
+	 */
 	private static void registerSounds()
 	{
 		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), AlchemySounds.CAULDRON_ADD_INGREDIENT);
@@ -354,6 +335,9 @@ public class Thuwumcraft implements ModInitializer
 		Registry.register(Registry.SOUND_EVENT, getId("item.research_book.open"), AlchemySounds.BOOK_OPEN_SOUND);
 	}
 
+	/**
+	 * Abilities
+	 */
 	private static void registerAbilities()
 	{
 		AbilityProvider.ENTITY_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityEntity::new);
@@ -361,39 +345,18 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(getId("runed_shield_ability"), RunedShieldAbilityItem::new);
 		AbilityProvider.ITEM_REGISTRY.register(getId("aspect_storage_ability"), PhialStorageAbility::new);
 		AbilityProvider.ENTITY_REGISTRY.register(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
-		AbilityProvider.ENTITY_REGISTRY.registerPacket(getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		AbilityProvider.CHUNK_REGISTRY.register(getId("vis_ability"), VisAbilityImpl::new);
-		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerResearchAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.register(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandAbility.ID, WandAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
 	}
 
-	private static void registerMultiBlocks()
+	/**
+	 * Lookup API
+	 */
+	private static void registerLookup()
 	{
-		MultiBlockRegistry.TYPES.add(AlchemicalFurnaceType.INSTANCE);
-	}
-
-	@Override
-	public void onInitialize()
-	{
-		ThuwumcraftStatusEffects.register();
-		ThuwumcraftRecipes.register();
-		ThuwumcraftBlockEntities.register();
-		ThuwumcraftFluids.register();
-		registerEvents();
-		registerAspects();
-		registerSounds();
-		registerMultiBlocks();
-		registerAbilities();
-		registerNetwork();
-		ThuwumcraftFeatures.register();
-		AlchemyEntityTags.register();
-		ThuwumcraftBiomes.register();
-		ThuwumcraftStructurePieceTypes.register();
-		ThuwumcraftStructureFeatures.register();
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
 		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {
 			return (AspectContainer)entity;
 		}, ThuwumcraftBlocks.ASPECT_PIPE_BLOCK);
@@ -420,6 +383,22 @@ public class Thuwumcraft implements ModInitializer
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			return (AspectContainer)entity;
 		}, ThuwumcraftBlockEntities.ESSENTIA_REFINERY);
+	}
+
+	/**
+	 * Reload Listeners
+	 */
+	private static void registerReloadListeners()
+	{
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchCategoryLoader());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ResearchLoader());
+	}
+
+	/**
+	 * Biome Modifications
+	 */
+	private static void registerBiomeModifications()
+	{
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE).get());
@@ -435,6 +414,34 @@ public class Thuwumcraft implements ModInitializer
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.VEGETAL_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE).get());
+	}
+
+	private static void registerMultiBlocks()
+	{
+		MultiBlockRegistry.TYPES.add(AlchemicalFurnaceType.INSTANCE);
+	}
+
+	@Override
+	public void onInitialize()
+	{
+		ThuwumcraftStatusEffects.register();
+		ThuwumcraftRecipes.register();
+		ThuwumcraftBlockEntities.register();
+		ThuwumcraftFluids.register();
+		registerEvents();
+		registerAspects();
+		registerSounds();
+		registerMultiBlocks();
+		registerAbilities();
+		registerNetwork();
+		ThuwumcraftFeatures.register();
+		AlchemyEntityTags.register();
+		ThuwumcraftBiomes.register();
+		ThuwumcraftStructurePieceTypes.register();
+		ThuwumcraftStructureFeatures.register();
+		registerLookup();
+		registerReloadListeners();
+		registerBiomeModifications();
 		VillageAdditions.register();
 	}
 }

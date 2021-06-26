@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -152,13 +151,6 @@ public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronIn
 
 	public static class Serializer implements RecipeSerializer<CauldronItemRecipe>
 	{
-		private final CauldronItemRecipe.Serializer.RecipeFactory<CauldronItemRecipe> recipeFactory;
-
-		public Serializer(CauldronItemRecipe.Serializer.RecipeFactory<CauldronItemRecipe> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public CauldronItemRecipe read(Identifier id, JsonObject json)
 		{
@@ -219,11 +211,6 @@ public class CauldronItemRecipe extends ResearchRequiredRecipe<BrewingCauldronIn
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, Ingredient catalyst, int waterUse, List<Ingredient> inputs, ItemStack output, List<Identifier> research);
 		}
 	}
 }

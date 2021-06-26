@@ -15,47 +15,53 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCraftingRecipe, CraftingRecipe
+public class ResearchUnlockedRecipe<T extends CraftingRecipe> implements ResearchRequiredCraftingRecipe, CraftingRecipe
 {
 	private final Identifier id;
 	private final List<Identifier> research;
-	private final ShapelessRecipe recipe;
+	public final T recipe;
 
-	public ResearchUnlockedShapelessRecipe(Identifier id, ShapelessRecipe recipe, List<Identifier> research)
+	public ResearchUnlockedRecipe(Identifier id, T recipe, List<Identifier> research)
 	{
 		this.id = id;
-		this.research = research;
 		this.recipe = recipe;
+		this.research = research;
 	}
 
 	@Override
 	public boolean matches(CraftingInventory craftingInventory, World world)
 	{
-		return this.recipe.matches(craftingInventory, world);
+		return recipe.matches(craftingInventory, world);
 	}
 
 	@Override
 	public ItemStack craft(CraftingInventory inv)
 	{
-		return this.recipe.craft(inv);
+		return recipe.craft(inv);
 	}
 
 	@Override
 	public boolean fits(int width, int height)
 	{
-		return this.recipe.fits(width, height);
+		return recipe.fits(width, height);
 	}
 
 	@Override
 	public ItemStack getOutput()
 	{
-		return this.recipe.getOutput();
+		return recipe.getOutput();
 	}
 
 	@Override
-	public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory)
+	public List<Identifier> getResearch()
 	{
-		return recipe.getRemainder(inventory);
+		return research;
+	}
+
+	@Override
+	public CraftingRecipe getRecipe()
+	{
+		return recipe;
 	}
 
 	@Override
@@ -79,6 +85,12 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 	}
 
 	@Override
+	public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory)
+	{
+		return recipe.getRemainder(inventory);
+	}
+
+	@Override
 	public boolean isIgnoredInRecipeBook()
 	{
 		return true;
@@ -93,7 +105,7 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
 	}
 
 	@Override
@@ -108,44 +120,46 @@ public class ResearchUnlockedShapelessRecipe implements ResearchRequiredCrafting
 		return this.recipe.getIngredients();
 	}
 
-	public static class Serializer implements RecipeSerializer<ResearchUnlockedShapelessRecipe>
+	public static class Serializer<T extends CraftingRecipe> implements RecipeSerializer<ResearchUnlockedRecipe<T>>
 	{
-		@Override
-		public ResearchUnlockedShapelessRecipe read(Identifier id, JsonObject json)
+		private final RecipeSerializer<T> serializer;
+
+		public Serializer(RecipeSerializer<T> serializer)
 		{
-			ShapelessRecipe recipe = RecipeSerializer.SHAPELESS.read(id, json);
-			List<Identifier> research = new ArrayList<>();
-			JsonHelper.getArray(json, "research", new JsonArray()).forEach(element -> research.add(Identifier.tryParse(element.getAsString())));
-			return new ResearchUnlockedShapelessRecipe(id, recipe, research);
+			this.serializer = serializer;
 		}
 
 		@Override
-		public ResearchUnlockedShapelessRecipe read(Identifier id, PacketByteBuf buf)
+		public ResearchUnlockedRecipe<T> read(Identifier id, JsonObject json)
 		{
-			ShapelessRecipe recipe = RecipeSerializer.SHAPELESS.read(id, buf);
+			T recipe = serializer.read(id, json);
 			List<Identifier> research = new ArrayList<>();
+			JsonHelper.getArray(json, "research", new JsonArray()).forEach(element -> research.add(Identifier.tryParse(element.getAsString())));
+			return new ResearchUnlockedRecipe<>(id, recipe, research);
+		}
+
+		@Override
+		public ResearchUnlockedRecipe<T> read(Identifier id, PacketByteBuf buf)
+		{
+			T recipe = serializer.read(id, buf);
 			int size = buf.readInt();
+			List<Identifier> research = new ArrayList<>();
 			for(int i = 0; i < size; i++)
 			{
 				research.add(buf.readIdentifier());
 			}
-			return new ResearchUnlockedShapelessRecipe(id, recipe, research);
+			return new ResearchUnlockedRecipe<>(id, recipe, research);
 		}
 
 		@Override
-		public void write(PacketByteBuf buf, ResearchUnlockedShapelessRecipe recipe)
+		public void write(PacketByteBuf buf, ResearchUnlockedRecipe<T> recipe)
 		{
-			RecipeSerializer.SHAPELESS.write(buf, recipe.recipe);
+			serializer.write(buf, recipe.recipe);
 			buf.writeInt(recipe.research.size());
 			for(int i = 0; i < recipe.research.size(); i++)
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input, List<Identifier> research);
 		}
 	}
 }

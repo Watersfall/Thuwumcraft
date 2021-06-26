@@ -20,6 +20,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.CraftingHopperEntity;
+import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -137,29 +138,19 @@ public class CraftingHopper extends HorizontalFacingBlock implements BlockEntity
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
 	{
-		switch(state.get(FACING))
+		return switch(state.get(FACING))
 		{
-			case NORTH:
-				return OUTLINE_SHAPE_NORTH;
-			case SOUTH:
-				return OUTLINE_SHAPE_SOUTH;
-			case EAST:
-				return OUTLINE_SHAPE_EAST;
-			default:
-				return OUTLINE_SHAPE_WEST;
-		}
+			case NORTH -> OUTLINE_SHAPE_NORTH;
+			case SOUTH -> OUTLINE_SHAPE_SOUTH;
+			case EAST -> OUTLINE_SHAPE_EAST;
+			default -> OUTLINE_SHAPE_WEST;
+		};
 	}
 
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperEntity::tick);
-	}
-
-	@Nullable
-	protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker)
-	{
-		return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
+		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperEntity::tick);
 	}
 }

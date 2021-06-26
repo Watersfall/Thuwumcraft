@@ -20,6 +20,7 @@ public class WitchySpoonItem extends Item
 		super(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP).maxCount(1));
 	}
 
+	//Todo: Behavior map like vanilla cauldron
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context)
 	{

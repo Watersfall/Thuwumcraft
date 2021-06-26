@@ -196,9 +196,8 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 		return false;
 	}
 
-	public static <T> void tick(World world, BlockPos pos, BlockState state, T blockEntity)
+	public static <T> void tick(World world, BlockPos pos, BlockState state, PedestalEntity entity)
 	{
-		PedestalEntity entity = (PedestalEntity)blockEntity;
 		if(entity.recipe != null)
 		{
 			if(entity.recipe.getStage() != PedestalRecipe.StageTracker.Stage.END)

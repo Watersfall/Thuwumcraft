@@ -51,12 +51,6 @@ public class GrindingRecipe extends ShapelessRecipe
 
 	public static class Serializer implements RecipeSerializer<GrindingRecipe>
 	{
-		private final GrindingRecipe.Serializer.RecipeFactory<GrindingRecipe> recipeFactory;
-		public Serializer(GrindingRecipe.Serializer.RecipeFactory<GrindingRecipe> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public GrindingRecipe read(Identifier id, JsonObject json)
 		{
@@ -96,11 +90,6 @@ public class GrindingRecipe extends ShapelessRecipe
 				recipe.inputs.get(i).write(buf);
 			}
 			buf.writeItemStack(recipe.output);
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, DefaultedList<Ingredient> inputs, ItemStack output);
 		}
 	}
 }

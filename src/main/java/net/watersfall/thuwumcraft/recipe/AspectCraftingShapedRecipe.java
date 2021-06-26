@@ -9,6 +9,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.world.World;
@@ -23,12 +24,12 @@ import java.util.List;
 
 public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequiredCraftingRecipe
 {
-	protected final ResearchUnlockedShapedRecipe recipe;
+	protected final ResearchUnlockedRecipe<ShapedRecipe> recipe;
 	protected final List<ItemStack> aspects;
 	protected final Identifier id;
 	protected final int vis;
 
-	public AspectCraftingShapedRecipe(Identifier id, ResearchUnlockedShapedRecipe recipe, List<ItemStack> aspects, int vis)
+	public AspectCraftingShapedRecipe(Identifier id, ResearchUnlockedRecipe<ShapedRecipe> recipe, List<ItemStack> aspects, int vis)
 	{
 		this.id = id;
 		this.recipe = recipe;
@@ -57,8 +58,6 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		}
 		return true;
 	}
-
-
 
 	@Override
 	public ItemStack craft(CraftingInventory inv)
@@ -113,6 +112,18 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 	}
 
 	@Override
+	public List<Identifier> getResearch()
+	{
+		return recipe.getResearch();
+	}
+
+	@Override
+	public CraftingRecipe getRecipe()
+	{
+		return recipe;
+	}
+
+	@Override
 	public boolean matches(CraftingInventory inventory, World world, PlayerResearchAbility ability)
 	{
 		return this.matches(inventory, world) && recipe.matches(inventory, world, ability);
@@ -123,7 +134,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, JsonObject json)
 		{
-			ResearchUnlockedShapedRecipe recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, json);
+			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, json);
 			JsonArray array = JsonHelper.getArray(json, "crystals");
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < array.size(); i++)
@@ -140,7 +151,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			ResearchUnlockedShapedRecipe recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, buf);
+			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, buf);
 			int size = buf.readInt();
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < size; i++)

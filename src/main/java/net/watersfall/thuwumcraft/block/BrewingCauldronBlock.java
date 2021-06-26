@@ -1,17 +1,10 @@
 package net.watersfall.thuwumcraft.block;
 
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
-import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
-import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
-import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
-import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +16,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
+import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
+import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
+import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
+import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.util.InventoryHelper;
 
 import java.util.Optional;
 
@@ -35,20 +35,11 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)
 	{
+		super.onEntityCollision(state, world, pos, entity);
 		BlockEntity test = world.getBlockEntity(pos);
-		if(test instanceof BrewingCauldronEntity)
+		if(test instanceof BrewingCauldronEntity cauldron)
 		{
-			BrewingCauldronEntity cauldron = (BrewingCauldronEntity)test;
-			if(entity instanceof LivingEntity)
-			{
-				if(!world.isClient && entity.isOnFire() && cauldron.getWaterLevel() > 333)
-				{
-					entity.extinguish();
-					cauldron.setWaterLevel((short) (cauldron.getWaterLevel() - 333));
-					cauldron.sync();
-				}
-			}
-			else if(entity instanceof ItemEntity)
+			if(entity instanceof ItemEntity)
 			{
 				if(this.isPowered(state))
 				{
@@ -82,112 +73,99 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 		}
 		ItemStack itemStack = player.getStackInHand(hand);
 		Item item = itemStack.getItem();
-		BrewingCauldronEntity entity = (BrewingCauldronEntity) world.getBlockEntity(pos);
-		if(this.isPowered(state) && entity.getWaterLevel() > 0)
+		BlockEntity test = world.getBlockEntity(pos);
+		if(test instanceof BrewingCauldronEntity entity)
 		{
-			ItemStack inputStack = new ItemStack(item);
-			entity.setInput(inputStack);
-			Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
-			if(typeOptional.isPresent())
+			if(this.isPowered(state) && entity.getWaterLevel() > 0)
 			{
-				CauldronIngredientRecipe typeRecipe = typeOptional.get();
-				if(typeRecipe.playerHasResearch(player))
+				ItemStack inputStack = new ItemStack(item);
+				entity.setInput(inputStack);
+				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
+				if(typeOptional.isPresent())
+				{
+					CauldronIngredientRecipe typeRecipe = typeOptional.get();
+					if(typeRecipe.playerHasResearch(player))
+					{
+						if(!world.isClient)
+						{
+							Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
+							if(!optional.isPresent())
+							{
+								player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+								return ActionResult.FAIL;
+							}
+							ItemStack stack = optional.get().craft(entity, typeRecipe, world);
+							if(inputStack == stack)
+							{
+								player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
+								return ActionResult.FAIL;
+							}
+							else
+							{
+								InventoryHelper.useItem(itemStack, player, hand, 1, stack);
+								entity.setInput(ItemStack.EMPTY);
+								entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.getWaterUse()));
+								entity.sync();
+							}
+						}
+						return ActionResult.success(world.isClient);
+					}
+				}
+				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, entity, world);
+				if(itemOptional.isPresent())
+				{
+					CauldronItemRecipe recipe = itemOptional.get();
+					if(recipe.playerHasResearch(player))
+					{
+						if(!world.isClient)
+						{
+							ItemStack stack = recipe.craft(entity);
+							InventoryHelper.useItem(itemStack, player, hand, 1, stack);
+							entity.setInput(ItemStack.EMPTY);
+							entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.getWaterUse()));
+							entity.sync();
+						}
+						return ActionResult.success(world.isClient);
+					}
+				}
+				entity.setInput(ItemStack.EMPTY);
+				if(entity.count(item) > 0)
 				{
 					if(!world.isClient)
 					{
-						Optional<CauldronIngredient> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENTS, entity.withInput(0), world);
-						if(!optional.isPresent())
+						if(entity.addItem(item))
 						{
-							player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
-							return ActionResult.FAIL;
-						}
-						ItemStack stack = optional.get().craft(entity, typeRecipe, world);
-						if(inputStack == stack)
-						{
-							player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
-							return ActionResult.FAIL;
-						}
-						else
-						{
-							itemStack.decrement(1);
-							if(itemStack.isEmpty())
+							if(!player.getAbilities().creativeMode)
 							{
-								player.setStackInHand(hand, stack);
+								itemStack.decrement(1);
 							}
-							else if(!player.getInventory().insertStack(stack))
-							{
-								player.dropItem(stack, true);
-							}
-							entity.setInput(ItemStack.EMPTY);
-							entity.setWaterLevel((short) (entity.getWaterLevel() - typeRecipe.getWaterUse()));
+							world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 							entity.sync();
 						}
 					}
 					return ActionResult.success(world.isClient);
 				}
-			}
-			Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, entity, world);
-			if(itemOptional.isPresent())
-			{
-				CauldronItemRecipe recipe = itemOptional.get();
-				if(recipe.playerHasResearch(player))
+				else if(entity.getIngredientCount() < 3)
 				{
 					if(!world.isClient)
 					{
-						ItemStack stack = recipe.craft(entity);
-						itemStack.decrement(1);
-						if(itemStack.isEmpty())
-						{
-							player.setStackInHand(hand, stack);
-						}
-						else if(!player.getInventory().insertStack(stack))
-						{
-							player.dropItem(stack, true);
-						}
-						entity.setInput(ItemStack.EMPTY);
-						entity.setWaterLevel((short) (entity.getWaterLevel() - recipe.getWaterUse()));
-						entity.sync();
-					}
-					return ActionResult.success(world.isClient);
-				}
-			}
-			entity.setInput(ItemStack.EMPTY);
-			if(entity.count(item) > 0)
-			{
-				if(!world.isClient)
-				{
-					if(entity.addItem(item))
-					{
+						entity.addStack(new ItemStack(item));
 						if(!player.getAbilities().creativeMode)
 						{
 							itemStack.decrement(1);
 						}
+						entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
 						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 						entity.sync();
 					}
+					return ActionResult.success(world.isClient);
 				}
-				return ActionResult.success(world.isClient);
+				return ActionResult.CONSUME;
 			}
-			else if(entity.getIngredientCount() < 3)
+			if(entity.getWaterLevel() <= 5)
 			{
-				if(!world.isClient)
-				{
-					entity.addStack(new ItemStack(item));
-					if(!player.getAbilities().creativeMode)
-					{
-						itemStack.decrement(1);
-					}
-					entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
-					world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
-					entity.sync();
-				}
-				return ActionResult.success(world.isClient);
+				entity.setWaterLevel((short) 0);
 			}
-			return ActionResult.CONSUME;
-		}
-		if(entity.getWaterLevel() <= 5)
-		{
-			entity.setWaterLevel((short) 0);
 		}
 		return ActionResult.PASS;
 	}

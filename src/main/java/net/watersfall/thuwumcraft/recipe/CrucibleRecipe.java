@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
@@ -113,12 +112,6 @@ public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory> impl
 
 	public static class Serializer implements RecipeSerializer<CrucibleRecipe>
 	{
-		private final CrucibleRecipe.Serializer.RecipeFactory<CrucibleRecipe> recipeFactory;
-		public Serializer(CrucibleRecipe.Serializer.RecipeFactory<CrucibleRecipe> recipeFactory)
-		{
-			this.recipeFactory = recipeFactory;
-		}
-
 		@Override
 		public CrucibleRecipe read(Identifier id, JsonObject json)
 		{
@@ -181,11 +174,6 @@ public class CrucibleRecipe extends ResearchRequiredRecipe<AspectInventory> impl
 			{
 				buf.writeIdentifier(recipe.research.get(i));
 			}
-		}
-
-		public interface RecipeFactory<T extends Recipe<?>>
-		{
-			T create(Identifier id, Ingredient catalyst, List<AspectStack> aspects, ItemStack output, List<Identifier> research);
 		}
 	}
 }

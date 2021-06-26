@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.renderer;
+package net.watersfall.thuwumcraft.client.renderer.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;

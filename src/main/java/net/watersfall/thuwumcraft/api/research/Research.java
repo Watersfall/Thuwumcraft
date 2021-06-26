@@ -106,7 +106,6 @@ public class Research
 		{
 			this.stack = Ingredient.ofItems(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())));
 		}
-
 		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
 		if(tabsArray != null)

@@ -37,8 +37,11 @@ public class ElementalClusterBlock extends AmethystClusterBlock
 			if(world.getRegistryManager().get(Registry.BIOME_KEY).getKey(world.getBiome(pos)).get() == ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY)
 			{
 				Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ThuwumcraftParticles.MAGIC_FOREST, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0, 0);
-				Vec3d color = Vec3d.unpackRgb(aspect.getColor());
-				particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+				if(particle != null)
+				{
+					Vec3d color = Vec3d.unpackRgb(aspect.getColor());
+					particle.setColor((float)color.getX(), (float)color.getY(), (float)color.getZ());
+				}
 			}
 		}
 	}

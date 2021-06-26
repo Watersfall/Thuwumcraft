@@ -1,8 +1,6 @@
 package net.watersfall.thuwumcraft.recipe;
 
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
@@ -23,8 +21,8 @@ public class ThuwumcraftRecipes
 	public static final RecipeSerializer<GrindingRecipe> GRINDING_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<AspectIngredient> ASPECT_INGREDIENT_SERIALIZER;
 	public static final RecipeSerializer<CrucibleRecipe> CRUCIBLE_RECIPE_SERIALIZER;
-	public static final RecipeSerializer<ResearchUnlockedShapedRecipe> RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
-	public static final RecipeSerializer<ResearchUnlockedShapelessRecipe> RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<ResearchUnlockedRecipe<ShapedRecipe>> RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<ResearchUnlockedRecipe<ShapelessRecipe>> RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<NekomancyRecipe> NEKOMANCY_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<AspectCraftingShapedRecipe> ASPECT_SHAPED_SERIALIZER;
 	
@@ -38,15 +36,15 @@ public class ThuwumcraftRecipes
 		ASPECT_INGREDIENTS = getRecipeType("aspect_ingredient");
 		CRUCIBLE_RECIPE = getRecipeType("crucible_recipe");
 		NEKOMANCY_RECIPE = getRecipeType("nekomancy_recipe");
-		CAULDRON_INGREDIENTS_SERIALIZER = new CauldronIngredient.Serializer(CauldronIngredient::new);
-		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = new CauldronIngredientRecipe.Serializer(CauldronIngredientRecipe::new);
-		CAULDRON_ITEM_RECIPE_SERIALIZER = new CauldronItemRecipe.Serializer(CauldronItemRecipe::new);
-		PEDESTAL_RECIPE_SERIALIZER = new PedestalRecipe.Serializer(PedestalRecipe::new);
-		GRINDING_RECIPE_SERIALIZER = new GrindingRecipe.Serializer(GrindingRecipe::new);
-		ASPECT_INGREDIENT_SERIALIZER = new AspectIngredient.Serializer(AspectIngredient::new);
-		CRUCIBLE_RECIPE_SERIALIZER = new CrucibleRecipe.Serializer(CrucibleRecipe::new);
-		RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER = new ResearchUnlockedShapedRecipe.Serializer();
-		RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER = new ResearchUnlockedShapelessRecipe.Serializer();
+		CAULDRON_INGREDIENTS_SERIALIZER = new CauldronIngredient.Serializer();
+		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = new CauldronIngredientRecipe.Serializer();
+		CAULDRON_ITEM_RECIPE_SERIALIZER = new CauldronItemRecipe.Serializer();
+		PEDESTAL_RECIPE_SERIALIZER = new PedestalRecipe.Serializer();
+		GRINDING_RECIPE_SERIALIZER = new GrindingRecipe.Serializer();
+		ASPECT_INGREDIENT_SERIALIZER = new AspectIngredient.Serializer();
+		CRUCIBLE_RECIPE_SERIALIZER = new CrucibleRecipe.Serializer();
+		RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER = new ResearchUnlockedRecipe.Serializer<>(RecipeSerializer.SHAPED);
+		RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER = new ResearchUnlockedRecipe.Serializer<>(RecipeSerializer.SHAPELESS);
 		NEKOMANCY_RECIPE_SERIALIZER = new NekomancyRecipe.Serializer();
 		ASPECT_SHAPED_SERIALIZER =new AspectCraftingShapedRecipe.Serializer();
 	}
