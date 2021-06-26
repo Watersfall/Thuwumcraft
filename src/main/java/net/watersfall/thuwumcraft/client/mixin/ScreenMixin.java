@@ -56,7 +56,7 @@ public abstract class ScreenMixin
 
 	@SuppressWarnings("UnresolvedMixinReference") //It exists, lambda method on line 141
 	@Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-	private static void onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info)
+	private static void thuwumcraft$onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info)
 	{
 		if (data instanceof CustomTooltipDataComponent)
 		{
@@ -66,7 +66,7 @@ public abstract class ScreenMixin
 	}
 
 	@Inject(method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"), cancellable = true)
-	public void renderTooltipFix(MatrixStack matrices, ItemStack stack, int x, int y, CallbackInfo info)
+	public void thuwumcraft$renderTooltipFix(MatrixStack matrices, ItemStack stack, int x, int y, CallbackInfo info)
 	{
 		if(MultiTooltipComponent.REGISTRY.get(stack.getItem()) != null)
 		{

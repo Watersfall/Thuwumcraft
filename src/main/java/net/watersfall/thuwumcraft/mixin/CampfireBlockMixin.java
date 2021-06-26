@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CampfireBlockMixin
 {
 	@Inject(method = "spawnSmokeParticle", at = @At("HEAD"), cancellable = true)
-	private static void waters_cancelSpawnSmokeParticles(World world, BlockPos pos, boolean isSignal, boolean lotsOfSmoke, CallbackInfo info)
+	private static void thuwumcraft$cancelSpawnSmokeParticles(World world, BlockPos pos, boolean isSignal, boolean lotsOfSmoke, CallbackInfo info)
 	{
 		Block block = world.getBlockState(pos.up()).getBlock();
 		if(block instanceof AbstractCauldronBlock)

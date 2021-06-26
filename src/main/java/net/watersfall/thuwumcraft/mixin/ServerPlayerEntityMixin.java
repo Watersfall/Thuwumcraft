@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerPlayerEntityMixin
 {
 	@Inject(method = "copyFrom", at = @At("TAIL"))
-	public void copyAbilities(ServerPlayerEntity player, boolean alive, CallbackInfo info)
+	public void thuwumcraft$copyAbilities(ServerPlayerEntity player, boolean alive, CallbackInfo info)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		provider.copy((Entity)(Object)this, alive);

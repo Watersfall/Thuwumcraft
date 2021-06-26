@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerWorldMixin
 {
 	@Inject(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;pop()V", ordinal = 1))
-	public void tickAbilities(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci)
+	public void thuwumcraft$tickAbilities(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci)
 	{
 		AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
 		provider.tick(chunk);

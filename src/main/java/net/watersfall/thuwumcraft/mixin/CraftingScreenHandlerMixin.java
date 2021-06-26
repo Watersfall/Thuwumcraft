@@ -26,7 +26,7 @@ public class CraftingScreenHandlerMixin
 			at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/recipe/RecipeManager;getFirstMatch(Lnet/minecraft/recipe/RecipeType;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/world/World;)Ljava/util/Optional;"),
 			locals = LocalCapture.CAPTURE_FAILHARD,
 			cancellable = true)
-	private static void checkResearchCrafting(ScreenHandler handler,
+	private static void thuwumcraft$checkResearchCrafting(ScreenHandler handler,
 											  World world,
 											  PlayerEntity player,
 											  CraftingInventory inventory,

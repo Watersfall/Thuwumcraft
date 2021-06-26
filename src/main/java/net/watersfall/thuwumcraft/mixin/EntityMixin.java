@@ -36,27 +36,27 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 
 	@Shadow public abstract int getId();
 
-	private final HashMap<Identifier, Ability<Entity>> waters_abilities = new HashMap<>();
-	private final HashMap<Identifier, Ability<Entity>> temp = new HashMap<>();
+	private final HashMap<Identifier, Ability<Entity>> thuwumcraft$abilities = new HashMap<>();
+	private final HashMap<Identifier, Ability<Entity>> thuwumcraft$temp = new HashMap<>();
 
 	@Override
 	public void addAbility(Ability<Entity> ability)
 	{
-		this.waters_abilities.put(ability.getId(), ability);
+		this.thuwumcraft$abilities.put(ability.getId(), ability);
 	}
 
 	@Override
 	public void removeAbility(Identifier id)
 	{
-		this.waters_abilities.remove(id);
+		this.thuwumcraft$abilities.remove(id);
 	}
 
 	@Override
 	public <R> Optional<R> getAbility(Identifier id, Class<R> clazz)
 	{
-		if(this.waters_abilities.containsKey(id))
+		if(this.thuwumcraft$abilities.containsKey(id))
 		{
-			Ability<Entity> ability = this.waters_abilities.get(id);
+			Ability<Entity> ability = this.thuwumcraft$abilities.get(id);
 			if(clazz.isInstance(ability))
 			{
 				return Optional.of(clazz.cast(ability));
@@ -67,7 +67,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Inject(method = "<init>", at = @At("TAIL"))
-	public void addToConstructor(EntityType<? extends Entity> type, World world, CallbackInfo info)
+	public void thuwumcraft$addToConstructor(EntityType<? extends Entity> type, World world, CallbackInfo info)
 	{
 		if(type == EntityType.PLAYER)
 		{
@@ -80,9 +80,9 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))
-	public void tick(CallbackInfo info)
+	public void thuwumcraft$tick(CallbackInfo info)
 	{
-		this.waters_abilities.values().forEach((ability) -> {
+		this.thuwumcraft$abilities.values().forEach((ability) -> {
 			ability.tick((Entity)(Object)this);
 		});
 	}
@@ -91,7 +91,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	public void copy(Entity to, boolean alive)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(to);
-		this.waters_abilities.values().forEach(ability -> {
+		this.thuwumcraft$abilities.values().forEach(ability -> {
 			if(ability.copyable() || alive)
 			{
 				provider.addAbility(ability);
@@ -102,7 +102,7 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public NbtCompound toNbt(NbtCompound tag)
 	{
-		this.waters_abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new NbtCompound(), (Entity)(Object)this)));
+		this.thuwumcraft$abilities.values().forEach(value -> tag.put(value.getId().toString(), value.toNbt(new NbtCompound(), (Entity)(Object)this)));
 		return tag;
 	}
 
@@ -121,8 +121,8 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
 		buf.writeInt(this.id);
-		buf.writeInt(this.waters_abilities.size());
-		waters_abilities.values().forEach((value) -> {
+		buf.writeInt(this.thuwumcraft$abilities.size());
+		thuwumcraft$abilities.values().forEach((value) -> {
 			if(value instanceof AbilityClientSerializable)
 			{
 				String id = value.getId().toString();
@@ -137,16 +137,16 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	@Environment(EnvType.CLIENT)
 	public void fromPacket(PacketByteBuf buf)
 	{
-		temp.clear();
+		thuwumcraft$temp.clear();
 		int size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
 			Identifier id = Identifier.tryParse(buf.readString());
-			this.temp.put(id, AbilityProvider.ENTITY_REGISTRY.create(id, buf));
+			this.thuwumcraft$temp.put(id, AbilityProvider.ENTITY_REGISTRY.create(id, buf));
 		}
 		MinecraftClient.getInstance().execute(() -> {
-			this.waters_abilities.clear();
-			this.waters_abilities.putAll(temp);
+			this.thuwumcraft$abilities.clear();
+			this.thuwumcraft$abilities.putAll(thuwumcraft$temp);
 		});
 	}
 
@@ -167,19 +167,19 @@ public abstract class EntityMixin implements AbilityProvider<Entity>
 	@Override
 	public void clear()
 	{
-		this.waters_abilities.clear();
+		this.thuwumcraft$abilities.clear();
 	}
 
 
 
 	@Inject(method = "writeNbt", at = @At("RETURN"))
-	public void writeCustomData(NbtCompound tag, CallbackInfoReturnable<NbtCompound> info)
+	public void thuwumcraft$writeCustomData(NbtCompound tag, CallbackInfoReturnable<NbtCompound> info)
 	{
 		this.toNbt(tag);
 	}
 
 	@Inject(method = "readNbt", at = @At("TAIL"))
-	public void readCustomData(NbtCompound tag, CallbackInfo info)
+	public void thuwumcraft$readCustomData(NbtCompound tag, CallbackInfo info)
 	{
 		this.fromNbt(tag);
 	}

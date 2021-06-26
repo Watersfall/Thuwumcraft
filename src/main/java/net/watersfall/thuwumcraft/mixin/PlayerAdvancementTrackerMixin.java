@@ -18,7 +18,7 @@ public class PlayerAdvancementTrackerMixin
 	@Shadow private ServerPlayerEntity owner;
 
 	@Inject(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/AdvancementRewards;apply(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
-	public void checkIsDone(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> cir)
+	public void thuwumcraft$checkIsDone(Advancement advancement, String criterionName, CallbackInfoReturnable<Boolean> cir)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(this.owner);
 		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {

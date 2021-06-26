@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"))
-	public void tick(CallbackInfo info)
+	public void thuwumcraft$tick(CallbackInfo info)
 	{
 		if(!world.isClient)
 		{
@@ -90,7 +90,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "onStatusEffectApplied", at = @At("HEAD"))
-	public void addStatusEffectModifier(StatusEffectInstance effect, Entity entity, CallbackInfo info)
+	public void thuwumcraft$addStatusEffectModifier(StatusEffectInstance effect, Entity entity, CallbackInfo info)
 	{
 		if(world instanceof ServerWorld)
 		{
@@ -101,7 +101,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "onStatusEffectRemoved", at = @At("HEAD"))
-	public void removeStatusEffectModifier(StatusEffectInstance effect, CallbackInfo info)
+	public void thuwumcraft$removeStatusEffectModifier(StatusEffectInstance effect, CallbackInfo info)
 	{
 		if(world instanceof ServerWorld)
 		{
@@ -112,7 +112,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "getEquipment", at = @At(value = "JUMP", opcode = 199), locals = LocalCapture.CAPTURE_FAILHARD)
-	public void checkRunedShield(
+	public void thuwumcraft$checkRunedShield(
 			CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> info,
 			Map<EquipmentSlot, ItemStack> map,
 			EquipmentSlot[] slots,
@@ -148,7 +148,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "createLivingAttributes", at = @At("RETURN"))
-	private static void addMagicResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info)
+	private static void thuwumcraft$addMagicResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info)
 	{
 		info.getReturnValue().add(ThuwumcraftAttributes.MAGIC_RESISTANCE, 0);
 	}
@@ -161,7 +161,7 @@ public abstract class LivingEntityMixin extends Entity
 					shift = At.Shift.BEFORE
 			)
 	)
-	public float modifyDamage(float amount, DamageSource source)
+	public float thuwumcraft$modifyDamage(float amount, DamageSource source)
 	{
 		if(source.isProjectile())
 		{
@@ -183,7 +183,7 @@ public abstract class LivingEntityMixin extends Entity
 	}
 
 	@Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isSleeping()Z"), cancellable = true)
-	public void beforeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info)
+	public void thuwumcraft$beforeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info)
 	{
 		if(source.getAttacker() instanceof LivingEntity entity)
 		{

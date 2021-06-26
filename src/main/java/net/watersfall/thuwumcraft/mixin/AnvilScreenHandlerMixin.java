@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class AnvilScreenHandlerMixin
 {
 	@Inject(method = "onTakeOutput", at = @At("RETURN"))
-	public void modifyOnTakeout(PlayerEntity player, ItemStack stack, CallbackInfo info)
+	public void thuwumcraft$modifyOnTakeout(PlayerEntity player, ItemStack stack, CallbackInfo info)
 	{
 		stack.onCraft(player.getEntityWorld(), player, stack.getCount());
 	}

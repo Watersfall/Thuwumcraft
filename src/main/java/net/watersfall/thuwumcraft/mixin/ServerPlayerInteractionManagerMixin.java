@@ -28,7 +28,7 @@ public class ServerPlayerInteractionManagerMixin
 			locals = LocalCapture.CAPTURE_FAILHARD,
 			cancellable = true
 	)
-	public void beforeBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info, BlockState state, BlockEntity blockEntity, Block block)
+	public void thuwumcraft$beforeBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info, BlockState state, BlockEntity blockEntity, Block block)
 	{
 		boolean check = ((BeforeActions)player.getMainHandStack().getItem()).beforeMine(player.getMainHandStack(), world, state, pos, player);
 		if(check)

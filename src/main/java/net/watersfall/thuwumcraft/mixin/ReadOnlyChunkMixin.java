@@ -22,7 +22,7 @@ public class ReadOnlyChunkMixin implements AbilityProvider<Chunk>
 	private AbilityProvider<Chunk> parentProvider;
 
 	@Inject(method = "<init>", at = @At("TAIL"))
-	public void addAbilities(WorldChunk wrapped, CallbackInfo ci)
+	public void thuwumcraft$addAbilities(WorldChunk wrapped, CallbackInfo ci)
 	{
 		parentProvider = AbilityProvider.getProvider((Chunk)(Object)wrapped);
 		parentProvider.addAbility(new VisAbilityImpl());

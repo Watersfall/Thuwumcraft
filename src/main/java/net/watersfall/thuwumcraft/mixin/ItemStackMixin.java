@@ -45,7 +45,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	private final Map<Identifier, Ability<ItemStack>> abilities = new HashMap<>();
 
 	@Inject(method = "<init>(Lnet/minecraft/item/ItemConvertible;I)V", at = @At("TAIL"))
-	public void addData(ItemConvertible item, int count, CallbackInfo info)
+	public void thuwumcraft$addData(ItemConvertible item, int count, CallbackInfo info)
 	{
 		if(item != null && item.asItem() instanceof GlassPhialItem)
 		{
@@ -69,13 +69,13 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	}
 
 	@Inject(method = "<init>(Lnet/minecraft/nbt/NbtCompound;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;postProcessNbt(Lnet/minecraft/nbt/NbtCompound;)V"))
-	public void  addData(NbtCompound tag, CallbackInfo info)
+	public void  thuwumcraft$addData(NbtCompound tag, CallbackInfo info)
 	{
 		this.fromNbt(this.tag);
 	}
 
 	@Inject(method = "writeNbt", at = @At(value = "RETURN"))
-	public void writeData(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir)
+	public void thuwumcraft$writeData(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir)
 	{
 		NbtCompound tag = nbt.getCompound("tag");
 		NbtCompound abilitiesTag = new NbtCompound();
@@ -131,13 +131,13 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	}
 
 	@Inject(method = "copy", at = @At(value = "RETURN", ordinal = 1), locals = LocalCapture.CAPTURE_FAILHARD)
-	public void copy(CallbackInfoReturnable<ItemStack> info, ItemStack to)
+	public void thuwumcraft$copy(CallbackInfoReturnable<ItemStack> info, ItemStack to)
 	{
 		this.copy(to, true);
 	}
 
 	@Inject(method = "setTag", at = @At("TAIL"))
-	public void setTag(NbtCompound tag, CallbackInfo info)
+	public void thuwumcraft$setTag(NbtCompound tag, CallbackInfo info)
 	{
 		this.abilities.clear();
 		this.fromNbt(tag);

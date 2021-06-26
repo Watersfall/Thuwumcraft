@@ -27,7 +27,7 @@ public abstract class PlayerEntityMixin extends LivingEntity
 					shift = At.Shift.BEFORE
 			)
 	)
-	public float modifyDamage(float amount, DamageSource source)
+	public float thuwumcraft$modifyDamage(float amount, DamageSource source)
 	{
 		if(source.isProjectile())
 		{

@@ -37,7 +37,7 @@ public class LakeFeatureMixin
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/StructureWorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", ordinal = 3, shift = At.Shift.AFTER, by = 1),
 			locals = LocalCapture.CAPTURE_FAILHARD
 	)
-	public void addLavaCrystals(FeatureContext<SingleStateFeatureConfig> context,
+	public void thuwumcraft$addLavaCrystals(FeatureContext<SingleStateFeatureConfig> context,
 							CallbackInfoReturnable<Boolean> info,
 							BlockPos pos,
 							StructureWorldAccess world,
@@ -69,7 +69,7 @@ public class LakeFeatureMixin
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockPos;add(III)Lnet/minecraft/util/math/BlockPos;", ordinal = 7),
 			locals = LocalCapture.CAPTURE_FAILHARD
 	)
-	public void addWaterCrystals(FeatureContext<SingleStateFeatureConfig> context,
+	public void thuwumcraft$addWaterCrystals(FeatureContext<SingleStateFeatureConfig> context,
 								 CallbackInfoReturnable<Boolean> info,
 								 BlockPos blockPos,
 								 StructureWorldAccess world,

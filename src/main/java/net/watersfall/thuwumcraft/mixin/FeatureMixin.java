@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class FeatureMixin
 {
 	@Inject(method = "isSoil(Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
-	private static void isDeepslateGrass(BlockState state, CallbackInfoReturnable<Boolean> cir)
+	private static void thuwumcraft$isDeepslateGrass(BlockState state, CallbackInfoReturnable<Boolean> cir)
 	{
 		if(state.isOf(ThuwumcraftBlocks.DEEPSLATE_GRASS))
 		{
