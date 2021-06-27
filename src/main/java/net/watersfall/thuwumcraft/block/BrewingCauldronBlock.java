@@ -94,6 +94,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 								player.sendMessage(new TranslatableText("block.thuwumcraft.cauldron.invalid_recipe").formatted(Formatting.GRAY, Formatting.ITALIC), true);
 								return ActionResult.FAIL;
 							}
+							entity.setInput(inputStack);
 							ItemStack stack = optional.get().craft(entity, typeRecipe, world);
 							if(inputStack == stack)
 							{

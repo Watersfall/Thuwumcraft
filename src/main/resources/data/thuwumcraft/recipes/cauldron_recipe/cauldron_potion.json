@@ -9,6 +9,6 @@
 	"action": "create_potion",
 	"output": "minecraft:potion",
 	"research": [
-		"thuwumcraft:beginner_brewing"
+		"thuwumcraft:alchemy/potion_brewing"
 	]
 }

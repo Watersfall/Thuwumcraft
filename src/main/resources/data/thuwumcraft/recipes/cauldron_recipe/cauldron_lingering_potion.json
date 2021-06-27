@@ -9,6 +9,6 @@
 	"action": "create_potion",
 	"output": "minecraft:lingering_potion",
 	"research": [
-		"thuwumcraft:special_potion_brewing"
+		"thuwumcraft:alchemy/special_potion_brewing"
 	]
 }
