@@ -1,0 +1,8 @@
+{
+	"type": "thuwumcraft:binding",
+	"input": {
+		"item": "minecraft:potion"
+	},
+	"output": "minecraft:potion",
+	"recipe_type": "NBT"
+}

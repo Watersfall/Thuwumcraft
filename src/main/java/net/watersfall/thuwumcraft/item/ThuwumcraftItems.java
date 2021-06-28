@@ -108,6 +108,7 @@ public class ThuwumcraftItems
 	public static final WandCapItem BRASS_CAP;
 	public static final WandCapItem THUWUMIUM_CAP;
 	public static final BlockItem SILVERWOOD_SAPLING;
+	public static final AlchemyBindingItem ALCHEMY_BINDING;
 	public static final List<Item> ITEMS;
 
 	static
@@ -119,8 +120,8 @@ public class ThuwumcraftItems
 				.appendItems(ThuwumcraftItems::getStacks)
 				.build();
 		WITCHY_SPOON_ITEM = register(Thuwumcraft.getId("witchy_spoon"), new WitchySpoonItem());
-		THROW_BOTTLE = register(Thuwumcraft.getId("throw_bottle"), new Item(new FabricItemSettings().maxCount(64).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));
-		LINGERING_BOTTLE = register(Thuwumcraft.getId("lingering_bottle"), new Item(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP)));
+		THROW_BOTTLE = register(Thuwumcraft.getId("throw_bottle"), new SpecialGlassBottleItem(new FabricItemSettings().maxCount(64).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), Items.SPLASH_POTION::getDefaultStack));
+		LINGERING_BOTTLE = register(Thuwumcraft.getId("lingering_bottle"), new SpecialGlassBottleItem(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP), Items.LINGERING_POTION::getDefaultStack));
 		LADLE_ITEM = register(Thuwumcraft.getId("ladle"), new LadleItem());
 		APOTHECARY_GUIDE = register(Thuwumcraft.getId("apothecary_guide_book"), new ApothecaryGuideItem());
 		PEDESTAL_ITEM = register(Thuwumcraft.getId("pedestal"), new BlockItem(ThuwumcraftBlocks.PEDESTAL_BLOCK, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));
@@ -196,6 +197,7 @@ public class ThuwumcraftItems
 		BRASS_CAP = register(Thuwumcraft.getId("brass_cap"), new WandCapItem(WandCapMaterials.BRASS, defaultSettings().maxCount(1)));
 		THUWUMIUM_CAP = register(Thuwumcraft.getId("thuwumium_cap"), new WandCapItem(WandCapMaterials.THUWUMIUM, defaultSettings().maxCount(1)));
 		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new BlockItem(ThuwumcraftBlocks.SILVERWOOD_SAPLING, defaultSettings()));
+		ALCHEMY_BINDING = register(Thuwumcraft.getId("alchemy_binding"), new AlchemyBindingItem(defaultSettings()));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

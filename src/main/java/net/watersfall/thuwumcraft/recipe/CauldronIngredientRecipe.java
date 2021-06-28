@@ -186,6 +186,7 @@ public class CauldronIngredientRecipe extends ResearchRequiredRecipe<BrewingCaul
 		ADD_EFFECTS,
 		CREATE_ITEM_EFFECT,
 		CREATE_ITEM_NO_EFFECT,
-		CREATE_POTION
+		CREATE_POTION,
+		CREATE_BINDING
 	}
 }

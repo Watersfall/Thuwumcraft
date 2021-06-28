@@ -107,7 +107,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	public void removeAbility(Identifier id)
 	{
 		this.abilities.remove(id);
-		this.getOrCreateTag().remove(id.toString());
+		this.getOrCreateSubTag("thuwumcraft:abilities").remove(id.toString());
 	}
 
 	@Override

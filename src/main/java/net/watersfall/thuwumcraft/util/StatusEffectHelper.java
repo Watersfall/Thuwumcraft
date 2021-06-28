@@ -101,6 +101,19 @@ public class StatusEffectHelper
 		}
 	}
 
+	public static NbtList toNbt(List<StatusEffectInstance> effects)
+	{
+		NbtList tag = new NbtList();
+		effects.forEach(effect -> {
+			NbtCompound effectTag = new NbtCompound();
+			effectTag.putInt(EFFECT, StatusEffect.getRawId(effect.getEffectType()));
+			effectTag.putInt(DURATION, effect.getDuration());
+			effectTag.putInt(AMPLIFIER, effect.getAmplifier());
+			tag.add(effectTag);
+		});
+		return tag;
+	}
+
 	public static void createItem(ItemStack stack, Set<StatusEffectInstance> effects)
 	{
 		NbtCompound tag = stack.getOrCreateTag();

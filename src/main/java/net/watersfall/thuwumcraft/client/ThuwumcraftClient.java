@@ -63,6 +63,7 @@ import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
+import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
@@ -142,6 +143,20 @@ public class ThuwumcraftClient implements ClientModInitializer
 					}
 				}
 			}
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			provider.getAbility(StatusEffectItem.ID, StatusEffectItem.class).ifPresent(ability -> {
+				if(ability.getEffects().size() > 0)
+				{
+					tooltip.add(StatusEffectHelper.APPLIED_EFFECTS);
+					ability.getEffects().forEach(effect -> {
+						tooltip.add(StatusEffectHelper.getEffectText(effect, true));
+					});
+				}
+				else
+				{
+					tooltip.add(StatusEffectHelper.NO_EFFECT);
+				}
+			});
 		}));
 		HudRenderCallback.EVENT.register((matrices, delta) -> {
 			MinecraftClient client = MinecraftClient.getInstance();

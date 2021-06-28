@@ -22,7 +22,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTables;
@@ -56,6 +55,7 @@ import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.abilities.item.*;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.BerserkerWeapon;
@@ -81,7 +81,6 @@ import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
-import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
 import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
@@ -89,7 +88,6 @@ import net.watersfall.thuwumcraft.world.structure.ThuwumcraftStructurePieceTypes
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -197,25 +195,12 @@ public class Thuwumcraft implements ModInitializer
 	private static void registerEvents()
 	{
 		AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-			if(!world.isClient)
+			if(!world.isClient && entity instanceof LivingEntity living)
 			{
-				ItemStack stack = player.getStackInHand(hand);
-				if(!stack.isEmpty() && stack.getTag() != null)
-				{
-					NbtCompound tag = stack.getTag();
-					if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
-					{
-						if(StatusEffectHelper.hasUses(tag))
-						{
-							List<StatusEffectInstance> effects = StatusEffectHelper.getEffectsFromTag(tag);
-							if(effects.size() > 0)
-							{
-								effects.forEach(((LivingEntity)entity)::addStatusEffect);
-							}
-						}
-						StatusEffectHelper.decrementUses(tag);
-					}
-				}
+				AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(player.getStackInHand(hand));
+				provider.getAbility(StatusEffectItem.ID, StatusEffectItem.class).ifPresent(ability -> {
+					ability.use(living, player.getStackInHand(hand));
+				});
 			}
 			return ActionResult.PASS;
 		});
@@ -350,6 +335,7 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(WandAbility.ID, WandAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
+		AbilityProvider.ITEM_REGISTRY.register(StatusEffectItem.ID, StatusEffectItemImpl::new);
 	}
 
 	/**

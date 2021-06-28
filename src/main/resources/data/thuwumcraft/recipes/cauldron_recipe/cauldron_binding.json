@@ -1,0 +1,11 @@
+{
+	"type": "thuwumcraft:cauldron_recipe",
+	"items": [
+		{
+			"item": "thuwumcraft:alchemy_binding"
+		}
+	],
+	"water_use": 250,
+	"action": "create_binding",
+	"output": "thuwumcraft:alchemy_binding"
+}

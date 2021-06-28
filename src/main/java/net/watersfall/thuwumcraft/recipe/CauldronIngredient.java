@@ -3,18 +3,22 @@ package net.watersfall.thuwumcraft.recipe;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
-import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.abilities.item.StatusEffectItemImpl;
+import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
+import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -84,6 +88,14 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
 				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
+			}
+			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_BINDING)
+			{
+				stack = recipe.getOutput().copy();
+				AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+				StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world);
+				StatusEffectItemImpl ability = new StatusEffectItemImpl(StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world).stream().toList(), 5);
+				provider.addAbility(ability);
 			}
 			return stack;
 		}

@@ -1,0 +1,8 @@
+{
+	"type": "thuwumcraft:binding",
+	"input": {
+		"tag": "fabric:axes"
+	},
+	"output": "minecraft:air",
+	"recipe_type": "ABILITY"
+}

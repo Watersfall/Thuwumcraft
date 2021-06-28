@@ -1,0 +1,8 @@
+{
+	"type": "thuwumcraft:binding",
+	"input": {
+		"tag": "fabric:swords"
+	},
+	"output": "minecraft:air",
+	"recipe_type": "ABILITY"
+}

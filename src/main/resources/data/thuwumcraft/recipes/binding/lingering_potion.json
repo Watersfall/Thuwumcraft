@@ -1,0 +1,8 @@
+{
+	"type": "thuwumcraft:binding",
+	"input": {
+		"item": "minecraft:lingering_potion"
+	},
+	"output": "minecraft:lingering_potion",
+	"recipe_type": "NBT"
+}

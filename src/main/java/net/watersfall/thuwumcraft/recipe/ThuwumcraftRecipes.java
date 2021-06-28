@@ -25,6 +25,7 @@ public class ThuwumcraftRecipes
 	public static final RecipeSerializer<ResearchUnlockedRecipe<ShapelessRecipe>> RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<NekomancyRecipe> NEKOMANCY_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<AspectCraftingShapedRecipe> ASPECT_SHAPED_SERIALIZER;
+	public static final RecipeSerializer<BindingRecipe> BINDING_RECIPE_SERIALIZER;
 	
 	static 
 	{
@@ -47,6 +48,7 @@ public class ThuwumcraftRecipes
 		RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER = new ResearchUnlockedRecipe.Serializer<>(RecipeSerializer.SHAPELESS);
 		NEKOMANCY_RECIPE_SERIALIZER = new NekomancyRecipe.Serializer();
 		ASPECT_SHAPED_SERIALIZER =new AspectCraftingShapedRecipe.Serializer();
+		BINDING_RECIPE_SERIALIZER = new BindingRecipe.Serializer();
 	}
 
 	public static void register()
@@ -70,6 +72,7 @@ public class ThuwumcraftRecipes
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("research_unlocked_shapeless_recipe"), RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("aspect_shaped"), ASPECT_SHAPED_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("binding"), BINDING_RECIPE_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)
