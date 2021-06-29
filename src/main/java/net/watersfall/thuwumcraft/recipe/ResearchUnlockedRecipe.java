@@ -105,7 +105,15 @@ public class ResearchUnlockedRecipe<T extends CraftingRecipe> implements Researc
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
+		//TODO: something about this
+		if(recipe instanceof ShapedRecipe)
+		{
+			return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER;
+		}
+		else
+		{
+			return ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPELESS_RECIPE_SERIALIZER;
+		}
 	}
 
 	@Override
