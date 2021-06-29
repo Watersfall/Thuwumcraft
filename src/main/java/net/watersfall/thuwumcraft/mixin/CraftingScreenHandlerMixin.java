@@ -1,5 +1,6 @@
 package net.watersfall.thuwumcraft.mixin;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
@@ -10,6 +11,8 @@ import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.recipe.ResearchRequiredCraftingRecipe;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,18 +37,24 @@ public class CraftingScreenHandlerMixin
 											  CallbackInfo info,
 											  ServerPlayerEntity serverPlayer,
 											  ItemStack stack,
-											  Optional<CraftingRecipe> optional)
+											  Optional<CraftingRecipe> recipeOptional)
 	{
-		if(optional.isPresent() && optional.get() instanceof ResearchRequiredCraftingRecipe)
+		if(recipeOptional.isPresent() && recipeOptional.get() instanceof ResearchRequiredCraftingRecipe recipe)
 		{
-			if (resultInventory.shouldCraftRecipe(world, serverPlayer, optional.get()))
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
+			if(optional.isPresent())
 			{
-				stack = optional.get().craft(inventory);
-				resultInventory.setStack(0, stack);
-				handler.setPreviousTrackedSlot(0, stack);
-				serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, 0, stack));
-				info.cancel();
+				if (resultInventory.shouldCraftRecipe(world, serverPlayer, recipeOptional.get()) && recipe.matches(inventory, world, optional.get()))
+				{
+					stack = recipeOptional.get().craft(inventory);
+					resultInventory.setStack(0, stack);
+					handler.setPreviousTrackedSlot(0, stack);
+					serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, 0, stack));
+					info.cancel();
+				}
 			}
+			info.cancel();
 		}
 	}
 }
