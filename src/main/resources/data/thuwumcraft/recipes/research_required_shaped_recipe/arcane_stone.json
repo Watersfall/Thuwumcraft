@@ -1,0 +1,23 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"XXX",
+		"XYX",
+		"XXX"
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:stone"
+		},
+		"Y": {
+			"item": "minecraft:amethyst_shard"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:arcane_stone",
+		"count": 8
+	},
+	"research": [
+		"thuwumcraft:start/infusion"
+	]
+}

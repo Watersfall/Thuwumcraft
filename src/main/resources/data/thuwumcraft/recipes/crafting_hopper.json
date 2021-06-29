@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"T T",
+		"THT",
+		" T "
+	],
+	"key": {
+		"H": {
+			"item": "minecraft:hopper"
+		},
+		"T": {
+			"item": "thuwumcraft:thuwumium_ingot"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:crafting_hopper"
+	}
+}

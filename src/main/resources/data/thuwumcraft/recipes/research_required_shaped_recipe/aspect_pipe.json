@@ -1,0 +1,21 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"CTC"
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:copper_ingot"
+		},
+		"T": {
+			"item": "minecraft:gold_ingot"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:aspect_pipe",
+		"count": 8
+	},
+	"research": [
+		"thuwumcraft:alchemy/essentia_smeltery"
+	]
+}

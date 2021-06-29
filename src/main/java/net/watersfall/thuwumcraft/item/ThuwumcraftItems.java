@@ -109,6 +109,8 @@ public class ThuwumcraftItems
 	public static final WandCapItem THUWUMIUM_CAP;
 	public static final BlockItem SILVERWOOD_SAPLING;
 	public static final AlchemyBindingItem ALCHEMY_BINDING;
+	public static final BlockItem ARCANE_STONE;
+	public static final BlockItem ARCANE_STONE_SLAB;
 	public static final List<Item> ITEMS;
 
 	static
@@ -198,6 +200,8 @@ public class ThuwumcraftItems
 		THUWUMIUM_CAP = register(Thuwumcraft.getId("thuwumium_cap"), new WandCapItem(WandCapMaterials.THUWUMIUM, defaultSettings().maxCount(1)));
 		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new BlockItem(ThuwumcraftBlocks.SILVERWOOD_SAPLING, defaultSettings()));
 		ALCHEMY_BINDING = register(Thuwumcraft.getId("alchemy_binding"), new AlchemyBindingItem(defaultSettings()));
+		ARCANE_STONE = register(Thuwumcraft.getId("arcane_stone"), new BlockItem(ThuwumcraftBlocks.ARCANE_STONE, defaultSettings()));
+		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new BlockItem(ThuwumcraftBlocks.ARCANE_STONE_SLAB, defaultSettings()));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

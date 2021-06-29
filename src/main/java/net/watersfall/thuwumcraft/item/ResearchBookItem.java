@@ -12,6 +12,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.gui.ResearchBookHandler;
 

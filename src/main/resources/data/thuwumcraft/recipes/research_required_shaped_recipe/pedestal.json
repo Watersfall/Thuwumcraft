@@ -1,0 +1,25 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		" X ",
+		"YYY",
+		" Z "
+	],
+	"key": {
+		"X": {
+			"tag": "minecraft:candles"
+		},
+		"Y": {
+			"item": "thuwumcraft:arcane_stone_slab"
+		},
+		"Z": {
+			"item": "thuwumcraft:arcane_stone"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:pedestal"
+	},
+	"research": [
+		"thuwumcraft:infusion/infusion_start"
+	]
+}

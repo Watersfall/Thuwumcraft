@@ -7,5 +7,31 @@
 		"research": [
 			"thuwumcraft:alchemy/crucible"
 		]
-	}
+	},
+	"tabs": [
+		{
+			"recipes": [
+				"thuwumcraft:research_required_shaped_recipe/essentia_smeltery"
+			],
+			"requires_complete": true
+		},
+		{
+			"recipes": [
+				"thuwumcraft:research_required_shaped_recipe/essentia_refinery"
+			],
+			"requires_complete": true
+		},
+		{
+			"recipes": [
+				"thuwumcraft:research_required_shaped_recipe/aspect_pipe"
+			],
+			"requires_complete": true
+		},
+		{
+			"recipes": [
+				"thuwumcraft:research_required_shaped_recipe/jar"
+			],
+			"requires_complete": true
+		}
+	]
 }

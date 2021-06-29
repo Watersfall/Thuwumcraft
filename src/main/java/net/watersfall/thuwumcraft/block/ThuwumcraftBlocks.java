@@ -1,6 +1,7 @@
 package net.watersfall.thuwumcraft.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -38,6 +39,8 @@ public class ThuwumcraftBlocks
 	public static final PortableHoleBlock PORTABLE_HOLE_BLOCK;
 	public static final WandWorkbenchBlock WAND_WORKBENCH;
 	public static final SaplingBlock SILVERWOOD_SAPLING;
+	public static final Block ARCANE_STONE;
+	public static final SlabBlock ARCANE_STONE_SLAB;
 
 	static
 	{
@@ -68,6 +71,8 @@ public class ThuwumcraftBlocks
 		PORTABLE_HOLE_BLOCK = register(Thuwumcraft.getId("portable_hole"), new PortableHoleBlock(FabricBlockSettings.copyOf(Blocks.AIR).luminance(5)));
 		WAND_WORKBENCH = register(Thuwumcraft.getId("wand_workbench"), new WandWorkbenchBlock(FabricBlockSettings.of(Material.WOOD)));
 		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new OpenSaplingBlock(new SilverwoodSaplingGenerator(), FabricBlockSettings.copyOf(Blocks.OAK_SAPLING)));
+		ARCANE_STONE = register(Thuwumcraft.getId("arcane_stone"), new Block(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
+		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new SlabBlock(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

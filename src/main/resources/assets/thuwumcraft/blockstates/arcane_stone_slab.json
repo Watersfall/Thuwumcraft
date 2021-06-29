@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "thuwumcraft:block/arcane_stone_bottom"
+		},
+		"type=double": {
+			"model": "thuwumcraft:block/arcane_stone"
+		},
+		"type=top": {
+			"model": "thuwumcraft:block/arcane_stone_top"
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"XXX"
+	],
+	"key": {
+		"X": {
+			"item": "thuwumcraft:arcane_stone"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:arcane_stone_slab",
+		"count": 6
+	},
+	"research": [
+		"thuwumcraft:start/infusion"
+	]
+}

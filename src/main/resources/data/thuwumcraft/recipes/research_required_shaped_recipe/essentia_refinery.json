@@ -1,0 +1,28 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"CCC",
+		"CBC",
+		"SFS"
+	],
+	"key": {
+		"C": {
+			"item": "minecraft:copper_ingot"
+		},
+		"B": {
+			"item": "minecraft:bucket"
+		},
+		"S": {
+			"item": "minecraft:cobblestone"
+		},
+		"F": {
+			"item": "thuwumcraft:aspect_pipe"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:essentia_refinery"
+	},
+	"research": [
+		"thuwumcraft:alchemy/essentia_smeltery"
+	]
+}

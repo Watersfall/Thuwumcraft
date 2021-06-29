@@ -1,0 +1,22 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"CCC",
+		"T T",
+		"TTT"
+	],
+	"key": {
+		"C": {
+			"tag": "minecraft:planks"
+		},
+		"T": {
+			"item": "minecraft:glass"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:jar"
+	},
+	"research": [
+		"thuwumcraft:alchemy/essentia_smeltery"
+	]
+}
