@@ -9,7 +9,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Rarity;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class MagicDustItem extends Item
 {

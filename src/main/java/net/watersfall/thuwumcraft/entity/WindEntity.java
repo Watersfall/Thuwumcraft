@@ -14,6 +14,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 import java.util.List;
 import java.util.UUID;

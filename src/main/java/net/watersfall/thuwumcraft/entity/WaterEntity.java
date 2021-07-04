@@ -18,6 +18,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 import java.util.UUID;
 

@@ -11,7 +11,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.entity.WindEntity;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class SpecialSwordItem extends SwordItem
 {

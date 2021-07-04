@@ -21,7 +21,7 @@ import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.InventoryHelper;
 
 import java.util.Optional;

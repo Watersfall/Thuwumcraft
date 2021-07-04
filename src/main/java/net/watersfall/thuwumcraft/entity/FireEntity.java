@@ -6,6 +6,7 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 public class FireEntity extends WaterEntity
 {

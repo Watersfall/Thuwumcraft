@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.item.BeforeActions;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class SpecialShovelItem extends ShovelItem implements BeforeActions
 {

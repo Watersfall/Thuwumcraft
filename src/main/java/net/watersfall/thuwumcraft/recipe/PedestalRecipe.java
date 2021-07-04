@@ -29,9 +29,10 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeType;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
 import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
 import java.util.ArrayList;
 import java.util.List;

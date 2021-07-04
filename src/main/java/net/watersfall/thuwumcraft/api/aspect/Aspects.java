@@ -21,7 +21,7 @@ import net.watersfall.thuwumcraft.block.ElementalClusterBlock;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.item.DecorativeStaffBlockItem;
 import net.watersfall.thuwumcraft.item.GlassPhialItem;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.HashMap;
 

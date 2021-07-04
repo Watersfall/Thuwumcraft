@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlock;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockComponent;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 
 public class AlchemicalFurnaceComponent implements MultiBlockComponent

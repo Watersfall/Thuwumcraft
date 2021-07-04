@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class LadleItem extends Item
 {

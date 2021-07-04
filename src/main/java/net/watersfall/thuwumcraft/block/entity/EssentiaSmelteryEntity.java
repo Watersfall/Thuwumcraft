@@ -21,7 +21,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.inventory.BasicInventory;
 import net.watersfall.thuwumcraft.inventory.BetterAspectInventory;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.gui.EssentiaSmelteryHandler;
 import org.jetbrains.annotations.Nullable;

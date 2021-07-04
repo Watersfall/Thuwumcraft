@@ -15,6 +15,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
 import java.util.ArrayList;
 import java.util.List;

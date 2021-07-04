@@ -6,7 +6,7 @@ import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 

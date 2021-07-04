@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.item.wand;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.function.Supplier;
 

@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.watersfall.thuwumcraft.entity.ThuwumcraftAttributes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftAttributes;
 
 import java.util.UUID;
 

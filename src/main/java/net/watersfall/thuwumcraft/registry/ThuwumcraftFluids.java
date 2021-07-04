@@ -1,7 +1,8 @@
-package net.watersfall.thuwumcraft.fluid;
+package net.watersfall.thuwumcraft.registry;
 
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.fluid.DimensionalFluid;
 
 public class ThuwumcraftFluids
 {

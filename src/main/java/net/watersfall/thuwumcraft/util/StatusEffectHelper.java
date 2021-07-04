@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.util;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffect;

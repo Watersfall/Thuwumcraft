@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.item;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockType;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
@@ -11,6 +11,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.ActionResult;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class WitchySpoonItem extends Item
 {

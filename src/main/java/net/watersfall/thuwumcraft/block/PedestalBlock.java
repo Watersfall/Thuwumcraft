@@ -20,9 +20,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 

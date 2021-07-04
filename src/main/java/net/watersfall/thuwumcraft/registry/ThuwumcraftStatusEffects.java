@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.effect;
+package net.watersfall.thuwumcraft.registry;
 
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -6,6 +6,8 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectType;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.effect.BerserkStatusEffect;
+import net.watersfall.thuwumcraft.effect.SpecialStatusEffect;
 
 import java.awt.*;
 

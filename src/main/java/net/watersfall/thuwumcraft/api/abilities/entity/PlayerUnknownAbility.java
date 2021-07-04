@@ -18,7 +18,7 @@ import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyFluidTags;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 
 public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSerializable<Entity>

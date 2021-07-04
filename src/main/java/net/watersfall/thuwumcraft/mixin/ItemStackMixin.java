@@ -14,7 +14,7 @@ import net.watersfall.thuwumcraft.abilities.item.RunedShieldAbilityItem;
 import net.watersfall.thuwumcraft.abilities.item.WandAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.GlassPhialItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;

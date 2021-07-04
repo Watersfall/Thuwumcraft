@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.NekomancerTableInventory;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.NekomancyRecipe;
 import net.watersfall.thuwumcraft.gui.slot.CrystalSlot;
 import net.watersfall.thuwumcraft.gui.slot.NekomancyOutputSlot;

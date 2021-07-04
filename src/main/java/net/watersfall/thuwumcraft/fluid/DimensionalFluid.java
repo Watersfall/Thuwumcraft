@@ -14,8 +14,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftFluids;
 
 public abstract class DimensionalFluid extends FlowableFluid
 {

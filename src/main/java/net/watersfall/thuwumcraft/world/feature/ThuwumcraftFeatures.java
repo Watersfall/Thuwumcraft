@@ -19,7 +19,7 @@ import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import net.minecraft.world.gen.trunk.BendingTrunkPlacer;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.world.config.DecoratedRockConfig;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeConfig;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeLayersConfig;

@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 public class SandEntity extends WaterEntity
 {

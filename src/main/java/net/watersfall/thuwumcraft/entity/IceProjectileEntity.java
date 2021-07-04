@@ -23,7 +23,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 public class IceProjectileEntity extends ThrownItemEntity
 {

@@ -2,7 +2,7 @@ package net.watersfall.thuwumcraft.client.mixin;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.math.Vec3f;
-import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;

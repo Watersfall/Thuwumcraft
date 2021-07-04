@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.block;
+package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
@@ -6,9 +6,9 @@ import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.block.*;
 import net.watersfall.thuwumcraft.block.sapling.OpenSaplingBlock;
 import net.watersfall.thuwumcraft.block.sapling.SilverwoodSaplingGenerator;
-import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
 
 public class ThuwumcraftBlocks
 {

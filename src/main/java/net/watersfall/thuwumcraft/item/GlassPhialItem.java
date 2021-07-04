@@ -20,6 +20,7 @@ import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.client.item.GlassPhialTooltipData;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

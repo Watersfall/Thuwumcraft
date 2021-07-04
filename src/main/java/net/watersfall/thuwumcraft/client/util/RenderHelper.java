@@ -17,7 +17,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.Collection;
 

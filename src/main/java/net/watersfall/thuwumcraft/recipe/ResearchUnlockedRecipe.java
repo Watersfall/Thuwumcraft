@@ -11,6 +11,7 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
 import java.util.ArrayList;
 import java.util.List;

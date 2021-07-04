@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.BerserkerWeapon;
 import net.watersfall.thuwumcraft.api.item.BeforeActions;
-import net.watersfall.thuwumcraft.effect.ThuwumcraftStatusEffects;
-import net.watersfall.thuwumcraft.item.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

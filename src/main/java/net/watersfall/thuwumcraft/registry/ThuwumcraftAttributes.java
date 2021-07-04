@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.entity;
+package net.watersfall.thuwumcraft.registry;
 
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;

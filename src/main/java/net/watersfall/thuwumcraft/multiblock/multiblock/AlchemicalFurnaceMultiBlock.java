@@ -22,7 +22,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.watersfall.thuwumcraft.api.multiblock.*;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.AlchemicalFurnaceEntity;
 import net.watersfall.thuwumcraft.block.entity.ChildBlockEntity;
 import net.watersfall.thuwumcraft.item.MagicalCoalItem;

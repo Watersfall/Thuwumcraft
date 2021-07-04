@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.item;
+package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -13,8 +13,7 @@ import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.fluid.ThuwumcraftFluids;
+import net.watersfall.thuwumcraft.item.*;
 import net.watersfall.thuwumcraft.item.armor.AlchemistArmorItem;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
 import net.watersfall.thuwumcraft.item.armor.SpeedBootsItem;

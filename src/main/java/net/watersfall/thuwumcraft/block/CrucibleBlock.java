@@ -17,7 +17,7 @@ import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.block.entity.CrucibleEntity;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CrucibleRecipe;
-import net.watersfall.thuwumcraft.recipe.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.InventoryHelper;
 import org.jetbrains.annotations.Nullable;
 

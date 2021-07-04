@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockType;
 import net.watersfall.thuwumcraft.block.AlchemicalFurnaceBlock;
-import net.watersfall.thuwumcraft.block.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceFuelComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceInputComponent;

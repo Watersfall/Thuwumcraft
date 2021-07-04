@@ -1,8 +1,9 @@
-package net.watersfall.thuwumcraft.recipe;
+package net.watersfall.thuwumcraft.registry;
 
 import net.minecraft.recipe.*;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.recipe.*;
 
 public class ThuwumcraftRecipes
 {

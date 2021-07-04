@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.entity.ArcaneLampEntity;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;

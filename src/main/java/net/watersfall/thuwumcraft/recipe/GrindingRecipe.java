@@ -10,6 +10,7 @@ import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
 public class GrindingRecipe extends ShapelessRecipe
 {

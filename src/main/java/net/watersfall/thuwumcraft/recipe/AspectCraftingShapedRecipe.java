@@ -18,6 +18,7 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
 import net.watersfall.thuwumcraft.item.CrystalItem;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
 import java.util.ArrayList;
 import java.util.List;
