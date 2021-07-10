@@ -50,7 +50,7 @@ public class CraftingScreenHandlerMixin
 					stack = recipeOptional.get().craft(inventory);
 					resultInventory.setStack(0, stack);
 					handler.setPreviousTrackedSlot(0, stack);
-					serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, 0, stack));
+					serverPlayer.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, stack));
 					info.cancel();
 				}
 			}

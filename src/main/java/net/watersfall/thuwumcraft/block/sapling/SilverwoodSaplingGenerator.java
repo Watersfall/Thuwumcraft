@@ -12,7 +12,7 @@ public class SilverwoodSaplingGenerator extends SaplingGenerator
 {
 	@Nullable
 	@Override
-	protected ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean bees)
+	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean bees)
 	{
 		return (ConfiguredFeature<TreeFeatureConfig, ?>)ThuwumcraftFeatures.SILVERWOOD_TREE_SAPLING;
 	}

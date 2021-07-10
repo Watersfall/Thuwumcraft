@@ -213,8 +213,8 @@ public class Thuwumcraft implements ModInitializer
 		});
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
 		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
-			Direction direction = pointer.getWorld().getBlockState(pointer.getBlockPos()).get(Properties.FACING);
-			BlockEntity test = pointer.getWorld().getBlockEntity(pointer.getBlockPos().offset(direction));
+			Direction direction = pointer.getWorld().getBlockState(pointer.getPos()).get(Properties.FACING);
+			BlockEntity test = pointer.getWorld().getBlockEntity(pointer.getPos().offset(direction));
 			if(test instanceof PedestalEntity entity)
 			{
 				World world = pointer.getWorld();
