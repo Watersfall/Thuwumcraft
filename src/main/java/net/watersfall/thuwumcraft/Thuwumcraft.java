@@ -187,6 +187,18 @@ public class Thuwumcraft implements ModInitializer
 				}
 			});
 		});
+		ServerPlayNetworking.registerGlobalReceiver(getId("player_close_research_book"), (server, player, handler, buf, responseSender) -> {
+			float x = buf.readFloat();
+			float y = buf.readFloat();
+			float scale = buf.readFloat();
+			Identifier category = buf.readIdentifier();
+			AbilityProvider.getProvider(player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent(ability -> {
+				ability.setLastCategory(category);
+				ability.setX(x);
+				ability.setY(y);
+				ability.setScale(scale);
+			});
+		});
 	}
 
 	/**

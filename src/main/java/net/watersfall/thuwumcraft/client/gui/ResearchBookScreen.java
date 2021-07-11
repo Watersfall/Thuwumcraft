@@ -1,6 +1,8 @@
 package net.watersfall.thuwumcraft.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
@@ -8,6 +10,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
@@ -51,7 +54,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		ability = optional.get();
-		this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+		this.currentCategory = ResearchCategory.REGISTRY.get(ability.getLastCategory());
+		if(currentCategory == null)
+		{
+			this.currentCategory = ResearchCategory.REGISTRY.get(Thuwumcraft.getId("starter"));
+		}
+		if(this.currentCategory == null)
+		{
+			this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+		}
 	}
 
 	@Override
@@ -61,8 +72,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.backgroundHeight = textureHeight;
 		super.init();
 		this.children().clear();
-		this.mapX = this.textureWidth / (scale * 2F) - 8;
-		this.mapY = this.textureHeight / (scale * 2F) - 8;
+		float scale = (float)client.getWindow().getScaleFactor();
+		this.mapX = ability.getX();
+		this.mapY = ability.getY();
+		this.scale = ability.getScale();
 		int total = 0;
 		List<ResearchCategory> tempCat = new ArrayList<>();
 		for(ResearchCategory category : ResearchCategory.REGISTRY.getAll())
@@ -86,8 +99,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		{
 			this.addDrawableChild(categories[i]);
 		}
-		int scale = (int)client.getWindow().getScaleFactor();
-		this.bottomY = height * scale - (textureHeight * scale) - this.y * scale;
+		this.bottomY = height * (int)scale - (textureHeight * (int)scale) - this.y * (int)scale;
 	}
 
 	@Override
@@ -137,6 +149,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		mapY += (deltaY);	
 		mapX = MathHelper.clamp(mapX, 0, this.width / scale);
 		mapY = MathHelper.clamp(mapY, 0, this.height / scale);
+		ability.setX(mapX);
+		ability.setY(mapY);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
 
@@ -151,6 +165,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		{
 			scale = MathHelper.clamp(scale + 0.05F, 0.5F, 1F);
 		}
+		ability.setScale(scale);
 		return true;
 	}
 
@@ -191,5 +206,17 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public int getY()
 	{
 		return y;
+	}
+
+	@Override
+	public void onClose()
+	{
+		super.onClose();
+		PacketByteBuf buf = PacketByteBufs.create();
+		buf.writeFloat(mapX);
+		buf.writeFloat(mapY);
+		buf.writeFloat(scale);
+		buf.writeIdentifier(currentCategory.getId());
+		ClientPlayNetworking.send(Thuwumcraft.getId("player_close_research_book"), buf);
 	}
 }

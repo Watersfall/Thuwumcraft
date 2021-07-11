@@ -15,11 +15,19 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 {
 	private Set<Identifier> research;
 	private Set<Identifier> advancements;
+	private float x;
+	private float y;
+	private float scale;
+	private Identifier lastCategory;
 
 	public PlayerResearchAbilityImpl()
 	{
 		this.advancements = new HashSet<>();
 		this.research = new HashSet<>();
+		x = Float.MAX_VALUE;
+		y = Float.MAX_VALUE;
+		lastCategory = null;
+		scale = 0.7F;
 	}
 
 	public PlayerResearchAbilityImpl(Entity entity)
@@ -96,5 +104,53 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 	public boolean hasResearch(Research research)
 	{
 		return this.research.contains(research.getId());
+	}
+
+	@Override
+	public float getX()
+	{
+		return x;
+	}
+
+	@Override
+	public float getY()
+	{
+		return y;
+	}
+
+	@Override
+	public float getScale()
+	{
+		return scale;
+	}
+
+	@Override
+	public Identifier getLastCategory()
+	{
+		return lastCategory;
+	}
+
+	@Override
+	public void setX(float x)
+	{
+		this.x = x;
+	}
+
+	@Override
+	public void setY(float y)
+	{
+		this.y = y;
+	}
+
+	@Override
+	public void setScale(float scale)
+	{
+		this.scale = scale;
+	}
+
+	@Override
+	public void setLastCategory(Identifier category)
+	{
+		this.lastCategory = category;
 	}
 }

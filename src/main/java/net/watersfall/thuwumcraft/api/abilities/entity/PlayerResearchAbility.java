@@ -33,6 +33,22 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 
 	boolean hasResearch(Research research);
 
+	float getX();
+
+	float getY();
+
+	float getScale();
+
+	Identifier getLastCategory();
+
+	void setX(float x);
+
+	void setY(float y);
+
+	void setScale(float scale);
+
+	void setLastCategory(Identifier category);
+
 	@Override
 	default Identifier getId()
 	{
@@ -47,6 +63,10 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 			list.add(NbtString.of(research.toString()));
 		});
 		tag.put("research_list", list);
+		tag.putFloat("x", getX());
+		tag.putFloat("y", getY());
+		tag.putFloat("scale", getScale());
+		tag.putString("category", getLastCategory().toString());
 		return tag;
 	}
 
@@ -62,6 +82,10 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 				addResearch(check);
 			}
 		});
+		setX(tag.getFloat("x"));
+		setY(tag.getFloat("y"));
+		setScale(tag.getFloat("scale"));
+		setLastCategory(Identifier.tryParse("category"));
 	}
 
 	@Override
@@ -71,6 +95,10 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		getResearch().forEach(buf::writeIdentifier);
 		buf.writeInt(getAdvancements().size());
 		getAdvancements().forEach(buf::writeIdentifier);
+		buf.writeFloat(getX());
+		buf.writeFloat(getY());
+		buf.writeFloat(getScale());
+		buf.writeIdentifier(getLastCategory());
 		return buf;
 	}
 
@@ -87,6 +115,10 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		{
 			this.addAdvancement(buf.readIdentifier());
 		}
+		this.setX(buf.readFloat());
+		this.setY(buf.readFloat());
+		this.setScale(buf.readFloat());
+		this.setLastCategory(buf.readIdentifier());
 	}
 
 	@Override
