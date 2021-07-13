@@ -119,6 +119,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 	private static final Identifier UNKNOWN_VIGNETTE = Thuwumcraft.getId("textures/misc/unknown_vignette.png");
 	private static final Identifier VANILLA_VIGNETTE = new Identifier("textures/misc/vignette.png");
 	public static final Identifier ALCHEMY_TEXTURE = Thuwumcraft.getId("textures/gui/research/recipe/alchemy.png");
+	public static final Identifier CRAFTING_TEXTURE = Thuwumcraft.getId("textures/gui/research/recipe/crafting.png");
 	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
@@ -538,27 +539,28 @@ public class ThuwumcraftClient implements ClientModInitializer
 			});
 		});
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
+			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
-			int offsetX = x + (width / 2) - 50;
+			int offsetX = x + 48 + 8;
+			int offsetY = y + 80 + 8;
 			//TODO make a special recipe type enum or some other solution to this
-			if(recipe instanceof ShapedRecipe)
+			if(recipe instanceof ShapedRecipe recipe1)
 			{
 				items = new ItemElement[10];
 				int o = 0;
 				int input = 0;
-				ShapedRecipe recipe1 = (ShapedRecipe)recipe;
 				for(int recipeY = 0; recipeY < 3; recipeY++)
 				{
 					for(int recipeX = 0; recipeX < 3; recipeX++)
 					{
 						if(recipeX < recipe1.getWidth() && recipeY < recipe1.getHeight())
 						{
-							items[o] = new ItemElement(recipe.getIngredients().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+							items[o] = new ItemElement(recipe.getIngredients().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
 							input++;
 						}
 						else
 						{
-							items[o] = new ItemElement(new ItemStack[]{ItemStack.EMPTY}, offsetX + (o % 3) * 20, y + (o / 3) * 20);
+							items[o] = new ItemElement(new ItemStack[]{ItemStack.EMPTY}, offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
 						}
 						o++;
 					}
@@ -568,16 +570,16 @@ public class ThuwumcraftClient implements ClientModInitializer
 			{
 				for(int o = 0; o < recipe.getIngredients().size(); o++)
 				{
-					items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 20, y + (o / 3) * 20);
+					items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
 				}
 			}
-			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
-			return new RecipeElement(items, RecipeElement.Background.EMPTY);
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, x + 88, y + 32);
+			return new RecipeElement(items, background);
 		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.INFUSION, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
-			Point origin = new Point(x + width / 2 - 32, y + height / 2 - 64);
+			Point origin = new Point(x + width / 2 - 8, y + height / 2 - 12);
 			items[0] = new ItemElement(recipe.getIngredients().get(0).getMatchingStacksClient(), origin.x, origin.y);
 			int total = recipe.getIngredients().size();
 			for(int o = 1; o < total; o++)
@@ -593,10 +595,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 				for(int o = 0; o < recipe.getAspects().size(); o++)
 				{
 					ItemStack stack = new ItemStack(recipe.getAspects().get(o).getAspect().getItem(), recipe.getAspects().get(o).getCount());
-					items[total + o] = new ItemElement(new ItemStack[]{stack}, startX + o * 20, origin.y + 60);
+					items[total + o] = new ItemElement(new ItemStack[]{stack}, startX + o * 20, origin.y + 56);
 				}
 			}
-			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x, origin.y - 108);
 			return new RecipeElement(items, RecipeElement.Background.EMPTY);
 		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CAULDRON, ((recipe2, x, y, width, height) -> {

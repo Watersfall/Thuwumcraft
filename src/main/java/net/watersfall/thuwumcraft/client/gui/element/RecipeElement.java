@@ -70,7 +70,7 @@ public class RecipeElement implements Element, Drawable, TooltipElement
 			if(this != EMPTY)
 			{
 				RenderSystem.setShaderTexture(0, texture());
-				DrawableHelper.drawTexture(matrices, x, y, 0, 0, width, height, width, height);
+				DrawableHelper.drawTexture(matrices, x, y, 100, 0, 0, width, height, height, width);
 			}
 		}
 	}
