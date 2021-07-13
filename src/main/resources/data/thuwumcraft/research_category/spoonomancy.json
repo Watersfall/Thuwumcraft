@@ -1,5 +1,7 @@
 {
 	"icon": "thuwumcraft:witchy_spoon",
 	"index": 2,
-	"required_research": []
+	"required_research": [
+		"thuwumcraft:start/spell_casting"
+	]
 }

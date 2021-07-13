@@ -1,5 +1,7 @@
 {
 	"icon": "minecraft:cauldron",
 	"index": 1,
-	"required_research": []
+	"required_research": [
+		"thuwumcraft:start/alchemy"
+	]
 }
