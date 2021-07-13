@@ -84,19 +84,6 @@ public class ResearchTab extends Screen
 		{
 			BookRenderableRecipe recipe = (BookRenderableRecipe)recipes[i];
 			recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
-			if(recipeElements[i].twoPage && i + 1 < recipes.length)
-			{
-				i++;
-				recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
-				if(!recipeElements[i].twoPage)
-				{
-					count++;
-				}
-				else
-				{
-					recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY2, textureWidth, textureHeight);
-				}
-			}
 			count++;
 		}
 		this.addDrawableChild(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
@@ -105,14 +92,7 @@ public class ResearchTab extends Screen
 		count = 0;
 		for(int i = 0; i < recipeElements.length; i++)
 		{
-			if(recipeElements[i].twoPage && i + 1 < recipeElements.length && recipeElements[i + 1].twoPage)
-			{
-				recipePages[count++] = new RecipePage(recipeElements[i], recipeElements[++i]);
-			}
-			else
-			{
-				recipePages[count++] = new RecipePage(recipeElements[i]);
-			}
+			recipePages[count++] = new RecipePage(recipeElements[i]);
 		}
 		this.page = new PageCounter(0, 0, recipePages.length - 1);
 		this.parent.init();

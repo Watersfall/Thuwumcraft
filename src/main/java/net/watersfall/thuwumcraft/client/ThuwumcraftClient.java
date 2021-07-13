@@ -118,6 +118,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 {
 	private static final Identifier UNKNOWN_VIGNETTE = Thuwumcraft.getId("textures/misc/unknown_vignette.png");
 	private static final Identifier VANILLA_VIGNETTE = new Identifier("textures/misc/vignette.png");
+	public static final Identifier ALCHEMY_TEXTURE = Thuwumcraft.getId("textures/gui/research/recipe/alchemy.png");
 	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
@@ -571,7 +572,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 84, y + 20);
-			return new RecipeElement(items, true);
+			return new RecipeElement(items, RecipeElement.Background.EMPTY);
 		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.INFUSION, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
@@ -596,19 +597,21 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x + 84, origin.y);
-			return new RecipeElement(items, false);
+			return new RecipeElement(items, RecipeElement.Background.EMPTY);
 		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CAULDRON, ((recipe2, x, y, width, height) -> {
+			RecipeElement.Background background = new RecipeElement.Background(x + 12, y + 32, 128, 128, ThuwumcraftClient.ALCHEMY_TEXTURE);
 			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
 			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];
 			int offsetX = x + (width / 2) - 50;
-			items[0] = new ItemElement(recipe.getCatalyst().getMatchingStacksClient(), offsetX, y);
+			items[0] = new ItemElement(recipe.getCatalyst().getMatchingStacksClient(), offsetX - 19, y + 34);
+			int size = recipe.getInputs().size();
 			for(int i = 1; i < items.length - 1; i++)
 			{
-				items[i] = new ItemElement(recipe.getInputs().get(i - 1).getMatchingStacksClient(), offsetX + 24 + i * 24, y + 40);
+				items[i] = new ItemElement(recipe.getInputs().get(i - 1).getMatchingStacksClient(), offsetX + i * 24 - (i + size * 12) + 32, y + 128);
 			}
-			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 36, y);
-			return new RecipeElement(items, true);
+			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 42, y + 24);
+			return new RecipeElement(items, background);
 		}));
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
 			preRegisterArmorTextures(Thuwumcraft.getId(item.getName()), false);
