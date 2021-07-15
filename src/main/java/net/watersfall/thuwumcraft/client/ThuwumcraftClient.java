@@ -76,7 +76,7 @@ import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.thuwumcraft.client.gui.*;
 import net.watersfall.thuwumcraft.client.gui.element.ItemElement;

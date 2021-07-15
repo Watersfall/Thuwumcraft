@@ -7,6 +7,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.world.CustomMobSpawnerLogic;
 import org.jetbrains.annotations.Nullable;
 

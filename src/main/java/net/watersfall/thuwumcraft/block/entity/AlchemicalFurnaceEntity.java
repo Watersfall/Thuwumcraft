@@ -10,6 +10,7 @@ import net.watersfall.thuwumcraft.api.multiblock.MultiBlock;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockComponent;
 import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceComponent;
 import net.watersfall.thuwumcraft.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEntityClientSerializable
 {

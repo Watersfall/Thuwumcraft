@@ -10,6 +10,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectContainer, BlockEntityClientSerializable
 {

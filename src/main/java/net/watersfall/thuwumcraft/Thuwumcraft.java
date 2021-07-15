@@ -72,7 +72,7 @@ import net.watersfall.thuwumcraft.api.tag.AlchemyEntityTags;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
-import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftFluids;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;

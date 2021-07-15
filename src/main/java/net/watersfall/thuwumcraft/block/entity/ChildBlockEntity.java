@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockComponent;
 import net.minecraft.block.entity.BlockEntity;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 public class ChildBlockEntity extends BlockEntity
 {

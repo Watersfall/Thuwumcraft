@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.HashMap;
 

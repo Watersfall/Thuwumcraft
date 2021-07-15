@@ -14,6 +14,7 @@ import net.minecraft.potion.PotionUtil;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 
 import java.util.Set;

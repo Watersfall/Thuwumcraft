@@ -13,6 +13,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.inventory.BasicInventory;
 import net.watersfall.thuwumcraft.gui.WandWorkbenchHandler;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
 public class WandWorkbenchEntity extends BlockEntity implements NamedScreenHandlerFactory, BasicInventory

@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.Direction;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.ArrayList;
 import java.util.List;

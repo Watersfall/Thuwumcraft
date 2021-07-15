@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.block.CraftingHopper;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.Optional;
 

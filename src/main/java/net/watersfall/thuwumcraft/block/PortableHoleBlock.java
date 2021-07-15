@@ -9,7 +9,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.PortableHoleBlockEntity;
 import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;

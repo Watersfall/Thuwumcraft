@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.block.entity.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;

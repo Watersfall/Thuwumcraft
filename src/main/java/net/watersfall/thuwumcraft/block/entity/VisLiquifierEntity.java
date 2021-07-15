@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 public class VisLiquifierEntity extends BlockEntity
 {

@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.block.entity;
+package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -6,7 +6,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.block.entity.*;
 
 public class ThuwumcraftBlockEntities
 {

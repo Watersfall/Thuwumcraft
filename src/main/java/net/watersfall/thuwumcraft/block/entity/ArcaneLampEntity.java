@@ -5,6 +5,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtLongArray;
 import net.minecraft.util.math.BlockPos;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.ArrayList;
 import java.util.Arrays;

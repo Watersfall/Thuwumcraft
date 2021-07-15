@@ -13,6 +13,7 @@ import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.block.PipeBlock;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.ArrayList;
 import java.util.HashMap;

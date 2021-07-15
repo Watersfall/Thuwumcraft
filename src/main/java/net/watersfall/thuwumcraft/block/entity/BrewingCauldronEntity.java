@@ -9,6 +9,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 
