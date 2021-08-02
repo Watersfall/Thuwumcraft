@@ -26,7 +26,7 @@ public class PlayerResearchAbilityImpl implements PlayerResearchAbility
 		this.research = new HashSet<>();
 		x = Float.MAX_VALUE;
 		y = Float.MAX_VALUE;
-		lastCategory = null;
+		lastCategory = new Identifier("empty");
 		scale = 0.7F;
 	}
 

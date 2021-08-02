@@ -4,7 +4,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.BlockView;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.block.*;
 import net.watersfall.thuwumcraft.block.sapling.OpenSaplingBlock;
@@ -41,6 +43,7 @@ public class ThuwumcraftBlocks
 	public static final SaplingBlock SILVERWOOD_SAPLING;
 	public static final Block ARCANE_STONE;
 	public static final SlabBlock ARCANE_STONE_SLAB;
+	public static final ArcaneSealBlock ARCANE_SEAL;
 
 	static
 	{
@@ -73,10 +76,16 @@ public class ThuwumcraftBlocks
 		SILVERWOOD_SAPLING = register(Thuwumcraft.getId("silverwood_sapling"), new OpenSaplingBlock(new SilverwoodSaplingGenerator(), FabricBlockSettings.copyOf(Blocks.OAK_SAPLING)));
 		ARCANE_STONE = register(Thuwumcraft.getId("arcane_stone"), new Block(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
 		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new SlabBlock(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
+		ARCANE_SEAL = register(Thuwumcraft.getId("arcane_seal"), new ArcaneSealBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().nonOpaque().emissiveLighting(ThuwumcraftBlocks::always).luminance(5)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)
 	{
 		return Registry.register(Registry.BLOCK, id, block);
+	}
+
+	private static boolean always(BlockState state, BlockView world, BlockPos pos)
+	{
+		return true;
 	}
 }

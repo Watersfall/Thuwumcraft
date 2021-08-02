@@ -1,0 +1,27 @@
+{
+	"variants": {
+		"facing=up": {
+			"model": "thuwumcraft:block/arcane_seal",
+			"x": 270
+		},
+		"facing=down": {
+			"model": "thuwumcraft:block/arcane_seal",
+			"x": 90
+		},
+		"facing=north": {
+			"model": "thuwumcraft:block/arcane_seal"
+		},
+		"facing=south": {
+			"model": "thuwumcraft:block/arcane_seal",
+			"y": 180
+		},
+		"facing=east": {
+			"model": "thuwumcraft:block/arcane_seal",
+			"y": 90
+		},
+		"facing=west": {
+			"model": "thuwumcraft:block/arcane_seal",
+			"y": 270
+		}
+	}
+}

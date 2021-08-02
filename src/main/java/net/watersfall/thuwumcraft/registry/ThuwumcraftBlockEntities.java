@@ -28,6 +28,7 @@ public class ThuwumcraftBlockEntities
 	public static final BlockEntityType<ArcaneLampEntity> ARCANE_LAMP_ENTITY;
 	public static final BlockEntityType<PortableHoleBlockEntity> PORTABLE_HOLE_ENTITY;
 	public static final BlockEntityType<WandWorkbenchEntity> WAND_WORKBENCH;
+	public static final BlockEntityType<ArcaneSealBlockEntity> ARCANE_SEAL;
 
 	static
 	{
@@ -49,6 +50,7 @@ public class ThuwumcraftBlockEntities
 		ARCANE_LAMP_ENTITY = register("arcane_lamp_entity", ArcaneLampEntity::new, ThuwumcraftBlocks.ARCANE_LAMP_BLOCK);
 		PORTABLE_HOLE_ENTITY = register("portable_hole", PortableHoleBlockEntity::new, ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK);
 		WAND_WORKBENCH = register("wand_workbench", WandWorkbenchEntity::new, ThuwumcraftBlocks.WAND_WORKBENCH);
+		ARCANE_SEAL = register("arcane_seal", ArcaneSealBlockEntity::new, ThuwumcraftBlocks.ARCANE_SEAL);
 	}
 
 	public static void register()

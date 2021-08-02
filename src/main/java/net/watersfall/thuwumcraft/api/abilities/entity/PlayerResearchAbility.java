@@ -66,6 +66,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		tag.putFloat("x", getX());
 		tag.putFloat("y", getY());
 		tag.putFloat("scale", getScale());
+		if(getLastCategory() != null)
 		tag.putString("category", getLastCategory().toString());
 		return tag;
 	}
@@ -85,7 +86,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		setX(tag.getFloat("x"));
 		setY(tag.getFloat("y"));
 		setScale(tag.getFloat("scale"));
-		setLastCategory(Identifier.tryParse("category"));
+		setLastCategory(Identifier.tryParse(tag.getString("category")));
 	}
 
 	@Override

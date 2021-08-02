@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -110,6 +111,8 @@ public class ThuwumcraftItems
 	public static final AlchemyBindingItem ALCHEMY_BINDING;
 	public static final BlockItem ARCANE_STONE;
 	public static final BlockItem ARCANE_STONE_SLAB;
+	public static final ArcaneRuneItem AIR_RUNE, WATER_RUNE, FIRE_RUNE, EARTH_RUNE, ORDER_RUNE, DISORDER_RUNE;
+	public static final BlockItem ARCANE_SEAL;
 	public static final List<Item> ITEMS;
 
 	static
@@ -201,11 +204,25 @@ public class ThuwumcraftItems
 		ALCHEMY_BINDING = register(Thuwumcraft.getId("alchemy_binding"), new AlchemyBindingItem(defaultSettings()));
 		ARCANE_STONE = register(Thuwumcraft.getId("arcane_stone"), new BlockItem(ThuwumcraftBlocks.ARCANE_STONE, defaultSettings()));
 		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new BlockItem(ThuwumcraftBlocks.ARCANE_STONE_SLAB, defaultSettings()));
+		AIR_RUNE = register(Thuwumcraft.getId("air_rune"), new ArcaneRuneItem(Aspects.AIR, defaultSettings().maxCount(1)));
+		EARTH_RUNE = register(Thuwumcraft.getId("earth_rune"), new ArcaneRuneItem(Aspects.EARTH, defaultSettings().maxCount(1)));
+		FIRE_RUNE = register(Thuwumcraft.getId("fire_rune"), new ArcaneRuneItem(Aspects.FIRE, defaultSettings().maxCount(1)));
+		WATER_RUNE = register(Thuwumcraft.getId("water_rune"), new ArcaneRuneItem(Aspects.WATER, defaultSettings().maxCount(1)));
+		ORDER_RUNE = register(Thuwumcraft.getId("order_rune"), new ArcaneRuneItem(Aspects.ORDER, defaultSettings().maxCount(1)));
+		DISORDER_RUNE = register(Thuwumcraft.getId("disorder_rune"), new ArcaneRuneItem(Aspects.DISORDER, defaultSettings().maxCount(1)));
+		ARCANE_SEAL = register(ThuwumcraftBlocks.ARCANE_SEAL, defaultSettings());
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
 	{
 		Registry.register(Registry.ITEM, id, item);
+		ITEMS.add(item);
+		return item;
+	}
+
+	private static BlockItem register(Block block, FabricItemSettings settings)
+	{
+		BlockItem item = Registry.register(Registry.ITEM, Registry.BLOCK.getId(block), new BlockItem(block, settings));
 		ITEMS.add(item);
 		return item;
 	}

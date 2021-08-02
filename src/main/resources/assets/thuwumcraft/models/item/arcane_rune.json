@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "thuwumcraft:item/arcane_rune",
+		"layer1": "thuwumcraft:item/arcane_rune_core"
+	}
+}

@@ -26,6 +26,8 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.block.BlockColorProvider;
+import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.option.KeyBinding;
@@ -75,8 +77,6 @@ import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.thuwumcraft.client.gui.*;
 import net.watersfall.thuwumcraft.client.gui.element.ItemElement;
@@ -90,18 +90,14 @@ import net.watersfall.thuwumcraft.client.renderer.block.*;
 import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.thuwumcraft.client.renderer.entity.WindEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 import net.watersfall.thuwumcraft.entity.WindEntity;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftFluids;
 import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
 import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import org.jetbrains.annotations.Nullable;
@@ -395,6 +391,19 @@ public class ThuwumcraftClient implements ClientModInitializer
 				},
 				ThuwumcraftItems.WAND_FOCUS
 		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> ((ItemColorProvider)stack.getItem()).getColor(stack, tintIndex),
+				ThuwumcraftItems.AIR_RUNE,
+				ThuwumcraftItems.WATER_RUNE,
+				ThuwumcraftItems.FIRE_RUNE,
+				ThuwumcraftItems.EARTH_RUNE,
+				ThuwumcraftItems.ORDER_RUNE,
+				ThuwumcraftItems.DISORDER_RUNE
+		);
+		ColorProviderRegistry.BLOCK.register(
+				((state, world, pos, tintIndex) -> ((BlockColorProvider)state.getBlock()).getColor(state, world, pos, tintIndex)),
+				ThuwumcraftBlocks.ARCANE_SEAL
+		);
 		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
 		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
 		setupFluidRendering(ThuwumcraftFluids.DIMENSIONAL_STILL, ThuwumcraftFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
@@ -406,6 +415,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ARCANE_SEAL, ArcaneSealRenderer::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
@@ -414,7 +424,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
-		BlockRenderLayerMap.INSTANCE.putBlock(ThuwumcraftBlocks.JAR_BLOCK, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+				ThuwumcraftBlocks.JAR_BLOCK,
+				ThuwumcraftBlocks.ARCANE_SEAL
+		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				ThuwumcraftBlocks.CUSTOM_SPAWNER,
 				ThuwumcraftBlocks.CHILD_BLOCK,
