@@ -39,13 +39,13 @@ public class ResearchElement extends ItemElement
 
 	public ResearchElement(ResearchBookScreen screen, Research research)
 	{
-		super(research.getStack().getMatchingStacksClient(), research.getX(), research.getY());
+		super(research.getStack().getMatchingStacks(), research.getX(), research.getY());
 		this.research = research;
 		this.screen = screen;
 		this.ability = screen.getAbility();
 		this.readableTooltip = Lists.newArrayList(research.getName());
 		this.hiddenTooltip = Lists.newArrayList(generateSecretText(research));
-		this.stacks = research.getStack().getMatchingStacksClient();
+		this.stacks = research.getStack().getMatchingStacks();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class ResearchElement extends ItemElement
 		{
 			if(research.isAvailable(ability))
 			{
-				MinecraftClient.getInstance().openScreen(new ResearchScreen(screen, research));
+				MinecraftClient.getInstance().setScreen(new ResearchScreen(screen, research));
 				MinecraftClient.getInstance().player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 				return true;
 			}

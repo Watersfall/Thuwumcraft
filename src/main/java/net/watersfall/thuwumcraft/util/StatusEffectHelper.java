@@ -116,7 +116,7 @@ public class StatusEffectHelper
 
 	public static void createItem(ItemStack stack, Set<StatusEffectInstance> effects)
 	{
-		NbtCompound tag = stack.getOrCreateTag();
+		NbtCompound tag = stack.getOrCreateNbt();
 		NbtList list = tag.getList(EFFECTS_LIST, NbtType.LIST);
 		list.clear();
 		effects.forEach((effect) -> {

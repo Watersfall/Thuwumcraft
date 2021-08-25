@@ -19,6 +19,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -70,15 +71,12 @@ import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyBlockTags;
 import net.watersfall.thuwumcraft.api.tag.AlchemyEntityTags;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
+import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftFluids;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.gui.ThaumatoriumHandler;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
+import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
@@ -199,6 +197,15 @@ public class Thuwumcraft implements ModInitializer
 				ability.setScale(scale);
 			});
 		});
+		ServerPlayNetworking.registerGlobalReceiver(getId("thaumatorium_click"), ((server, player, handler, buf, responseSender) -> {
+			Identifier recipeId = buf.readIdentifier();
+			server.execute(() -> {
+				if(player.currentScreenHandler instanceof ThaumatoriumHandler screen)
+				{
+					screen.getEntity().setCurrentRecipe(recipeId);
+				}
+			});
+		}));
 	}
 
 	/**
@@ -381,6 +388,23 @@ public class Thuwumcraft implements ModInitializer
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			return (AspectContainer)entity;
 		}, ThuwumcraftBlockEntities.ESSENTIA_REFINERY);
+		AspectContainer.API.registerForBlocks((world, pos, state, blockEntity, direction) -> {
+			if(direction != Direction.UP && direction != Direction.DOWN && direction != state.get(ThaumatoriumBlock.FACING))
+			{
+				if(state.get(ThaumatoriumBlock.HALF) == DoubleBlockHalf.UPPER)
+				{
+					if(world.getBlockEntity(pos.down()) instanceof AspectContainer inventory)
+					{
+						return inventory;
+					}
+				}
+				else if(blockEntity instanceof AspectContainer inventory)
+				{
+					return inventory;
+				}
+			}
+			return null;
+		}, ThuwumcraftBlocks.THAUMATORIUM);
 	}
 
 	/**

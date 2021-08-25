@@ -44,9 +44,9 @@ public class SpecialAxeItem extends AxeItem implements BeforeActions
 	@Override
 	public void onCraft(ItemStack stack, World world, PlayerEntity player)
 	{
-		if(stack.getTag() != null && stack.getTag().contains("RepairCost"))
+		if(stack.getNbt() != null && stack.getNbt().contains("RepairCost"))
 		{
-			stack.getTag().putInt("RepairCost", 0);
+			stack.getNbt().putInt("RepairCost", 0);
 		}
 	}
 }

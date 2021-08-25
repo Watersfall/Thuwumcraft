@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"facing=south,half=upper": {
+			"model": "thuwumcraft:block/thaumatorium_top",
+			"y": 180
+		},
+		"facing=north,half=upper": {
+			"model": "thuwumcraft:block/thaumatorium_top"
+		},
+		"facing=east,half=upper": {
+			"model": "thuwumcraft:block/thaumatorium_top",
+			"y": 90
+		},
+		"facing=west,half=upper": {
+			"model": "thuwumcraft:block/thaumatorium_top",
+			"y": 270
+		},
+		"facing=south,half=lower": {
+			"model": "thuwumcraft:block/thaumatorium_bottom",
+			"y": 180
+		},
+		"facing=north,half=lower": {
+			"model": "thuwumcraft:block/thaumatorium_bottom"
+		},
+		"facing=east,half=lower": {
+			"model": "thuwumcraft:block/thaumatorium_bottom",
+			"y": 90
+		},
+		"facing=west,half=lower": {
+			"model": "thuwumcraft:block/thaumatorium_bottom",
+			"y": 270
+		}
+	}
+}

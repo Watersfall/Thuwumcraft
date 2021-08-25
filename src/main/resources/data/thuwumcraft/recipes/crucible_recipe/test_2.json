@@ -1,0 +1,20 @@
+{
+	"type": "thuwumcraft:crucible_recipe",
+	"catalyst": {
+		"item": "minecraft:iron_ingot"
+	},
+	"aspects": [
+		{
+			"aspect": "thuwumcraft:fire",
+			"count": 10
+		},
+		{
+			"aspect": "thuwumcraft:earth",
+			"count": 20
+		}
+	],
+	"output": "minecraft:diamond",
+	"research": [
+		"thuwumcraft:test_research_6"
+	]
+}

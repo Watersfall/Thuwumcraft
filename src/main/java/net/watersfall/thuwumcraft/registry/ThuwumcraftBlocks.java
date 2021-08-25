@@ -44,6 +44,7 @@ public class ThuwumcraftBlocks
 	public static final Block ARCANE_STONE;
 	public static final SlabBlock ARCANE_STONE_SLAB;
 	public static final ArcaneSealBlock ARCANE_SEAL;
+	public static final ThaumatoriumBlock THAUMATORIUM;
 
 	static
 	{
@@ -77,11 +78,17 @@ public class ThuwumcraftBlocks
 		ARCANE_STONE = register(Thuwumcraft.getId("arcane_stone"), new Block(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
 		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new SlabBlock(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
 		ARCANE_SEAL = register(Thuwumcraft.getId("arcane_seal"), new ArcaneSealBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().nonOpaque().emissiveLighting(ThuwumcraftBlocks::always).luminance(5)));
+		THAUMATORIUM = register("thaumatorium", new ThaumatoriumBlock(FabricBlockSettings.of(Material.METAL)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)
 	{
 		return Registry.register(Registry.BLOCK, id, block);
+	}
+
+	private static <T extends Block> T register(String id, T block)
+	{
+		return Registry.register(Registry.BLOCK, Thuwumcraft.getId(id), block);
 	}
 
 	private static boolean always(BlockState state, BlockView world, BlockPos pos)

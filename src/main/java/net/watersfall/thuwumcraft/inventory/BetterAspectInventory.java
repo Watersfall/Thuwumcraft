@@ -1,7 +1,10 @@
 package net.watersfall.thuwumcraft.inventory;
 
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.api.aspect.Aspects;
 
 import java.util.Map;
 
@@ -51,5 +54,30 @@ public interface BetterAspectInventory
 			current.decrement(count);
 			return new AspectStack(aspect, count);
 		}
+	}
+
+	public static void write(Map<Aspect, AspectStack> map, NbtCompound nbt)
+	{
+		NbtCompound list = new NbtCompound();
+		map.forEach((key, value) -> {
+			list.putInt(key.getId().toString(), value.getCount());
+		});
+		nbt.put("aspects", list);
+	}
+
+	public static void read(Map<Aspect, AspectStack> map, NbtCompound nbt)
+	{
+		NbtCompound list = nbt.getCompound("aspects");
+		list.getKeys().forEach(id -> {
+			Aspect aspect = Aspects.getAspectById(Identifier.tryParse(id));
+			if(aspect == null)
+			{
+				System.out.println("Null aspect with id: " + id + " found in inventory, skipping...");
+			}
+			else
+			{
+				map.put(aspect, new AspectStack(aspect, list.getInt(id)));
+			}
+		});
 	}
 }

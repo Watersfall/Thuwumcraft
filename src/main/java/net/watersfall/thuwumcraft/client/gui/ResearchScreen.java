@@ -70,12 +70,12 @@ public class ResearchScreen extends Screen
 		int i;
 		for(i = 0; i < this.research.getRequiredItems().size(); i++)
 		{
-			this.addDrawableChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, false));
+			this.addDrawableChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 195, false));
 		}
 		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
 		for(i = 0; i < this.research.getConsumedItems().size(); i++)
 		{
-			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacksClient(), startX + i * 20, this.y + 195, true));
+			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 195, true));
 		}
 		this.addDrawableChild(researchButton);
 	}
@@ -160,7 +160,7 @@ public class ResearchScreen extends Screen
 	@Override
 	public void onClose()
 	{
-		this.client.openScreen(parent);
+		this.client.setScreen(parent);
 	}
 
 	@Override

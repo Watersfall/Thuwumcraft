@@ -34,13 +34,13 @@ import java.util.Optional;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 {
-	@Shadow public abstract NbtCompound getOrCreateTag();
+	@Shadow public abstract NbtCompound getOrCreateNbt();
 
-	@Shadow private NbtCompound tag;
+	@Shadow private NbtCompound nbt;
 
-	@Shadow @Nullable public abstract NbtCompound getTag();
+	@Shadow @Nullable public abstract NbtCompound getNbt();
 
-	@Shadow public abstract NbtCompound getOrCreateSubTag(String key);
+	@Shadow public abstract NbtCompound getOrCreateSubNbt(String key);
 
 	private final Map<Identifier, Ability<ItemStack>> abilities = new HashMap<>();
 
@@ -71,7 +71,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Inject(method = "<init>(Lnet/minecraft/nbt/NbtCompound;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;postProcessNbt(Lnet/minecraft/nbt/NbtCompound;)V"))
 	public void  thuwumcraft$addData(NbtCompound tag, CallbackInfo info)
 	{
-		this.fromNbt(this.tag);
+		this.fromNbt(this.nbt);
 	}
 
 	@Inject(method = "writeNbt", at = @At(value = "RETURN"))
@@ -92,7 +92,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	@Override
 	public void addAbility(Ability<ItemStack> ability)
 	{
-		NbtCompound tag = this.getOrCreateSubTag("thuwumcraft:abilities");
+		NbtCompound tag = this.getOrCreateSubNbt("thuwumcraft:abilities");
 		tag.put(ability.getId().toString(), ability.toNbt(new NbtCompound(), (ItemStack)(Object)this));
 		this.abilities.put(ability.getId(), ability);
 	}
@@ -107,7 +107,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 	public void removeAbility(Identifier id)
 	{
 		this.abilities.remove(id);
-		this.getOrCreateSubTag("thuwumcraft:abilities").remove(id.toString());
+		this.getOrCreateSubNbt("thuwumcraft:abilities").remove(id.toString());
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		this.copy(to, true);
 	}
 
-	@Inject(method = "setTag", at = @At("TAIL"))
+	@Inject(method = "setNbt", at = @At("TAIL"))
 	public void thuwumcraft$setTag(NbtCompound tag, CallbackInfo info)
 	{
 		this.abilities.clear();
@@ -152,7 +152,7 @@ public abstract class ItemStackMixin implements AbilityProvider<ItemStack>
 		});
 		if(!this.abilities.isEmpty())
 		{
-			to.getOrCreateTag().put("thuwumcraft:abilities", provider.toNbt(new NbtCompound()));
+			to.getOrCreateNbt().put("thuwumcraft:abilities", provider.toNbt(new NbtCompound()));
 		}
 	}
 

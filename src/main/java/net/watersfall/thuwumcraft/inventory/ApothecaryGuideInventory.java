@@ -15,7 +15,7 @@ public class ApothecaryGuideInventory implements Inventory
 	public ApothecaryGuideInventory(ItemStack stack)
 	{
 		this.stack = stack;
-		NbtCompound tag = stack.getSubTag("Items");
+		NbtCompound tag = stack.getSubNbt("Items");
 
 		if (tag != null) {
 			Inventories.readNbt(tag, contents);
@@ -109,7 +109,7 @@ public class ApothecaryGuideInventory implements Inventory
 	@Override
 	public void markDirty()
 	{
-		NbtCompound tag = stack.getOrCreateSubTag("Items");
+		NbtCompound tag = stack.getOrCreateSubNbt("Items");
 		Inventories.writeNbt(tag, contents);
 	}
 }

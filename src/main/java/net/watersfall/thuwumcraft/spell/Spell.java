@@ -2,7 +2,6 @@ package net.watersfall.thuwumcraft.spell;
 
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-
 import java.util.Collection;
 import java.util.HashMap;
 

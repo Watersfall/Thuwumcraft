@@ -156,7 +156,7 @@ public class CustomMobSpawnerLogic
 
 	public static List<Text> toTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context)
 	{
-		NbtCompound tag = stack.getTag();
+		NbtCompound tag = stack.getNbt();
 		if(tag == null)
 		{
 			return tooltip;

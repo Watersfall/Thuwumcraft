@@ -113,6 +113,7 @@ public class ThuwumcraftItems
 	public static final BlockItem ARCANE_STONE_SLAB;
 	public static final ArcaneRuneItem AIR_RUNE, WATER_RUNE, FIRE_RUNE, EARTH_RUNE, ORDER_RUNE, DISORDER_RUNE;
 	public static final BlockItem ARCANE_SEAL;
+	public static final BlockItem THAUMATORIUM;
 	public static final List<Item> ITEMS;
 
 	static
@@ -210,6 +211,7 @@ public class ThuwumcraftItems
 		WATER_RUNE = register(Thuwumcraft.getId("water_rune"), new ArcaneRuneItem(Aspects.WATER, defaultSettings().maxCount(1)));
 		ORDER_RUNE = register(Thuwumcraft.getId("order_rune"), new ArcaneRuneItem(Aspects.ORDER, defaultSettings().maxCount(1)));
 		DISORDER_RUNE = register(Thuwumcraft.getId("disorder_rune"), new ArcaneRuneItem(Aspects.DISORDER, defaultSettings().maxCount(1)));
+		THAUMATORIUM = register(ThuwumcraftBlocks.THAUMATORIUM, defaultSettings());
 		ARCANE_SEAL = register(ThuwumcraftBlocks.ARCANE_SEAL, defaultSettings());
 	}
 

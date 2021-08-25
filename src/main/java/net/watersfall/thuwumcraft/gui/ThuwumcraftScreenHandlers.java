@@ -15,6 +15,7 @@ public class ThuwumcraftScreenHandlers
 	public static final ScreenHandlerType<PotionSprayerHandler> POTION_SPRAYER_HANDLER;
 	public static final ScreenHandlerType<EssentiaSmelteryHandler> ESSENTIA_SMELTERY_HANDLER;
 	public static final ScreenHandlerType<WandWorkbenchHandler> WAND_WORKBENCH;
+	public static final ScreenHandlerType<ThaumatoriumHandler> THAUMATORIUM;
 
 	static
 	{
@@ -26,5 +27,6 @@ public class ThuwumcraftScreenHandlers
 		POTION_SPRAYER_HANDLER = ScreenHandlerRegistry.registerSimple(getId("potion_sprayer_handler"), PotionSprayerHandler::new);
 		ESSENTIA_SMELTERY_HANDLER = ScreenHandlerRegistry.registerSimple(getId("essentia_smeltery_handler"), EssentiaSmelteryHandler::new);
 		WAND_WORKBENCH = ScreenHandlerRegistry.registerSimple(getId("wand_workbench"), WandWorkbenchHandler::new);
+		THAUMATORIUM = ScreenHandlerRegistry.registerExtended(getId("thaumatorium"), ThaumatoriumHandler::new);
 	}
 }

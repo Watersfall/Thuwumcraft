@@ -72,7 +72,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.ADD_EFFECTS)
 			{
 				StatusEffectHelper.createItem(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
-				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
+				stack.getNbt().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
 			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_POTION)
 			{
@@ -88,7 +88,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 			{
 				stack = recipe.getOutput().copy();
 				PotionUtil.setCustomPotionEffects(stack, StatusEffectHelper.getEffects(inventory, world.getRecipeManager(), world));
-				stack.getTag().putInt(StatusEffectHelper.USES, recipe.getUses());
+				stack.getNbt().putInt(StatusEffectHelper.USES, recipe.getUses());
 			}
 			else if(recipe.getCraftingAction() == CauldronIngredientRecipe.CraftingAction.CREATE_BINDING)
 			{

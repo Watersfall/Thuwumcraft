@@ -131,7 +131,7 @@ public class ResearchTab extends Screen
 		this.parent.childOpen = false;
 		if(researchButtonOriginalState)
 			this.parent.getResearchButton().enable();
-		this.client.openScreen(parent);
+		this.client.setScreen(parent);
 	}
 
 	@Override

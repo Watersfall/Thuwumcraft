@@ -37,7 +37,7 @@ public class BrewingCauldronEntityRenderer extends AbstractCauldronRenderer<Brew
 		}
 		else
 		{
-			SPRITE_CACHE.put(item, MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getSprite());
+			SPRITE_CACHE.put(item, MinecraftClient.getInstance().getItemRenderer().getModels().getModel(item).getParticleSprite());
 		}
 		return SPRITE_CACHE.get(item);
 	}
@@ -90,7 +90,7 @@ public class BrewingCauldronEntityRenderer extends AbstractCauldronRenderer<Brew
 					entity.getContents().forEach((stack -> {
 						if(!stack.isEmpty())
 						{
-							Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(stack.getItem()).getSprite();
+							Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(stack.getItem()).getParticleSprite();
 							RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360, false);
 							if(stack.getCount() > 1)
 							{

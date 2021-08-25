@@ -122,7 +122,7 @@ public class AspectCraftingOutputSlot extends Slot
 				{
 					this.inventory.setStack(i, remainingStack);
 				}
-				else if(ItemStack.areItemsEqualIgnoreDamage(currentStack, remainingStack) && ItemStack.areTagsEqual(currentStack, remainingStack))
+				else if(ItemStack.areItemsEqualIgnoreDamage(currentStack, remainingStack) && ItemStack.areNbtEqual(currentStack, remainingStack))
 				{
 					remainingStack.increment(currentStack.getCount());
 					this.inventory.setStack(i, remainingStack);

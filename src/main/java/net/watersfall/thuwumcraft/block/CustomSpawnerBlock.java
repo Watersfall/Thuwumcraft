@@ -25,12 +25,12 @@ public class CustomSpawnerBlock extends SpawnerBlock
 	public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack)
 	{
 		super.onPlaced(world, pos, state, entity, stack);
-		if(stack.getTag() != null)
+		if(stack.getNbt() != null)
 		{
 			CustomSpawnerEntity spawner = (CustomSpawnerEntity)world.getBlockEntity(pos);
 			if(spawner != null)
 			{
-				spawner.getLogic().readNbt(world, pos, stack.getTag());
+				spawner.getLogic().readNbt(world, pos, stack.getNbt());
 			}
 		}
 	}

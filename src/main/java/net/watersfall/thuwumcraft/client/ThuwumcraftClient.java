@@ -122,9 +122,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 	private static void registerEvents()
 	{
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
-			if(stack.getTag() != null && !stack.getTag().isEmpty())
+			if(stack.getNbt() != null && !stack.getNbt().isEmpty())
 			{
-				NbtCompound tag = stack.getTag();
+				NbtCompound tag = stack.getNbt();
 				if(tag.contains(StatusEffectHelper.EFFECTS_LIST))
 				{
 					NbtList list = tag.getList(StatusEffectHelper.EFFECTS_LIST, NbtType.COMPOUND);
@@ -300,7 +300,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 				ItemStack main = client.player.getMainHandStack();
 				if(!wandFocusKeyPressed && main.getItem() == ThuwumcraftItems.WAND)
 				{
-					client.openScreen(new FocusChangeScreen(main));
+					client.setScreen(new FocusChangeScreen(main));
 					wandFocusKeyPressed = true;
 				}
 			}
@@ -424,6 +424,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.POTION_SPRAYER_HANDLER, PotionSprayerScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.THAUMATORIUM, ThaumatoriumScreen::new);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
 				ThuwumcraftBlocks.JAR_BLOCK,
 				ThuwumcraftBlocks.ARCANE_SEAL
@@ -568,7 +569,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 					{
 						if(recipeX < recipe1.getWidth() && recipeY < recipe1.getHeight())
 						{
-							items[o] = new ItemElement(recipe.getIngredients().get(input).getMatchingStacksClient(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
+							items[o] = new ItemElement(recipe.getIngredients().get(input).getMatchingStacks(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
 							input++;
 						}
 						else
@@ -583,7 +584,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			{
 				for(int o = 0; o < recipe.getIngredients().size(); o++)
 				{
-					items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
+					items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacks(), offsetX + (o % 3) * 32, offsetY + (o / 3) * 32);
 				}
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, x + 88, y + 32);
@@ -593,14 +594,14 @@ public class ThuwumcraftClient implements ClientModInitializer
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
 			Point origin = new Point(x + width / 2 - 8, y + height / 2 - 12);
-			items[0] = new ItemElement(recipe.getIngredients().get(0).getMatchingStacksClient(), origin.x, origin.y);
+			items[0] = new ItemElement(recipe.getIngredients().get(0).getMatchingStacks(), origin.x, origin.y);
 			int total = recipe.getIngredients().size();
 			for(int o = 1; o < total; o++)
 			{
 				double angle = Math.PI * 2  / (total - 1) * o;
 				int circleX = origin.x + (int)(40 * Math.cos(angle));
 				int circleY = origin.y + (int)(40 * Math.sin(angle));
-				items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacksClient(), circleX, circleY);
+				items[o] = new ItemElement(recipe.getIngredients().get(o).getMatchingStacks(), circleX, circleY);
 			}
 			int startX = x + width / 2 - (recipe.getAspects().size() * 20) / 2;
 			if(!recipe.getAspects().isEmpty())
@@ -619,11 +620,11 @@ public class ThuwumcraftClient implements ClientModInitializer
 			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
 			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];
 			int offsetX = x + (width / 2) - 50;
-			items[0] = new ItemElement(recipe.getCatalyst().getMatchingStacksClient(), offsetX - 19, y + 34);
+			items[0] = new ItemElement(recipe.getCatalyst().getMatchingStacks(), offsetX - 19, y + 34);
 			int size = recipe.getInputs().size();
 			for(int i = 1; i < items.length - 1; i++)
 			{
-				items[i] = new ItemElement(recipe.getInputs().get(i - 1).getMatchingStacksClient(), offsetX + i * 24 - (i + size * 12) + 32, y + 128);
+				items[i] = new ItemElement(recipe.getInputs().get(i - 1).getMatchingStacks(), offsetX + i * 24 - (i + size * 12) + 32, y + 128);
 			}
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 42, y + 24);
 			return new RecipeElement(items, background);

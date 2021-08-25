@@ -109,7 +109,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 		this.aspects = aspects;
 		this.nbt = nbt;
 		this.nbtReplace = nbtReplace;
-		this.output.setTag(nbt);
+		this.output.setNbt(nbt);
 	}
 
 	@Override
@@ -155,17 +155,17 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 	public ItemStack craft(PedestalEntity inv)
 	{
 		ItemStack stack = this.output.copy();
-		stack.getOrCreateTag();
+		stack.getOrCreateNbt();
 		if(nbt != null)
 		{
 			if(nbtReplace)
 			{
-				stack.setTag(nbt);
+				stack.setNbt(nbt);
 			}
 			else
 			{
-				inv.getStack().getOrCreateTag().copyFrom(nbt);
-				stack.setTag(inv.getStack().getTag());
+				inv.getStack().getOrCreateNbt().copyFrom(nbt);
+				stack.setNbt(inv.getStack().getNbt());
 			}
 		}
 		inv.setStack(stack);
