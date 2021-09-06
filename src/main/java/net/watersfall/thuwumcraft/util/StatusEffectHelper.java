@@ -8,7 +8,7 @@ import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -139,7 +139,7 @@ public class StatusEffectHelper
 				.append("(")
 				.append(StatusEffectUtil.durationToString(instance, 1))
 				.append(")");
-		if(instance.getEffectType().getType() == StatusEffectType.HARMFUL)
+		if(instance.getEffectType().getCategory() == StatusEffectCategory.HARMFUL)
 		{
 			text.formatted(Formatting.RED);
 		}

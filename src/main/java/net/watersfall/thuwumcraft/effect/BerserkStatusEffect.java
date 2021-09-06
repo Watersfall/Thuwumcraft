@@ -4,13 +4,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class BerserkStatusEffect extends SpecialStatusEffect
 {
 	public BerserkStatusEffect()
 	{
-		super(StatusEffectType.BENEFICIAL, 0xff9999);
+		super(StatusEffectCategory.BENEFICIAL, 0xff9999);
 	}
 
 	@Override
