@@ -19,10 +19,17 @@ public interface MultiTooltipComponent
 	class Registry
 	{
 		private final HashMap<Item, List<Function<ItemStack, TooltipComponent>>> components;
+		private final HashMap<Item, List<Function<ItemStack, TooltipComponent>>> reloadRemovedComponents;
 
 		private Registry()
 		{
 			components = new HashMap<>();
+			reloadRemovedComponents = new HashMap<>();
+		}
+
+		public void reload()
+		{
+			reloadRemovedComponents.clear();
 		}
 
 		public void register(Item item, Function<ItemStack, TooltipComponent> component)
@@ -39,9 +46,32 @@ public interface MultiTooltipComponent
 			}
 		}
 
+		public void registerReloadRemoved(Item item, Function<ItemStack, TooltipComponent> component)
+		{
+			if(reloadRemovedComponents.containsKey(item))
+			{
+				reloadRemovedComponents.get(item).add(component);
+			}
+			else
+			{
+				List<Function<ItemStack, TooltipComponent>> list = new ArrayList<>();
+				list.add(component);
+				reloadRemovedComponents.put(item, list);
+			}
+		}
+
 		public List<Function<ItemStack, TooltipComponent>> get(Item item)
 		{
-			return components.get(item);
+			List<Function<ItemStack, TooltipComponent>> list = new ArrayList<>();
+			if(components.containsKey(item))
+			{
+				list.addAll(components.get(item));
+			}
+			if(reloadRemovedComponents.containsKey(item))
+			{
+				list.addAll(reloadRemovedComponents.get(item));
+			}
+			return list;
 		}
 	}
 }

@@ -42,7 +42,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -71,7 +70,6 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
-import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
 import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
@@ -106,6 +104,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -312,6 +311,17 @@ public class ThuwumcraftClient implements ClientModInitializer
 		}
 	}
 
+	public static void registerAspectTooltips()
+	{
+		RecipeManager manager = MinecraftClient.getInstance().getNetworkHandler().getRecipeManager();
+		List<AspectIngredient> recipes = manager.listAllOfType(ThuwumcraftRecipes.ASPECT_INGREDIENTS);
+		recipes.forEach(recipe -> {
+			MultiTooltipComponent.REGISTRY.registerReloadRemoved(recipe.getInput(), (stack) -> {
+				return new AspectTooltipComponent(new AspectTooltipData(recipe.getAspects()));
+			});
+		});
+	}
+
 	@Override
 	public void onInitializeClient()
 	{
@@ -474,18 +484,6 @@ public class ThuwumcraftClient implements ClientModInitializer
 				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.getVis()), 0, 0, -1);
 			});
 		});
-		for(Item item : Registry.ITEM)
-		{
-			MultiTooltipComponent.REGISTRY.register(item, (stack) -> {
-				RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
-				Optional<AspectIngredient> ingredientOptional = manager.getFirstMatch(ThuwumcraftRecipes.ASPECT_INGREDIENTS, new AspectInventory.Impl(stack), MinecraftClient.getInstance().world);
-				if(ingredientOptional.isPresent())
-				{
-					return new AspectTooltipComponent(new AspectTooltipData(ingredientOptional.get().getAspects()));
-				}
-				return null;
-			});
-		}
 		registerEvents();
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
@@ -574,6 +572,14 @@ public class ThuwumcraftClient implements ClientModInitializer
 				client.world.addEntity(id, entity);
 			});
 		});
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("server_reload_packet"), ((client, handler, buf, responseSender) -> {
+			boolean success = buf.readBoolean();
+			if(success)
+			{
+				MultiTooltipComponent.REGISTRY.reload();
+				registerAspectTooltips();
+			}
+		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];

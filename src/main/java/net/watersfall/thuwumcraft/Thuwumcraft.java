@@ -229,6 +229,11 @@ public class Thuwumcraft implements ModInitializer
 			{
 				setIngredientTag(Tag.of(getAllIngredients(server)));
 			}
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeBoolean(success);
+			server.getPlayerManager().getPlayerList().forEach(player -> {
+				ServerPlayNetworking.send(player, Thuwumcraft.getId("server_reload_packet"), buf);
+			});
 		});
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
 		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {

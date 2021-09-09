@@ -33,6 +33,11 @@ public class AspectIngredient implements Recipe<AspectInventory>
 		this.aspects = aspects;
 	}
 
+	public Item getInput()
+	{
+		return input;
+	}
+
 	@Override
 	public boolean matches(AspectInventory inv, World world)
 	{
