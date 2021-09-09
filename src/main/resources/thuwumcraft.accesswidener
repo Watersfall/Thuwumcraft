@@ -9,4 +9,5 @@ accessible method net/minecraft/recipe/ShapedRecipe getPattern (Lcom/google/gson
 accessible method net/minecraft/recipe/ShapedRecipe getIngredients ([Ljava/lang/String;Ljava/util/Map;II)Lnet/minecraft/util/collection/DefaultedList;
 accessible method net/minecraft/recipe/ShapelessRecipe$Serializer getIngredients (Lcom/google/gson/JsonArray;)Lnet/minecraft/util/collection/DefaultedList;
 accessible method net/minecraft/world/gen/trunk/TrunkPlacerType <init> (Lcom/mojang/serialization/Codec;)V
+accessible method net/minecraft/client/gui/screen/Screen renderTooltipFromComponents (Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V
 accessible class net/minecraft/world/gen/feature/ConfiguredFeatures$Decorators

@@ -228,6 +228,10 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 			{
 				int extract = Math.min(stack.getCount(), optional.get().getCount());
 				optional.get().decrement(extract);
+				if(optional.get().isEmpty())
+				{
+					this.removeAspect(optional.get().getAspect());
+				}
 				this.sync();
 				return new AspectStack(stack.getAspect(), extract);
 			}

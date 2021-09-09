@@ -20,7 +20,6 @@ import net.watersfall.thuwumcraft.block.ElementalBlock;
 import net.watersfall.thuwumcraft.block.ElementalClusterBlock;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.item.DecorativeStaffBlockItem;
-import net.watersfall.thuwumcraft.item.GlassPhialItem;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.HashMap;
@@ -28,7 +27,6 @@ import java.util.HashMap;
 public class Aspects
 {
 	public static final HashMap<Identifier, Aspect> ASPECTS = new HashMap<>();
-	public static final HashMap<Aspect, GlassPhialItem> ASPECT_TO_PHIAL = new HashMap<>();
 	public static final HashMap<Aspect, Item> ASPECT_TO_CRYSTAL = new HashMap<>();
 	public static final HashMap<Aspect, ElementalClusterBlock> ASPECT_TO_CLUSTER = new HashMap<>();
 	public static final HashMap<Aspect, ElementalClusterBlock> ASPECT_TO_SMALL_CLUSTER = new HashMap<>();
@@ -50,16 +48,13 @@ public class Aspects
 	public static Aspect register(Identifier id, Aspect aspect)
 	{
 		ASPECTS.put(id, aspect);
-		GlassPhialItem item = new GlassPhialItem(aspect);
 		Item crystal = new CrystalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), aspect);
-		ASPECT_TO_PHIAL.put(aspect, item);
 		ASPECT_TO_CRYSTAL.put(aspect, crystal);
 		DecorativeStaffBlock staff = new DecorativeStaffBlock(aspect, FabricBlockSettings.copyOf(Blocks.TALL_GRASS).sounds(BlockSoundGroup.WOOD).luminance(15));
 		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
 		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
-		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "phial/" + aspect.getId().getPath()), item);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
 		Registry.register(Registry.BLOCK, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staff);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staffItem);
@@ -69,16 +64,6 @@ public class Aspects
 		}
 		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 		{
-			ColorProviderRegistry.ITEM.register(
-					((stack, tintIndex) -> {
-						if(tintIndex == 0)
-						{
-							return ((GlassPhialItem)stack.getItem()).getAspect().getColor();
-						}
-						return -1;
-					}),
-					item
-			);
 			ColorProviderRegistry.ITEM.register(
 					((stack, tintIndex) -> aspect.getColor()),
 					crystal

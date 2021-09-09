@@ -7,11 +7,11 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
-import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
 import net.watersfall.thuwumcraft.item.*;
@@ -142,7 +142,7 @@ public class ThuwumcraftItems
 		SPECIAL_BOW_ITEM = register(Thuwumcraft.getId("magic_bow"), new SpecialBowItem(defaultSettings().maxCount(1)));
 		SPECIAL_SHOVEL_ITEM = register(Thuwumcraft.getId("magic_shovel"), new SpecialShovelItem());
 		JAR_ITEM = register(Thuwumcraft.getId("jar"), new BlockItem(ThuwumcraftBlocks.JAR_BLOCK, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));
-		EMPTY_PHIAL_ITEM = register(Thuwumcraft.getId("phial/empty"), new GlassPhialItem(Aspect.EMPTY));
+		EMPTY_PHIAL_ITEM = register(Thuwumcraft.getId("phial"), new GlassPhialItem());
 		PHIAL_SHELF_ITEM = register(Thuwumcraft.getId("phial_shelf"), new BlockItem(ThuwumcraftBlocks.PHIAL_SHELF_BLOCK, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP)));
 		RESEARCH_BOOK_ITEM = register(Thuwumcraft.getId("research_book"), new ResearchBookItem(defaultSettings()));
 		ASPECT_PIPE_ITEM = register(Thuwumcraft.getId("aspect_pipe"), new BlockItem(ThuwumcraftBlocks.ASPECT_PIPE_BLOCK, defaultSettings()));
@@ -243,9 +243,9 @@ public class ThuwumcraftItems
 			}
 		});
 		ITEMS.forEach((item) -> {
-			if(!(item instanceof BlockItem) && item != EMPTY_PHIAL_ITEM && !(item instanceof AspectItem))
+			if(!(item instanceof BlockItem) && !(item instanceof AspectItem))
 			{
-				stack.add(item.getDefaultStack());
+				item.appendStacks(ALCHEMY_MOD_ITEM_GROUP, (DefaultedList<ItemStack>)stack);
 			}
 		});
 		Spell.REGISTRY.getSpells().forEach(spell -> {
@@ -276,9 +276,6 @@ public class ThuwumcraftItems
 			stack.add(item.getDefaultStack());
 		});
 		stack.add(EMPTY_PHIAL_ITEM.getDefaultStack());
-		Aspects.ASPECT_TO_PHIAL.values().forEach((item) -> {
-			stack.add(item.getDefaultStack());
-		});
 	}
 
 	private static ItemStack getDisplayIcon()

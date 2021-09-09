@@ -60,4 +60,12 @@ public class AspectStack
 	{
 		return new AspectStack(this.getAspect(), this.getCount());
 	}
+
+	public NbtCompound toNbt()
+	{
+		NbtCompound tag = new NbtCompound();
+		tag.putString("aspect", aspect.getId().toString());
+		tag.putInt("count", count);
+		return tag;
+	}
 }

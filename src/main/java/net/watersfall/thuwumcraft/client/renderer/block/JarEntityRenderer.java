@@ -36,91 +36,94 @@ public class JarEntityRenderer implements BlockEntityRenderer<JarEntity>
 	{
 		if(entity.aspectSize() > 0)
 		{
-			matrices.push();
 			AspectStack stack = entity.getAspects().values().stream().findFirst().get();
-			float scale = ((float)stack.getCount() / (float)entity.getMaxAspectCount()) / 1.5F;
-			matrices.scale(0.5F, scale, 0.5F);
-			matrices.translate(0.5F, 0.0625F, 0.5F);
-			RenderHelper.drawTexture(
-					vertexConsumers.getBuffer(RenderLayer.getSolid()),
-					matrices,
-					WATER_SPRITE,
-					stack.getAspect().getColor(),
-					light,
-					overlay
-			);
-			matrices.push();
-			float minU = WATER_SPRITE.getMinU();
-			float maxU = WATER_SPRITE.getMaxU();
-			float minV = WATER_SPRITE.getMinV();
-			float maxV = minV + (WATER_SPRITE.getMaxV() - minV) * scale;
-			matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90F));
-			matrices.translate(0F, -1F, 0F);
-			RenderHelper.drawTexture(
-					vertexConsumers.getBuffer(RenderLayer.getSolid()),
-					matrices,
-					WATER_SPRITE,
-					minU,
-					minV,
-					maxU,
-					maxV,
-					stack.getAspect().getColor(),
-					light,
-					overlay
-			);
-			matrices.pop();
-			matrices.push();
-			matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(270F));
-			matrices.translate(0F, 0F, -1F);
-			RenderHelper.drawTexture(
-					vertexConsumers.getBuffer(RenderLayer.getSolid()),
-					matrices,
-					WATER_SPRITE,
-					minU,
-					minV,
-					maxU,
-					maxV,
-					stack.getAspect().getColor(),
-					light,
-					overlay
-			);
-			matrices.pop();
-			matrices.push();
-			matrices.multiply(Vec3f.NEGATIVE_Z.getDegreesQuaternion(270F));
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
-			matrices.translate(-1F, -1F, 0F);
-			RenderHelper.drawTexture(
-					vertexConsumers.getBuffer(RenderLayer.getSolid()),
-					matrices,
-					WATER_SPRITE,
-					minU,
-					minV,
-					maxU,
-					maxV,
-					stack.getAspect().getColor(),
-					light,
-					overlay
-			);
-			matrices.pop();
-			matrices.push();
-			matrices.multiply(Vec3f.NEGATIVE_Z.getDegreesQuaternion(90F));
-			matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
-			matrices.translate(-1F, 0F, -1F);
-			RenderHelper.drawTexture(
-					vertexConsumers.getBuffer(RenderLayer.getSolid()),
-					matrices,
-					WATER_SPRITE,
-					minU,
-					minV,
-					maxU,
-					maxV,
-					stack.getAspect().getColor(),
-					light,
-					overlay
-			);
-			matrices.pop();
-			matrices.pop();
-			RenderHelper.renderAspects(entity.getAspects().values(), entity, matrices, vertexConsumers, textRenderer, dispatcher);
+			if(!stack.isEmpty())
+			{
+				matrices.push();
+				float scale = ((float)stack.getCount() / (float)entity.getMaxAspectCount()) / 1.5F;
+				matrices.scale(0.5F, scale, 0.5F);
+				matrices.translate(0.5F, 0.0625F, 0.5F);
+				RenderHelper.drawTexture(
+						vertexConsumers.getBuffer(RenderLayer.getSolid()),
+						matrices,
+						WATER_SPRITE,
+						stack.getAspect().getColor(),
+						light,
+						overlay
+				);
+				matrices.push();
+				float minU = WATER_SPRITE.getMinU();
+				float maxU = WATER_SPRITE.getMaxU();
+				float minV = WATER_SPRITE.getMinV();
+				float maxV = minV + (WATER_SPRITE.getMaxV() - minV) * scale;
+				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90F));
+				matrices.translate(0F, -1F, 0F);
+				RenderHelper.drawTexture(
+						vertexConsumers.getBuffer(RenderLayer.getSolid()),
+						matrices,
+						WATER_SPRITE,
+						minU,
+						minV,
+						maxU,
+						maxV,
+						stack.getAspect().getColor(),
+						light,
+						overlay
+				);
+				matrices.pop();
+				matrices.push();
+				matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(270F));
+				matrices.translate(0F, 0F, -1F);
+				RenderHelper.drawTexture(
+						vertexConsumers.getBuffer(RenderLayer.getSolid()),
+						matrices,
+						WATER_SPRITE,
+						minU,
+						minV,
+						maxU,
+						maxV,
+						stack.getAspect().getColor(),
+						light,
+						overlay
+				);
+				matrices.pop();
+				matrices.push();
+				matrices.multiply(Vec3f.NEGATIVE_Z.getDegreesQuaternion(270F));
+				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+				matrices.translate(-1F, -1F, 0F);
+				RenderHelper.drawTexture(
+						vertexConsumers.getBuffer(RenderLayer.getSolid()),
+						matrices,
+						WATER_SPRITE,
+						minU,
+						minV,
+						maxU,
+						maxV,
+						stack.getAspect().getColor(),
+						light,
+						overlay
+				);
+				matrices.pop();
+				matrices.push();
+				matrices.multiply(Vec3f.NEGATIVE_Z.getDegreesQuaternion(90F));
+				matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+				matrices.translate(-1F, 0F, -1F);
+				RenderHelper.drawTexture(
+						vertexConsumers.getBuffer(RenderLayer.getSolid()),
+						matrices,
+						WATER_SPRITE,
+						minU,
+						minV,
+						maxU,
+						maxV,
+						stack.getAspect().getColor(),
+						light,
+						overlay
+				);
+				matrices.pop();
+				matrices.pop();
+				RenderHelper.renderAspects(entity.getAspects().values(), entity, matrices, vertexConsumers, textRenderer, dispatcher);
+			}
 		}
 	}
 }

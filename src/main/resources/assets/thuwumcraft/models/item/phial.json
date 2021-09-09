@@ -1,0 +1,14 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "thuwumcraft:item/phial/empty"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"thuwumcraft:filled": 1
+			},
+			"model": "thuwumcraft:item/phial_filled"
+		}
+	]
+}

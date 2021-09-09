@@ -2,23 +2,19 @@ package net.watersfall.thuwumcraft.abilities.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.common.AspectStorageAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
-import net.watersfall.thuwumcraft.api.aspect.Aspects;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 {
-	private NbtCompound tag;
+	private AspectStack stack;
 
 	public PhialStorageAbility(AspectStack stack)
 	{
-		tag = new NbtCompound();
-		tag.putInt(stack.getAspect().getId().toString(), stack.getCount());
+		this.stack = stack;
 	}
 
 	public PhialStorageAbility(Aspect aspect)
@@ -33,27 +29,21 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 
 	public PhialStorageAbility(NbtCompound tag, ItemStack stack)
 	{
-		this.tag = tag;
-	}
-
-	@Override
-	public NbtCompound getTag()
-	{
-		return this.tag;
+		fromNbt(tag, stack);
 	}
 
 	@Override
 	public int getSize()
 	{
-		return this.tag.getSize();
+		return stack.getCount();
 	}
 
 	@Override
 	public AspectStack getAspect(Aspect aspect)
 	{
-		if(this.tag.contains(aspect.getId().toString()))
+		if(aspect == stack.getAspect())
 		{
-			return new AspectStack(aspect, this.tag.getInt(aspect.getId().toString()));
+			return stack;
 		}
 		return AspectStack.EMPTY;
 	}
@@ -75,39 +65,43 @@ public class PhialStorageAbility implements AspectStorageAbility<ItemStack>
 	@Override
 	public void setAspect(AspectStack stack)
 	{
-		this.tag.putInt(stack.getAspect().getId().toString(), stack.getCount());
+		this.stack = stack;
 	}
 
 	@Override
 	public void addAspect(AspectStack stack)
 	{
-		if(this.tag.contains(stack.getAspect().getId().toString()))
+		if(stack.getAspect() == this.stack.getAspect())
 		{
-			AspectStack stack1 = this.getAspect(stack.getAspect());
-			stack.increment(stack1.getCount());
+			this.stack.increment(stack.getCount());
 		}
-		this.setAspect(stack);
+		else
+		{
+			this.setAspect(stack);
+		}
 	}
 
 	@Override
 	public List<AspectStack> getAspects()
 	{
-		List<AspectStack> list = new ArrayList<>();
-		tag.getKeys().forEach((key) -> {
-			list.add(this.getAspect(Aspects.getAspectById(Identifier.tryParse(key))));
-		});
-		return list;
+		return List.of(stack);
 	}
 
 	@Override
 	public NbtCompound toNbt(NbtCompound tag, ItemStack t)
 	{
-		return this.tag;
+		return this.stack.toNbt();
 	}
 
 	@Override
 	public void fromNbt(NbtCompound tag, ItemStack t)
 	{
-		this.tag = tag;
+		this.stack = new AspectStack(tag);
+	}
+
+	@Override
+	public boolean isEmpty()
+	{
+		return stack.isEmpty();
 	}
 }

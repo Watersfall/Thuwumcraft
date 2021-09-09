@@ -63,6 +63,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
+import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
@@ -327,6 +328,15 @@ public class ThuwumcraftClient implements ClientModInitializer
 			}
 			return 0;
 		}));
+		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.EMPTY_PHIAL_ITEM, Thuwumcraft.getId("filled"), ((stack, world, entity, seed) -> {
+			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+			Optional<PhialStorageAbility> optional = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
+			if(optional.isPresent())
+			{
+				return 1;
+			}
+			return 0;
+		}));
 		ColorProviderRegistry.BLOCK.register(
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
 				ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK
@@ -404,6 +414,18 @@ public class ThuwumcraftClient implements ClientModInitializer
 				((state, world, pos, tintIndex) -> ((BlockColorProvider)state.getBlock()).getColor(state, world, pos, tintIndex)),
 				ThuwumcraftBlocks.ARCANE_SEAL
 		);
+		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
+			if(tintIndex == 0)
+			{
+				AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+				Optional<PhialStorageAbility> optional = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
+				if(optional.isPresent())
+				{
+					return optional.get().getAspects().get(0).getAspect().getColor();
+				}
+			}
+			return -1;
+		}), ThuwumcraftItems.EMPTY_PHIAL_ITEM);
 		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
 		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
 		setupFluidRendering(ThuwumcraftFluids.DIMENSIONAL_STILL, ThuwumcraftFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);

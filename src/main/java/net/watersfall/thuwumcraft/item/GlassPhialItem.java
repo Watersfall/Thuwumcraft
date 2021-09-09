@@ -6,16 +6,18 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
 import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.common.AspectStorageAbility;
-import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
@@ -28,13 +30,11 @@ import java.util.Optional;
 
 public class GlassPhialItem extends Item
 {
-	private final Aspect aspect;
-	private static final int MAX_COUNT = 64;
+	private static final int MAX_COUNT = 10;
 
-	public GlassPhialItem(Aspect aspect)
+	public GlassPhialItem()
 	{
 		super(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
-		this.aspect = aspect;
 	}
 
 	@Override
@@ -64,11 +64,15 @@ public class GlassPhialItem extends Item
 					{
 						player.dropItem(newStack, true);
 					}
+					if(ability.get().isEmpty())
+					{
+						provider.removeAbility(ability.get());
+					}
 				}
 				else if(original.getCount() != phialStack.getCount())
 				{
 					stack.decrement(1);
-					ItemStack newStack = Aspects.ASPECT_TO_PHIAL.get(phialStack.getAspect()).getDefaultStack();
+					ItemStack newStack = this.getDefaultStack();
 					AbilityProvider<ItemStack> provider2 = AbilityProvider.getProvider(newStack);
 					PhialStorageAbility ability2 = provider2.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class).get();
 					ability2.setAspect(phialStack);
@@ -81,14 +85,14 @@ public class GlassPhialItem extends Item
 			if(ability.isEmpty())
 			{
 				Aspects.ASPECTS.values().forEach((aspect -> {
-					AspectStack check = new AspectStack(aspect, 64);
+					AspectStack check = new AspectStack(aspect, MAX_COUNT);
 					if(!(check = container.extract(check)).isEmpty())
 					{
 						stack.decrement(1);
-						ItemStack newStack = new ItemStack(Aspects.ASPECT_TO_PHIAL.get(check.getAspect()), 1);
+						ItemStack newStack = this.getDefaultStack();
 						AbilityProvider<ItemStack> provider2 = AbilityProvider.getProvider(newStack);
-						PhialStorageAbility ability2 = provider2.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class).get();
-						ability2.setAspect(check);
+						PhialStorageAbility ability2 = new PhialStorageAbility(check);
+						provider2.addAbility(ability2);
 						if(!player.getInventory().insertStack(newStack))
 						{
 							player.dropItem(newStack, true);
@@ -101,22 +105,24 @@ public class GlassPhialItem extends Item
 		return ActionResult.PASS;
 	}
 
-	public Aspect getAspect()
-	{
-		return this.aspect;
-	}
-
 	@Override
-	public String getTranslationKey()
+	public Text getName(ItemStack stack)
 	{
-		if(this.aspect == Aspect.EMPTY)
+		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+		Optional<PhialStorageAbility> optional = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
+		if(optional.isPresent())
 		{
-			return "item.thuwumcraft.phial.empty";
+			AspectStack aspect = optional.get().getAspects().get(0);
+			if(aspect.isEmpty())
+			{
+				return new TranslatableText("item.thuwumcraft.phial.empty");
+			}
+			else
+			{
+				return new TranslatableText("item.thuwumcraft.phial.filled", new TranslatableText(aspect.getAspect().getTranslationKey()));
+			}
 		}
-		else
-		{
-			return "item.thuwumcraft.phial";
-		}
+		return super.getName(stack);
 	}
 
 	@Override
@@ -128,11 +134,28 @@ public class GlassPhialItem extends Item
 	@Override
 	public Optional<TooltipData> getTooltipData(ItemStack stack)
 	{
-		if(this.aspect != Aspect.EMPTY)
+		AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+		Optional<AspectStorageAbility> optional = provider.getAbility(AspectStorageAbility.ID, AspectStorageAbility.class);
+		if(optional.isPresent())
 		{
-			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
-			return Optional.of(new GlassPhialTooltipData((PhialStorageAbility) provider.getAbility(AspectStorageAbility.ID, AspectStorageAbility.class).get()));
+			return Optional.of(new GlassPhialTooltipData(optional.get()));
 		}
 		return super.getTooltipData(stack);
+	}
+
+	@Override
+	public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks)
+	{
+		super.appendStacks(group, stacks);
+		if(this.isIn(group))
+		{
+			Aspects.ASPECTS.values().forEach(aspect -> {
+				ItemStack stack = new ItemStack(this, 1);
+				AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
+				provider.addAbility(new PhialStorageAbility(aspect, MAX_COUNT));
+				stacks.add(stack);
+			});
+
+		}
 	}
 }
