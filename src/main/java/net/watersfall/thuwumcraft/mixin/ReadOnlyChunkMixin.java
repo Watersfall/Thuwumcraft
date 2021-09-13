@@ -24,7 +24,7 @@ public class ReadOnlyChunkMixin implements AbilityProvider<Chunk>
 	@Inject(method = "<init>", at = @At("TAIL"))
 	public void thuwumcraft$addAbilities(WorldChunk wrapped, CallbackInfo ci)
 	{
-		parentProvider = AbilityProvider.getProvider((Chunk)(Object)wrapped);
+		parentProvider = AbilityProvider.getProvider(wrapped);
 		parentProvider.addAbility(new VisAbilityImpl());
 	}
 
@@ -87,12 +87,6 @@ public class ReadOnlyChunkMixin implements AbilityProvider<Chunk>
 	public void fromPacket(PacketByteBuf buf)
 	{
 		parentProvider.fromPacket(buf);
-	}
-
-	@Override
-	public void sync(Chunk chunk)
-	{
-		parentProvider.sync(chunk);
 	}
 
 	@Override

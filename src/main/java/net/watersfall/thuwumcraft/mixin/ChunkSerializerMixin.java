@@ -7,9 +7,8 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.ChunkSerializer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ProtoChunk;
-import net.minecraft.world.chunk.ReadOnlyChunk;
 import net.minecraft.world.poi.PointOfInterestStorage;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.thuwumcraft.hooks.AbilityHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,15 +20,12 @@ public abstract class ChunkSerializerMixin
 	@Inject(method = "deserialize", at = @At(value = "RETURN", ordinal = 0))
 	private static void thuwumcraft$readAbilities(ServerWorld world, StructureManager structureManager, PointOfInterestStorage poiStorage, ChunkPos pos, NbtCompound tag, CallbackInfoReturnable<ProtoChunk> cir)
 	{
-		AbilityProvider.getProvider(cir.getReturnValue()).fromNbt(tag);
+		AbilityHooks.readChunkAbilities(cir, tag);
 	}
 
 	@Inject(method = "serialize", at = @At("RETURN"))
 	private static void thuwumcraft$writeAbilities(ServerWorld world, Chunk chunk, CallbackInfoReturnable<NbtCompound> cir)
 	{
-		if(!(chunk instanceof ProtoChunk) || (chunk instanceof ReadOnlyChunk))
-		{
-			AbilityProvider.getProvider(chunk).toNbt(cir.getReturnValue());
-		}
+		AbilityHooks.writeChunkAbilities(cir, chunk);
 	}
 }

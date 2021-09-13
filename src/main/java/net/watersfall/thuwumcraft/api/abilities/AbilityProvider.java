@@ -49,7 +49,22 @@ public interface AbilityProvider<T> extends Clearable
 
 	void tick(T t);
 
-	void sync(T t);
+	default Registry<T> getRegistry(T t)
+	{
+		if(t instanceof Entity)
+		{
+			return (Registry<T>)ENTITY_REGISTRY;
+		}
+		else if(t instanceof ItemStack)
+		{
+			return (Registry<T>)ITEM_REGISTRY;
+		}
+		else if(t instanceof Chunk)
+		{
+			return (Registry<T>)CHUNK_REGISTRY;
+		}
+		return null;
+	}
 
 	class Registry<T>
 	{

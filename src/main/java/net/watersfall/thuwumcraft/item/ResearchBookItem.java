@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.item;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -58,7 +59,8 @@ public class ResearchBookItem extends Item
 			@Override
 			public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf)
 			{
-				AbilityProvider.getProvider(player).getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent(ability -> {
+				AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
+				provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent(ability -> {
 					ability.toPacket(buf);
 				});
 			}

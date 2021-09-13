@@ -5,7 +5,7 @@
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
 		"AnvilScreenHandlerMixin", "CampfireBlockMixin", "ChunkSerializerMixin", "CraftingScreenHandlerMixin",
-		"EntityMixin", "FeatureMixin", "ItemMixin", "ItemStackMixin", "LakeFeatureMixin", "LivingEntityMixin",
+		"EntityMixin", "ItemMixin", "ItemStackMixin", "LakeFeatureMixin", "LivingEntityMixin",
 		"PlayerAdvancementTrackerMixin", "PlayerEntityMixin", "ReadOnlyChunkMixin", "ServerPlayerEntityMixin",
 		"ServerPlayerInteractionManagerMixin", "ServerWorldMixin", "WorldChunkMixin"
 	],

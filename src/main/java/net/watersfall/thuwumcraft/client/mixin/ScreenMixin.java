@@ -6,9 +6,7 @@ import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.watersfall.thuwumcraft.api.client.item.CustomTooltipDataComponent;
-import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
-import net.watersfall.thuwumcraft.client.util.ScreenHelper;
+import net.watersfall.thuwumcraft.client.hooks.ClientHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,25 +22,16 @@ public abstract class ScreenMixin
 	@Shadow public abstract List<Text> getTooltipFromItem(ItemStack stack);
 
 
-	@SuppressWarnings("UnresolvedMixinReference") //It exists, lambda method on line 141
+	@SuppressWarnings("UnresolvedMixinReference") //lambda method on line 180
 	@Inject(method = "method_32635", at = @At("HEAD"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void thuwumcraft$onComponentConstruct(List<TooltipComponent> list, TooltipData data, CallbackInfo info)
 	{
-		if (data instanceof CustomTooltipDataComponent)
-		{
-			list.add(((CustomTooltipDataComponent)data).getComponent());
-			info.cancel();
-		}
+		ClientHooks.screenCreateItemTooltipData(data, list, info);
 	}
 
 	@Inject(method = "renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/item/ItemStack;II)V", at = @At("HEAD"), cancellable = true)
 	public void thuwumcraft$renderTooltipFix(MatrixStack matrices, ItemStack stack, int x, int y, CallbackInfo info)
 	{
-		if(MultiTooltipComponent.REGISTRY.get(stack.getItem()) != null)
-		{
-			ScreenHelper.renderTooltip((Screen)(Object)this, matrices, this.getTooltipFromItem(stack), stack.getTooltipData(), stack, x, y);
-			info.cancel();
-		}
+		ClientHooks.screenRenderTooltip(stack, (Screen)(Object)this, this.getTooltipFromItem(stack), matrices, x, y,info);
 	}
-
 }

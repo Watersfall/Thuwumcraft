@@ -7,7 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.watersfall.thuwumcraft.api.item.BeforeActions;
+import net.watersfall.thuwumcraft.hooks.Hooks;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,11 +30,6 @@ public class ServerPlayerInteractionManagerMixin
 	)
 	public void thuwumcraft$beforeBreakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> info, BlockState state, BlockEntity blockEntity, Block block)
 	{
-		boolean check = ((BeforeActions)player.getMainHandStack().getItem()).beforeMine(player.getMainHandStack(), world, state, pos, player);
-		if(check)
-		{
-			info.setReturnValue(false);
-			info.cancel();
-		}
+		Hooks.playerOnBlockBroken(player, world, pos, info, state);
 	}
 }

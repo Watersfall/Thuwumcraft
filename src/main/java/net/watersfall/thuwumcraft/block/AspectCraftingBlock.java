@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -20,7 +19,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
 import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 import org.jetbrains.annotations.Nullable;
@@ -46,8 +44,6 @@ public class AspectCraftingBlock extends Block implements BlockEntityProvider
 	{
 		if(!world.isClient)
 		{
-			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
-			provider.sync(player);
 			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 		}
 		return ActionResult.success(world.isClient);
