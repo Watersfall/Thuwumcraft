@@ -4,9 +4,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.api.abilities.Ability;
-import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
+import net.watersfall.wet.api.abilities.Ability;
+import net.watersfall.wet.api.abilities.AbilityClientSerializable;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.List;
 

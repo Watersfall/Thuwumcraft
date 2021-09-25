@@ -2,7 +2,7 @@ package net.watersfall.thuwumcraft.api.abilities.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.api.abilities.Ability;
+import net.watersfall.wet.api.abilities.Ability;
 
 public interface BerserkerWeapon extends Ability<ItemStack>
 {

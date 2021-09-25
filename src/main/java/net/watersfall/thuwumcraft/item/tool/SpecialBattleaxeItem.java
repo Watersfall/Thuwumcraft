@@ -15,11 +15,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.BerserkerWeapon;
-import net.watersfall.thuwumcraft.api.item.BeforeActions;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
+import net.watersfall.wet.api.abilities.AbilityProvider;
+import net.watersfall.wet.api.item.BeforeActions;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

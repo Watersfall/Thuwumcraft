@@ -17,7 +17,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
@@ -25,6 +24,7 @@ import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
 import java.util.Comparator;

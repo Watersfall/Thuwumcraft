@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.item.BeforeActions;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.wet.api.item.BeforeActions;
 
 import java.util.ArrayList;
 

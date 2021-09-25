@@ -1,6 +1,6 @@
 package net.watersfall.thuwumcraft.api.abilities.common;
 
-import net.watersfall.thuwumcraft.api.abilities.Ability;
+import net.watersfall.wet.api.abilities.Ability;
 
 public interface RunedShieldAbility<T> extends Ability<T>
 {

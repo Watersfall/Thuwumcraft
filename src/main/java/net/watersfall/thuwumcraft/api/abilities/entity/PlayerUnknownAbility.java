@@ -14,12 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.Ability;
-import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.api.tag.AlchemyFluidTags;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
+import net.watersfall.wet.api.abilities.Ability;
+import net.watersfall.wet.api.abilities.AbilityClientSerializable;
 
 public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSerializable<Entity>
 {

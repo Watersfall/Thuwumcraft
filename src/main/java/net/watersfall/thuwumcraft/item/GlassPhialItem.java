@@ -16,13 +16,13 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.common.AspectStorageAbility;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.client.item.GlassPhialTooltipData;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

@@ -9,14 +9,14 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
 import net.watersfall.thuwumcraft.recipe.ResearchRequiredCraftingRecipe;
-import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.Optional;
 

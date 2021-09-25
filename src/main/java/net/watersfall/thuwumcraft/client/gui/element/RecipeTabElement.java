@@ -3,10 +3,10 @@ package net.watersfall.thuwumcraft.client.gui.element;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundCategory;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
 import net.watersfall.thuwumcraft.client.gui.ResearchTab;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class RecipeTabElement extends TabElement
 {

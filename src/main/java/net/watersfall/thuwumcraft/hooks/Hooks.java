@@ -38,14 +38,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
-import net.watersfall.thuwumcraft.api.item.BeforeActions;
 import net.watersfall.thuwumcraft.block.AbstractCauldronBlock;
 import net.watersfall.thuwumcraft.recipe.ResearchRequiredCraftingRecipe;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftAttributes;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -229,34 +228,12 @@ public class Hooks
 		return amount;
 	}
 
-	public static void livingEntityOnDamage(LivingEntity entity, DamageSource source, CallbackInfoReturnable<Boolean> info)
-	{
-		if(source.getAttacker() instanceof LivingEntity attacker)
-		{
-			if(((BeforeActions)entity.getMainHandStack().getItem()).beforeHit(entity.getMainHandStack(), entity, attacker))
-			{
-				info.setReturnValue(false);
-				info.cancel();
-			}
-		}
-	}
-
 	public static void serverPlayerOnAdvancementComplete(ServerPlayerEntity player, Advancement advancement)
 	{
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability -> {
 			ability.addAdvancement(advancement.getId());
 		}));
-	}
-
-	public static void playerOnBlockBroken(PlayerEntity player, World world, BlockPos pos, CallbackInfoReturnable<Boolean> info, BlockState state)
-	{
-		boolean check = ((BeforeActions)player.getMainHandStack().getItem()).beforeMine(player.getMainHandStack(), world, state, pos, player);
-		if(check)
-		{
-			info.setReturnValue(false);
-			info.cancel();
-		}
 	}
 
 	private static boolean test(ArrowEntity entity, LivingEntity living)

@@ -11,7 +11,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
 import net.watersfall.thuwumcraft.item.*;
@@ -22,6 +21,7 @@ import net.watersfall.thuwumcraft.item.tool.*;
 import net.watersfall.thuwumcraft.item.wand.*;
 import net.watersfall.thuwumcraft.spell.Spell;
 import net.watersfall.thuwumcraft.spell.SpellAction;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
 import java.util.List;

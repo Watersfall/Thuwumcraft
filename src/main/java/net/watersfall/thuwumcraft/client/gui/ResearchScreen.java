@@ -9,13 +9,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.client.gui.element.ItemRequirementElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchButton;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.List;
 

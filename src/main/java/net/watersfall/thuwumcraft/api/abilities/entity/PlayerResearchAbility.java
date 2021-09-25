@@ -7,9 +7,9 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.api.abilities.Ability;
-import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
 import net.watersfall.thuwumcraft.api.research.Research;
+import net.watersfall.wet.api.abilities.Ability;
+import net.watersfall.wet.api.abilities.AbilityClientSerializable;
 
 import java.util.Set;
 

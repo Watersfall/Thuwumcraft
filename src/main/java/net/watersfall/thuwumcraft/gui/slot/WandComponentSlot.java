@@ -3,13 +3,13 @@ package net.watersfall.thuwumcraft.gui.slot;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.item.wand.WandCapItem;
 import net.watersfall.thuwumcraft.item.wand.WandCapMaterial;
 import net.watersfall.thuwumcraft.item.wand.WandCoreItem;
 import net.watersfall.thuwumcraft.item.wand.WandCoreMaterial;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class WandComponentSlot extends Slot
 {

@@ -13,8 +13,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.item.BeforeActions;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.wet.api.item.BeforeActions;
 
 public class SpecialShovelItem extends ShovelItem implements BeforeActions
 {

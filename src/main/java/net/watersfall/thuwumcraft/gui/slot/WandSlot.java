@@ -4,9 +4,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.function.Supplier;
 

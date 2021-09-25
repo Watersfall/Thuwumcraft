@@ -11,13 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.client.ThuwumcraftClient;
 import net.watersfall.thuwumcraft.client.gui.element.RemoveWandFocusElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
 import net.watersfall.thuwumcraft.client.gui.element.WandFocusElement;
 import net.watersfall.thuwumcraft.item.wand.WandFocusItem;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.awt.*;
 import java.util.HashMap;

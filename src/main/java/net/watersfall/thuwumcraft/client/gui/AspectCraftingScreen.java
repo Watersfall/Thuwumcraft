@@ -10,11 +10,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
-import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
 import net.watersfall.thuwumcraft.gui.AspectCraftingHandler;
+import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 {

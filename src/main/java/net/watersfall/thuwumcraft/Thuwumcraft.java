@@ -25,6 +25,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
@@ -55,7 +56,6 @@ import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.abilities.item.*;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
@@ -74,6 +74,8 @@ import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.watersfall.thuwumcraft.gui.ThaumatoriumHandler;
+import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
+import net.watersfall.thuwumcraft.item.wand.WandItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.registry.*;
@@ -84,6 +86,8 @@ import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
 import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
 import net.watersfall.thuwumcraft.world.structure.ThuwumcraftStructurePieceTypes;
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
+import net.watersfall.wet.api.abilities.AbilityProvider;
+import net.watersfall.wet.api.event.AbilityCreateEvent;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -360,6 +364,33 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(StatusEffectItem.ID, StatusEffectItemImpl::new);
+		AbilityCreateEvent.CHUNK.register((world, pos, provider) -> {
+			provider.addAbility(new VisAbilityImpl());
+		});
+		AbilityCreateEvent.ITEM.register((item, provider) -> {
+			if(item.asItem() == Items.NETHERITE_CHESTPLATE)
+			{
+				provider.addAbility(new RunedShieldAbilityItem(10, 10 ,10));
+			}
+			else if(item instanceof WandItem)
+			{
+				provider.addAbility(new WandAbilityImpl());
+			}
+			else if(item instanceof SpecialBattleaxeItem)
+			{
+				provider.addAbility(new BerserkerWeaponImpl());
+			}
+		});
+		AbilityCreateEvent.ENTITY.register((type, world, provider) -> {
+			if(type == EntityType.PLAYER)
+			{
+				if(!world.isClient)
+				{
+					provider.addAbility(new PlayerResearchAbilityImpl());
+				}
+				provider.addAbility(new PlayerUnknownAbilityImpl());
+			}
+		});
 	}
 
 	/**

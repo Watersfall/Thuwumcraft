@@ -7,9 +7,9 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.spell.Spell;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;

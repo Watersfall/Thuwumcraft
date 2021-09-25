@@ -63,7 +63,6 @@ import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
@@ -99,6 +98,7 @@ import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 

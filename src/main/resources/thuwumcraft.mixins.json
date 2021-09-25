@@ -4,10 +4,8 @@
 	"package": "net.watersfall.thuwumcraft.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"AnvilScreenHandlerMixin", "CampfireBlockMixin", "ChunkSerializerMixin", "CraftingScreenHandlerMixin",
-		"EntityMixin", "ItemMixin", "ItemStackMixin", "LakeFeatureMixin", "LivingEntityMixin",
-		"PlayerAdvancementTrackerMixin", "PlayerEntityMixin", "ReadOnlyChunkMixin", "ServerPlayerEntityMixin",
-		"ServerPlayerInteractionManagerMixin", "ServerWorldMixin", "WorldChunkMixin"
+		"AnvilScreenHandlerMixin", "CampfireBlockMixin", "CraftingScreenHandlerMixin", "ItemMixin", "LakeFeatureMixin",
+		"LivingEntityMixin", "PlayerAdvancementTrackerMixin", "PlayerEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

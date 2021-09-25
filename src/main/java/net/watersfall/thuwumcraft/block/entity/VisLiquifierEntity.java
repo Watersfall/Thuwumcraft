@@ -7,9 +7,9 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class VisLiquifierEntity extends BlockEntity
 {

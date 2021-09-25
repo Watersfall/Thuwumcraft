@@ -12,10 +12,10 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.gui.WandWorkbenchHandler;
 import net.watersfall.thuwumcraft.spell.Spell;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 {

@@ -83,10 +83,4 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		return Hooks.livingEntityApplyDamageModifiers((LivingEntity)(Object)this, source, amount);
 	}
-
-	@Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isSleeping()Z"), cancellable = true)
-	public void thuwumcraft$beforeDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> info)
-	{
-		Hooks.livingEntityOnDamage((LivingEntity)(Object)this, source, info);
-	}
 }

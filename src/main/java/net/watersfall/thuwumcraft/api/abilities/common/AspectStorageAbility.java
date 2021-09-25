@@ -2,9 +2,9 @@ package net.watersfall.thuwumcraft.api.abilities.common;
 
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.Ability;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.wet.api.abilities.Ability;
 
 import java.util.List;
 

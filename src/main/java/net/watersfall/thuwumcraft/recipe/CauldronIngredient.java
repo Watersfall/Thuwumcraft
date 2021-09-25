@@ -16,10 +16,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.item.StatusEffectItemImpl;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.inventory.BrewingCauldronInventory;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.StatusEffectHelper;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.awt.*;
 import java.util.ArrayList;

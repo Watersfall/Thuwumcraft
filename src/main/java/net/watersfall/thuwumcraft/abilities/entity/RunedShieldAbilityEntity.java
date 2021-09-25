@@ -10,9 +10,9 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.abilities.AbilityClientSerializable;
-import net.watersfall.thuwumcraft.api.abilities.AbilityProvider;
 import net.watersfall.thuwumcraft.api.abilities.common.RunedShieldAbility;
+import net.watersfall.wet.api.abilities.AbilityClientSerializable;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class RunedShieldAbilityEntity implements RunedShieldAbility<Entity>, AbilityClientSerializable<Entity>
 {
