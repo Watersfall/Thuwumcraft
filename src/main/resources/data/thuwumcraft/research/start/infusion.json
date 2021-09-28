@@ -6,7 +6,7 @@
 	"complete_requirements":
 	{
 		"inventory_consumed": [
-			"thuwumcraft:phial/air",
+			"thuwumcraft:phial",
 			"minecraft:feather",
 			"minecraft:stone"
 		]

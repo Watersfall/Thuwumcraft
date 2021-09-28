@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
@@ -17,6 +18,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -39,10 +41,13 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -308,6 +313,22 @@ public class Thuwumcraft implements ModInitializer
 					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_RIBCAGE, supplier, AlchemyEntityTags.DROPS_RIBCAGE);
 				}
 			}
+		}));
+		UseBlockCallback.EVENT.register(((player, world, hand, hitResult) -> {
+			if(player.getStackInHand(hand).getItem() == ThuwumcraftItems.WAND)
+			{
+				if(world.getBlockState(hitResult.getBlockPos()).isOf(Blocks.BOOKSHELF))
+				{
+					if(!world.isClient)
+					{
+						world.setBlockState(hitResult.getBlockPos(), Blocks.AIR.getDefaultState());
+						ItemScatterer.spawn(world, hitResult.getBlockPos(), DefaultedList.ofSize(1, ThuwumcraftItems.RESEARCH_BOOK_ITEM.getDefaultStack()));
+					}
+					world.playSound(player, hitResult.getBlockPos(), AlchemySounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 1, 1);
+					return ActionResult.success(world.isClient);
+				}
+			}
+			return ActionResult.PASS;
 		}));
 	}
 

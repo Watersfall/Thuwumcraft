@@ -96,8 +96,8 @@ public class Research
 	{
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research/", "").replace(".json", ""));
 		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".name");
-		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
-		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
+		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc");
+		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc.completed");
 		if(json.get("icon").isJsonObject() || json.get("icon").isJsonArray())
 		{
 			this.stack = Ingredient.fromJson(json.get("icon"));
@@ -340,9 +340,9 @@ public class Research
 	public void fromPacket(PacketByteBuf buf)
 	{
 		this.id = buf.readIdentifier();
-		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
-		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc");
-		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath() + ".desc.completed");
+		this.name = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".name");
+		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc");
+		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc.completed");
 		this.stack = Ingredient.fromPacket(buf);
 		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
 		this.tabs = new RecipeGroup[buf.readInt()];

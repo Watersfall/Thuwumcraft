@@ -20,6 +20,7 @@ public class ThuwumcraftStructureFeatures
 	{
 		FabricStructureBuilder.create(Thuwumcraft.getId("unknown_pillar"), UNKNOWN_PILLAR)
 				.step(GenerationStep.Feature.SURFACE_STRUCTURES)
+				.superflatFeature(UNKNOWN_PILLAR.configure(DefaultFeatureConfig.DEFAULT))
 				.defaultConfig(4, 2, 12)
 				.adjustsSurface()
 				.register();

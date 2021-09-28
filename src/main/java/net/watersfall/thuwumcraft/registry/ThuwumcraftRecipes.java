@@ -15,6 +15,7 @@ public class ThuwumcraftRecipes
 	public static final RecipeType<AspectIngredient> ASPECT_INGREDIENTS;
 	public static final RecipeType<CrucibleRecipe> CRUCIBLE_RECIPE;
 	public static final RecipeType<NekomancyRecipe> NEKOMANCY_RECIPE;
+	public static final RecipeType<WandRecipe> WAND;
 	public static final RecipeSerializer<CauldronIngredient> CAULDRON_INGREDIENTS_SERIALIZER;
 	public static final RecipeSerializer<CauldronIngredientRecipe> CAULDRON_INGREDIENT_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<CauldronItemRecipe> CAULDRON_ITEM_RECIPE_SERIALIZER;
@@ -27,6 +28,7 @@ public class ThuwumcraftRecipes
 	public static final RecipeSerializer<NekomancyRecipe> NEKOMANCY_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<AspectCraftingShapedRecipe> ASPECT_SHAPED_SERIALIZER;
 	public static final RecipeSerializer<BindingRecipe> BINDING_RECIPE_SERIALIZER;
+	public static final RecipeSerializer<WandRecipe> WAND_RECIPE_SERIALIZER;
 	
 	static 
 	{
@@ -38,6 +40,7 @@ public class ThuwumcraftRecipes
 		ASPECT_INGREDIENTS = getRecipeType("aspect_ingredient");
 		CRUCIBLE_RECIPE = getRecipeType("crucible_recipe");
 		NEKOMANCY_RECIPE = getRecipeType("nekomancy_recipe");
+		WAND = getRecipeType("wand_recipe");
 		CAULDRON_INGREDIENTS_SERIALIZER = new CauldronIngredient.Serializer();
 		CAULDRON_INGREDIENT_RECIPE_SERIALIZER = new CauldronIngredientRecipe.Serializer();
 		CAULDRON_ITEM_RECIPE_SERIALIZER = new CauldronItemRecipe.Serializer();
@@ -50,6 +53,7 @@ public class ThuwumcraftRecipes
 		NEKOMANCY_RECIPE_SERIALIZER = new NekomancyRecipe.Serializer();
 		ASPECT_SHAPED_SERIALIZER =new AspectCraftingShapedRecipe.Serializer();
 		BINDING_RECIPE_SERIALIZER = new BindingRecipe.Serializer();
+		WAND_RECIPE_SERIALIZER = new WandRecipe.Serializer();
 	}
 
 	public static void register()
@@ -62,6 +66,7 @@ public class ThuwumcraftRecipes
 		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("aspect_ingredient"), ASPECT_INGREDIENTS);
 		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("crucible_recipe"), CRUCIBLE_RECIPE);
 		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("nekomancy_recipe"), NEKOMANCY_RECIPE);
+		Registry.register(Registry.RECIPE_TYPE, Thuwumcraft.getId("wand_recipe"), WAND);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_ingredient"), ThuwumcraftRecipes.CAULDRON_INGREDIENTS_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_recipe"), ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("cauldron_item"), ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE_SERIALIZER);
@@ -74,6 +79,7 @@ public class ThuwumcraftRecipes
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("nekomancy_recipe"), NEKOMANCY_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("aspect_shaped"), ASPECT_SHAPED_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("binding"), BINDING_RECIPE_SERIALIZER);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("wand_recipe"), WAND_RECIPE_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)

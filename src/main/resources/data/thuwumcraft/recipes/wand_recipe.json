@@ -1,0 +1,14 @@
+{
+	"type": "thuwumcraft:wand_recipe",
+	"ingredients": [
+		{
+			"tag": "thuwumcraft:wand_caps"
+		},
+		{
+			"tag": "thuwumcraft:wand_cores"
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:wand"
+	}
+}

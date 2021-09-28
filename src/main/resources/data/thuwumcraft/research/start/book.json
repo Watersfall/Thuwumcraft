@@ -2,5 +2,25 @@
 	"icon": "thuwumcraft:research_book",
 	"category": "thuwumcraft:starter",
 	"x": 0,
-	"y": -4
+	"y": -4,
+	"tabs": [
+		{
+			"recipes": [
+				"thuwumcraft:wood_core"
+			],
+			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"thuwumcraft:iron_cap"
+			],
+			"requires_complete": false
+		},
+		{
+			"recipes": [
+				"thuwumcraft:wand_recipe"
+			],
+			"requires_complete": false
+		}
+	]
 }
