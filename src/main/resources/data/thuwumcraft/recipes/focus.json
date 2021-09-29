@@ -1,0 +1,20 @@
+{
+	"type": "thuwumcraft:shapeless_ability",
+	"ingredients": [
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "minecraft:amethyst_shard"
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:wand_focus"
+	},
+	"abilities": [
+		{
+			"id": "thuwumcraft:wand_focus_ability",
+			"nbt": "{spell:\"thuwumcraft:fire\"}"
+		}
+	]
+}
