@@ -37,12 +37,12 @@ public class Aspects
 	public static final HashMap<Aspect, DecorativeStaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
 	public static final HashMap<Aspect, DecorativeStaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
-	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xffff00);
-	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x00ff00);
-	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x0000ff);
-	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xe69836);
-	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xdddddd);
-	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x222222);
+	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xEAE249);
+	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x4E3C00);
+	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x4BAFF6);
+	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xFF7D00);
+	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xFFF200);
+	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x55457A);
 	public static final Aspect METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, new Aspect[]{EARTH, ORDER});
 
 	public static Aspect register(Identifier id, Aspect aspect)
@@ -76,6 +76,7 @@ public class Aspects
 					(state, world, pos, tintIndex) -> ((DecorativeStaffBlock)state.getBlock()).getAspect().getColor(),
 					staff
 			);
+			ColorProviderRegistry.ITEM.register((stack, tintIndex) -> aspect.getColor(), aspect.getItem());
 			BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), staff);
 		}
 		return aspect;

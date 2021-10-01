@@ -164,7 +164,7 @@ public class RenderHelper
 				matrices.translate(-0.5F * (aspects.size() + 1), 0F, 0F);
 				aspects.forEach((aspectStack -> {
 					Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getParticleSprite();
-					RenderHelper.drawTexture(builder, matrices, sprite, -1, 9437408, 655360, false);
+					RenderHelper.drawTexture(builder, matrices, sprite, aspectStack.getAspect().getColor(), 9437408, 655360, false);
 					if(aspectStack.getCount() > 1)
 					{
 						matrices.push();
