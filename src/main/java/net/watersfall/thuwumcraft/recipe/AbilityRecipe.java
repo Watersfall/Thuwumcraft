@@ -16,7 +16,6 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.watersfall.wet.api.abilities.Ability;
-import net.watersfall.wet.api.abilities.AbilityClientSerializable;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
@@ -164,7 +163,8 @@ public class AbilityRecipe<T extends CraftingRecipe> implements CraftingRecipe
 			for(int i = 0; i < size; i++)
 			{
 				Identifier abilityId = buf.readIdentifier();
-				abilities.add(AbilityProvider.ITEM_REGISTRY.create(abilityId, buf));
+				NbtCompound nbt = buf.readNbt();
+				abilities.add(AbilityProvider.ITEM_REGISTRY.create(abilityId, nbt, ItemStack.EMPTY));
 			}
 			return new AbilityRecipe(this, recipe, abilities);
 		}
@@ -176,10 +176,7 @@ public class AbilityRecipe<T extends CraftingRecipe> implements CraftingRecipe
 			buf.writeInt(recipe.abilities.size());
 			recipe.abilities.forEach(ability -> {
 				buf.writeIdentifier(ability.getId());
-				if(ability instanceof AbilityClientSerializable client)
-				{
-					client.toPacket(buf);
-				}
+				buf.writeNbt(ability.toNbt(new NbtCompound(), ItemStack.EMPTY));
 			});
 		}
 	}

@@ -324,7 +324,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 			buf.writeInt(recipe.aspects.size());
 			for(int i = 0; i < recipe.aspects.size(); i++)
 			{
-				buf.writeString(recipe.aspects.get(i).getAspect().toString());
+				buf.writeString(recipe.aspects.get(i).getAspect().getId().toString());
 				buf.writeInt(recipe.aspects.get(i).getCount());
 			}
 			recipe.getCatalyst().write(buf);
