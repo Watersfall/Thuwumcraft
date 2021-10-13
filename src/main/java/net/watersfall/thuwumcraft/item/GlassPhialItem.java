@@ -56,7 +56,7 @@ public class GlassPhialItem extends Item
 			ability.ifPresent(phial -> {
 				AspectStack phialStack = phial.getAspects().get(0);
 				AspectStack original = phialStack.copy();
-				if((phialStack = container.insert(phialStack)).isEmpty())
+				if((phialStack = container.insert(phialStack, false)).isEmpty())
 				{
 					stack.decrement(1);
 					ItemStack newStack = new ItemStack(ThuwumcraftItems.EMPTY_PHIAL_ITEM, 1);
@@ -86,7 +86,7 @@ public class GlassPhialItem extends Item
 			{
 				Aspects.ASPECTS.values().forEach((aspect -> {
 					AspectStack check = new AspectStack(aspect, MAX_COUNT);
-					if(!(check = container.extract(check)).isEmpty())
+					if(!(check = container.extract(check, false)).isEmpty())
 					{
 						stack.decrement(1);
 						ItemStack newStack = this.getDefaultStack();

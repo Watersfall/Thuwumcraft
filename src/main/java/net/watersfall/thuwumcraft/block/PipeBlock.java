@@ -2,8 +2,6 @@ package net.watersfall.thuwumcraft.block;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -15,9 +13,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.PipeEntity;
-import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.state.property.Properties.*;
@@ -127,13 +123,6 @@ public class PipeBlock extends Block implements BlockEntityProvider
 			return state.with(getPropertyFromDirection(direction), false);
 		}
 		return state;
-	}
-
-	@Nullable
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
-	{
-		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.ASPECT_PIPE_ENTITY, PipeEntity::tick);
 	}
 
 	private byte generateIndex(BlockState state)

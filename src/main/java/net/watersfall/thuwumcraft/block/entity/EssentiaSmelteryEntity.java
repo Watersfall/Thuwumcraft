@@ -105,9 +105,9 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 			if(container != null)
 			{
 				AspectStack remove = stack.copy();
-				if(container.insert(stack).isEmpty())
+				if(container.insert(stack, false).isEmpty())
 				{
-					entity.extract(remove);
+					entity.extract(remove, false);
 					return AspectStack.EMPTY;
 				}
 				else
@@ -193,13 +193,13 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 	}
 
 	@Override
-	public AspectStack insert(AspectStack stack)
+	public AspectStack insert(AspectStack stack, boolean simulate)
 	{
 		return AspectStack.EMPTY;
 	}
 
 	@Override
-	public AspectStack extract(AspectStack stack)
+	public AspectStack extract(AspectStack stack, boolean simulate)
 	{
 		if(stack.isEmpty())
 		{
@@ -211,8 +211,11 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 			int extract = Math.min(currentStack.getCount(), stack.getCount());
 			if(extract > 0)
 			{
-				currentStack.decrement(extract);
-				this.aspectCount -= extract;
+				if(!simulate)
+				{
+					currentStack.decrement(extract);
+					this.aspectCount -= extract;
+				}
 				return new AspectStack(stack.getAspect(), extract);
 			}
 		}

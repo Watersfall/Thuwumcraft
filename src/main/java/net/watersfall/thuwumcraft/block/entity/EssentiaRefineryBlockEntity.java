@@ -1,18 +1,30 @@
 package net.watersfall.thuwumcraft.block.entity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvironmentInterface;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
+import net.watersfall.thuwumcraft.api.client.render.AspectRenderer;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
-public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectContainer, BlockEntityClientSerializable
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+@EnvironmentInterface(value = EnvType.CLIENT, itf = AspectRenderer.class)
+public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectContainer, BlockEntityClientSerializable, AspectRenderer
 {
 	private AspectStack stack;
 	private static final int MAX_COUNT = 64;
@@ -24,7 +36,7 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 	}
 
 	@Override
-	public AspectStack insert(AspectStack stack)
+	public AspectStack insert(AspectStack stack, boolean simulate)
 	{
 		if(stack.isEmpty())
 		{
@@ -35,36 +47,45 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 			if(this.stack.getAspect() == stack.getAspect())
 			{
 				int increment = Math.min(MAX_COUNT - this.stack.getCount(), stack.getCount());
-				this.stack.increment(increment);
+				if(!simulate)
+				{
+					this.stack.increment(increment);
+					this.sync();
+				}
 				stack.decrement(increment);
-				this.sync();
 				return stack;
 			}
 		}
 		else
 		{
-			this.stack = stack;
-			this.sync();
+			if(!simulate)
+			{
+				this.stack = stack;
+				this.sync();
+			}
 			return AspectStack.EMPTY;
 		}
 		return stack;
 	}
 
 	@Override
-	public AspectStack extract(AspectStack stack)
+	public AspectStack extract(AspectStack stack, boolean simulate)
 	{
-		if(stack.isEmpty())
+		if(stack.isEmpty() && this.stack.isEmpty())
 		{
 			return stack;
 		}
 		if(!this.stack.isEmpty())
 		{
-			if(this.stack.getAspect() == stack.getAspect())
+			if(this.stack.getAspect() == stack.getAspect() || stack.isEmpty())
 			{
 				int extract = Math.min(stack.getCount(), this.stack.getCount());
-				this.stack.decrement(extract);
-				this.sync();
-				return new AspectStack(stack.getAspect(), extract);
+				if(!simulate)
+				{
+					this.stack.decrement(extract);
+					this.sync();
+				}
+				return new AspectStack(this.stack.getAspect(), extract);
 			}
 		}
 		return AspectStack.EMPTY;
@@ -102,5 +123,39 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 			tag.putInt("count", this.stack.getCount());
 		}
 		return tag;
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public void setup(MatrixStack matrices, BlockHitResult hit)
+	{
+		AspectRenderer.super.setup(matrices, hit);
+		Direction direction = hit.getSide();
+		if(direction.getAxis() == Direction.Axis.Y)
+		{
+			matrices.translate(0, direction == Direction.UP ? -0.25 : -1.75, 0);
+		}
+		else
+		{
+			matrices.translate(direction.getOffsetX() / 1.25D, -1, direction.getOffsetZ() / 1.25D);
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public Collection<AspectStack> getStacksForRender()
+	{
+		if(stack.isEmpty())
+		{
+			return Collections.emptyList();
+		}
+		return List.of(stack);
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public boolean shouldRenderInEvent()
+	{
+		return true;
 	}
 }

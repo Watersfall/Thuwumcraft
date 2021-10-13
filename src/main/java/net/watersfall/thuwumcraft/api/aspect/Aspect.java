@@ -5,7 +5,7 @@ import net.watersfall.thuwumcraft.api.item.AspectItem;
 
 public class Aspect
 {
-	public static final Aspect EMPTY = new Aspect(null, -1, null);
+	public static final Aspect EMPTY = new Aspect(new Identifier("thuwumcraft:empty"), -1, null);
 
 	private final Identifier name;
 	private final int color;

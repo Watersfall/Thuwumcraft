@@ -41,13 +41,13 @@ public class ThaumatoriumBlockEntity extends BlockEntity implements AspectContai
 	}
 
 	@Override
-	public AspectStack insert(AspectStack stack)
+	public AspectStack insert(AspectStack stack, boolean simulate)
 	{
 		return stack;
 	}
 
 	@Override
-	public AspectStack extract(AspectStack stack)
+	public AspectStack extract(AspectStack stack, boolean simulate)
 	{
 		//No extract >:(
 		return stack;
@@ -140,7 +140,7 @@ public class ThaumatoriumBlockEntity extends BlockEntity implements AspectContai
 		if(container != null)
 		{
 			AspectStack stack;
-			if(start.getSuction() > container.getSuction() && !(stack = container.extract(new AspectStack(aspect, 1))).isEmpty())
+			if(start.getSuction() > container.getSuction() && !(stack = container.extract(new AspectStack(aspect, 1), false)).isEmpty())
 			{
 				BlockEntity test = world.getBlockEntity(pos);
 				if(test instanceof BlockEntityClientSerializable)

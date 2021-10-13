@@ -8,7 +8,7 @@ public class AspectStack
 	/**
 	 * An ItemStack with an Aspect instead of an Item
 	 */
-	public static final AspectStack EMPTY = new AspectStack(null, 1);
+	public static final AspectStack EMPTY = new AspectStack(Aspect.EMPTY, 1);
 
 	private final Aspect aspect;
 	private int count;
@@ -53,7 +53,7 @@ public class AspectStack
 
 	public boolean isEmpty()
 	{
-		return this.aspect == null || this.count < 1;
+		return this.aspect == null || this.aspect == Aspect.EMPTY || this.count < 1;
 	}
 
 	public AspectStack copy()
@@ -67,5 +67,22 @@ public class AspectStack
 		tag.putString("aspect", aspect.getId().toString());
 		tag.putInt("count", count);
 		return tag;
+	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if(other != null)
+		{
+			if(this == other)
+			{
+				return true;
+			}
+			else if(other instanceof AspectStack stack)
+			{
+				return stack.aspect == this.aspect && stack.count == this.count;
+			}
+		}
+		return false;
 	}
 }

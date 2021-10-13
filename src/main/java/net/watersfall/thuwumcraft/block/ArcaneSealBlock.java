@@ -1,5 +1,7 @@
 package net.watersfall.thuwumcraft.block;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.EnvironmentInterface;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -26,6 +28,7 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.util.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
+@EnvironmentInterface(value = EnvType.CLIENT, itf = BlockColorProvider.class)
 public class ArcaneSealBlock extends FacingBlock implements BlockEntityProvider, BlockColorProvider
 {
 	public static final IntProperty RUNES = IntProperty.of("runes", 0, 3);

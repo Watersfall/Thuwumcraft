@@ -1,26 +1,31 @@
 package net.watersfall.thuwumcraft.block.entity;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvironmentInterface;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectInventory;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.api.client.render.AspectRenderer;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.block.PipeBlock;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class JarEntity extends BlockEntity implements AspectInventory, BlockEntityClientSerializable, AspectContainer
+
+@EnvironmentInterface(value = EnvType.CLIENT, itf = AspectRenderer.class)
+public class JarEntity extends BlockEntity implements AspectInventory, BlockEntityClientSerializable, AspectContainer, AspectRenderer
 {
 	private static final int MAX_COUNT = 256;
 	private final HashMap<Aspect, AspectStack> aspects;
@@ -128,33 +133,37 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 		return toInventoryTag(compoundTag);
 	}
 
-	private static AspectStack followPipe(World world, BlockPos pos, Direction from, Aspect aspect, JarEntity start)
+	private static AspectStack followPipe(World world, BlockPos pos, Direction from, Aspect aspect, JarEntity start, int suction)
 	{
 		start.visited.add(pos);
-		AspectContainer container = AspectContainer.API.find(world, pos, from);
-		if(container != null)
+		if(world.isChunkLoaded(pos) && suction > 0)
 		{
-			AspectStack stack;
-			if(start.getSuction() > container.getSuction() && !(stack = container.extract(new AspectStack(aspect, 1))).isEmpty())
+			AspectContainer container = AspectContainer.API.find(world, pos, from);
+			AspectContainer insert = AspectContainer.API.find(world, pos.offset(from), from.getOpposite());
+			if(container != null && insert != null)
 			{
-				BlockEntity test = world.getBlockEntity(pos);
-				if(test instanceof BlockEntityClientSerializable)
+				AspectStack stack;
+				if(suction > container.getSuction() && !(stack = container.extract(new AspectStack(aspect, 1), true)).isEmpty())
 				{
-					((BlockEntityClientSerializable)test).sync();
-				}
-				return stack;
-			}
-			else
-			{
-				BlockState state = world.getBlockState(pos);
-				for(Direction direction : Direction.values())
-				{
-					if(direction != from && (state.getEntries().containsKey(PipeBlock.getPropertyFromDirection(direction)) && state.get(PipeBlock.getPropertyFromDirection(direction))) && !start.visited.contains(pos.offset(direction)))
+					AspectStack newStack = insert.insert(stack.copy(), false);
+					if(!newStack.equals(stack))
 					{
-						stack = followPipe(world, pos.offset(direction), direction.getOpposite(), aspect, start);
-						if(!stack.isEmpty())
+						container.extract(new AspectStack(aspect, 1), false);
+					}
+					return AspectStack.EMPTY;
+				}
+				else
+				{
+					BlockState state = world.getBlockState(pos);
+					for(Direction direction : Direction.values())
+					{
+						if(direction != from && (state.getEntries().containsKey(PipeBlock.getPropertyFromDirection(direction)) && state.get(PipeBlock.getPropertyFromDirection(direction))) && !start.visited.contains(pos.offset(direction)))
 						{
-							return stack;
+							stack = followPipe(world, pos.offset(direction), direction.getOpposite(), aspect, start, suction - 1);
+							if(!stack.isEmpty())
+							{
+								return stack;
+							}
 						}
 					}
 				}
@@ -165,29 +174,24 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 
 	public static void tick(World world, BlockPos pos, BlockState state, JarEntity jar)
 	{
-		if(world.getTime() % 10 == 0)
+		//if(world.getTime() % 10 == 0)
 		{
 			Optional<AspectStack> optional = jar.aspects.values().stream().findFirst();
 			AspectStack stack;
 			if(optional.isPresent() && optional.get().getCount() < MAX_COUNT)
 			{
-				stack = followPipe(world, pos.up(), Direction.DOWN, optional.get().getAspect(), jar);
+				stack = followPipe(world, pos.up(), Direction.DOWN, optional.get().getAspect(), jar, jar.getSuction());
 			}
 			else
 			{
-				stack = followPipe(world, pos.up(), Direction.DOWN, Aspect.EMPTY, jar);
-			}
-			if(stack != null && !stack.isEmpty())
-			{
-				jar.insert(stack);
-				jar.sync();
+				stack = followPipe(world, pos.up(), Direction.DOWN, Aspect.EMPTY, jar, jar.getSuction());
 			}
 			jar.visited.clear();
 		}
 	}
 
 	@Override
-	public AspectStack insert(AspectStack stack)
+	public AspectStack insert(AspectStack stack, boolean simulate)
 	{
 		if(stack.isEmpty())
 		{
@@ -199,23 +203,29 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 			if(optional.get().getAspect() == stack.getAspect())
 			{
 				int increment = Math.min(MAX_COUNT - optional.get().getCount(), stack.getCount());
-				optional.get().increment(increment);
+				if(!simulate)
+				{
+					optional.get().increment(increment);
+					this.sync();
+				}
 				stack.decrement(increment);
-				this.sync();
 				return stack;
 			}
 		}
 		else
 		{
-			this.addAspect(stack);
-			this.sync();
+			if(!simulate)
+			{
+				this.addAspect(stack);
+				this.sync();
+			}
 			return AspectStack.EMPTY;
 		}
 		return AspectStack.EMPTY;
 	}
 
 	@Override
-	public AspectStack extract(AspectStack stack)
+	public AspectStack extract(AspectStack stack, boolean simulate)
 	{
 		if(stack.isEmpty())
 		{
@@ -227,12 +237,15 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 			if(optional.get().getAspect() == stack.getAspect())
 			{
 				int extract = Math.min(stack.getCount(), optional.get().getCount());
-				optional.get().decrement(extract);
-				if(optional.get().isEmpty())
+				if(!simulate)
 				{
-					this.removeAspect(optional.get().getAspect());
+					optional.get().decrement(extract);
+					if(optional.get().isEmpty())
+					{
+						this.removeAspect(optional.get().getAspect());
+					}
+					this.sync();
 				}
-				this.sync();
 				return new AspectStack(stack.getAspect(), extract);
 			}
 		}
@@ -242,6 +255,38 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	@Override
 	public int getSuction()
 	{
-		return 5;
+		return 10;
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public void setup(MatrixStack matrices, BlockHitResult hit)
+	{
+		AspectRenderer.super.setup(matrices, hit);
+		BlockPos up = pos.up();
+		matrices.scale(2, 2, 2);
+		if(world.getBlockState(up).getMaterial().isSolid())
+		{
+			Direction direction = hit.getSide();
+			if(direction.getAxis() == Direction.Axis.Y)
+			{
+				matrices.translate(0, direction == Direction.UP ? -0.25 : -1.75, 0);
+			}
+			else
+			{
+				matrices.translate(direction.getOffsetX() / 1.75D, -1, direction.getOffsetZ() / 1.75D);
+			}
+		}
+		else
+		{
+			matrices.translate(0, -0.25, 0);
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public Collection<AspectStack> getStacksForRender()
+	{
+		return aspects.values();
 	}
 }

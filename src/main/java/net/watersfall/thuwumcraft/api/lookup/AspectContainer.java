@@ -9,9 +9,9 @@ public interface AspectContainer
 {
 	public static final BlockApiLookup<AspectContainer, Direction> API = BlockApiLookup.get(Thuwumcraft.getId("aspect_container"), AspectContainer.class, Direction.class);
 
-	AspectStack insert(AspectStack stack);
+	AspectStack insert(AspectStack stack, boolean simulate);
 
-	AspectStack extract(AspectStack stack);
+	AspectStack extract(AspectStack stack, boolean simulate);
 
 	int getSuction();
 }

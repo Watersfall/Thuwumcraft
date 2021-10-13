@@ -14,9 +14,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Quaternion;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.*;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.client.renderer.AspectRenderLayer;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.Collection;
@@ -115,7 +115,6 @@ public class RenderHelper
 
 	public static void drawTexture(VertexConsumer renderer, MatrixStack matrices, Identifier sprite, int color, int light, int overlay)
 	{
-		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderTexture(0, sprite);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder builder = tessellator.getBuffer();
@@ -133,11 +132,11 @@ public class RenderHelper
 	}
 
 	public static void renderAspects(Collection<AspectStack> aspects,
-									 BlockEntity entity,
+									 BlockPos pos,
 									 MatrixStack matrices,
 									 VertexConsumerProvider vertexConsumers,
 									 TextRenderer textRenderer,
-									 BlockEntityRenderDispatcher dispatcher)
+									 Vec3d camera)
 	{
 		if(aspects.size() > 0)
 		{
@@ -146,26 +145,30 @@ public class RenderHelper
 			boolean shouldRender = (
 					!MinecraftClient.getInstance().options.hudHidden
 							&& result != null && result.getType() == HitResult.Type.BLOCK
-							&& ((BlockHitResult)result).getBlockPos().equals(entity.getPos()))
+							&& ((BlockHitResult)result).getBlockPos().equals(pos))
 					&& (player.getStackInHand(Hand.MAIN_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS
 							|| player.getStackInHand(Hand.OFF_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS)
 					|| (player.getEquippedStack(EquipmentSlot.HEAD).getItem() == ThuwumcraftItems.GOGGLES
-							&& entity.getPos().getSquaredDistance(player.getBlockPos()) < 256);
+							&& pos.getSquaredDistance(player.getBlockPos()) < 256);
 			if(shouldRender)
 			{
 				matrices.push();
-				VertexConsumer builder = vertexConsumers.getBuffer(RenderLayer.getCutout());
+				VertexConsumer builder = vertexConsumers.getBuffer(AspectRenderLayer.INSTANCE);
 				matrices.translate(0.5D, 1.75D, 0.5D);
-				Quaternion quaternion = dispatcher.camera.getRotation().copy();
-				quaternion.hamiltonProduct(Vec3f.NEGATIVE_X.getDegreesQuaternion(270));
+				Vec3d center = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+				float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);
 				matrices.scale(0.25F, 0.25F, 0.25F);
+				Quaternion quaternion = Vec3f.POSITIVE_X.getDegreesQuaternion(90);
+				quaternion.hamiltonProduct(Vec3f.POSITIVE_Z.getRadialQuaternion(-angle + MathHelper.PI));
 				matrices.multiply(quaternion);
 				matrices.translate(0.5D, 0D, 0.5D);
 				matrices.translate(-0.5F * (aspects.size() + 1), 0F, 0F);
-				aspects.forEach((aspectStack -> {
+				for(AspectStack aspectStack : aspects)
+				{
 					Sprite sprite = MinecraftClient.getInstance().getItemRenderer().getModels().getModel(aspectStack.getAspect().getItem()).getParticleSprite();
-					RenderHelper.drawTexture(builder, matrices, sprite, aspectStack.getAspect().getColor(), 9437408, 655360, false);
-					if(aspectStack.getCount() > 1)
+					RenderHelper.drawTexture(builder, matrices, sprite, aspectStack.getAspect().getColor(), 9437408, 655360);
+					RenderSystem.disableDepthTest();
+					if(aspectStack.getCount() > 0)
 					{
 						matrices.push();
 						matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
@@ -179,14 +182,23 @@ public class RenderHelper
 						}
 						matrices.scale(0.0625F, 0.0625F, 0.0625F);
 						matrices.scale(-1F, -1F, -1F);
-						textRenderer.draw(matrices, "" + aspectStack.getCount(), 0F, 0F, -1);
+						textRenderer.draw("" + aspectStack.getCount(), 0, 0, 16777215, false, matrices.peek().getModel(), vertexConsumers, true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 						matrices.pop();
 					}
 					matrices.translate(1F, 0F, 0F);
-				}));
+				}
 				matrices.pop();
 			}
-
 		}
+	}
+
+	public static void renderAspects(Collection<AspectStack> aspects,
+									 BlockEntity entity,
+									 MatrixStack matrices,
+									 VertexConsumerProvider vertexConsumers,
+									 TextRenderer textRenderer,
+									 BlockEntityRenderDispatcher dispatcher)
+	{
+		renderAspects(aspects, entity.getPos(), matrices, vertexConsumers, textRenderer, dispatcher.camera.getPos());
 	}
 }

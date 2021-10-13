@@ -11,6 +11,7 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.block.entity.JarEntity;
@@ -122,7 +123,10 @@ public class JarEntityRenderer implements BlockEntityRenderer<JarEntity>
 				);
 				matrices.pop();
 				matrices.pop();
-				RenderHelper.renderAspects(entity.getAspects().values(), entity, matrices, vertexConsumers, textRenderer, dispatcher);
+				if(MinecraftClient.getInstance().crosshairTarget instanceof BlockHitResult hit)
+				{
+					entity.render(matrices, vertexConsumers, textRenderer, entity.getPos(), dispatcher.camera.getPos(), hit);
+				}
 			}
 		}
 	}
