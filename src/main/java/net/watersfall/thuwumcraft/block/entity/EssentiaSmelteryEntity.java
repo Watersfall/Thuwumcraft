@@ -4,7 +4,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -226,5 +228,25 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 	public int getSuction()
 	{
 		return 1;
+	}
+
+	@Override
+	public void readNbt(NbtCompound nbt)
+	{
+		BetterAspectInventory.read(aspects, nbt);
+		Inventories.readNbt(nbt, items);
+		fuelAmount = nbt.getInt("fuel");
+		aspectCount = nbt.getInt("aspect_count");
+		super.readNbt(nbt);
+	}
+
+	@Override
+	public NbtCompound writeNbt(NbtCompound nbt)
+	{
+		BetterAspectInventory.write(aspects, nbt);
+		Inventories.writeNbt(nbt, items);
+		nbt.putInt("fuel", fuelAmount);
+		nbt.putInt("aspect_count", aspectCount);
+		return super.writeNbt(nbt);
 	}
 }

@@ -103,6 +103,20 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 	}
 
 	@Override
+	public void readNbt(NbtCompound nbt)
+	{
+		stack = new AspectStack(nbt.getCompound("aspect"));
+		super.readNbt(nbt);
+	}
+
+	@Override
+	public NbtCompound writeNbt(NbtCompound nbt)
+	{
+		nbt.put("aspect", stack.toNbt());
+		return super.writeNbt(nbt);
+	}
+
+	@Override
 	public void fromClientTag(NbtCompound tag)
 	{
 		this.stack = AspectStack.EMPTY;
