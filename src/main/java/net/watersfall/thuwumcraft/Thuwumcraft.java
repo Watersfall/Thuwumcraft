@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
@@ -329,6 +330,12 @@ public class Thuwumcraft implements ModInitializer
 				}
 			}
 			return ActionResult.PASS;
+		}));
+		ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
+			AbilityProvider<Entity> provider = AbilityProvider.getProvider(handler.getPlayer());
+			PacketByteBuf buf = PacketByteBufs.create();
+			provider.toPacket(buf);
+			ServerPlayNetworking.send(handler.getPlayer(), getId("abilities_packet_player"), buf);
 		}));
 	}
 

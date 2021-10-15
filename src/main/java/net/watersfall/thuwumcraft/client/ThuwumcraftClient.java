@@ -519,7 +519,6 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet_player"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = new PacketByteBuf(buf.copy());
 			client.execute(() -> {
-				buf2.readInt();
 				AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 				provider.fromPacket(buf2);
 			});
