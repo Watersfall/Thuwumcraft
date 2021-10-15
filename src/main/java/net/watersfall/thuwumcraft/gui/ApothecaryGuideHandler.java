@@ -77,6 +77,26 @@ public class ApothecaryGuideHandler extends ScreenHandler
 		}
 	}
 
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		if(index == 0)
+		{
+			return ItemStack.EMPTY;
+		}
+		Slot book = slots.get(0);
+		Slot slot = slots.get(index);
+		if(book.hasStack())
+		{
+			return ItemStack.EMPTY;
+		}
+		if(slot.hasStack())
+		{
+			book.setStack(new ItemStack(slot.getStack().getItem()));
+		}
+		return ItemStack.EMPTY;
+	}
+
 	public static class IngredientSlot extends Slot
 	{
 		private final int index;

@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -50,5 +51,32 @@ public class EssentiaSmelteryHandler extends ScreenHandler
 	public int getAspectCount()
 	{
 		return properties.get(0);
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		Slot slot = slots.get(index);
+		if(slot.hasStack())
+		{
+			if(index == 0)
+			{
+				if(!this.insertItem(slot.getStack(), 1, 37, true))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else
+			{
+				Slot input = slots.get(0);
+				ItemStack stack = slot.getStack();
+				if(input.canInsert(stack))
+				{
+					input.insertStack(stack);
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 }

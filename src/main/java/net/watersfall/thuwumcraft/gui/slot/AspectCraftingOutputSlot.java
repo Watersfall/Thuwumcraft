@@ -90,8 +90,12 @@ public class AspectCraftingOutputSlot extends Slot
 			{
 				return super.getStack();
 			}
+			else
+			{
+				return ItemStack.EMPTY;
+			}
 		}
-		return ItemStack.EMPTY;
+		return super.getStack();
 	}
 
 	public void onTakeItem(PlayerEntity player, ItemStack stack)

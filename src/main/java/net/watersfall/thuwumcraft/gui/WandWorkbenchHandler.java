@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.item.wand.WandCapItem;
@@ -11,17 +12,15 @@ import net.watersfall.thuwumcraft.item.wand.WandCoreItem;
 import net.watersfall.thuwumcraft.item.wand.WandFocusItem;
 import net.watersfall.thuwumcraft.gui.slot.WandComponentSlot;
 import net.watersfall.thuwumcraft.gui.slot.WandSlot;
+import net.watersfall.thuwumcraft.item.wand.WandItem;
 
 public class WandWorkbenchHandler extends ScreenHandler
 {
-	public WandWorkbenchHandler(int syncId, PlayerInventory inventory)
-	{
-		this(syncId, inventory, new SimpleInventory(4));
-	}
+	private final Inventory wandInventory = new SimpleInventory(4);
 	private WandSlot slot;
 	private WandComponentSlot core, cap, focus;
 
-	public WandWorkbenchHandler(int syncId, PlayerInventory playerInventory, Inventory wandInventory)
+	public WandWorkbenchHandler(int syncId, PlayerInventory playerInventory)
 	{
 		super(ThuwumcraftScreenHandlers.WAND_WORKBENCH, syncId);
 
@@ -53,5 +52,51 @@ public class WandWorkbenchHandler extends ScreenHandler
 	public boolean canUse(PlayerEntity player)
 	{
 		return true;
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		Slot slot = slots.get(index);
+		if(index < 4)
+		{
+			ItemStack original = slot.getStack();
+			if(!this.insertItem(slot.getStack(), 1, 37, true))
+			{
+				return ItemStack.EMPTY;
+			}
+			slot.onQuickTransfer(slot.getStack(), original);
+		}
+		else if(slot.hasStack())
+		{
+			if(slot.getStack().getItem() instanceof WandCoreItem && !core.hasStack())
+			{
+				core.insertStack(slot.getStack());
+				return ItemStack.EMPTY;
+			}
+			else if(slot.getStack().getItem() instanceof WandCapItem && !cap.hasStack())
+			{
+				cap.insertStack(slot.getStack());
+				return ItemStack.EMPTY;
+			}
+			else if(slot.getStack().getItem() instanceof WandFocusItem && !focus.hasStack())
+			{
+				focus.insertStack(slot.getStack());
+				return ItemStack.EMPTY;
+			}
+			else if(slot.getStack().getItem() instanceof WandItem && !this.slot.hasStack())
+			{
+				this.slot.insertStack(slot.getStack());
+				return ItemStack.EMPTY;
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public void close(PlayerEntity player)
+	{
+		super.close(player);
+		this.dropInventory(player, new SimpleInventory(slot.getStack()));
 	}
 }

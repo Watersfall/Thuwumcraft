@@ -21,6 +21,7 @@ import net.watersfall.thuwumcraft.block.entity.AspectCraftingEntity;
 import net.watersfall.thuwumcraft.gui.slot.AspectCraftingOutputSlot;
 import net.watersfall.thuwumcraft.gui.slot.CrystalSlot;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
+import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
@@ -97,7 +98,7 @@ public class AspectCraftingHandler extends ScreenHandler
 	{
 		ItemStack output = ItemStack.EMPTY;
 		Optional<CraftingRecipe> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, inventory, world);
-		if (optional.isPresent())
+		if(optional.isPresent())
 		{
 			output = optional.get().craft(inventory);
 			this.currentRecipe = optional.get();
@@ -106,12 +107,8 @@ public class AspectCraftingHandler extends ScreenHandler
 		{
 			this.currentRecipe = null;
 		}
-		if (!world.isClient)
-		{
-			inventory.output.setStack(0, output);
-			if(this.slots.size() > 0)
-				this.slots.get(0).markDirty();
-		}
+		inventory.output.setStack(0, output);
+		this.slots.get(0).markDirty();
 	}
 
 	public void onContentChanged(Inventory inventory)
@@ -119,6 +116,7 @@ public class AspectCraftingHandler extends ScreenHandler
 		if(this.entity != null)
 		{
 			this.inventory.save(this.entity.contents);
+			entity.markDirty();
 			this.entity.handlers.forEach(handler -> handler.onContentChanged(inventory, false));
 		}
 	}
@@ -166,5 +164,91 @@ public class AspectCraftingHandler extends ScreenHandler
 	public boolean canUse(PlayerEntity player)
 	{
 		return true;
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		ItemStack original = ItemStack.EMPTY;
+		Slot slot = this.slots.get(index);
+		if(slot.hasStack())
+		{
+			ItemStack clicked = slot.getStack();
+			original = clicked.copy();
+			if(index == 0)
+			{
+				this.context.run((world, pos) -> {
+					clicked.getItem().onCraft(clicked, world, player);
+				});
+				if(!this.insertItem(clicked, 16, 52, true))
+				{
+					entity.markDirty();
+					return ItemStack.EMPTY;
+				}
+				entity.markDirty();
+				slot.onQuickTransfer(clicked, original);
+			}
+			else if(index >= 16 && index < 52)
+			{
+				if(clicked.getItem() instanceof CrystalItem crystalItem)
+				{
+					for(int i = 0; i < 6; i++)
+					{
+						CrystalSlot crystalSlot = (CrystalSlot)slots.get(10 + i);
+						if(crystalSlot.aspect == crystalItem.getAspect() && crystalSlot.getStack().getCount() < crystalSlot.getStack().getMaxCount())
+						{
+							crystalSlot.insertStack(slot.getStack());
+							entity.markDirty();
+							return ItemStack.EMPTY;
+						}
+					}
+				}
+				if(!this.insertItem(clicked, 1, 10, false))
+				{
+					if(index < 43)
+					{
+						if(!this.insertItem(clicked, 43, 52, false))
+						{
+							entity.markDirty();
+							return ItemStack.EMPTY;
+						}
+						entity.markDirty();
+					}
+					else if(!this.insertItem(clicked, 16, 43, false))
+					{
+						entity.markDirty();
+						return ItemStack.EMPTY;
+					}
+					entity.markDirty();
+				}
+			}
+			else if(!this.insertItem(clicked, 16, 52, false))
+			{
+				entity.markDirty();
+				return ItemStack.EMPTY;
+			}
+			entity.markDirty();
+			if(clicked.isEmpty())
+			{
+				slot.setStack(ItemStack.EMPTY);
+				entity.markDirty();
+			}
+			else
+			{
+				slot.markDirty();
+				entity.markDirty();
+			}
+			if(clicked.getCount() == original.getCount())
+			{
+				return ItemStack.EMPTY;
+			}
+			slot.onTakeItem(player, clicked);
+			if(index == 0)
+			{
+				player.dropItem(clicked, false);
+			}
+		}
+
+		return original;
 	}
 }

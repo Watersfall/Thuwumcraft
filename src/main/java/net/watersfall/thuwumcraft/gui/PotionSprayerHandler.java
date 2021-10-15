@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.gui.slot.PotionSprayerSlot;
@@ -44,5 +45,11 @@ public class PotionSprayerHandler extends ScreenHandler
 	public boolean canUse(PlayerEntity player)
 	{
 		return true;
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		return ItemStack.EMPTY;
 	}
 }

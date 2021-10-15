@@ -73,7 +73,7 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 	{
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasStack())
+		if (slot.hasStack())
 		{
 			ItemStack itemStack2 = slot.getStack();
 			itemStack = itemStack2.copy();

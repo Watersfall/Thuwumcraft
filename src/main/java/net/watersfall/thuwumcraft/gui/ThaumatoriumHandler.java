@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.gui;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -59,5 +60,28 @@ public class ThaumatoriumHandler extends ScreenHandler
 		{
 			super.onSlotClick(slotIndex, button, actionType, player);
 		}
+	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		if(index != 1)
+		{
+			Slot slot = slots.get(index);
+			if(index < 3)
+			{
+				if (!this.insertItem(slot.getStack(), 18, this.slots.size(), true))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			else
+			{
+				Slot input = slots.get(0);
+				input.insertStack(slot.getStack());
+				return ItemStack.EMPTY;
+			}
+		}
+		return ItemStack.EMPTY;
 	}
 }

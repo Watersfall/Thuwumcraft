@@ -37,7 +37,7 @@ public class WandWorkbenchEntity extends BlockEntity implements NamedScreenHandl
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
-		return new WandWorkbenchHandler(syncId, inv, this);
+		return new WandWorkbenchHandler(syncId, inv);
 	}
 
 	@Override

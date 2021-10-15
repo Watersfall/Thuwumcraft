@@ -135,4 +135,10 @@ public class NekomancyTableHandler extends ScreenHandler
 			}
 		}
 	}
+
+	@Override
+	public ItemStack transferSlot(PlayerEntity player, int index)
+	{
+		return ItemStack.EMPTY;
+	}
 }

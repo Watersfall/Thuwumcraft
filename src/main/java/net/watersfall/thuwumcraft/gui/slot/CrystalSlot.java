@@ -8,7 +8,7 @@ import net.watersfall.thuwumcraft.item.CrystalItem;
 
 public class CrystalSlot extends Slot
 {
-	private final Aspect aspect;
+	public final Aspect aspect;
 
 	public CrystalSlot(Inventory inventory, int index, int x, int y, Aspect aspect)
 	{
