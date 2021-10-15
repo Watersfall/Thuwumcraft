@@ -1,7 +1,10 @@
 {
 	"variants": {
-		"": {
+		"up=false": {
 			"model": "thuwumcraft:block/jar"
+		},
+		"up=true": {
+			"model": "thuwumcraft:block/jar_connected"
 		}
 	}
 }

@@ -86,6 +86,7 @@ public class ThuwumcraftItems
 	public static final ArmorItem FORTRESS_HELMET;
 	public static final ArmorItem FORTRESS_CHESTPLATE;
 	public static final ArmorItem FORTRESS_LEGGINGS;
+	public static final ArmorItem FORTRESS_BOOTS;
 	public static final SpeedBootsItem BOOTS_OF_BLINDING_SPEED;
 	public static final BlockItem ARCANE_LAMP_ITEM;
 	public static final BucketItem DIMENSIONAL_FLUID_BUCKET;
@@ -113,7 +114,10 @@ public class ThuwumcraftItems
 	public static final BlockItem ARCANE_STONE_SLAB;
 	public static final ArcaneRuneItem AIR_RUNE, WATER_RUNE, FIRE_RUNE, EARTH_RUNE, ORDER_RUNE, DISORDER_RUNE;
 	public static final BlockItem ARCANE_SEAL;
-	public static final BlockItem THAUMATORIUM;
+	public static final BlockItem GREATWOOD_LOG;
+	public static final BlockItem SILVERWOOD_LOG;
+	public static final BlockItem SPAWNER_FRAME;
+	public static final BlockItem WAND_WORKBENCH;
 	public static final List<Item> ITEMS;
 
 	static
@@ -180,6 +184,7 @@ public class ThuwumcraftItems
 		FORTRESS_HELMET = register(Thuwumcraft.getId("fortress_helmet"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.HEAD, defaultSettings()));
 		FORTRESS_CHESTPLATE = register(Thuwumcraft.getId("fortress_chestplate"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.CHEST, defaultSettings()));
 		FORTRESS_LEGGINGS = register(Thuwumcraft.getId("fortress_leggings"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.LEGS, defaultSettings()));
+		FORTRESS_BOOTS = register(Thuwumcraft.getId("fortress_boots"), new ArmorItem(AlchemyArmorMaterials.FORTRESS, EquipmentSlot.FEET, defaultSettings()));
 		BOOTS_OF_BLINDING_SPEED = register(Thuwumcraft.getId("boots_of_blinding_speed"), new SpeedBootsItem(AlchemyArmorMaterials.MAGIC, 0.5F));
 		ARCANE_LAMP_ITEM = register(Thuwumcraft.getId("arcane_lamp"), new BlockItem(ThuwumcraftBlocks.ARCANE_LAMP_BLOCK, defaultSettings()));
 		DIMENSIONAL_FLUID_BUCKET = register(Thuwumcraft.getId("dimensional_fluid_bucket"), new BucketItem(ThuwumcraftFluids.DIMENSIONAL_STILL, defaultSettings().maxCount(1)));
@@ -211,8 +216,11 @@ public class ThuwumcraftItems
 		WATER_RUNE = register(Thuwumcraft.getId("water_rune"), new ArcaneRuneItem(Aspects.WATER, defaultSettings().maxCount(1)));
 		ORDER_RUNE = register(Thuwumcraft.getId("order_rune"), new ArcaneRuneItem(Aspects.ORDER, defaultSettings().maxCount(1)));
 		DISORDER_RUNE = register(Thuwumcraft.getId("disorder_rune"), new ArcaneRuneItem(Aspects.DISORDER, defaultSettings().maxCount(1)));
-		THAUMATORIUM = register(ThuwumcraftBlocks.THAUMATORIUM, defaultSettings());
 		ARCANE_SEAL = register(ThuwumcraftBlocks.ARCANE_SEAL, defaultSettings());
+		GREATWOOD_LOG = register(ThuwumcraftBlocks.GREATWOOD_LOG, defaultSettings());
+		SILVERWOOD_LOG = register(ThuwumcraftBlocks.SILVERWOOD_LOG, defaultSettings());
+		SPAWNER_FRAME = register(ThuwumcraftBlocks.SPAWNER_FRAME, defaultSettings());
+		WAND_WORKBENCH = register(ThuwumcraftBlocks.WAND_WORKBENCH, defaultSettings());
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

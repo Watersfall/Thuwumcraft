@@ -1,8 +1,22 @@
 {
-	"parent": "minecraft:block/orientable",
+	"credit": "Made with Blockbench",
 	"textures": {
-		"top": "minecraft:block/furnace_top",
-		"front": "minecraft:block/furnace_front",
-		"side": "minecraft:block/furnace_side"
-	}
+		"0": "thuwumcraft:block/essentia_refinery",
+		"particle": "thuwumcraft:block/essentia_refinery"
+	},
+	"elements": [
+		{
+			"name": "main",
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"west": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 8], "texture": "#0"}
+			}
+		}
+	]
 }

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AlchemicalFurnaceBlock extends ChildBlock implements BlockEntityProvider
 {
-	public static final DirectionProperty DIRECTION = Properties.FACING;
+	public static final DirectionProperty DIRECTION = Properties.HORIZONTAL_FACING;
 	protected static final VoxelShape[] OUTLINE_SHAPES = new VoxelShape[]{
 			VoxelShapes.cuboid(0D, 0D, 0D, 2D, 2D, 1D),
 			VoxelShapes.cuboid(-1D, 0D, 0D, 1D, 2D, 1D),

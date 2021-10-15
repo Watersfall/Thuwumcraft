@@ -1,7 +1,84 @@
 {
-	"variants": {
-		"": {
-			"model": "thuwumcraft:block/essentia_refinery"
+	"multipart": [
+		{
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery"
+			}
+		},
+		{
+			"when": {
+				"north": "true"
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection"
+			}
+		},
+		{
+			"when": {
+				"south": "true"
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection",
+				"y": 180
+			}
+		},
+		{
+			"when": {
+				"east": "true"
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection",
+				"y": 90
+			}
+		},
+		{
+			"when": {
+				"west": "true"
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection",
+				"y": 270
+			}
+		},
+		{
+			"when": {
+				"up": "true"
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection",
+				"x": 270
+			}
+		},
+		{
+			"when": {
+				"AND": [
+					{
+						"down": "true"
+					},
+					{
+						"connected_to_smeltery": "false"
+					}
+				]
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection",
+				"x": 90
+			}
+		},
+		{
+			"when": {
+				"AND": [
+					{
+						"down": "true"
+					},
+					{
+						"connected_to_smeltery": "true"
+					}
+				]
+			},
+			"apply": {
+				"model": "thuwumcraft:block/essentia_refinery_connection_smeltery"
+			}
 		}
-	}
+	]
 }

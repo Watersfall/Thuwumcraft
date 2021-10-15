@@ -481,7 +481,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				ThuwumcraftBlocks.CUSTOM_SPAWNER,
 				ThuwumcraftBlocks.CHILD_BLOCK,
-				ThuwumcraftBlocks.SILVERWOOD_SAPLING
+				ThuwumcraftBlocks.SILVERWOOD_SAPLING,
+				ThuwumcraftBlocks.ESSENTIA_REFINERY_BLOCK,
+				ThuwumcraftBlocks.SPAWNER_FRAME
 		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
 				ThuwumcraftBlocks.DEEPSLATE_GRASS

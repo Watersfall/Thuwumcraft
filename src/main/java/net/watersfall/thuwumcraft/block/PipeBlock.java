@@ -25,12 +25,12 @@ public class PipeBlock extends Block implements BlockEntityProvider
 	static
 	{
 		VoxelShape center = createCuboidShape(6, 6, 6, 10, 10, 10);
-		VoxelShape north = createCuboidShape(7, 7, 0, 9, 9, 6);
-		VoxelShape south = createCuboidShape(7, 7, 10, 9, 9, 16);
-		VoxelShape east = createCuboidShape(10, 7, 7, 16, 9, 9);
-		VoxelShape west = createCuboidShape(0, 7, 7, 6, 9, 9);
-		VoxelShape up = createCuboidShape(7, 10, 7, 9, 16, 9);
-		VoxelShape down = createCuboidShape(7, 0, 7, 9, 6, 9);
+		VoxelShape north = createCuboidShape(6, 6, 0, 10, 10, 6);
+		VoxelShape south = createCuboidShape(6, 6, 10, 10, 10, 16);
+		VoxelShape east = createCuboidShape(10, 6, 6, 16, 10, 10);
+		VoxelShape west = createCuboidShape(0, 6, 6, 6, 10, 10);
+		VoxelShape up = createCuboidShape(6, 10, 6, 10, 16, 10);
+		VoxelShape down = createCuboidShape(6, 0, 6, 10, 6, 10);
 		for(int i = 0; i < 64; i++)
 		{
 			VoxelShape shape = center;

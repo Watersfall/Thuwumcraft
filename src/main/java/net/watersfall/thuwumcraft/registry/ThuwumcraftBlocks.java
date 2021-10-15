@@ -45,6 +45,7 @@ public class ThuwumcraftBlocks
 	public static final SlabBlock ARCANE_STONE_SLAB;
 	public static final ArcaneSealBlock ARCANE_SEAL;
 	public static final ThaumatoriumBlock THAUMATORIUM;
+	public static final PillarBlock GREATWOOD_LOG;
 
 	static
 	{
@@ -79,6 +80,7 @@ public class ThuwumcraftBlocks
 		ARCANE_STONE_SLAB = register(Thuwumcraft.getId("arcane_stone_slab"), new SlabBlock(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
 		ARCANE_SEAL = register(Thuwumcraft.getId("arcane_seal"), new ArcaneSealBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().nonOpaque().emissiveLighting(ThuwumcraftBlocks::always).luminance(5)));
 		THAUMATORIUM = register("thaumatorium", new ThaumatoriumBlock(FabricBlockSettings.of(Material.METAL)));
+		GREATWOOD_LOG = register("greatwood_log", new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)));
 	}
 
 	private static <T extends Block> T register(Identifier id, T block)

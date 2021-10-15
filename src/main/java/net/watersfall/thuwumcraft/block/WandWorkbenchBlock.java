@@ -40,6 +40,6 @@ public class WandWorkbenchBlock extends BlockWithEntity
 		{
 			player.openHandledScreen(this.createScreenHandlerFactory(state, world, pos));
 		}
-		return ActionResult.CONSUME;
+		return ActionResult.success(world.isClient);
 	}
 }

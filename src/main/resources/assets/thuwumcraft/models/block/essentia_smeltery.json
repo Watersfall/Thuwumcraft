@@ -1,8 +1,12 @@
 {
-	"parent": "minecraft:block/orientable",
+	"parent": "minecraft:block/cube",
 	"textures": {
-		"top": "minecraft:block/furnace_top",
-		"front": "minecraft:block/furnace_front",
-		"side": "minecraft:block/furnace_side"
+		"down": "minecraft:block/furnace_top",
+		"up": "thuwumcraft:block/essentia_smeltery_top",
+		"north": "thuwumcraft:block/essentia_smeltery_front",
+		"south": "thuwumcraft:block/essentia_smeltery_side",
+		"east": "thuwumcraft:block/essentia_smeltery_side",
+		"west": "thuwumcraft:block/essentia_smeltery_side",
+		"particle": "thuwumcraft:block/essentia_smeltery_front"
 	}
 }

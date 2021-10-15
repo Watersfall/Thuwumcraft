@@ -1,7 +1,19 @@
 {
 	"variants": {
-		"": {
+		"facing=north": {
 			"model": "thuwumcraft:block/essentia_smeltery"
+		},
+		"facing=south": {
+			"model": "thuwumcraft:block/essentia_smeltery",
+			"y": 180
+		},
+		"facing=east": {
+			"model": "thuwumcraft:block/essentia_smeltery",
+			"y": 90
+		},
+		"facing=west": {
+			"model": "thuwumcraft:block/essentia_smeltery",
+			"y": 270
 		}
 	}
 }

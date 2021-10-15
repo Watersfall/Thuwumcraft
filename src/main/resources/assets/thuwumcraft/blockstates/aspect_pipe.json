@@ -10,7 +10,7 @@
 				"north": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/north"
+				"model": "thuwumcraft:block/pipe/connection"
 			}
 		},
 		{
@@ -18,7 +18,8 @@
 				"south": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/south"
+				"model": "thuwumcraft:block/pipe/connection",
+				"y": 180
 			}
 		},
 		{
@@ -26,7 +27,8 @@
 				"east": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/east"
+				"model": "thuwumcraft:block/pipe/connection",
+				"y": 90
 			}
 		},
 		{
@@ -34,7 +36,8 @@
 				"west": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/west"
+				"model": "thuwumcraft:block/pipe/connection",
+				"y": 270
 			}
 		},
 		{
@@ -42,7 +45,8 @@
 				"up": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/up"
+				"model": "thuwumcraft:block/pipe/connection",
+				"x": 270
 			}
 		},
 		{
@@ -50,7 +54,8 @@
 				"down": "true"
 			},
 			"apply": {
-				"model": "thuwumcraft:block/pipe/down"
+				"model": "thuwumcraft:block/pipe/connection",
+				"x": 90
 			}
 		}
 	]
