@@ -174,7 +174,7 @@ public class RenderHelper
 						matrices.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
 						if(aspectStack.getCount() >= 10)
 						{
-							matrices.translate(0.5F, -0.625F, 0.99F);
+							matrices.translate(0.5F, -0.625F, 0.98F);
 						}
 						else
 						{

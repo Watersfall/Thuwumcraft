@@ -224,21 +224,22 @@ public class ThuwumcraftClient implements ClientModInitializer
 				});
 			}
 		});
-
-		WorldRenderEvents.AFTER_ENTITIES.register((world) -> {
-			if(MinecraftClient.getInstance().crosshairTarget instanceof BlockHitResult result)
+		WorldRenderEvents.BLOCK_OUTLINE.register((world, result) -> {
+			if(MinecraftClient.getInstance().crosshairTarget instanceof BlockHitResult hit)
 			{
-				BlockEntity test = world.world().getBlockEntity(result.getBlockPos());
+				BlockEntity test = world.world().getBlockEntity(hit.getBlockPos());
 				if(test instanceof AspectRenderer renderer && renderer.shouldRenderInEvent())
 				{
 					MatrixStack matrices = world.matrixStack();
 					matrices.push();
-					renderer.render(matrices, world.consumers(), world.gameRenderer().getClient().textRenderer, result.getBlockPos(), world.camera().getPos(), result);
+					renderer.render(matrices, world.consumers(), world.gameRenderer().getClient().textRenderer, hit.getBlockPos(), world.camera().getPos(), hit);
 					matrices.pop();
 				}
 			}
+			return true;
 		});
 	}
+
 	private void preRegisterArmorTextures(Identifier name, boolean hasOverlay)
 	{
 		for (int layer = 1; layer <= 2; layer++)
@@ -465,6 +466,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ARCANE_SEAL, ArcaneSealRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);

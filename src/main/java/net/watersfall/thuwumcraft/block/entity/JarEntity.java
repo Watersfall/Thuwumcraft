@@ -264,8 +264,7 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	{
 		AspectRenderer.super.setup(matrices, hit);
 		BlockPos up = pos.up();
-		matrices.scale(2, 2, 2);
-		if(world.getBlockState(up).getMaterial().isSolid())
+		if(world.getBlockState(up).getMaterial().isSolid() && hit.getBlockPos().equals(this.getPos()))
 		{
 			Direction direction = hit.getSide();
 			if(direction.getAxis() == Direction.Axis.Y)
@@ -288,5 +287,12 @@ public class JarEntity extends BlockEntity implements AspectInventory, BlockEnti
 	public Collection<AspectStack> getStacksForRender()
 	{
 		return aspects.values();
+	}
+
+	@Environment(EnvType.CLIENT)
+	@Override
+	public boolean shouldRenderInEvent()
+	{
+		return true;
 	}
 }

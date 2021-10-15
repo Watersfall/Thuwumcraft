@@ -144,14 +144,17 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 	public void setup(MatrixStack matrices, BlockHitResult hit)
 	{
 		AspectRenderer.super.setup(matrices, hit);
-		Direction direction = hit.getSide();
-		if(direction.getAxis() == Direction.Axis.Y)
+		if(hit.getBlockPos().equals(this.getPos()))
 		{
-			matrices.translate(0, direction == Direction.UP ? -0.25 : -1.75, 0);
-		}
-		else
-		{
-			matrices.translate(direction.getOffsetX() / 1.25D, -1, direction.getOffsetZ() / 1.25D);
+			Direction direction = hit.getSide();
+			if(direction.getAxis() == Direction.Axis.Y)
+			{
+				matrices.translate(0, direction == Direction.UP ? -0.5 : -1.25, 0);
+			}
+			else
+			{
+				matrices.translate(direction.getOffsetX() / 2D, -1, direction.getOffsetZ() / 2D);
+			}
 		}
 	}
 

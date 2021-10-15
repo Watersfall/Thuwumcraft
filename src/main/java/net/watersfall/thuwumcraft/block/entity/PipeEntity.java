@@ -131,14 +131,17 @@ public class PipeEntity extends BlockEntity implements AspectContainer, BlockEnt
 	public void setup(MatrixStack matrices, BlockHitResult hit)
 	{
 		AspectRenderer.super.setup(matrices, hit);
-		Direction direction = hit.getSide();
-		if(direction.getAxis() == Direction.Axis.Y)
+		if(hit.getBlockPos().equals(this.getPos()))
 		{
-			matrices.translate(0, direction == Direction.UP ? -0.75 : -1.25, 0);
-		}
-		else
-		{
-			matrices.translate(direction.getOffsetX() / 3D, -1, direction.getOffsetZ() / 3D);
+			Direction direction = hit.getSide();
+			if(direction.getAxis() == Direction.Axis.Y)
+			{
+				matrices.translate(0, direction == Direction.UP ? -0.75 : -1.25, 0);
+			}
+			else
+			{
+				matrices.translate(direction.getOffsetX() / 3D, -1, direction.getOffsetZ() / 3D);
+			}
 		}
 	}
 
