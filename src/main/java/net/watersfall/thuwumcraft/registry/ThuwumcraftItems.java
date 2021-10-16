@@ -118,6 +118,7 @@ public class ThuwumcraftItems
 	public static final BlockItem SILVERWOOD_LOG;
 	public static final BlockItem SPAWNER_FRAME;
 	public static final BlockItem WAND_WORKBENCH;
+	public static final Item GOGGLES_OVERLAY_ITEM;
 	public static final List<Item> ITEMS;
 
 	static
@@ -221,6 +222,7 @@ public class ThuwumcraftItems
 		SILVERWOOD_LOG = register(ThuwumcraftBlocks.SILVERWOOD_LOG, defaultSettings());
 		SPAWNER_FRAME = register(ThuwumcraftBlocks.SPAWNER_FRAME, defaultSettings());
 		WAND_WORKBENCH = register(ThuwumcraftBlocks.WAND_WORKBENCH, defaultSettings());
+		GOGGLES_OVERLAY_ITEM = register(Thuwumcraft.getId("goggles_overlay_item"), new Item(new FabricItemSettings()));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

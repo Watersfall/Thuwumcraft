@@ -11,3 +11,5 @@ accessible method net/minecraft/recipe/ShapelessRecipe$Serializer getIngredients
 accessible method net/minecraft/world/gen/trunk/TrunkPlacerType <init> (Lcom/mojang/serialization/Codec;)V
 accessible method net/minecraft/client/gui/screen/Screen renderTooltipFromComponents (Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V
 accessible class net/minecraft/world/gen/feature/ConfiguredFeatures$Decorators
+accessible class net/minecraft/client/render/RenderLayer$MultiPhase
+accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters

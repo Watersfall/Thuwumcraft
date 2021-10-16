@@ -4,9 +4,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.TooltipData;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -17,6 +20,7 @@ import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.client.ThuwumcraftClient;
 import net.watersfall.thuwumcraft.client.renderer.SpriteCache;
 import net.watersfall.thuwumcraft.client.util.ScreenHelper;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -117,5 +121,19 @@ public class ClientHooks
 	public static void onResourceReload()
 	{
 		SpriteCache.reload();
+	}
+
+	public static void onRenderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> model)
+	{
+		ItemStack stack = entity.getEquippedStack(slot);
+		if(slot == EquipmentSlot.HEAD && stack.hasNbt() && stack.getNbt().contains("thuwumcraft$goggles") && stack.getNbt().getBoolean("thuwumcraft$goggles"))
+		{
+			matrices.push();
+			model.head.rotate(matrices);
+			matrices.translate(0, entity.getEyeHeight(entity.getPose()) - entity.getHeight() - 0.0375, -0.275);
+			matrices.scale(0.5F, 0.5F, 0.5F);
+			MinecraftClient.getInstance().getItemRenderer().renderItem(ThuwumcraftItems.GOGGLES_OVERLAY_ITEM.getDefaultStack(), ModelTransformation.Mode.NONE, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+			matrices.pop();
+		}
 	}
 }

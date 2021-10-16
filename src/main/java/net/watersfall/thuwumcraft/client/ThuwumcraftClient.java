@@ -54,6 +54,8 @@ import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -144,6 +146,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 					{
 						tooltip.add(StatusEffectHelper.NO_EFFECT);
 					}
+				}
+				if(tag.contains("thuwumcraft$goggles"))
+				{
+					tooltip.add(1, new TranslatableText(ThuwumcraftItems.GOGGLES.getTranslationKey()).formatted(Formatting.GRAY));
 				}
 			}
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);

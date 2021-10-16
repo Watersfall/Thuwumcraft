@@ -10,13 +10,14 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
-import net.watersfall.thuwumcraft.client.renderer.AspectRenderLayer;
+import net.watersfall.thuwumcraft.client.renderer.ThuwumcraftRenderLayers;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.Collection;
@@ -142,18 +143,21 @@ public class RenderHelper
 		{
 			HitResult result = MinecraftClient.getInstance().crosshairTarget;
 			ClientPlayerEntity player = MinecraftClient.getInstance().player;
+			ItemStack helmet = player.getEquippedStack(EquipmentSlot.HEAD);
 			boolean shouldRender = (
 					!MinecraftClient.getInstance().options.hudHidden
 							&& result != null && result.getType() == HitResult.Type.BLOCK
 							&& ((BlockHitResult)result).getBlockPos().equals(pos))
 					&& (player.getStackInHand(Hand.MAIN_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS
-							|| player.getStackInHand(Hand.OFF_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS)
-					|| (player.getEquippedStack(EquipmentSlot.HEAD).getItem() == ThuwumcraftItems.GOGGLES
+							|| player.getStackInHand(Hand.OFF_HAND).getItem() == ThuwumcraftItems.THUWUMIC_MAGNIFYING_GLASS
+							|| (helmet.hasNbt() && helmet.getNbt().contains("thuwumcraft$goggles") && helmet.getNbt().getBoolean("thuwumcraft$goggles"))
+					)
+					|| (helmet.getItem() == ThuwumcraftItems.GOGGLES
 							&& pos.getSquaredDistance(player.getBlockPos()) < 256);
 			if(shouldRender)
 			{
 				matrices.push();
-				VertexConsumer builder = vertexConsumers.getBuffer(AspectRenderLayer.INSTANCE);
+				VertexConsumer builder = vertexConsumers.getBuffer(ThuwumcraftRenderLayers.INSTANCE);
 				matrices.translate(0.5D, 1.75D, 0.5D);
 				Vec3d center = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 				float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);

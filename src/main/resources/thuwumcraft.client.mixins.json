@@ -11,5 +11,8 @@
 	"injectors": {
 		"defaultRequire": 1
 	},
-	"mixins": ["CreativeInventoryScreenMixin", "RecipeManagerMixin", "RecipeMixin", "ResourceReloadLoggerMixin"]
+	"mixins": [
+		"ArmorFeatureRendererMixin", "CreativeInventoryScreenMixin", "RecipeManagerMixin", "RecipeMixin",
+		"ResourceReloadLoggerMixin"
+	]
 }

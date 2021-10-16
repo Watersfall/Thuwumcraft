@@ -30,6 +30,7 @@ public class ThuwumcraftRecipes
 	public static final RecipeSerializer<BindingRecipe> BINDING_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<WandRecipe> WAND_RECIPE_SERIALIZER;
 	public static final RecipeSerializer<AbilityRecipe<ShapelessRecipe>> SHAPELESS_ABILITY;
+	public static final RecipeSerializer<GogglesRecipe> GOGGLES_SERIALIZER;
 	
 	static 
 	{
@@ -56,6 +57,7 @@ public class ThuwumcraftRecipes
 		BINDING_RECIPE_SERIALIZER = new BindingRecipe.Serializer();
 		WAND_RECIPE_SERIALIZER = new WandRecipe.Serializer();
 		SHAPELESS_ABILITY = new AbilityRecipe.Serializer(RecipeSerializer.SHAPELESS);
+		GOGGLES_SERIALIZER = new GogglesRecipe.Serializer();
 	}
 
 	public static void register()
@@ -83,6 +85,7 @@ public class ThuwumcraftRecipes
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("binding"), BINDING_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("wand_recipe"), WAND_RECIPE_SERIALIZER);
 		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("shapeless_ability"), SHAPELESS_ABILITY);
+		Registry.register(Registry.RECIPE_SERIALIZER, Thuwumcraft.getId("goggles"), GOGGLES_SERIALIZER);
 	}
 
 	private static <T extends Recipe<?>> RecipeType<T> getRecipeType(String string)
