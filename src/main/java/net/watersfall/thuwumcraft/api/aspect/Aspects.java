@@ -20,6 +20,7 @@ import net.watersfall.thuwumcraft.block.ElementalBlock;
 import net.watersfall.thuwumcraft.block.ElementalClusterBlock;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.item.DecorativeStaffBlockItem;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.HashMap;
@@ -84,10 +85,10 @@ public class Aspects
 
 	private static void registerClusters(Aspect aspect)
 	{
-		ElementalClusterBlock cluster = new ElementalClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(9), aspect);
-		ElementalClusterBlock large = new ElementalClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD).luminance(7), aspect);
-		ElementalClusterBlock medium = new ElementalClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD).luminance(5), aspect);
-		ElementalClusterBlock small = new ElementalClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD).luminance(4), aspect);
+		ElementalClusterBlock cluster = new ElementalClusterBlock(7, 3, FabricBlockSettings.copyOf(Blocks.AMETHYST_CLUSTER).luminance(9).emissiveLighting(ThuwumcraftBlocks::always), aspect);
+		ElementalClusterBlock large = new ElementalClusterBlock(5, 3, FabricBlockSettings.copyOf(Blocks.LARGE_AMETHYST_BUD).luminance(7).emissiveLighting(ThuwumcraftBlocks::always), aspect);
+		ElementalClusterBlock medium = new ElementalClusterBlock(4, 3, FabricBlockSettings.copyOf(Blocks.MEDIUM_AMETHYST_BUD).luminance(5).emissiveLighting(ThuwumcraftBlocks::always), aspect);
+		ElementalClusterBlock small = new ElementalClusterBlock(3, 3, FabricBlockSettings.copyOf(Blocks.SMALL_AMETHYST_BUD).luminance(4).emissiveLighting(ThuwumcraftBlocks::always), aspect);
 		ElementalBlock block = new ElementalBlock(FabricBlockSettings.copyOf(Blocks.AMETHYST_BLOCK), aspect);
 		BuddingElementalBlock budding = new BuddingElementalBlock(FabricBlockSettings.copyOf(Blocks.BUDDING_AMETHYST), aspect);
 		BlockItem clusterItem = new BlockItem(cluster, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));

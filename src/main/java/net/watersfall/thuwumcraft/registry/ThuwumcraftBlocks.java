@@ -93,7 +93,7 @@ public class ThuwumcraftBlocks
 		return Registry.register(Registry.BLOCK, Thuwumcraft.getId(id), block);
 	}
 
-	private static boolean always(BlockState state, BlockView world, BlockPos pos)
+	public static boolean always(BlockState state, BlockView world, BlockPos pos)
 	{
 		return true;
 	}
