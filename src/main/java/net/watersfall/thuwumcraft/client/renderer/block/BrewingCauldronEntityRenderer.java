@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class BrewingCauldronEntityRenderer extends AbstractCauldronRenderer<BrewingCauldronEntity>
 {
-	private static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
+	public static final HashMap<Item, Sprite> SPRITE_CACHE = new HashMap<>();
 
 	public BrewingCauldronEntityRenderer(BlockEntityRendererFactory.Context context)
 	{

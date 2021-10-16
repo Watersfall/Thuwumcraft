@@ -8,21 +8,17 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Vec3f;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.block.entity.EssentiaRefineryBlockEntity;
 import net.watersfall.thuwumcraft.client.util.RenderHelper;
 
+import static net.watersfall.thuwumcraft.client.renderer.SpriteCache.WATER_SPRITE;
+
 public class EssentiaRefineryRenderer implements BlockEntityRenderer<EssentiaRefineryBlockEntity>
 {
-	private static final Sprite WATER_SPRITE = ((SpriteAtlasTexture) MinecraftClient.getInstance()
-		.getTextureManager()
-		.getTexture(new Identifier("minecraft", "textures/atlas/blocks.png"))).getSprite(new Identifier("block/water_still"));
 	private final BlockEntityRenderDispatcher dispatcher;
 	private final TextRenderer textRenderer;
 

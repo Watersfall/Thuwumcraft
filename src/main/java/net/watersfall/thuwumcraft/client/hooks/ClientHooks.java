@@ -15,6 +15,7 @@ import net.minecraft.util.math.Vec3f;
 import net.watersfall.thuwumcraft.api.client.item.CustomTooltipDataComponent;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.client.ThuwumcraftClient;
+import net.watersfall.thuwumcraft.client.renderer.SpriteCache;
 import net.watersfall.thuwumcraft.client.util.ScreenHelper;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -111,5 +112,10 @@ public class ClientHooks
 			return Optional.of(list2);
 		}
 		return Optional.empty();
+	}
+
+	public static void onResourceReload()
+	{
+		SpriteCache.reload();
 	}
 }
