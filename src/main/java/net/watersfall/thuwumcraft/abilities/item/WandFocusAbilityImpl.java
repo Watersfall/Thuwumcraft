@@ -9,12 +9,10 @@ import net.watersfall.thuwumcraft.spell.SpellActionInstance;
 
 public class WandFocusAbilityImpl implements WandFocusAbility
 {
-	private NbtCompound tag;
 	private SpellActionInstance spell;
 
 	public WandFocusAbilityImpl(Spell spell, ItemStack stack)
 	{
-		this.tag = new NbtCompound();
 		setSpell(new SpellActionInstance(spell, 0, 0));
 	}
 
@@ -32,15 +30,21 @@ public class WandFocusAbilityImpl implements WandFocusAbility
 	@Override
 	public NbtCompound toNbt(NbtCompound tag, ItemStack stack)
 	{
-		return this.tag;
+		if(spell != null && spell.spell() != null)
+		{
+			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		}
+		return tag;
 	}
 
 	@Override
 	public void fromNbt(NbtCompound tag, ItemStack stack)
 	{
-		this.tag = tag;
-		Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
-		setSpell(new SpellActionInstance(action, 0, 0));
+		if(tag.contains("spell"))
+		{
+			Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
+			setSpell(new SpellActionInstance(action, 0, 0));
+		}
 	}
 
 	@Override
@@ -53,13 +57,5 @@ public class WandFocusAbilityImpl implements WandFocusAbility
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		if(spell == null || spell.spell() == null)
-		{
-			tag.putString("spell", "");
-		}
-		else
-		{
-			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
-		}
 	}
 }

@@ -14,11 +14,9 @@ public class WandAbilityImpl implements WandAbility
 	private WandCoreMaterial core;
 	private SpellActionInstance spell;
 	private double vis;
-	private NbtCompound tag;
 
 	public WandAbilityImpl()
 	{
-		this.tag = new NbtCompound();
 		setWandCap(WandCapMaterials.IRON);
 		setWandCore(WandCoreMaterials.WOOD);
 		setSpell(null);
@@ -58,49 +56,24 @@ public class WandAbilityImpl implements WandAbility
 	public void setWandCap(WandCapMaterial cap)
 	{
 		this.cap = cap;
-		if(cap == null)
-		{
-			tag.putString("cap", "");
-		}
-		else
-		{
-			tag.putString("cap", cap.getId().toString());
-		}
 	}
 
 	@Override
 	public void setWandCore(WandCoreMaterial core)
 	{
 		this.core = core;
-		if(core == null)
-		{
-			tag.putString("core", "");
-		}
-		else
-		{
-			tag.putString("core", core.getId().toString());
-		}
 	}
 
 	@Override
 	public void setSpell(SpellActionInstance spell)
 	{
 		this.spell = spell;
-		if(spell == null || spell.spell() == null)
-		{
-			tag.putString("spell", "");
-		}
-		else
-		{
-			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
-		}
 	}
 
 	@Override
 	public void setVis(double vis)
 	{
 		this.vis = vis;
-		tag.putDouble("vis", vis);
 	}
 
 	@Override
@@ -122,17 +95,38 @@ public class WandAbilityImpl implements WandAbility
 	@Override
 	public NbtCompound toNbt(NbtCompound tag, ItemStack itemStack)
 	{
-		return this.tag;
+		if(cap != null)
+		{
+			tag.putString("cap", cap.getId().toString());
+		}
+		if(core != null)
+		{
+			tag.putString("core", core.getId().toString());
+		}
+		if(spell != null && spell.spell() != null)
+		{
+			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+		}
+		tag.putDouble("vis", vis);
+		return tag;
 	}
 
 	@Override
 	public void fromNbt(NbtCompound tag, ItemStack itemStack)
 	{
-		this.tag = tag;
-		this.cap = WandCapMaterial.REGISTRY.get(new Identifier(tag.getString("cap")));
-		this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
-		Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
-		this.spell = new SpellActionInstance(action, 0, 0);
+		if(tag.contains("cap"))
+		{
+			this.cap = WandCapMaterial.REGISTRY.get(new Identifier(tag.getString("cap")));
+		}
+		if(tag.contains("core"))
+		{
+			this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
+		}
+		if(tag.contains("spell"))
+		{
+			Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
+			this.spell = new SpellActionInstance(action, 0, 0);
+		}
 		this.vis = tag.getDouble("vis");
 	}
 }
