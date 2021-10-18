@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.entity.WindEntity;
+import net.watersfall.thuwumcraft.entity.spell.WindEntity;
 
 public class WindEntityRenderer extends EntityRenderer<WindEntity>
 {

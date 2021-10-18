@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.entity;
+package net.watersfall.thuwumcraft.entity.spell;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;

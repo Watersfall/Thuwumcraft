@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
@@ -26,6 +27,8 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -337,6 +340,18 @@ public class Thuwumcraft implements ModInitializer
 			provider.toPacket(buf);
 			ServerPlayNetworking.send(handler.getPlayer(), getId("abilities_packet_player"), buf);
 		}));
+		FabricDefaultAttributeRegistry.register(ThuwumcraftEntities.GOLEM,
+				DefaultAttributeContainer.builder()
+						.add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
+						.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
+						.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
+						.add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5)
+						.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16)
+						.add(EntityAttributes.GENERIC_ARMOR, 0)
+						.add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 0)
+						.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
+						.add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5)
+		);
 	}
 
 	private static void generateNecromancyDrop(Item item, FabricLootSupplierBuilder supplier, Tag<EntityType<?>> tag)

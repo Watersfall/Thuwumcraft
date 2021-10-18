@@ -6,7 +6,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.entity.*;
+import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
+import net.watersfall.thuwumcraft.entity.spell.*;
 
 public class ThuwumcraftEntities
 {
@@ -15,6 +16,7 @@ public class ThuwumcraftEntities
 	public static final EntityType<FireEntity> FIRE_ENTITY;
 	public static final EntityType<SandEntity> SAND_ENTITY;
 	public static final EntityType<WindEntity> WIND;
+	public static final EntityType<GolemEntity> GOLEM;
 
 	static
 	{
@@ -61,6 +63,13 @@ public class ThuwumcraftEntities
 						.dimensions(EntityDimensions.fixed(0.5F, 0.5F))
 						.trackedUpdateRate(10)
 						.trackRangeBlocks(4)
+						.build()
+		);
+		GOLEM = Registry.register(
+				Registry.ENTITY_TYPE,
+				Thuwumcraft.getId("golem"),
+				FabricEntityTypeBuilder.<GolemEntity>create(SpawnGroup.MISC, GolemEntity::new)
+						.dimensions(EntityDimensions.fixed(0.65F, 1))
 						.build()
 		);
 	}

@@ -111,6 +111,9 @@ public class AlchemicalFurnaceHandler extends ScreenHandler
 	public void onSlotClick(int slotIndex, int clickData, SlotActionType actionType, PlayerEntity player)
 	{
 		super.onSlotClick(slotIndex, clickData, actionType, player);
-		this.getSlot(slotIndex).markDirty();
+		if(slotIndex >= 0)
+		{
+			this.getSlot(slotIndex).markDirty();
+		}
 	}
 }

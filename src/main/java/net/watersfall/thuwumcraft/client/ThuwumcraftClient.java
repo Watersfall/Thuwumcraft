@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
@@ -88,14 +89,16 @@ import net.watersfall.thuwumcraft.client.gui.element.ItemElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
 import net.watersfall.thuwumcraft.client.gui.item.AspectTooltipComponent;
 import net.watersfall.thuwumcraft.client.item.AspectTooltipData;
+import net.watersfall.thuwumcraft.client.model.GolemEntityModel;
 import net.watersfall.thuwumcraft.client.particle.FireParticle;
 import net.watersfall.thuwumcraft.client.particle.MagicForestParticle;
 import net.watersfall.thuwumcraft.client.particle.WaterParticle;
 import net.watersfall.thuwumcraft.client.renderer.block.*;
 import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.thuwumcraft.client.renderer.entity.WindEntityRenderer;
+import net.watersfall.thuwumcraft.client.renderer.entity.golem.GolemEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
-import net.watersfall.thuwumcraft.entity.WindEntity;
+import net.watersfall.thuwumcraft.entity.spell.WindEntity;
 import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
 import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
@@ -686,6 +689,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
 			preRegisterArmorTextures(Thuwumcraft.getId(item.getName()), false);
 		});
+		EntityModelLayerRegistry.registerModelLayer(GolemEntityRenderer.MODEL_LAYER, GolemEntityModel::getTexturedModelData);
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(Thuwumcraft.getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(Thuwumcraft.getId("player_research_ability"), PlayerResearchAbilityImpl::new);
@@ -697,6 +701,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.FIRE_ENTITY, WaterEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_ENTITY, WaterEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WIND, WindEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.GOLEM, GolemEntityRenderer::new);
 		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM, Thuwumcraft.getId("level"), ((stack, world, entity, seed) -> {
 			return ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM.getLevel(stack);
 		}));

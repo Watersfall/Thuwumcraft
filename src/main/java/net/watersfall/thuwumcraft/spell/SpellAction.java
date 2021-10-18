@@ -9,10 +9,10 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
-import net.watersfall.thuwumcraft.entity.FireEntity;
-import net.watersfall.thuwumcraft.entity.IceProjectileEntity;
-import net.watersfall.thuwumcraft.entity.SandEntity;
-import net.watersfall.thuwumcraft.entity.WaterEntity;
+import net.watersfall.thuwumcraft.entity.spell.FireEntity;
+import net.watersfall.thuwumcraft.entity.spell.IceProjectileEntity;
+import net.watersfall.thuwumcraft.entity.spell.SandEntity;
+import net.watersfall.thuwumcraft.entity.spell.WaterEntity;
 
 @FunctionalInterface
 public interface SpellAction

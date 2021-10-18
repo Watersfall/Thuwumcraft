@@ -40,6 +40,35 @@ public class InventoryHelper
 		return false;
 	}
 
+	public static ItemStack insert(Inventory inventory, ItemStack stack)
+	{
+		for(int i = 0; i < inventory.size() && !stack.isEmpty(); i++)
+		{
+			ItemStack invStack = inventory.getStack(i);
+			if(invStack.isEmpty())
+			{
+				inventory.setStack(i, stack);
+				return ItemStack.EMPTY;
+			}
+			else if(ItemStack.canCombine(stack, invStack))
+			{
+				if(invStack.getCount() + stack.getCount() > invStack.getMaxCount())
+				{
+					int original = invStack.getCount();
+					int count = Math.min(invStack.getMaxCount(), invStack.getCount() + stack.getCount());
+					invStack.setCount(count);
+					stack.decrement(count - original);
+				}
+				else
+				{
+					invStack.increment(stack.getCount());
+					return ItemStack.EMPTY;
+				}
+			}
+		}
+		return stack;
+	}
+
 	public static void useItem(ItemStack stack, PlayerEntity player, Hand hand, int count)
 	{
 		useItem(stack, player, hand, count, ItemStack.EMPTY);
