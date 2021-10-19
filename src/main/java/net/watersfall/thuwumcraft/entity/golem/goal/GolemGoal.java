@@ -3,6 +3,7 @@ package net.watersfall.thuwumcraft.entity.golem.goal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 
+//TODO create interface
 public abstract class GolemGoal extends Goal
 {
 	protected final GolemEntity golem;

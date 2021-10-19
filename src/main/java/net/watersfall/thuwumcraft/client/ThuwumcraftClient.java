@@ -61,15 +61,19 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.WorldChunk;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.abilities.chunk.GolemMarkersAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
+import net.watersfall.thuwumcraft.api.abilities.chunk.GolemMarkersAbility;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
@@ -80,6 +84,7 @@ import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
 import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.api.client.render.AspectRenderer;
+import net.watersfall.thuwumcraft.api.golem.GolemMarker;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
@@ -246,6 +251,58 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 			return true;
+		});
+		WorldRenderEvents.AFTER_ENTITIES.register(world -> {
+			if(MinecraftClient.getInstance().player != null)
+			{
+				MatrixStack matrices = world.matrixStack();
+				ChunkPos center = new ChunkPos(MinecraftClient.getInstance().player.getBlockPos());
+				for(ChunkPos pos : ChunkPos.stream(center, 2).toList())
+				{
+					Chunk chunk = world.world().getChunk(pos.x, pos.z);
+					AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
+					Optional<GolemMarkersAbility> optional = provider.getAbility(GolemMarkersAbility.ID, GolemMarkersAbility.class);
+					if(optional.isPresent())
+					{
+						GolemMarkersAbility ability = optional.get();
+						if(ability.getAllMarkers().size() > 0)
+						{
+							matrices.push();
+							matrices.translate(-world.camera().getPos().x, -world.camera().getPos().y, -world.camera().getPos().z);
+							for(GolemMarker marker : ability.getAllMarkers())
+							{
+								Direction direction = marker.side();
+								Direction.Axis axis = marker.side().getAxis();
+								BlockPos one = marker.pos().add(
+										direction == Direction.EAST ? 1 : 0,
+										direction == Direction.UP ? 1 : 0,
+										direction == Direction.SOUTH ? 1 : 0
+								);
+								BlockPos two = one.add(
+										axis == Direction.Axis.X ? 0 : 1,
+										axis == Direction.Axis.Y ? 0 : 1,
+										axis == Direction.Axis.Z ? 0 : 1
+								);
+								WorldRenderer.drawBox(
+										matrices,
+										world.consumers().getBuffer(RenderLayer.LINES),
+										one.getX(),
+										one.getY(),
+										one.getZ(),
+										two.getX(),
+										two.getY(),
+										two.getZ(),
+										marker.color().getColorComponents()[0],
+										marker.color().getColorComponents()[1],
+										marker.color().getColorComponents()[2],
+										1F
+								);
+							}
+							matrices.pop();
+						}
+					}
+				}
+			}
 		});
 	}
 
@@ -609,6 +666,16 @@ public class ThuwumcraftClient implements ClientModInitializer
 				registerAspectTooltips();
 			}
 		}));
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("golem_markers"), ((client, handler, buf, responseSender) -> {
+			ChunkPos pos = new ChunkPos(buf.readLong());
+			WorldChunk chunk = client.world.getChunk(pos.x, pos.z);
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
+			Optional<GolemMarkersAbility> optional = provider.getAbility(GolemMarkersAbility.ID, GolemMarkersAbility.class);
+			if(optional.isPresent())
+			{
+				optional.get().fromPacket(buf);
+			}
+		}));
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
@@ -691,6 +758,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		});
 		EntityModelLayerRegistry.registerModelLayer(GolemEntityRenderer.MODEL_LAYER, GolemEntityModel::getTexturedModelData);
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(Thuwumcraft.getId("vis_ability"), VisAbilityImpl::new);
+		AbilityProvider.CHUNK_REGISTRY.registerPacket(GolemMarkersAbility.ID, GolemMarkersAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(Thuwumcraft.getId("player_research_ability"), PlayerResearchAbilityImpl::new);
 		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);

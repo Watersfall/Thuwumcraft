@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.entity.golem.goal;
 
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
@@ -29,7 +30,8 @@ public class PickupItemGoal extends GolemGoal
 		if(golem.getMainHandStack().isEmpty())
 		{
 			List<ItemEntity> items = golem.world.getEntitiesByClass(ItemEntity.class, golem.getBoundingBox().expand(16), (item) -> {
-				return golem.getNavigation().findPathTo(item, 32) != null;
+				Path path = golem.getNavigation().findPathTo(item, 32);
+				return path != null && path.reachesTarget();
 			});
 			return !items.isEmpty();
 		}
@@ -40,7 +42,8 @@ public class PickupItemGoal extends GolemGoal
 	public void start()
 	{
 		List<ItemEntity> items = golem.world.getEntitiesByClass(ItemEntity.class, golem.getBoundingBox().expand(16), (item) -> {
-			return golem.getNavigation().findPathTo(item, 32) != null;
+			Path path = golem.getNavigation().findPathTo(item, 32);
+			return path != null && path.reachesTarget();
 		});
 		if(!items.isEmpty())
 		{

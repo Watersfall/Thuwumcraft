@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
@@ -60,11 +61,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GenerationStep;
+import net.watersfall.thuwumcraft.abilities.chunk.GolemMarkersAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.abilities.item.*;
+import net.watersfall.thuwumcraft.api.abilities.chunk.GolemMarkersAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
@@ -352,6 +355,16 @@ public class Thuwumcraft implements ModInitializer
 						.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
 						.add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5)
 		);
+		PlayerBlockBreakEvents.AFTER.register(((world, player, pos, state, blockEntity) -> {
+			Chunk chunk = world.getChunk(pos);
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
+			Optional<GolemMarkersAbility> optional = provider.getAbility(GolemMarkersAbility.ID, GolemMarkersAbility.class);
+			if(optional.isPresent())
+			{
+				optional.get().removeMarkers(pos);
+				optional.get().sync(chunk);
+			}
+		}));
 	}
 
 	private static void generateNecromancyDrop(Item item, FabricLootSupplierBuilder supplier, Tag<EntityType<?>> tag)
@@ -407,8 +420,10 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(WandFocusAbility.ID, WandFocusAbilityImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(StatusEffectItem.ID, StatusEffectItemImpl::new);
+		AbilityProvider.CHUNK_REGISTRY.register(GolemMarkersAbility.ID, GolemMarkersAbilityImpl::new);
 		AbilityCreateEvent.CHUNK.register((world, pos, provider) -> {
 			provider.addAbility(new VisAbilityImpl());
+			provider.addAbility(new GolemMarkersAbilityImpl());
 		});
 		AbilityCreateEvent.ITEM.register((item, provider) -> {
 			if(item.asItem() == Items.NETHERITE_CHESTPLATE)

@@ -13,6 +13,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
+import net.watersfall.thuwumcraft.entity.golem.goal.ExtractFromInventoryGoal;
 import net.watersfall.thuwumcraft.entity.golem.goal.InsertIntoInventoryGoal;
 import net.watersfall.thuwumcraft.entity.golem.goal.PickupItemGoal;
 import net.watersfall.thuwumcraft.item.*;
@@ -21,6 +22,7 @@ import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
 import net.watersfall.thuwumcraft.item.armor.SpeedBootsItem;
 import net.watersfall.thuwumcraft.item.golem.GolemBellItem;
 import net.watersfall.thuwumcraft.item.golem.GolemItem;
+import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.golem.GolemSealItem;
 import net.watersfall.thuwumcraft.item.tool.*;
 import net.watersfall.thuwumcraft.item.wand.*;
@@ -127,6 +129,8 @@ public class ThuwumcraftItems
 	public static final Item GOLEM;
 	public static final GolemBellItem GOLEM_BELL_ITEM;
 	public static final GolemSealItem PICKUP_SEAL;
+	public static final GolemSealItem STOCK_SEAL;
+	public static final GolemMarkerItem GOLEM_MARKER;
 	public static final List<Item> ITEMS;
 
 	static
@@ -234,6 +238,8 @@ public class ThuwumcraftItems
 		GOLEM = register("golem", new GolemItem(defaultSettings()));
 		GOLEM_BELL_ITEM = register("golemancy_bell", new GolemBellItem(defaultSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
 		PICKUP_SEAL = register("pickup_golem_seal", new GolemSealItem(defaultSettings(), new PickupItemGoal(null), new InsertIntoInventoryGoal(null)));
+		STOCK_SEAL = register("stock_golem_seal", new GolemSealItem(defaultSettings(), new ExtractFromInventoryGoal(null), new InsertIntoInventoryGoal(null)));
+		GOLEM_MARKER = register("golem_marker", new GolemMarkerItem(defaultSettings().maxCount(1)));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)
