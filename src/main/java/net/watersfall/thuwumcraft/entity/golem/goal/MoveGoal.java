@@ -7,13 +7,10 @@ import java.util.EnumSet;
 
 public class MoveGoal extends GolemGoal
 {
-	private final BlockPos pos;
-
 	public MoveGoal(GolemEntity entity)
 	{
 		super(entity);
 		this.setControls(EnumSet.of(Control.MOVE));
-		this.pos = entity.getHome();
 	}
 
 	@Override
@@ -26,6 +23,7 @@ public class MoveGoal extends GolemGoal
 	public void start()
 	{
 		super.start();
+		BlockPos pos = golem.getHome();
 		golem.getNavigation().startMovingTo(pos.getX(), pos.getY(), pos.getZ(), 1);
 	}
 
@@ -33,6 +31,7 @@ public class MoveGoal extends GolemGoal
 	public void tick()
 	{
 		super.tick();
+		BlockPos pos = golem.getHome();
 		golem.getNavigation().startMovingTo(pos.getX(), pos.getY(), pos.getZ(), 1);
 	}
 

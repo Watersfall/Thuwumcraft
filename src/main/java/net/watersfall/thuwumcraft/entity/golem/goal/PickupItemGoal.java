@@ -42,8 +42,12 @@ public class PickupItemGoal extends GolemGoal
 	public void start()
 	{
 		List<ItemEntity> items = golem.world.getEntitiesByClass(ItemEntity.class, golem.getBoundingBox().expand(16), (item) -> {
-			Path path = golem.getNavigation().findPathTo(item, 32);
-			return path != null && path.reachesTarget();
+			if(golem.getWhitelist().isEmpty() || golem.getWhitelist().isOf(item.getStack().getItem()))
+			{
+				Path path = golem.getNavigation().findPathTo(item, 32);
+				return path != null && path.reachesTarget();
+			}
+			return false;
 		});
 		if(!items.isEmpty())
 		{

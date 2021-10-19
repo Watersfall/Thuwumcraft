@@ -6,7 +6,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -94,7 +93,7 @@ public class ExtractFromInventoryGoal extends GolemGoal
 			for(int z = -1; z <= 1; z++)
 			{
 				GolemMarkersAbility ability = AbilityProvider.getAbility(world.getChunk(center.x + x, center.z + z), GolemMarkersAbility.ID, GolemMarkersAbility.class).get();
-				Optional<GolemMarker> optional = ability.getClosestMarker(golem.getBlockPos(), DyeColor.BLUE);
+				Optional<GolemMarker> optional = ability.getClosestMarker(golem.getBlockPos(), golem.getColor(), true);
 				if(optional.isPresent())
 				{
 					GolemMarker check = optional.get();
@@ -124,9 +123,12 @@ public class ExtractFromInventoryGoal extends GolemGoal
 			for(int i : inventory.getAvailableSlots(side))
 			{
 				ItemStack stack = inventory.getStack(i);
-				if(inventory.canExtract(i, stack, side) && !stack.isEmpty())
+				if(golem.getWhitelist().isEmpty() || golem.getWhitelist().isOf(stack.getItem()))
 				{
-					return i;
+					if(inventory.canExtract(i, stack, side) && !stack.isEmpty())
+					{
+						return i;
+					}
 				}
 			}
 		}
@@ -135,9 +137,12 @@ public class ExtractFromInventoryGoal extends GolemGoal
 			for(int i = 0; i < inventory.size(); i++)
 			{
 				ItemStack stack = inventory.getStack(i);
-				if(!stack.isEmpty())
+				if(golem.getWhitelist().isEmpty() || golem.getWhitelist().isOf(stack.getItem()))
 				{
-					return i;
+					if(!stack.isEmpty())
+					{
+						return i;
+					}
 				}
 			}
 		}
@@ -148,9 +153,12 @@ public class ExtractFromInventoryGoal extends GolemGoal
 				for(int i : inventory.getAvailableSlots(side))
 				{
 					ItemStack stack = inventory.getStack(i);
-					if(inventory.canExtract(i, stack, side) && !stack.isEmpty())
+					if(golem.getWhitelist().isEmpty() || golem.getWhitelist().isOf(stack.getItem()))
 					{
-						return i;
+						if(inventory.canExtract(i, stack, side) && !stack.isEmpty())
+						{
+							return i;
+						}
 					}
 				}
 			}

@@ -10,6 +10,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -204,5 +205,27 @@ public class RenderHelper
 									 BlockEntityRenderDispatcher dispatcher)
 	{
 		renderAspects(aspects, entity.getPos(), matrices, vertexConsumers, textRenderer, dispatcher.camera.getPos());
+	}
+
+	public static boolean isHoldingBell(PlayerEntity player)
+	{
+		if(player == null)
+		{
+			return false;
+		}
+		ItemStack main = player.getMainHandStack();
+		ItemStack off = player.getOffHandStack();
+		return main.isOf(ThuwumcraftItems.GOLEM_BELL_ITEM) || off.isOf(ThuwumcraftItems.GOLEM_BELL_ITEM);
+	}
+
+	public static boolean isHoldingMarker(PlayerEntity player)
+	{
+		if(player == null)
+		{
+			return false;
+		}
+		ItemStack main = player.getMainHandStack();
+		ItemStack off = player.getOffHandStack();
+		return main.isOf(ThuwumcraftItems.GOLEM_MARKER) || off.isOf(ThuwumcraftItems.GOLEM_MARKER);
 	}
 }

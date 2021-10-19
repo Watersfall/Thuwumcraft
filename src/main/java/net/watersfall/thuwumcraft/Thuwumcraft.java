@@ -32,6 +32,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.EntityPropertiesLootCondition;
@@ -364,6 +365,13 @@ public class Thuwumcraft implements ModInitializer
 				optional.get().removeMarkers(pos);
 				optional.get().sync(chunk);
 			}
+		}));
+		UseBlockCallback.EVENT.register(((player, world, hand, hitResult) -> {
+			if(player.getStackInHand(hand).isOf(ThuwumcraftItems.GOLEM_MARKER))
+			{
+				return player.getStackInHand(hand).useOnBlock(new ItemUsageContext(player, hand, hitResult));
+			}
+			return ActionResult.PASS;
 		}));
 	}
 

@@ -101,13 +101,17 @@ public class GolemMarkersAbilityImpl implements GolemMarkersAbility
 	}
 
 	@Override
-	public Optional<GolemMarker> getClosestMarker(BlockPos pos, DyeColor color)
+	public Optional<GolemMarker> getClosestMarker(BlockPos pos, DyeColor color, boolean exclude)
 	{
 		double distance = Integer.MAX_VALUE;
 		GolemMarker closest = null;
 		for(GolemMarker marker : markers)
 		{
-			if(marker.color() == color)
+			if(exclude && marker.pos().equals(pos))
+			{
+				continue;
+			}
+			if(marker.color() == color || marker.color() == DyeColor.WHITE || color == DyeColor.WHITE)
 			{
 				double test = pos.getSquaredDistance(marker.pos());
 				if(test < distance)

@@ -26,7 +26,7 @@ public interface GolemMarkersAbility extends Ability<Chunk>, AbilityClientSerial
 
 	List<GolemMarker> getMarkers(BlockPos pos);
 
-	Optional<GolemMarker> getClosestMarker(BlockPos pos, DyeColor color);
+	Optional<GolemMarker> getClosestMarker(BlockPos pos, DyeColor color, boolean exclude);
 
 	List<GolemMarker> getAllMarkers();
 

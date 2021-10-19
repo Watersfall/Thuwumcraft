@@ -30,7 +30,22 @@ public class GolemMarkerItem extends Item
 			if(optional.isPresent())
 			{
 				GolemMarkersAbility ability = optional.get();
-				ability.addMarker(new GolemMarker(DyeColor.BLUE, context.getBlockPos(), chunk.getPos(), context.getSide()));
+				if(context.getPlayer() != null && context.getPlayer().isSneaking())
+				{
+					ability.removeMarkers(context.getBlockPos());
+				}
+				else
+				{
+					Optional<GolemMarker> check = ability.getMarker(context.getBlockPos(), context.getSide());
+					if(check.isPresent())
+					{
+						ability.removeMarker(context.getBlockPos(), context.getSide());
+					}
+					else
+					{
+						ability.addMarker(new GolemMarker(DyeColor.BLUE, context.getBlockPos(), chunk.getPos(), context.getSide()));
+					}
+				}
 				ability.sync(chunk);
 			}
 		}

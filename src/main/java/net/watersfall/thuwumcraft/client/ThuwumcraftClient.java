@@ -56,12 +56,11 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
@@ -103,6 +102,8 @@ import net.watersfall.thuwumcraft.client.renderer.entity.WaterEntityRenderer;
 import net.watersfall.thuwumcraft.client.renderer.entity.WindEntityRenderer;
 import net.watersfall.thuwumcraft.client.renderer.entity.golem.GolemEntityRenderer;
 import net.watersfall.thuwumcraft.client.toast.ResearchToast;
+import net.watersfall.thuwumcraft.client.util.RenderHelper;
+import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.entity.spell.WindEntity;
 import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
@@ -253,9 +254,35 @@ public class ThuwumcraftClient implements ClientModInitializer
 			return true;
 		});
 		WorldRenderEvents.AFTER_ENTITIES.register(world -> {
-			if(MinecraftClient.getInstance().player != null)
+			PlayerEntity player = MinecraftClient.getInstance().player;
+			MatrixStack matrices = world.matrixStack();
+			if(RenderHelper.isHoldingBell(player))
 			{
-				MatrixStack matrices = world.matrixStack();
+				matrices.push();
+				matrices.translate(-world.camera().getPos().x, -world.camera().getPos().y, -world.camera().getPos().z);
+				for(GolemEntity golem : world.world().getEntitiesByClass(GolemEntity.class, player.getBoundingBox().expand(64), (golem) -> true))
+				{
+					renderBox(matrices, world.consumers(), golem.getSide(), golem.getHome(), golem.getColor());
+					if(golem.hasCustomName())
+					{
+						matrices.push();
+						BlockPos pos = golem.getHome();
+						Direction dir = golem.getSide();
+						matrices.translate(pos.getX() + dir.getOffsetX() + 0.5, pos.getY() + dir.getOffsetY() + 0.5, pos.getZ() + dir.getOffsetZ() + 0.5);
+						matrices.scale(0.025F, -0.025F, 0.025F);
+						Vec3d camera = world.camera().getPos();
+						Vec3d center = new Vec3d(pos.getX() + 0.5 + dir.getOffsetX(), pos.getY() + 0.5 + dir.getOffsetY(), pos.getZ() + 0.5 + dir.getOffsetZ());
+						float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);
+						matrices.multiply(Quaternion.method_35821(angle, 0, 0));
+						matrices.translate(golem.getCustomName().getString().length() / 2F * -4F, 0, 0);
+						MinecraftClient.getInstance().textRenderer.draw(golem.getCustomName(), 0F, 0F, -1, false, matrices.peek().getModel(), world.consumers(), true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+						matrices.pop();
+					}
+				}
+				matrices.pop();
+			}
+			if(RenderHelper.isHoldingMarker(player))
+			{
 				ChunkPos center = new ChunkPos(MinecraftClient.getInstance().player.getBlockPos());
 				for(ChunkPos pos : ChunkPos.stream(center, 2).toList())
 				{
@@ -271,32 +298,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 							matrices.translate(-world.camera().getPos().x, -world.camera().getPos().y, -world.camera().getPos().z);
 							for(GolemMarker marker : ability.getAllMarkers())
 							{
-								Direction direction = marker.side();
-								Direction.Axis axis = marker.side().getAxis();
-								BlockPos one = marker.pos().add(
-										direction == Direction.EAST ? 1 : 0,
-										direction == Direction.UP ? 1 : 0,
-										direction == Direction.SOUTH ? 1 : 0
-								);
-								BlockPos two = one.add(
-										axis == Direction.Axis.X ? 0 : 1,
-										axis == Direction.Axis.Y ? 0 : 1,
-										axis == Direction.Axis.Z ? 0 : 1
-								);
-								WorldRenderer.drawBox(
-										matrices,
-										world.consumers().getBuffer(RenderLayer.LINES),
-										one.getX(),
-										one.getY(),
-										one.getZ(),
-										two.getX(),
-										two.getY(),
-										two.getZ(),
-										marker.color().getColorComponents()[0],
-										marker.color().getColorComponents()[1],
-										marker.color().getColorComponents()[2],
-										1F
-								);
+								renderBox(matrices, world.consumers(), marker.side(), marker.pos(), marker.color());
 							}
 							matrices.pop();
 						}
@@ -304,6 +306,35 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 		});
+	}
+
+	private static void renderBox(MatrixStack matrices, VertexConsumerProvider consumers, Direction direction, BlockPos pos, DyeColor color)
+	{
+		Direction.Axis axis = direction.getAxis();
+		BlockPos one = pos.add(
+				direction == Direction.EAST ? 1 : 0,
+				direction == Direction.UP ? 1 : 0,
+				direction == Direction.SOUTH ? 1 : 0
+		);
+		BlockPos two = one.add(
+				axis == Direction.Axis.X ? 0 : 1,
+				axis == Direction.Axis.Y ? 0 : 1,
+				axis == Direction.Axis.Z ? 0 : 1
+		);
+		WorldRenderer.drawBox(
+				matrices,
+				consumers.getBuffer(RenderLayer.getLines()),
+				one.getX(),
+				one.getY(),
+				one.getZ(),
+				two.getX(),
+				two.getY(),
+				two.getZ(),
+				color.getColorComponents()[0],
+				color.getColorComponents()[1],
+				color.getColorComponents()[2],
+				1F
+		);
 	}
 
 	private void preRegisterArmorTextures(Identifier name, boolean hasOverlay)
