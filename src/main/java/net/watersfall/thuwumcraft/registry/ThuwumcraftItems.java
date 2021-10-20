@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.collection.DefaultedList;
@@ -130,7 +131,22 @@ public class ThuwumcraftItems
 	public static final GolemBellItem GOLEM_BELL_ITEM;
 	public static final GolemSealItem PICKUP_SEAL;
 	public static final GolemSealItem STOCK_SEAL;
-	public static final GolemMarkerItem GOLEM_MARKER;
+	public static final GolemMarkerItem WHITE_GOLEM_MARKER;
+	public static final GolemMarkerItem ORANGE_GOLEM_MARKER;
+	public static final GolemMarkerItem MAGENTA_GOLEM_MARKER;
+	public static final GolemMarkerItem LIGHT_BLUE_GOLEM_MARKER;
+	public static final GolemMarkerItem YELLOW_GOLEM_MARKER;
+	public static final GolemMarkerItem LIME_GOLEM_MARKER;
+	public static final GolemMarkerItem PINK_GOLEM_MARKER;
+	public static final GolemMarkerItem GRAY_GOLEM_MARKER;
+	public static final GolemMarkerItem LIGHT_GRAY_GOLEM_MARKER;
+	public static final GolemMarkerItem CYAN_GOLEM_MARKER;
+	public static final GolemMarkerItem PURPLE_GOLEM_MARKER;
+	public static final GolemMarkerItem BLUE_GOLEM_MARKER;
+	public static final GolemMarkerItem BROWN_GOLEM_MARKER;
+	public static final GolemMarkerItem GREEN_GOLEM_MARKER;
+	public static final GolemMarkerItem RED_GOLEM_MARKER;
+	public static final GolemMarkerItem BLACK_GOLEM_MARKER;
 	public static final List<Item> ITEMS;
 
 	static
@@ -239,7 +255,27 @@ public class ThuwumcraftItems
 		GOLEM_BELL_ITEM = register("golemancy_bell", new GolemBellItem(defaultSettings().maxCount(1).rarity(Rarity.UNCOMMON)));
 		PICKUP_SEAL = register("pickup_golem_seal", new GolemSealItem(defaultSettings(), new PickupItemGoal(null), new InsertIntoInventoryGoal(null)));
 		STOCK_SEAL = register("stock_golem_seal", new GolemSealItem(defaultSettings(), new ExtractFromInventoryGoal(null), new InsertIntoInventoryGoal(null)));
-		GOLEM_MARKER = register("golem_marker", new GolemMarkerItem(defaultSettings().maxCount(1)));
+		WHITE_GOLEM_MARKER = register(DyeColor.WHITE);
+		ORANGE_GOLEM_MARKER = register(DyeColor.ORANGE);
+		MAGENTA_GOLEM_MARKER = register(DyeColor.MAGENTA);
+		LIGHT_BLUE_GOLEM_MARKER = register(DyeColor.LIGHT_BLUE);
+		YELLOW_GOLEM_MARKER = register(DyeColor.YELLOW);
+		LIME_GOLEM_MARKER = register(DyeColor.LIME);
+		PINK_GOLEM_MARKER = register(DyeColor.PINK);
+		GRAY_GOLEM_MARKER = register(DyeColor.GRAY);
+		LIGHT_GRAY_GOLEM_MARKER = register(DyeColor.LIGHT_GRAY);
+		CYAN_GOLEM_MARKER = register(DyeColor.CYAN);
+		PURPLE_GOLEM_MARKER = register(DyeColor.PURPLE);
+		BLUE_GOLEM_MARKER = register(DyeColor.BLUE);
+		BROWN_GOLEM_MARKER = register(DyeColor.BROWN);
+		GREEN_GOLEM_MARKER = register(DyeColor.GREEN);
+		RED_GOLEM_MARKER = register(DyeColor.RED);
+		BLACK_GOLEM_MARKER = register(DyeColor.BLACK);
+	}
+
+	private static GolemMarkerItem register(DyeColor color)
+	{
+		return register("golem_marker/" + color.asString(), new GolemMarkerItem(defaultSettings().maxCount(1), color));
 	}
 
 	private static <T extends Item> T register(Identifier id, T item)

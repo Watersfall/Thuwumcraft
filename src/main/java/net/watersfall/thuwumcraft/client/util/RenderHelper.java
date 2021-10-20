@@ -19,6 +19,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.client.renderer.ThuwumcraftRenderLayers;
+import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.Collection;
@@ -226,6 +227,6 @@ public class RenderHelper
 		}
 		ItemStack main = player.getMainHandStack();
 		ItemStack off = player.getOffHandStack();
-		return main.isOf(ThuwumcraftItems.GOLEM_MARKER) || off.isOf(ThuwumcraftItems.GOLEM_MARKER);
+		return main.getItem() instanceof GolemMarkerItem || off.getItem() instanceof GolemMarkerItem;
 	}
 }

@@ -1,8 +1,5 @@
 {
 	"parent": "thuwumcraft:item/golemancy_bell",
-	"textures": {
-		"layer0": "thuwumcraft:item/golem_marker"
-	},
 	"display": {
 		"firstperson_righthand": {
 			"rotation": [ 0, -270, 205 ],

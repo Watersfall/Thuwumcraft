@@ -87,6 +87,7 @@ import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.watersfall.thuwumcraft.gui.ThaumatoriumHandler;
+import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
@@ -367,7 +368,7 @@ public class Thuwumcraft implements ModInitializer
 			}
 		}));
 		UseBlockCallback.EVENT.register(((player, world, hand, hitResult) -> {
-			if(player.getStackInHand(hand).isOf(ThuwumcraftItems.GOLEM_MARKER))
+			if(player.getStackInHand(hand).getItem() instanceof GolemMarkerItem)
 			{
 				return player.getStackInHand(hand).useOnBlock(new ItemUsageContext(player, hand, hitResult));
 			}

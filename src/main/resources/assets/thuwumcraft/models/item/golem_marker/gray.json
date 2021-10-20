@@ -1,0 +1,6 @@
+{
+	"parent": "thuwumcraft:item/golem_marker",
+	"textures": {
+		"layer0": "thuwumcraft:item/golem_marker/gray"
+	}
+}
