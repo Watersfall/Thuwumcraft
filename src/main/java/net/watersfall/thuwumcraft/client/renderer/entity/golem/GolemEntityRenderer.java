@@ -46,13 +46,14 @@ public class GolemEntityRenderer extends BipedEntityRenderer<GolemEntity, GolemE
 	@Override
 	protected boolean hasLabel(GolemEntity mobEntity)
 	{
-		return super.hasLabel(mobEntity) || RenderHelper.isHoldingBell(MinecraftClient.getInstance().player);
+		return super.hasLabel(mobEntity) ||
+				(RenderHelper.isHoldingBell(MinecraftClient.getInstance().player) && RenderHelper.shouldRenderGolemOutline(MinecraftClient.getInstance().player, mobEntity));
 	}
 
 	@Override
 	protected void renderLabelIfPresent(GolemEntity golem, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light)
 	{
-		if(RenderHelper.isHoldingBell(MinecraftClient.getInstance().player))
+		if(RenderHelper.isHoldingBell(MinecraftClient.getInstance().player) && RenderHelper.shouldRenderGolemOutline(MinecraftClient.getInstance().player, golem))
 		{
 			matrices.push();
 			BlockPos pos = golem.getHome();

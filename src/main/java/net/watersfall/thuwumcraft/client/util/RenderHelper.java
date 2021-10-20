@@ -18,8 +18,11 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.*;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
+import net.watersfall.thuwumcraft.api.golem.GolemMarker;
+import net.watersfall.thuwumcraft.api.item.golem.RendersGolemMarkers;
+import net.watersfall.thuwumcraft.api.item.golem.RendersGolemOutlines;
 import net.watersfall.thuwumcraft.client.renderer.ThuwumcraftRenderLayers;
-import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
+import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.Collection;
@@ -214,9 +217,38 @@ public class RenderHelper
 		{
 			return false;
 		}
-		ItemStack main = player.getMainHandStack();
-		ItemStack off = player.getOffHandStack();
-		return main.isOf(ThuwumcraftItems.GOLEM_BELL_ITEM) || off.isOf(ThuwumcraftItems.GOLEM_BELL_ITEM);
+		for(EquipmentSlot slot : EquipmentSlot.values())
+		{
+			ItemStack stack = player.getEquippedStack(slot);
+			if(stack.getItem() instanceof RendersGolemOutlines outlineRenderer)
+			{
+				if(outlineRenderer.shouldRenderOutlines(stack, player))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean shouldRenderGolemOutline(PlayerEntity player, GolemEntity golem)
+	{
+		if(player == null || golem == null)
+		{
+			return false;
+		}
+		for(EquipmentSlot slot : EquipmentSlot.values())
+		{
+			ItemStack stack = player.getEquippedStack(slot);
+			if(stack.getItem() instanceof RendersGolemOutlines outlineRenderer)
+			{
+				if(outlineRenderer.shouldRenderOutline(stack, player, golem))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public static boolean isHoldingMarker(PlayerEntity player)
@@ -225,8 +257,37 @@ public class RenderHelper
 		{
 			return false;
 		}
-		ItemStack main = player.getMainHandStack();
-		ItemStack off = player.getOffHandStack();
-		return main.getItem() instanceof GolemMarkerItem || off.getItem() instanceof GolemMarkerItem;
+		for(EquipmentSlot slot : EquipmentSlot.values())
+		{
+			ItemStack stack = player.getEquippedStack(slot);
+			if(stack.getItem() instanceof RendersGolemMarkers markerRenderer)
+			{
+				if(markerRenderer.shouldRenderMarkers(stack, player))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean shouldRenderMarker(PlayerEntity player, GolemMarker marker)
+	{
+		if(player == null || marker == null)
+		{
+			return false;
+		}
+		for(EquipmentSlot slot : EquipmentSlot.values())
+		{
+			ItemStack stack = player.getEquippedStack(slot);
+			if(stack.getItem() instanceof RendersGolemMarkers markerRenderer)
+			{
+				if(markerRenderer.shouldRenderMarker(stack, player, marker))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

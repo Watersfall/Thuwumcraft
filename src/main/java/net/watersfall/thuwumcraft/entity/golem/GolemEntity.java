@@ -50,7 +50,7 @@ public class GolemEntity extends PathAwareEntity
 	@Override
 	public boolean isGlowing()
 	{
-		return super.isGlowing() || RenderHelper.isHoldingBell(MinecraftClient.getInstance().player);
+		return (RenderHelper.isHoldingBell(MinecraftClient.getInstance().player) && RenderHelper.shouldRenderGolemOutline(MinecraftClient.getInstance().player, this));
 	}
 
 	@Override

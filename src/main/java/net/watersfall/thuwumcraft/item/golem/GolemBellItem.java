@@ -11,11 +11,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
+import net.watersfall.thuwumcraft.api.item.golem.RendersGolemOutlines;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.wet.api.item.BeforeActions;
 
-public class GolemBellItem extends Item implements BeforeActions
+public class GolemBellItem extends Item implements BeforeActions, RendersGolemOutlines
 {
 	public GolemBellItem(Settings settings)
 	{

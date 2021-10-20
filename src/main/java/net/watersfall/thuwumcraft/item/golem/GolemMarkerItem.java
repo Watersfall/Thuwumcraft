@@ -12,12 +12,12 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.thuwumcraft.api.abilities.chunk.GolemMarkersAbility;
 import net.watersfall.thuwumcraft.api.golem.GolemMarker;
+import net.watersfall.thuwumcraft.api.item.golem.RendersGolemMarkers;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.Optional;
 
-//TODO turn into interface
-public class GolemMarkerItem extends Item
+public class GolemMarkerItem extends Item implements RendersGolemMarkers
 {
 	private final DyeColor color;
 	private String translationKey = null;

@@ -79,7 +79,7 @@ public class PickupItemGoal extends GolemGoal
 				ItemStack hand = golem.getMainHandStack();
 				for(ItemEntity entity : items)
 				{
-					if(hand.getCount() >= 16 || hand.getCount() >= hand.getMaxCount())
+					if(hand.getCount() >= 16 || hand.getCount() >= hand.getMaxCount() || (!golem.getWhitelist().isEmpty() && !entity.getStack().isOf(golem.getWhitelist().getItem())))
 					{
 						break;
 					}

@@ -262,21 +262,24 @@ public class ThuwumcraftClient implements ClientModInitializer
 				matrices.translate(-world.camera().getPos().x, -world.camera().getPos().y, -world.camera().getPos().z);
 				for(GolemEntity golem : world.world().getEntitiesByClass(GolemEntity.class, player.getBoundingBox().expand(64), (golem) -> true))
 				{
-					renderBox(matrices, world.consumers(), golem.getSide(), golem.getHome(), golem.getColor());
-					if(golem.hasCustomName())
+					if(RenderHelper.shouldRenderGolemOutline(player, golem))
 					{
-						matrices.push();
-						BlockPos pos = golem.getHome();
-						Direction dir = golem.getSide();
-						matrices.translate(pos.getX() + dir.getOffsetX() + 0.5, pos.getY() + dir.getOffsetY() + 0.5, pos.getZ() + dir.getOffsetZ() + 0.5);
-						matrices.scale(0.025F, -0.025F, 0.025F);
-						Vec3d camera = world.camera().getPos();
-						Vec3d center = new Vec3d(pos.getX() + 0.5 + dir.getOffsetX(), pos.getY() + 0.5 + dir.getOffsetY(), pos.getZ() + 0.5 + dir.getOffsetZ());
-						float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);
-						matrices.multiply(Quaternion.method_35821(angle, 0, 0));
-						matrices.translate(golem.getCustomName().getString().length() / 2F * -4F, 0, 0);
-						MinecraftClient.getInstance().textRenderer.draw(golem.getCustomName(), 0F, 0F, -1, false, matrices.peek().getModel(), world.consumers(), true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
-						matrices.pop();
+						renderBox(matrices, world.consumers(), golem.getSide(), golem.getHome(), golem.getColor());
+						if(golem.hasCustomName())
+						{
+							matrices.push();
+							BlockPos pos = golem.getHome();
+							Direction dir = golem.getSide();
+							matrices.translate(pos.getX() + dir.getOffsetX() + 0.5, pos.getY() + dir.getOffsetY() + 0.5, pos.getZ() + dir.getOffsetZ() + 0.5);
+							matrices.scale(0.025F, -0.025F, 0.025F);
+							Vec3d camera = world.camera().getPos();
+							Vec3d center = new Vec3d(pos.getX() + 0.5 + dir.getOffsetX(), pos.getY() + 0.5 + dir.getOffsetY(), pos.getZ() + 0.5 + dir.getOffsetZ());
+							float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);
+							matrices.multiply(Quaternion.method_35821(angle, 0, 0));
+							matrices.translate(golem.getCustomName().getString().length() / 2F * -4F, 0, 0);
+							MinecraftClient.getInstance().textRenderer.draw(golem.getCustomName(), 0F, 0F, -1, false, matrices.peek().getModel(), world.consumers(), true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+							matrices.pop();
+						}
 					}
 				}
 				matrices.pop();
@@ -298,7 +301,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 							matrices.translate(-world.camera().getPos().x, -world.camera().getPos().y, -world.camera().getPos().z);
 							for(GolemMarker marker : ability.getAllMarkers())
 							{
-								renderBox(matrices, world.consumers(), marker.side(), marker.pos(), marker.color());
+								if(RenderHelper.shouldRenderMarker(player, marker))
+								{
+									renderBox(matrices, world.consumers(), marker.side(), marker.pos(), marker.color());
+								}
 							}
 							matrices.pop();
 						}
