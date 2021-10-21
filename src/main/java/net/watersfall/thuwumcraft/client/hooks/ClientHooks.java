@@ -1,13 +1,16 @@
 package net.watersfall.thuwumcraft.client.hooks;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,14 +18,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3f;
+import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.client.item.CustomTooltipDataComponent;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
 import net.watersfall.thuwumcraft.client.ThuwumcraftClient;
 import net.watersfall.thuwumcraft.client.renderer.SpriteCache;
 import net.watersfall.thuwumcraft.client.util.ScreenHelper;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftStatusEffects;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +38,7 @@ import java.util.function.Function;
 public class ClientHooks
 {
 	private static final ItemStack STACK = new ItemStack(Items.SHIELD, 1);
+	private static final SpriteIdentifier HUNGRY_CHEST_TEXTURE = new SpriteIdentifier(TexturedRenderLayers.CHEST_ATLAS_TEXTURE, Thuwumcraft.getId("models/chest/hungry_chest"));
 
 	public static void addTooltipsToCreativeScreen(Screen screen, ItemStack stack, MatrixStack matrices, int x, int y, List<Text> list, CallbackInfo info)
 	{
@@ -134,6 +141,15 @@ public class ClientHooks
 			matrices.scale(0.5F, 0.5F, 0.5F);
 			MinecraftClient.getInstance().getItemRenderer().renderItem(ThuwumcraftItems.GOGGLES_OVERLAY_ITEM.getDefaultStack(), ModelTransformation.Mode.NONE, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 			matrices.pop();
+		}
+	}
+
+	public static void getHungryChestTexture(BlockEntity blockEntity, CallbackInfoReturnable<SpriteIdentifier> info)
+	{
+		if(blockEntity.getType() == ThuwumcraftBlockEntities.HUNGRY_CHEST)
+		{
+			info.setReturnValue(HUNGRY_CHEST_TEXTURE);
+			info.cancel();
 		}
 	}
 }

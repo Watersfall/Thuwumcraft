@@ -147,6 +147,7 @@ public class ThuwumcraftItems
 	public static final GolemMarkerItem GREEN_GOLEM_MARKER;
 	public static final GolemMarkerItem RED_GOLEM_MARKER;
 	public static final GolemMarkerItem BLACK_GOLEM_MARKER;
+	public static final BlockItem HUNGRY_CHEST;
 	public static final List<Item> ITEMS;
 
 	static
@@ -271,6 +272,7 @@ public class ThuwumcraftItems
 		GREEN_GOLEM_MARKER = register(DyeColor.GREEN);
 		RED_GOLEM_MARKER = register(DyeColor.RED);
 		BLACK_GOLEM_MARKER = register(DyeColor.BLACK);
+		HUNGRY_CHEST = register(ThuwumcraftBlocks.HUNGRY_CHEST, defaultSettings());
 	}
 
 	private static GolemMarkerItem register(DyeColor color)

@@ -30,6 +30,7 @@ public class ThuwumcraftBlockEntities
 	public static final BlockEntityType<WandWorkbenchEntity> WAND_WORKBENCH;
 	public static final BlockEntityType<ArcaneSealBlockEntity> ARCANE_SEAL;
 	public static final BlockEntityType<ThaumatoriumBlockEntity> THAUMATORIUM;
+	public static BlockEntityType<HungryChestBlockEntity> HUNGRY_CHEST;
 
 	static
 	{
@@ -71,6 +72,7 @@ public class ThuwumcraftBlockEntities
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("aspect_crafting_entity"), ASPECT_CRAFTING_ENTITY);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("potion_sprayer_entity"), POTION_SPRAYER);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("essentia_smeltery_entity"), ESSENTIA_SMELTERY_ENTITY);
+		HUNGRY_CHEST = register("hungry_chest", HungryChestBlockEntity::new, ThuwumcraftBlocks.HUNGRY_CHEST);
 	}
 
 	public static <T extends BlockEntity> BlockEntityType<T> register(String id, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks)

@@ -13,6 +13,6 @@
 	},
 	"mixins": [
 		"ArmorFeatureRendererMixin", "CreativeInventoryScreenMixin", "RecipeManagerMixin", "RecipeMixin",
-		"ResourceReloadLoggerMixin"
+		"ResourceReloadLoggerMixin", "TexturedRenderLayersMixin"
 	]
 }

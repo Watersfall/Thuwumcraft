@@ -16,10 +16,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -34,19 +31,24 @@ import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ExperienceOrbEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
@@ -54,6 +56,8 @@ import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
@@ -87,6 +91,7 @@ import net.watersfall.thuwumcraft.api.golem.GolemMarker;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
+import net.watersfall.thuwumcraft.block.entity.HungryChestBlockEntity;
 import net.watersfall.thuwumcraft.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.thuwumcraft.client.gui.*;
 import net.watersfall.thuwumcraft.client.gui.element.ItemElement;
@@ -570,6 +575,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ARCANE_SEAL, ArcaneSealRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.HUNGRY_CHEST, ChestBlockEntityRenderer::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
@@ -713,6 +719,41 @@ public class ThuwumcraftClient implements ClientModInitializer
 				optional.get().fromPacket(buf);
 			}
 		}));
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("block_entity_pickup"), (client, handler, buf, responseSender) -> {
+			int item = buf.readInt();
+			BlockPos pos = BlockPos.fromLong(buf.readLong());
+			int count = buf.readInt();
+			client.execute(() -> {
+				Entity entity = client.world.getEntityById(item);
+				if(entity != null)
+				{
+					if(entity instanceof ExperienceOrbEntity)
+					{
+						client.world.playSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 0.1F, (client.world.random.nextFloat() - client.world.random.nextFloat()) * 0.35F + 0.9F, false);
+					}
+					else
+					{
+						client.world.playSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (client.world.random.nextFloat() - client.world.random.nextFloat()) * 1.4F + 2.0F, false);
+					}
+					ItemEntity moveTo = new ItemEntity(client.world, pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5, Items.COBBLESTONE.getDefaultStack(), 0, 0, 0);
+					moveTo.resetPosition();
+					client.particleManager.addParticle(new ItemPickupParticle(client.getEntityRenderDispatcher(), client.getBufferBuilders(), client.world, entity, moveTo));
+					if(entity instanceof ItemEntity itemEntity)
+					{
+						ItemStack itemStack = itemEntity.getStack();
+						itemStack.decrement(count);
+						if(itemStack.isEmpty())
+						{
+							client.world.removeEntity(item, Entity.RemovalReason.DISCARDED);
+						}
+					}
+					else if (!(entity instanceof ExperienceOrbEntity))
+					{
+						client.world.removeEntity(item, Entity.RemovalReason.DISCARDED);
+					}
+				}
+			});
+		});
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
@@ -810,5 +851,17 @@ public class ThuwumcraftClient implements ClientModInitializer
 		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM, Thuwumcraft.getId("level"), ((stack, world, entity, seed) -> {
 			return ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM.getLevel(stack);
 		}));
+		BuiltinItemRendererRegistry.INSTANCE.register(ThuwumcraftItems.HUNGRY_CHEST, ((stack, mode, matrices, vertexConsumers, light, overlay) -> {
+			MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(
+					new HungryChestBlockEntity(BlockPos.ORIGIN, ThuwumcraftBlocks.HUNGRY_CHEST.getDefaultState()),
+					matrices,
+					vertexConsumers,
+					light,
+					overlay
+			);
+		}));
+		ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register((atlas, registry) -> {
+			registry.register(Thuwumcraft.getId("models/chest/hungry_chest"));
+		});
 	}
 }
