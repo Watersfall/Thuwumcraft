@@ -1,5 +1,7 @@
 package net.watersfall.thuwumcraft.entity.golem;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
@@ -47,6 +49,7 @@ public class GolemEntity extends PathAwareEntity
 		super(type, world);
 	}
 
+	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean isGlowing()
 	{
