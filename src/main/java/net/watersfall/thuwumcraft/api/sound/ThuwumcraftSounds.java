@@ -3,7 +3,7 @@ package net.watersfall.thuwumcraft.api.sound;
 import net.minecraft.sound.SoundEvent;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemySounds
+public class ThuwumcraftSounds
 {
 	public static final SoundEvent CAULDRON_ADD_INGREDIENT = new SoundEvent(Thuwumcraft.getId("block.cauldron.add_ingredient"));
 	public static final SoundEvent USE_DUST_SOUND = new SoundEvent(Thuwumcraft.getId("item.magic_dust.use"));

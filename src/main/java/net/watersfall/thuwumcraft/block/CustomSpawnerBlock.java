@@ -5,14 +5,20 @@ import net.minecraft.block.SpawnerBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import net.watersfall.thuwumcraft.block.entity.CustomSpawnerEntity;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
+import net.watersfall.thuwumcraft.world.CustomMobSpawnerLogic;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class CustomSpawnerBlock extends SpawnerBlock
 {
@@ -42,6 +48,12 @@ public class CustomSpawnerBlock extends SpawnerBlock
 	}
 
 	@Override
+	public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext context)
+	{
+		CustomMobSpawnerLogic.toTooltip(stack, world, tooltip, context);
+	}
+
+	@Override
 	public BlockEntity createBlockEntity(BlockPos pos, BlockState state)
 	{
 		return new CustomSpawnerEntity(pos, state);
@@ -51,6 +63,6 @@ public class CustomSpawnerBlock extends SpawnerBlock
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::clientTick) : checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER_ENTITY, CustomSpawnerEntity::serverTick);
+		return world.isClient ? checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER, CustomSpawnerEntity::clientTick) : checkType(type, ThuwumcraftBlockEntities.CUSTOM_SPAWNER, CustomSpawnerEntity::serverTick);
 	}
 }

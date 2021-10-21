@@ -11,14 +11,14 @@ import net.watersfall.thuwumcraft.entity.spell.*;
 
 public class ThuwumcraftEntities
 {
-	public static final EntityType<IceProjectileEntity> ICE_PROJECTILE;
-	public static final EntityType<WaterEntity> WATER_ENTITY;
-	public static final EntityType<FireEntity> FIRE_ENTITY;
-	public static final EntityType<SandEntity> SAND_ENTITY;
-	public static final EntityType<WindEntity> WIND;
-	public static final EntityType<GolemEntity> GOLEM;
+	public static EntityType<IceProjectileEntity> ICE_PROJECTILE;
+	public static EntityType<WaterEntity> WATER_PROJECTILE;
+	public static EntityType<FireEntity> FIRE_PROJECTILE;
+	public static EntityType<SandEntity> SAND_PROJECTILE;
+	public static EntityType<WindEntity> WIND_PROJECTILE;
+	public static EntityType<GolemEntity> GOLEM;
 
-	static
+	public static void register()
 	{
 		ICE_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
@@ -29,7 +29,7 @@ public class ThuwumcraftEntities
 					.trackedUpdateRate(10)
 					.build()
 		);
-		WATER_ENTITY = Registry.register(
+		WATER_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
 				Thuwumcraft.getId("water_entity"),
 				FabricEntityTypeBuilder.<WaterEntity>create(SpawnGroup.MISC, WaterEntity::new)
@@ -38,7 +38,7 @@ public class ThuwumcraftEntities
 						.trackRangeBlocks(4)
 						.build()
 		);
-		FIRE_ENTITY = Registry.register(
+		FIRE_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
 				Thuwumcraft.getId("fire_entity"),
 				FabricEntityTypeBuilder.<FireEntity>create(SpawnGroup.MISC, FireEntity::new)
@@ -47,7 +47,7 @@ public class ThuwumcraftEntities
 						.trackRangeBlocks(4)
 						.build()
 		);
-		SAND_ENTITY = Registry.register(
+		SAND_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
 				Thuwumcraft.getId("sand_entity"),
 				FabricEntityTypeBuilder.<SandEntity>create(SpawnGroup.MISC, SandEntity::new)
@@ -56,7 +56,7 @@ public class ThuwumcraftEntities
 						.trackRangeBlocks(4)
 						.build()
 		);
-		WIND = Registry.register(
+		WIND_PROJECTILE = Registry.register(
 				Registry.ENTITY_TYPE,
 				Thuwumcraft.getId("wind_entity"),
 				FabricEntityTypeBuilder.<WindEntity>create(SpawnGroup.MISC, WindEntity::new)

@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.tag.Tag;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyEntityTags
+public class ThuwumcraftEntityTags
 {
 	public static final Tag<EntityType<?>> DROPS_ARM;
 	public static final Tag<EntityType<?>> DROPS_HEAD;

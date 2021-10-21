@@ -5,7 +5,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.tag.Tag;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyFluidTags
+public class ThuwumcraftFluidTags
 {
 	public static final Tag<Fluid> DIMENSIONAL_FLUID = TagRegistry.fluid(Thuwumcraft.getId("dimensional_fluids"));
 }

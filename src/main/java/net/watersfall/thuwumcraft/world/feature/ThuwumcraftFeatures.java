@@ -48,7 +48,7 @@ public class ThuwumcraftFeatures
 	{
 		NETHER_GEODE_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("nether_geode"), new NetherGeodeFeature(NetherGeodeConfig.CODEC));
 		DECORATED_ROCK_FEATURE = Registry.register(Registry.FEATURE, Thuwumcraft.getId("decorated_rock"), new DecoratedRockFeature(DecoratedRockConfig.CODEC));
-		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(VeryBiasedToBottomHeightProvider.create(YOffset.aboveBottom(4), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8));
+		DIMENSIONAL_LAKE = Feature.LAKE.configure(new SingleStateFeatureConfig(ThuwumcraftBlocks.DIMENSIONAL_FLUID.getDefaultState())).decorate(Decorator.LAVA_LAKE.configure(new ChanceDecoratorConfig(10))).decorate(Decorator.RANGE.configure(new RangeDecoratorConfig(VeryBiasedToBottomHeightProvider.create(YOffset.aboveBottom(4), YOffset.aboveBottom(64), 8))).spreadHorizontally().applyChance(8));
 		EARTH_CRYSTAL_GEODE = Feature.GEODE.configure(new GeodeFeatureConfig(
 						new GeodeLayerConfig(
 								new SimpleBlockStateProvider(Blocks.CAVE_AIR.getDefaultState()),

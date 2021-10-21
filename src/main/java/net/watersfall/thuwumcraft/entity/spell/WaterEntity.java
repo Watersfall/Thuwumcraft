@@ -30,7 +30,7 @@ public class WaterEntity extends Entity
 
 	public WaterEntity(World world, Entity owner)
 	{
-		super(ThuwumcraftEntities.WATER_ENTITY, world);
+		super(ThuwumcraftEntities.WATER_PROJECTILE, world);
 		if(owner != null)
 		{
 			this.owner = owner;

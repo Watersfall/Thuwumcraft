@@ -9,7 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
-import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
 
 import java.util.Random;

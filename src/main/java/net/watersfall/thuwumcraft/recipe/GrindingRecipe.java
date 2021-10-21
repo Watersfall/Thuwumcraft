@@ -33,7 +33,7 @@ public class GrindingRecipe extends ShapelessRecipe
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.GRINDING_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.GRINDING_SERIALIZER;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class PhialShelfEntity extends BlockEntity implements BasicInventory, Blo
 
 	public PhialShelfEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.PHIAL_SHELF_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.PHIAL_SHELF, pos, state);
 		contents = DefaultedList.ofSize(6, ItemStack.EMPTY);
 	}
 

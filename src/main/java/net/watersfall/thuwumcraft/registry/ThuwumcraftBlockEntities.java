@@ -10,68 +10,50 @@ import net.watersfall.thuwumcraft.block.entity.*;
 
 public class ThuwumcraftBlockEntities
 {
-	public static final BlockEntityType<BrewingCauldronEntity> BREWING_CAULDRON_ENTITY;
-	public static final BlockEntityType<PedestalEntity> PEDESTAL_ENTITY;
-	public static final BlockEntityType<AlchemicalFurnaceEntity> ALCHEMICAL_FURNACE_ENTITY;
-	public static final BlockEntityType<ChildBlockEntity> CHILD_BLOCK_ENTITY;
-	public static final BlockEntityType<CrucibleEntity> CRUCIBLE_ENTITY;
-	public static final BlockEntityType<JarEntity> JAR_ENTITY;
-	public static final BlockEntityType<PhialShelfEntity> PHIAL_SHELF_ENTITY;
-	public static final BlockEntityType<PipeEntity> ASPECT_PIPE_ENTITY;
-	public static final BlockEntityType<CustomSpawnerEntity> CUSTOM_SPAWNER_ENTITY;
-	public static final BlockEntityType<CraftingHopperEntity> CRAFTING_HOPPER;
-	public static final BlockEntityType<VisLiquifierEntity> VIS_LIQUIFIER_ENTITY;
-	public static final BlockEntityType<AspectCraftingEntity> ASPECT_CRAFTING_ENTITY;
-	public static final BlockEntityType<PotionSprayerEntity> POTION_SPRAYER;
-	public static final BlockEntityType<EssentiaSmelteryEntity> ESSENTIA_SMELTERY_ENTITY;
-	public static final BlockEntityType<EssentiaRefineryBlockEntity> ESSENTIA_REFINERY;
-	public static final BlockEntityType<ArcaneLampEntity> ARCANE_LAMP_ENTITY;
-	public static final BlockEntityType<PortableHoleBlockEntity> PORTABLE_HOLE_ENTITY;
-	public static final BlockEntityType<WandWorkbenchEntity> WAND_WORKBENCH;
-	public static final BlockEntityType<ArcaneSealBlockEntity> ARCANE_SEAL;
-	public static final BlockEntityType<ThaumatoriumBlockEntity> THAUMATORIUM;
+	public static BlockEntityType<BrewingCauldronEntity> BREWING_CAULDRON;
+	public static BlockEntityType<PedestalEntity> PEDESTAL;
+	public static BlockEntityType<AlchemicalFurnaceEntity> ALCHEMICAL_FURNACE;
+	public static BlockEntityType<ChildBlockEntity> CHILD_BLOCK;
+	public static BlockEntityType<CrucibleEntity> CRUCIBLE;
+	public static BlockEntityType<JarEntity> JAR;
+	public static BlockEntityType<PhialShelfEntity> PHIAL_SHELF;
+	public static BlockEntityType<PipeEntity> ASPECT_PIPE;
+	public static BlockEntityType<CustomSpawnerEntity> CUSTOM_SPAWNER;
+	public static BlockEntityType<CraftingHopperEntity> CRAFTING_HOPPER;
+	public static BlockEntityType<VisLiquifierEntity> VIS_LIQUIFIER;
+	public static BlockEntityType<AspectCraftingEntity> ASPECT_CRAFTING_TABLE;
+	public static BlockEntityType<PotionSprayerEntity> POTION_SPRAYER;
+	public static BlockEntityType<EssentiaSmelteryEntity> ESSENTIA_SMELTERY;
+	public static BlockEntityType<EssentiaRefineryBlockEntity> ESSENTIA_REFINERY;
+	public static BlockEntityType<ArcaneLampEntity> ARCANE_LAMP;
+	public static BlockEntityType<PortableHoleBlockEntity> PORTABLE_HOLE;
+	public static BlockEntityType<WandWorkbenchEntity> WAND_WORKBENCH;
+	public static BlockEntityType<ArcaneSealBlockEntity> ARCANE_SEAL;
+	public static BlockEntityType<ThaumatoriumBlockEntity> THAUMATORIUM;
 	public static BlockEntityType<HungryChestBlockEntity> HUNGRY_CHEST;
-
-	static
-	{
-		BREWING_CAULDRON_ENTITY = FabricBlockEntityTypeBuilder.create(BrewingCauldronEntity::new, ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK).build(null);
-		PEDESTAL_ENTITY = FabricBlockEntityTypeBuilder.create(PedestalEntity::new, ThuwumcraftBlocks.PEDESTAL_BLOCK).build(null);
-		ALCHEMICAL_FURNACE_ENTITY = FabricBlockEntityTypeBuilder.create(AlchemicalFurnaceEntity::new, ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK).build(null);
-		CHILD_BLOCK_ENTITY = FabricBlockEntityTypeBuilder.create(ChildBlockEntity::new, ThuwumcraftBlocks.CHILD_BLOCK).build(null);
-		CRUCIBLE_ENTITY = FabricBlockEntityTypeBuilder.create(CrucibleEntity::new, ThuwumcraftBlocks.CRUCIBLE_BLOCK).build(null);
-		JAR_ENTITY = FabricBlockEntityTypeBuilder.create(JarEntity::new, ThuwumcraftBlocks.JAR_BLOCK).build(null);
-		PHIAL_SHELF_ENTITY = FabricBlockEntityTypeBuilder.create(PhialShelfEntity::new, ThuwumcraftBlocks.PHIAL_SHELF_BLOCK).build(null);
-		ASPECT_PIPE_ENTITY = FabricBlockEntityTypeBuilder.create(PipeEntity::new, ThuwumcraftBlocks.ASPECT_PIPE_BLOCK).build(null);
-		CUSTOM_SPAWNER_ENTITY = FabricBlockEntityTypeBuilder.create(CustomSpawnerEntity::new, ThuwumcraftBlocks.CUSTOM_SPAWNER).build(null);
-		CRAFTING_HOPPER = FabricBlockEntityTypeBuilder.create(CraftingHopperEntity::new, ThuwumcraftBlocks.CRAFTING_HOPPER).build(null);
-		VIS_LIQUIFIER_ENTITY = FabricBlockEntityTypeBuilder.create(VisLiquifierEntity::new, ThuwumcraftBlocks.VIS_LIQUIFIER).build(null);
-		ASPECT_CRAFTING_ENTITY = FabricBlockEntityTypeBuilder.create(AspectCraftingEntity::new, ThuwumcraftBlocks.ASPECT_CRAFTING_BLOCK).build(null);
-		POTION_SPRAYER = FabricBlockEntityTypeBuilder.create(PotionSprayerEntity::new, ThuwumcraftBlocks.POTION_SPRAYER_BLOCK).build(null);
-		ESSENTIA_SMELTERY_ENTITY = FabricBlockEntityTypeBuilder.create(EssentiaSmelteryEntity::new, ThuwumcraftBlocks.ESSENTIA_SMELTERY).build(null);
-		ESSENTIA_REFINERY = register("essentia_refinery", EssentiaRefineryBlockEntity::new, ThuwumcraftBlocks.ESSENTIA_REFINERY_BLOCK);
-		ARCANE_LAMP_ENTITY = register("arcane_lamp_entity", ArcaneLampEntity::new, ThuwumcraftBlocks.ARCANE_LAMP_BLOCK);
-		PORTABLE_HOLE_ENTITY = register("portable_hole", PortableHoleBlockEntity::new, ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK);
-		WAND_WORKBENCH = register("wand_workbench", WandWorkbenchEntity::new, ThuwumcraftBlocks.WAND_WORKBENCH);
-		ARCANE_SEAL = register("arcane_seal", ArcaneSealBlockEntity::new, ThuwumcraftBlocks.ARCANE_SEAL);
-		THAUMATORIUM = register("thaumatorium", ThaumatoriumBlockEntity::new, ThuwumcraftBlocks.THAUMATORIUM);
-	}
 
 	public static void register()
 	{
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("brewing_cauldron_entity"), ThuwumcraftBlockEntities.BREWING_CAULDRON_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("pedestal_entity"), ThuwumcraftBlockEntities.PEDESTAL_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("alchemical_furnace_entity"), ThuwumcraftBlockEntities.ALCHEMICAL_FURNACE_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("child_block_entity"), ThuwumcraftBlockEntities.CHILD_BLOCK_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("brewing_crucible_entity"), ThuwumcraftBlockEntities.CRUCIBLE_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("jar_entity"), ThuwumcraftBlockEntities.JAR_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("phial_shelf_entity"), PHIAL_SHELF_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("aspect_pipe_entity"), ASPECT_PIPE_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("custom_spawner_entity"), CUSTOM_SPAWNER_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("crafting_hopper_entity"), CRAFTING_HOPPER);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("vis_liquifier_entity"), VIS_LIQUIFIER_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("aspect_crafting_entity"), ASPECT_CRAFTING_ENTITY);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("potion_sprayer_entity"), POTION_SPRAYER);
-		Registry.register(Registry.BLOCK_ENTITY_TYPE, Thuwumcraft.getId("essentia_smeltery_entity"), ESSENTIA_SMELTERY_ENTITY);
+		BREWING_CAULDRON = register("brewing_cauldron", BrewingCauldronEntity::new, ThuwumcraftBlocks.BREWING_CAULDRON);
+		PEDESTAL = register("pedestal", PedestalEntity::new, ThuwumcraftBlocks.PEDESTAL);
+		ALCHEMICAL_FURNACE = register("alchemical_furnace", AlchemicalFurnaceEntity::new, ThuwumcraftBlocks.ALCHEMICAL_FURNACE);
+		CHILD_BLOCK = register("child_block", ChildBlockEntity::new, ThuwumcraftBlocks.CHILD_BLOCK);
+		CRUCIBLE = register("crucible", CrucibleEntity::new, ThuwumcraftBlocks.CRUCIBLE);
+		JAR = register("jar", JarEntity::new, ThuwumcraftBlocks.JAR);
+		PHIAL_SHELF = register("phial_shelf", PhialShelfEntity::new, ThuwumcraftBlocks.PHIAL_SHELF);
+		ASPECT_PIPE = register("brass_pipe", PipeEntity::new, ThuwumcraftBlocks.BRASS_PIPE);
+		CUSTOM_SPAWNER = register("custom_spawner", CustomSpawnerEntity::new, ThuwumcraftBlocks.CUSTOM_SPAWNER);
+		CRAFTING_HOPPER = register("crafting_hopper", CraftingHopperEntity::new, ThuwumcraftBlocks.CRAFTING_HOPPER);
+		VIS_LIQUIFIER = register("vis_liquifier", VisLiquifierEntity::new, ThuwumcraftBlocks.VIS_LIQUIFIER);
+		ASPECT_CRAFTING_TABLE = register("aspect_crafting_table", AspectCraftingEntity::new, ThuwumcraftBlocks.ASPECT_CRAFTING_TABLE);
+		POTION_SPRAYER = register("potion_sprayer", PotionSprayerEntity::new, ThuwumcraftBlocks.POTION_SPRAYER);
+		ESSENTIA_SMELTERY = register("essentia_smeltery", EssentiaSmelteryEntity::new, ThuwumcraftBlocks.ESSENTIA_SMELTERY);
+		ESSENTIA_REFINERY = register("essentia_refinery", EssentiaRefineryBlockEntity::new, ThuwumcraftBlocks.ESSENTIA_REFINERY);
+		ARCANE_LAMP = register("arcane_lamp_entity", ArcaneLampEntity::new, ThuwumcraftBlocks.ARCANE_LAMP);
+		PORTABLE_HOLE = register("portable_hole", PortableHoleBlockEntity::new, ThuwumcraftBlocks.PORTABLE_HOLE);
+		WAND_WORKBENCH = register("wand_workbench", WandWorkbenchEntity::new, ThuwumcraftBlocks.WAND_WORKBENCH);
+		ARCANE_SEAL = register("arcane_seal", ArcaneSealBlockEntity::new, ThuwumcraftBlocks.ARCANE_SEAL);
+		THAUMATORIUM = register("thaumatorium", ThaumatoriumBlockEntity::new, ThuwumcraftBlocks.THAUMATORIUM);
 		HUNGRY_CHEST = register("hungry_chest", HungryChestBlockEntity::new, ThuwumcraftBlocks.HUNGRY_CHEST);
 	}
 

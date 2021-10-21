@@ -53,9 +53,9 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 			PedestalEntity entity = (PedestalEntity)entityCheck;
 			if(!entity.isMain() && !entity.isCrafting())
 			{
-				if(playerStack.getItem() == ThuwumcraftItems.WITCHY_SPOON_ITEM)
+				if(playerStack.getItem() == ThuwumcraftItems.WITCHY_SPOON)
 				{
-					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL_RECIPE, entity, world);
+					Optional<PedestalRecipe> recipeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL, entity, world);
 					if(recipeOptional.isPresent())
 					{
 						PedestalRecipe recipe = recipeOptional.get();
@@ -163,6 +163,6 @@ public class PedestalBlock extends Block implements BlockEntityProvider
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return BlockUtils.checkType(type, ThuwumcraftBlockEntities.PEDESTAL_ENTITY, PedestalEntity::tick);
+		return BlockUtils.checkType(type, ThuwumcraftBlockEntities.PEDESTAL, PedestalEntity::tick);
 	}
 }

@@ -12,7 +12,7 @@ public class FireEntity extends WaterEntity
 {
 	public FireEntity(World world, Entity owner)
 	{
-		super(ThuwumcraftEntities.FIRE_ENTITY, world);
+		super(ThuwumcraftEntities.FIRE_PROJECTILE, world);
 		if(owner != null)
 		{
 			this.ownerUUID = owner.getUuid();

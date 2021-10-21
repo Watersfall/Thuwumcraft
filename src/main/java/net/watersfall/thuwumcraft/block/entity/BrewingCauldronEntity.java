@@ -24,7 +24,7 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 
 	public BrewingCauldronEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.BREWING_CAULDRON_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.BREWING_CAULDRON, pos, state);
 	}
 
 	@Override

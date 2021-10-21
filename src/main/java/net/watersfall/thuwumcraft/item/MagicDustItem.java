@@ -8,7 +8,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Rarity;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
@@ -28,8 +28,8 @@ public class MagicDustItem extends Item
 		{
 			if(!context.getWorld().isClient)
 			{
-				context.getWorld().playSound(null, context.getBlockPos(), AlchemySounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
-				context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.CRUCIBLE_BLOCK.getDefaultState());
+				context.getWorld().playSound(null, context.getBlockPos(), ThuwumcraftSounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
+				context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.CRUCIBLE.getDefaultState());
 			}
 			return ActionResult.success(context.getWorld().isClient);
 		}

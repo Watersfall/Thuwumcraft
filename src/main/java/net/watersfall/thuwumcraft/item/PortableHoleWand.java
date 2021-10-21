@@ -94,9 +94,9 @@ public class PortableHoleWand extends Item
 			BlockState oldState = world.getBlockState(list.get(i));
 			BlockEntity oldEntity = world.getBlockEntity(list.get(i));
 			world.removeBlockEntity(list.get(i));
-			world.setBlockState(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), 1 << 3 | 1 << 1);
+			world.setBlockState(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE.getDefaultState(), 1 << 3 | 1 << 1);
 			world.removeBlockEntity(list.get(i));
-			world.addBlockEntity(ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.createBlockEntity(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE_BLOCK.getDefaultState(), oldState, oldEntity));
+			world.addBlockEntity(ThuwumcraftBlocks.PORTABLE_HOLE.createBlockEntity(list.get(i), ThuwumcraftBlocks.PORTABLE_HOLE.getDefaultState(), oldState, oldEntity));
 		}
 		return ActionResult.CONSUME;
 	}

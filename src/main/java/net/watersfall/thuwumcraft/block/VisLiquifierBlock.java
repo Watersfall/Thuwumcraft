@@ -42,6 +42,6 @@ public class VisLiquifierBlock extends HorizontalFacingBlock implements BlockEnt
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.VIS_LIQUIFIER_ENTITY, VisLiquifierEntity::tick);
+		return world.isClient ? null : BlockUtils.checkType(type, ThuwumcraftBlockEntities.VIS_LIQUIFIER, VisLiquifierEntity::tick);
 	}
 }

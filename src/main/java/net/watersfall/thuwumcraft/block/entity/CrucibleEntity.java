@@ -19,7 +19,7 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 
 	public CrucibleEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.CRUCIBLE_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.CRUCIBLE, pos, state);
 		this.inputStack = ItemStack.EMPTY;
 		this.aspects = new HashMap<>();
 	}

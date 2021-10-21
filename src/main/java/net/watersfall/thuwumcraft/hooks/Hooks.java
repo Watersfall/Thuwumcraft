@@ -204,7 +204,10 @@ public class Hooks
 
 	public static void livingEntityAddAttributeModifiers(CallbackInfoReturnable<DefaultAttributeContainer.Builder> info)
 	{
-		info.getReturnValue().add(ThuwumcraftAttributes.MAGIC_RESISTANCE, 0);
+		if(ThuwumcraftAttributes.MAGIC_RESISTANCE != null)
+		{
+			info.getReturnValue().add(ThuwumcraftAttributes.MAGIC_RESISTANCE, 0);
+		}
 	}
 
 	public static float livingEntityApplyDamageModifiers(LivingEntity entity, DamageSource source, float amount)

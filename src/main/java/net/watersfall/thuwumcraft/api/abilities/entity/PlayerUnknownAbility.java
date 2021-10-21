@@ -14,8 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
-import net.watersfall.thuwumcraft.api.tag.AlchemyFluidTags;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.api.tag.ThuwumcraftFluidTags;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import net.watersfall.wet.api.abilities.Ability;
@@ -65,7 +65,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 	{
 		if(entity.getEntityWorld().getRegistryKey() == World.OVERWORLD)
 		{
-			if(entity.getEntityWorld().getFluidState(entity.getBlockPos()).isIn(AlchemyFluidTags.DIMENSIONAL_FLUID))
+			if(entity.getEntityWorld().getFluidState(entity.getBlockPos()).isIn(ThuwumcraftFluidTags.DIMENSIONAL_FLUID))
 			{
 				if(!entity.getEntityWorld().isClient && this.getTicksInUnknown() == 0)
 				{
@@ -95,7 +95,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 					pos = world.getSpawnPos();
 				}
 				player.teleport(world, pos.getX(), pos.getY(), pos.getZ(), player.getSpawnAngle(), 0);
-				player.dropItem(ThuwumcraftItems.EYE_OF_THE_UNKNOWN_ITEM);
+				player.dropItem(ThuwumcraftItems.EYE_OF_THE_UNKNOWN);
 				this.setTemporary(false);
 				this.sync(entity);
 			}
@@ -104,8 +104,8 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 			{
 				if(entity.world.isClient)
 				{
-					entity.world.playSoundFromEntity((PlayerEntity)entity, entity, AlchemySounds.RINGING_SOUND, SoundCategory.PLAYERS, 1F, 1F);
-					entity.world.playSoundFromEntity((PlayerEntity)entity, entity, AlchemySounds.STATIC_SOUND, SoundCategory.PLAYERS, 1F, 1F);
+					entity.world.playSoundFromEntity((PlayerEntity)entity, entity, ThuwumcraftSounds.RINGING_SOUND, SoundCategory.PLAYERS, 1F, 1F);
+					entity.world.playSoundFromEntity((PlayerEntity)entity, entity, ThuwumcraftSounds.STATIC_SOUND, SoundCategory.PLAYERS, 1F, 1F);
 				}
 				this.setShouldPlaySound(false);
 				this.sync(entity);

@@ -75,7 +75,7 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 
 	public EssentiaSmelteryEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ESSENTIA_SMELTERY, pos, state);
 		this.items = DefaultedList.ofSize(2, ItemStack.EMPTY);
 		this.aspects = new HashMap<>();
 	}

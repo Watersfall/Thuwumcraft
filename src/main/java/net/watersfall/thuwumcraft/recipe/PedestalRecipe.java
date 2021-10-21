@@ -63,7 +63,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 					if(!mutablePos.equals(pos))
 					{
 						loopState = world.getBlockState(mutablePos);
-						if(loopState.getBlock() == ThuwumcraftBlocks.PEDESTAL_BLOCK)
+						if(loopState.getBlock() == ThuwumcraftBlocks.PEDESTAL)
 						{
 							entities.add((PedestalEntity)world.getBlockEntity(mutablePos));
 						}
@@ -89,7 +89,7 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 					if(!mutablePos.equals(pos))
 					{
 						loopState = world.getBlockState(mutablePos);
-						if(loopState.getBlock() == ThuwumcraftBlocks.JAR_BLOCK)
+						if(loopState.getBlock() == ThuwumcraftBlocks.JAR)
 						{
 							entities.add((JarEntity) world.getBlockEntity(mutablePos));
 						}
@@ -219,13 +219,13 @@ public class PedestalRecipe extends ResearchRequiredRecipe<PedestalEntity> imple
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.PEDESTAL_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.PEDESTAL_SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType()
 	{
-		return ThuwumcraftRecipes.PEDESTAL_RECIPE;
+		return ThuwumcraftRecipes.PEDESTAL;
 	}
 
 	public List<AspectStack> getAspects()

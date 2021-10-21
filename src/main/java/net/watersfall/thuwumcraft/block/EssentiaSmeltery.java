@@ -42,6 +42,6 @@ public class EssentiaSmeltery extends AbstractFurnaceBlock implements BlockEntit
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type)
 	{
-		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY, EssentiaSmelteryEntity::tick);
+		return world.isClient ? null : checkType(type, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY, EssentiaSmelteryEntity::tick);
 	}
 }

@@ -38,7 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.watersfall.thuwumcraft.api.fluid.ColoredWaterContainer;
 import net.watersfall.thuwumcraft.api.fluid.WaterContainer;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.AbstractCauldronEntity;
 import net.watersfall.thuwumcraft.util.InventoryHelper;
 import org.jetbrains.annotations.Nullable;
@@ -154,7 +154,7 @@ public abstract class AbstractCauldronBlock extends Block
 							world.playSound(pos.getX(),
 									pos.getY(),
 									pos.getZ(),
-									AlchemySounds.BUBBLE_SOUND,
+									ThuwumcraftSounds.BUBBLE_SOUND,
 									SoundCategory.BLOCKS,
 									0.25F,
 									0.9F + (float)(Math.random() * 0.2F),

@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
-public class AlchemyBlockTags
+public class ThuwumcraftBlockTags
 {
 	public static final Tag<Block> ESSENTIA_REFINERIES;
 

@@ -26,7 +26,7 @@ public class WindEntity extends Entity
 
 	public WindEntity(World world)
 	{
-		this(ThuwumcraftEntities.WIND, world);
+		this(ThuwumcraftEntities.WIND_PROJECTILE, world);
 	}
 
 	public WindEntity(EntityType<WindEntity> type, World world)

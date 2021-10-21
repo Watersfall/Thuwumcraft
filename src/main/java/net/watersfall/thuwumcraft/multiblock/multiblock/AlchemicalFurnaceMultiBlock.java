@@ -176,7 +176,7 @@ public class AlchemicalFurnaceMultiBlock implements GuiMultiBlock<AlchemicalFurn
 		for(int i = 0; i < this.components.length; i++)
 		{
 			Block block = this.world.getBlockState(this.components[i].getPos()).getBlock();
-			if(block == ThuwumcraftBlocks.CHILD_BLOCK || block == ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK)
+			if(block == ThuwumcraftBlocks.CHILD_BLOCK || block == ThuwumcraftBlocks.ALCHEMICAL_FURNACE)
 			{
 				this.world.setBlockState(this.components[i].getPos(), Blocks.FURNACE.getDefaultState().with(FurnaceBlock.FACING, direction));
 			}

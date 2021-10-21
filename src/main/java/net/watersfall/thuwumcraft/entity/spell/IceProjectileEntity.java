@@ -41,7 +41,7 @@ public class IceProjectileEntity extends ThrownItemEntity
 	@Override
 	protected Item getDefaultItem()
 	{
-		return ThuwumcraftItems.ICE_PROJECTILE_ITEM;
+		return ThuwumcraftItems.ICE_PROJECTILE;
 	}
 
 

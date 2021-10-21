@@ -57,7 +57,7 @@ public class ThaumatoriumScreen extends HandledScreen<ThaumatoriumHandler>
 		super.render(matrices, mouseX, mouseY, delta);
 		ItemStack input = this.handler.getSlot(0).getStack();
 		List<ItemStack> list = new ArrayList<>();
-		client.world.getRecipeManager().listAllOfType(ThuwumcraftRecipes.CRUCIBLE_RECIPE).forEach(recipe -> {
+		client.world.getRecipeManager().listAllOfType(ThuwumcraftRecipes.CRUCIBLE).forEach(recipe -> {
 			if(recipe.catalyst.test(input))
 			{
 				list.add(recipe.getOutput());
@@ -127,7 +127,7 @@ public class ThaumatoriumScreen extends HandledScreen<ThaumatoriumHandler>
 		{
 			ItemStack input = this.handler.getSlot(0).getStack();
 			List<CrucibleRecipe> list = new ArrayList<>();
-			client.world.getRecipeManager().listAllOfType(ThuwumcraftRecipes.CRUCIBLE_RECIPE).forEach(recipe -> {
+			client.world.getRecipeManager().listAllOfType(ThuwumcraftRecipes.CRUCIBLE).forEach(recipe -> {
 				if(recipe.catalyst.test(input))
 				{
 					list.add(recipe);

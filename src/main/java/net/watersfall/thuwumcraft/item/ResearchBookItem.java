@@ -18,7 +18,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.gui.ResearchBookHandler;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
@@ -34,7 +34,7 @@ public class ResearchBookItem extends Item
 	{
 		if(world.isClient)
 		{
-			MinecraftClient.getInstance().world.playSoundFromEntity(user, user, AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
+			MinecraftClient.getInstance().world.playSoundFromEntity(user, user, ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 		}
 		user.openHandledScreen(createScreenHandlerFactory(user.getStackInHand(hand)));
 		return TypedActionResult.consume(user.getStackInHand(hand));

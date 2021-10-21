@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.CrucibleEntity;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CrucibleRecipe;
@@ -45,7 +45,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 			if(!stack.isEmpty())
 			{
 				entity.setCurrentInput(stack);
-				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CRUCIBLE_RECIPE, entity, world);
+				Optional<CrucibleRecipe> crucibleOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CRUCIBLE, entity, world);
 				if(crucibleOptional.isPresent())
 				{
 					CrucibleRecipe recipe = crucibleOptional.get();
@@ -69,7 +69,7 @@ public class CrucibleBlock extends AbstractCauldronBlock implements BlockEntityP
 						ingredient.craft(entity);
 						entity.markDirty();
 						entity.sync();
-						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, ThuwumcraftSounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 					}
 					return ActionResult.success(world.isClient);
 				}

@@ -8,7 +8,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.entity.spell.FireEntity;
 import net.watersfall.thuwumcraft.entity.spell.IceProjectileEntity;
 import net.watersfall.thuwumcraft.entity.spell.SandEntity;
@@ -66,7 +66,7 @@ public interface SpellAction
 		entity.setPos(pos.x, pos.y, pos.z);
 		entity.updateTrackedPosition(pos.x, pos.y, pos.z);
 		entity.setVelocity(player.getRotationVector());
-		world.playSoundFromEntity(player, player, AlchemySounds.POCKET_SAND, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		world.playSoundFromEntity(player, player, ThuwumcraftSounds.POCKET_SAND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		world.spawnEntity(entity);
 		return TypedActionResult.success(stack);
 	};

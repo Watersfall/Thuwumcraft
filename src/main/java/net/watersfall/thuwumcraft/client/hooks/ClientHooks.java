@@ -139,7 +139,7 @@ public class ClientHooks
 			model.head.rotate(matrices);
 			matrices.translate(0, entity.getEyeHeight(entity.getPose()) - entity.getHeight() - 0.0375, -0.275);
 			matrices.scale(0.5F, 0.5F, 0.5F);
-			MinecraftClient.getInstance().getItemRenderer().renderItem(ThuwumcraftItems.GOGGLES_OVERLAY_ITEM.getDefaultStack(), ModelTransformation.Mode.NONE, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+			MinecraftClient.getInstance().getItemRenderer().renderItem(ThuwumcraftItems.GOGGLES_OVERLAY.getDefaultStack(), ModelTransformation.Mode.NONE, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 			matrices.pop();
 		}
 	}

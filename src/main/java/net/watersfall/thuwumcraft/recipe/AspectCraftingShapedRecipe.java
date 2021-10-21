@@ -135,7 +135,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, JsonObject json)
 		{
-			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, json);
+			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_SERIALIZER.read(id, json);
 			JsonArray array = JsonHelper.getArray(json, "crystals");
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < array.size(); i++)
@@ -152,7 +152,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public AspectCraftingShapedRecipe read(Identifier id, PacketByteBuf buf)
 		{
-			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.read(id, buf);
+			ResearchUnlockedRecipe<ShapedRecipe> recipe = ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_SERIALIZER.read(id, buf);
 			int size = buf.readInt();
 			List<ItemStack> list = new ArrayList<>();
 			for(int i = 0; i < size; i++)
@@ -166,7 +166,7 @@ public class AspectCraftingShapedRecipe implements CraftingRecipe, ResearchRequi
 		@Override
 		public void write(PacketByteBuf buf, AspectCraftingShapedRecipe recipe)
 		{
-			ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_RECIPE_SERIALIZER.write(buf, recipe.recipe);
+			ThuwumcraftRecipes.RESEARCH_UNLOCKED_SHAPED_SERIALIZER.write(buf, recipe.recipe);
 			buf.writeInt(recipe.aspects.size());
 			for(int i = 0; i < recipe.aspects.size(); i++)
 			{

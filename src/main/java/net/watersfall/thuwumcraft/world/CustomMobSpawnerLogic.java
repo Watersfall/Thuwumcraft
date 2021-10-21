@@ -1,7 +1,10 @@
 package net.watersfall.thuwumcraft.world;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -10,6 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.MobSpawnerEntry;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -154,7 +158,7 @@ public class CustomMobSpawnerLogic
 		return tag;
 	}
 
-	public static List<Text> toTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context)
+	public static List<Text> toTooltip(ItemStack stack, BlockView world, List<Text> tooltip, TooltipContext context)
 	{
 		NbtCompound tag = stack.getNbt();
 		if(tag == null)

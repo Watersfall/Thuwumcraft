@@ -7,9 +7,9 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class ThuwumcraftAttributes
 {
-	public static final EntityAttribute MAGIC_RESISTANCE;
+	public static EntityAttribute MAGIC_RESISTANCE;
 
-	static
+	public static void register()
 	{
 		MAGIC_RESISTANCE = Registry.register(
 				Registry.ATTRIBUTE,

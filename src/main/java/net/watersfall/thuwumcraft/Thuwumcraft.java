@@ -80,9 +80,9 @@ import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
-import net.watersfall.thuwumcraft.api.tag.AlchemyBlockTags;
-import net.watersfall.thuwumcraft.api.tag.AlchemyEntityTags;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.api.tag.ThuwumcraftBlockTags;
+import net.watersfall.thuwumcraft.api.tag.ThuwumcraftEntityTags;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
@@ -91,6 +91,7 @@ import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
@@ -254,13 +255,13 @@ public class Thuwumcraft implements ModInitializer
 			});
 		});
 		ServerTickEvents.END_SERVER_TICK.register(server -> MultiBlockRegistry.SERVER_TICKER.tick());
-		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON_ITEM, ((pointer, stack) -> {
+		DispenserBlock.registerBehavior(ThuwumcraftItems.WITCHY_SPOON, ((pointer, stack) -> {
 			Direction direction = pointer.getWorld().getBlockState(pointer.getPos()).get(Properties.FACING);
 			BlockEntity test = pointer.getWorld().getBlockEntity(pointer.getPos().offset(direction));
 			if(test instanceof PedestalEntity entity)
 			{
 				World world = pointer.getWorld();
-				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL_RECIPE, entity, world);
+				Optional<PedestalRecipe> recipeOptional = pointer.getWorld().getRecipeManager().getFirstMatch(ThuwumcraftRecipes.PEDESTAL, entity, world);
 				recipeOptional.ifPresent(entity::beginCraft);
 			}
 			return stack;
@@ -315,11 +316,11 @@ public class Thuwumcraft implements ModInitializer
 				Optional<EntityType<?>> optional = EntityType.get(path[path.length - 1]);
 				if(optional.isPresent())
 				{
-					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_SKULL, supplier, AlchemyEntityTags.DROPS_HEAD);
-					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_ARM, supplier, AlchemyEntityTags.DROPS_ARM);
-					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_LEG, supplier, AlchemyEntityTags.DROPS_LEG);
-					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_HEART, supplier, AlchemyEntityTags.DROPS_HEART);
-					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_RIBCAGE, supplier, AlchemyEntityTags.DROPS_RIBCAGE);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_SKULL, supplier, ThuwumcraftEntityTags.DROPS_HEAD);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_ARM, supplier, ThuwumcraftEntityTags.DROPS_ARM);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_LEG, supplier, ThuwumcraftEntityTags.DROPS_LEG);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_HEART, supplier, ThuwumcraftEntityTags.DROPS_HEART);
+					generateNecromancyDrop(ThuwumcraftItems.NECROMANCY_RIBCAGE, supplier, ThuwumcraftEntityTags.DROPS_RIBCAGE);
 				}
 			}
 		}));
@@ -331,9 +332,9 @@ public class Thuwumcraft implements ModInitializer
 					if(!world.isClient)
 					{
 						world.setBlockState(hitResult.getBlockPos(), Blocks.AIR.getDefaultState());
-						ItemScatterer.spawn(world, hitResult.getBlockPos(), DefaultedList.ofSize(1, ThuwumcraftItems.RESEARCH_BOOK_ITEM.getDefaultStack()));
+						ItemScatterer.spawn(world, hitResult.getBlockPos(), DefaultedList.ofSize(1, ThuwumcraftItems.RESEARCH_BOOK.getDefaultStack()));
 					}
-					world.playSound(player, hitResult.getBlockPos(), AlchemySounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 1, 1);
+					world.playSound(player, hitResult.getBlockPos(), ThuwumcraftSounds.USE_DUST_SOUND, SoundCategory.BLOCKS, 1, 1);
 					return ActionResult.success(world.isClient);
 				}
 			}
@@ -407,10 +408,10 @@ public class Thuwumcraft implements ModInitializer
 	 */
 	private static void registerSounds()
 	{
-		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), AlchemySounds.CAULDRON_ADD_INGREDIENT);
-		Registry.register(Registry.SOUND_EVENT, getId("block.crucible.create"), AlchemySounds.USE_DUST_SOUND);
-		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), AlchemySounds.BUBBLE_SOUND);
-		Registry.register(Registry.SOUND_EVENT, getId("item.research_book.open"), AlchemySounds.BOOK_OPEN_SOUND);
+		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.add_ingredient"), ThuwumcraftSounds.CAULDRON_ADD_INGREDIENT);
+		Registry.register(Registry.SOUND_EVENT, getId("block.crucible.create"), ThuwumcraftSounds.USE_DUST_SOUND);
+		Registry.register(Registry.SOUND_EVENT, getId("block.cauldron.bubble"), ThuwumcraftSounds.BUBBLE_SOUND);
+		Registry.register(Registry.SOUND_EVENT, getId("item.research_book.open"), ThuwumcraftSounds.BOOK_OPEN_SOUND);
 	}
 
 	/**
@@ -467,14 +468,14 @@ public class Thuwumcraft implements ModInitializer
 	{
 		AspectContainer.API.registerForBlocks((world, pos, state, entity, direction) -> {
 			return (AspectContainer)entity;
-		}, ThuwumcraftBlocks.ASPECT_PIPE_BLOCK);
+		}, ThuwumcraftBlocks.BRASS_PIPE);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			if(direction == null || direction == Direction.UP)
 			{
 				return (AspectContainer)entity;
 			}
 			return null;
-		}, ThuwumcraftBlockEntities.JAR_ENTITY);
+		}, ThuwumcraftBlockEntities.JAR);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			if(direction == null)
 			{
@@ -482,12 +483,12 @@ public class Thuwumcraft implements ModInitializer
 			}
 			World world = entity.getWorld();
 			BlockState state = world.getBlockState(entity.getPos().offset(direction));
-			if(state.isIn(AlchemyBlockTags.ESSENTIA_REFINERIES) || state.getBlock() instanceof EssentiaSmeltery)
+			if(state.isIn(ThuwumcraftBlockTags.ESSENTIA_REFINERIES) || state.getBlock() instanceof EssentiaSmeltery)
 			{
 				return (AspectContainer)entity;
 			}
 			return null;
-		}, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY_ENTITY);
+		}, ThuwumcraftBlockEntities.ESSENTIA_SMELTERY);
 		AspectContainer.API.registerForBlockEntities((entity, direction) -> {
 			return (AspectContainer)entity;
 		}, ThuwumcraftBlockEntities.ESSENTIA_REFINERY);
@@ -549,10 +550,15 @@ public class Thuwumcraft implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		ThuwumcraftStatusEffects.register();
-		ThuwumcraftRecipes.register();
-		ThuwumcraftBlockEntities.register();
+		ThuwumcraftAttributes.register();
 		ThuwumcraftFluids.register();
+		ThuwumcraftBlocks.register();
+		ThuwumcraftItems.register();
+		ThuwumcraftBlockEntities.register();
+		ThuwumcraftStatusEffects.register();
+		ThuwumcraftEntities.register();
+		ThuwumcraftRecipes.register();
+		ThuwumcraftParticles.register();
 		registerEvents();
 		registerAspects();
 		registerSounds();
@@ -560,7 +566,7 @@ public class Thuwumcraft implements ModInitializer
 		registerAbilities();
 		registerNetwork();
 		ThuwumcraftFeatures.register();
-		AlchemyEntityTags.register();
+		ThuwumcraftEntityTags.register();
 		ThuwumcraftBiomes.register();
 		ThuwumcraftStructurePieceTypes.register();
 		ThuwumcraftStructureFeatures.register();

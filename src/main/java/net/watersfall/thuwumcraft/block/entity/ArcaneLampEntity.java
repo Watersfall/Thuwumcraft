@@ -17,7 +17,7 @@ public class ArcaneLampEntity extends BlockEntity
 
 	public ArcaneLampEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.ARCANE_LAMP_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ARCANE_LAMP, pos, state);
 		this.lights = new ArrayList<>();
 	}
 

@@ -1,7 +1,8 @@
-package net.watersfall.thuwumcraft.gui;
+package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.screen.ScreenHandlerType;
+import net.watersfall.thuwumcraft.gui.*;
 
 import static net.watersfall.thuwumcraft.Thuwumcraft.getId;
 

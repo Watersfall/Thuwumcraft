@@ -110,9 +110,9 @@ import net.watersfall.thuwumcraft.client.toast.ResearchToast;
 import net.watersfall.thuwumcraft.client.util.RenderHelper;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.entity.spell.WindEntity;
-import net.watersfall.thuwumcraft.gui.ThuwumcraftScreenHandlers;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
-import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
@@ -140,7 +140,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 	public static final KeyBinding WAND_FOCUS_KEY = new KeyBinding("key.thuwumcraft.wand_focus", GLFW.GLFW_KEY_C, KeyBinding.UI_CATEGORY);
 	public static boolean wandFocusKeyPressed = false;
 
-	private static void registerEvents()
+	private void registerEvents()
 	{
 		ItemTooltipCallback.EVENT.register(((stack, context, tooltip) -> {
 			if(stack.getNbt() != null && !stack.getNbt().isEmpty())
@@ -317,6 +317,24 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 		});
+		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
+		ClientChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeInt(chunk.getPos().x);
+			buf.writeInt(chunk.getPos().z);
+			ClientPlayNetworking.send(Thuwumcraft.getId("chunk_packet"), buf);
+		});
+		HudRenderCallback.EVENT.register((matrices, value) -> {
+			World world = MinecraftClient.getInstance().world;
+			PlayerEntity player = MinecraftClient.getInstance().player;
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(world.getChunk(player.getBlockPos()));
+			provider.getAbility(VisAbility.ID, VisAbility.class).ifPresent((ability) -> {
+				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.getVis()), 0, 0, -1);
+			});
+		});
+		ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register((atlas, registry) -> {
+			registry.register(Thuwumcraft.getId("models/chest/hungry_chest"));
+		});
 	}
 
 	private static void renderBox(MatrixStack matrices, VertexConsumerProvider consumers, Direction direction, BlockPos pos, DyeColor color)
@@ -449,8 +467,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		});
 	}
 
-	@Override
-	public void onInitializeClient()
+	private void registerModelPredicates()
 	{
 		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.WAND, Thuwumcraft.getId("has_focus"), ((stack, world, entity, seed) -> {
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
@@ -465,7 +482,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			}
 			return 0;
 		}));
-		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.EMPTY_PHIAL_ITEM, Thuwumcraft.getId("filled"), ((stack, world, entity, seed) -> {
+		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.GLASS_PHIAL, Thuwumcraft.getId("filled"), ((stack, world, entity, seed) -> {
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
 			Optional<PhialStorageAbility> optional = provider.getAbility(PhialStorageAbility.ID, PhialStorageAbility.class);
 			if(optional.isPresent())
@@ -474,25 +491,40 @@ public class ThuwumcraftClient implements ClientModInitializer
 			}
 			return 0;
 		}));
+		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.SPECIAL_BATTLEAXE, Thuwumcraft.getId("level"), ((stack, world, entity, seed) -> {
+			return ThuwumcraftItems.SPECIAL_BATTLEAXE.getLevel(stack);
+		}));
+	}
+
+	private void registerBlockColors()
+	{
 		ColorProviderRegistry.BLOCK.register(
 				(state, view, pos, tintIndex) -> BiomeColors.getWaterColor(view, pos),
-				ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK
+				ThuwumcraftBlocks.BREWING_CAULDRON
 		);
 		ColorProviderRegistry.BLOCK.register(
 				((state, world, pos, tintIndex) -> 0x000000),
-				ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK
+				ThuwumcraftBlocks.DIMENSIONAL_FLUID
 		);
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D),
 				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
-		ColorProviderRegistry.ITEM.register(
-				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
-				ThuwumcraftBlocks.DEEPSLATE_GRASS
-		);
 		ColorProviderRegistry.BLOCK.register(
 				(state, world, pos, tintIndex) -> 0x00AAFF,
 				ThuwumcraftBlocks.SILVERWOOD_LEAVES
+		);
+		ColorProviderRegistry.BLOCK.register(
+				((state, world, pos, tintIndex) -> ((BlockColorProvider)state.getBlock()).getColor(state, world, pos, tintIndex)),
+				ThuwumcraftBlocks.ARCANE_SEAL
+		);
+	}
+
+	private void registerItemColors()
+	{
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
+				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {
@@ -547,10 +579,6 @@ public class ThuwumcraftClient implements ClientModInitializer
 				ThuwumcraftItems.ORDER_RUNE,
 				ThuwumcraftItems.DISORDER_RUNE
 		);
-		ColorProviderRegistry.BLOCK.register(
-				((state, world, pos, tintIndex) -> ((BlockColorProvider)state.getBlock()).getColor(state, world, pos, tintIndex)),
-				ThuwumcraftBlocks.ARCANE_SEAL
-		);
 		ColorProviderRegistry.ITEM.register(((stack, tintIndex) -> {
 			if(tintIndex == 0)
 			{
@@ -562,20 +590,25 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			}
 			return -1;
-		}), ThuwumcraftItems.EMPTY_PHIAL_ITEM);
-		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
-		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
-		setupFluidRendering(ThuwumcraftFluids.DIMENSIONAL_STILL, ThuwumcraftFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.BREWING_CAULDRON_ENTITY, BrewingCauldronEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PEDESTAL_ENTITY, PedestalEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRUCIBLE_ENTITY, CrucibleEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.JAR_ENTITY, JarEntityRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PHIAL_SHELF_ENTITY, PhialShelfEntityRenderer::new);
+		}), ThuwumcraftItems.GLASS_PHIAL);
+	}
+
+	private void registerBlockEntityRenderers()
+	{
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.BREWING_CAULDRON, BrewingCauldronEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PEDESTAL, PedestalEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRUCIBLE, CrucibleEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.JAR, JarEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PHIAL_SHELF, PhialShelfEntityRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.CRAFTING_HOPPER, CraftingHopperRenderer::new);
-		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE_ENTITY, PortableHoleRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.PORTABLE_HOLE, PortableHoleRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ARCANE_SEAL, ArcaneSealRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.HUNGRY_CHEST, ChestBlockEntityRenderer::new);
+	}
+
+	private void registerGuis()
+	{
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.APOTHECARY_GUIDE_HANDLER, ApothecaryGuideScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ALCHEMICAL_FURNACE_HANDLER, AlchemicalFurnaceScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.RESEARCH_BOOK_HANDLER, ResearchBookScreen::new);
@@ -585,36 +618,28 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.THAUMATORIUM, ThaumatoriumScreen::new);
+	}
+
+	private void registerBlockRenderLayers()
+	{
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
-				ThuwumcraftBlocks.JAR_BLOCK,
+				ThuwumcraftBlocks.JAR,
 				ThuwumcraftBlocks.ARCANE_SEAL
 		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
 				ThuwumcraftBlocks.CUSTOM_SPAWNER,
 				ThuwumcraftBlocks.CHILD_BLOCK,
 				ThuwumcraftBlocks.SILVERWOOD_SAPLING,
-				ThuwumcraftBlocks.ESSENTIA_REFINERY_BLOCK,
+				ThuwumcraftBlocks.ESSENTIA_REFINERY,
 				ThuwumcraftBlocks.SPAWNER_FRAME
 		);
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutoutMipped(),
 				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
-		ClientTickEvents.END_CLIENT_TICK.register(client -> MultiBlockRegistry.CLIENT_TICKER.tick());
-		ClientChunkEvents.CHUNK_LOAD.register((world, chunk) -> {
-			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeInt(chunk.getPos().x);
-			buf.writeInt(chunk.getPos().z);
-			ClientPlayNetworking.send(Thuwumcraft.getId("chunk_packet"), buf);
-		});
-		HudRenderCallback.EVENT.register((matrices, value) -> {
-			World world = MinecraftClient.getInstance().world;
-			PlayerEntity player = MinecraftClient.getInstance().player;
-			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(world.getChunk(player.getBlockPos()));
-			provider.getAbility(VisAbility.ID, VisAbility.class).ifPresent((ability) -> {
-				MinecraftClient.getInstance().textRenderer.draw(matrices, new LiteralText("" + ability.getVis()), 0, 0, -1);
-			});
-		});
-		registerEvents();
+	}
+
+	private void registerNetworking()
+	{
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
 			client.execute(() -> {
@@ -754,6 +779,10 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			});
 		});
+	}
+
+	private void registerBookRecipeRenderers()
+	{
 		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
@@ -831,27 +860,41 @@ public class ThuwumcraftClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, offsetX + 42, y + 24);
 			return new RecipeElement(items, background);
 		}));
-		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
-			preRegisterArmorTextures(Thuwumcraft.getId(item.getName()), false);
-		});
+	}
+
+	private void registerEntityModels()
+	{
 		EntityModelLayerRegistry.registerModelLayer(GolemEntityRenderer.MODEL_LAYER, GolemEntityModel::getTexturedModelData);
+	}
+
+	private void registerEntityRenderers()
+	{
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WATER_PROJECTILE, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.FIRE_PROJECTILE, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_PROJECTILE, WaterEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WIND_PROJECTILE, WindEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.GOLEM, GolemEntityRenderer::new);
+	}
+
+	private void registerParticles()
+	{
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.WATER, WaterParticle.Factory::new);
+		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.FIRE, FireParticle.Factory::new);
+	}
+
+	private void registerAbilities()
+	{
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(Thuwumcraft.getId("vis_ability"), VisAbilityImpl::new);
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(GolemMarkersAbility.ID, GolemMarkersAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(Thuwumcraft.getId("player_research_ability"), PlayerResearchAbilityImpl::new);
-		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.MAGIC_FOREST, MagicForestParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.WATER, WaterParticle.Factory::new);
-		ParticleFactoryRegistry.getInstance().register(ThuwumcraftParticles.FIRE, FireParticle.Factory::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.ICE_PROJECTILE, FlyingItemEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WATER_ENTITY, WaterEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.FIRE_ENTITY, WaterEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_ENTITY, WaterEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WIND, WindEntityRenderer::new);
-		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.GOLEM, GolemEntityRenderer::new);
-		FabricModelPredicateProviderRegistry.register(ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM, Thuwumcraft.getId("level"), ((stack, world, entity, seed) -> {
-			return ThuwumcraftItems.SPECIAL_BATTLEAXE_ITEM.getLevel(stack);
-		}));
-		BuiltinItemRendererRegistry.INSTANCE.register(ThuwumcraftItems.HUNGRY_CHEST, ((stack, mode, matrices, vertexConsumers, light, overlay) -> {
+	}
+
+	private void registerItemModels()
+	{
+		BuiltinItemRendererRegistry.INSTANCE.register(ThuwumcraftItems.HUNGRY_CHEST_BLOCK, ((stack, mode, matrices, vertexConsumers, light, overlay) -> {
 			MinecraftClient.getInstance().getBlockEntityRenderDispatcher().renderEntity(
 					new HungryChestBlockEntity(BlockPos.ORIGIN, ThuwumcraftBlocks.HUNGRY_CHEST.getDefaultState()),
 					matrices,
@@ -860,8 +903,46 @@ public class ThuwumcraftClient implements ClientModInitializer
 					overlay
 			);
 		}));
-		ClientSpriteRegistryCallback.event(TexturedRenderLayers.CHEST_ATLAS_TEXTURE).register((atlas, registry) -> {
-			registry.register(Thuwumcraft.getId("models/chest/hungry_chest"));
+	}
+
+	private void registerKeyBindings()
+	{
+		ClientTickEvents.START_CLIENT_TICK.register(this::checkKeys);
+		KeyBindingHelper.registerKeyBinding(WAND_FOCUS_KEY);
+	}
+
+	private void registerFluidRenderers()
+	{
+		setupFluidRendering(ThuwumcraftFluids.DIMENSIONAL_STILL, ThuwumcraftFluids.DIMENSIONAL_FLOWING, new Identifier("water"), 0x000000);
+	}
+
+	private void registerArmorTextures()
+	{
+		Arrays.stream(AlchemyArmorMaterials.values()).forEach(item -> {
+			preRegisterArmorTextures(Thuwumcraft.getId(item.getName()), false);
 		});
+	}
+
+	@Override
+	public void onInitializeClient()
+	{
+		registerBlockRenderLayers();
+		registerModelPredicates();
+		registerBlockColors();
+		registerItemColors();
+		registerBlockEntityRenderers();
+		registerGuis();
+		registerBlockEntityRenderers();
+		registerEvents();
+		registerNetworking();
+		registerBookRecipeRenderers();
+		registerEntityModels();
+		registerEntityRenderers();
+		registerParticles();
+		registerAbilities();
+		registerItemModels();
+		registerKeyBindings();
+		registerFluidRenderers();
+		registerArmorTextures();
 	}
 }

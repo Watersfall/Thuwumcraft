@@ -20,7 +20,7 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 
 	public AlchemicalFurnaceEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.ALCHEMICAL_FURNACE_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.ALCHEMICAL_FURNACE, pos, state);
 	}
 
 	@Override

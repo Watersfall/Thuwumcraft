@@ -13,6 +13,7 @@ import net.watersfall.thuwumcraft.item.wand.WandFocusItem;
 import net.watersfall.thuwumcraft.gui.slot.WandComponentSlot;
 import net.watersfall.thuwumcraft.gui.slot.WandSlot;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 public class WandWorkbenchHandler extends ScreenHandler
 {

@@ -20,7 +20,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
@@ -194,7 +194,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		if(category != currentCategory)
 		{
 			this.currentCategory = category;
-			client.player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
+			client.player.playSound(ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 		}
 	}
 

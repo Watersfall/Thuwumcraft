@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.particle;
+package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.DefaultParticleType;
@@ -8,9 +8,16 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class ThuwumcraftParticles
 {
-	public static final DefaultParticleType MAGIC_FOREST = register("magic_forest", FabricParticleTypes.simple());
-	public static final DefaultParticleType WATER = register("water", FabricParticleTypes.simple());
-	public static final DefaultParticleType FIRE = register("fire", FabricParticleTypes.simple());
+	public static DefaultParticleType MAGIC_FOREST;
+	public static DefaultParticleType WATER;
+	public static DefaultParticleType FIRE;
+
+	public static void register()
+	{
+		MAGIC_FOREST = register("magic_forest", FabricParticleTypes.simple());
+		WATER = register("water", FabricParticleTypes.simple());
+		FIRE = register("fire", FabricParticleTypes.simple());
+	}
 
 	public static <T extends ParticleType<?>> T register(String name, T particle)
 	{

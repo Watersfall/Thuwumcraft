@@ -15,7 +15,7 @@ import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
-import net.watersfall.thuwumcraft.particle.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
 import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
 

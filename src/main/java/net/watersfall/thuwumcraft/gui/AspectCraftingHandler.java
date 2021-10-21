@@ -23,6 +23,7 @@ import net.watersfall.thuwumcraft.gui.slot.CrystalSlot;
 import net.watersfall.thuwumcraft.inventory.AspectCraftingInventory;
 import net.watersfall.thuwumcraft.item.CrystalItem;
 import net.watersfall.thuwumcraft.recipe.AspectCraftingShapedRecipe;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.Optional;

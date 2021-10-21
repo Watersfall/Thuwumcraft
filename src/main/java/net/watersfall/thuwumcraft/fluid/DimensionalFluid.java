@@ -40,7 +40,7 @@ public abstract class DimensionalFluid extends FlowableFluid
 
 	public BlockState toBlockState(FluidState state)
 	{
-		return ThuwumcraftBlocks.DIMENSIONAL_FLUID_BLOCK.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+		return ThuwumcraftBlocks.DIMENSIONAL_FLUID.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
 	}
 
 	public boolean matchesType(Fluid fluid)

@@ -19,7 +19,7 @@ public class ChildBlockEntity extends BlockEntity
 
 	public ChildBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.CHILD_BLOCK_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.CHILD_BLOCK, pos, state);
 	}
 
 	public MultiBlockComponent getComponent()

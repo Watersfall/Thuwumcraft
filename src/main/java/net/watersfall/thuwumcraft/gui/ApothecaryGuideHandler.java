@@ -10,6 +10,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 public class ApothecaryGuideHandler extends ScreenHandler
 {

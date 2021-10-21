@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.gui.slot.PotionSprayerSlot;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 public class PotionSprayerHandler extends ScreenHandler
 {

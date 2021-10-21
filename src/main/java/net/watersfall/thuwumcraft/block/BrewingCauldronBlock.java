@@ -16,7 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
@@ -80,7 +80,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 			{
 				ItemStack inputStack = new ItemStack(item);
 				entity.setInput(inputStack);
-				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENT_RECIPE, entity, world);
+				Optional<CauldronIngredientRecipe> typeOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_INGREDIENT, entity, world);
 				if(typeOptional.isPresent())
 				{
 					CauldronIngredientRecipe typeRecipe = typeOptional.get();
@@ -112,7 +112,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 						return ActionResult.success(world.isClient);
 					}
 				}
-				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_ITEM_RECIPE, entity, world);
+				Optional<CauldronItemRecipe> itemOptional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.CAULDRON_ITEM, entity, world);
 				if(itemOptional.isPresent())
 				{
 					CauldronItemRecipe recipe = itemOptional.get();
@@ -140,7 +140,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 							{
 								itemStack.decrement(1);
 							}
-							world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
+							world.playSound(null, pos, ThuwumcraftSounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 							entity.sync();
 						}
 					}
@@ -156,7 +156,7 @@ public class BrewingCauldronBlock extends AbstractCauldronBlock implements Block
 							itemStack.decrement(1);
 						}
 						entity.setIngredientCount((byte) (entity.getIngredientCount() + 1));
-						world.playSound(null, pos, AlchemySounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
+						world.playSound(null, pos, ThuwumcraftSounds.CAULDRON_ADD_INGREDIENT, SoundCategory.BLOCKS, 0.5F, 0.8F + ((float)Math.random() * 0.4F));
 						entity.sync();
 					}
 					return ActionResult.success(world.isClient);

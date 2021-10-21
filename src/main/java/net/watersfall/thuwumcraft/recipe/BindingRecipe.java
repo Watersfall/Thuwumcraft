@@ -125,7 +125,7 @@ public class BindingRecipe implements CraftingRecipe
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.BINDING_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.BINDING_SERIALIZER;
 	}
 
 	@Override

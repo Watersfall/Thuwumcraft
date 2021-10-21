@@ -101,7 +101,7 @@ public class ThaumatoriumBlock extends HorizontalFacingBlock implements BlockEnt
 		{
 			state = state.with(FACING, ctx.getPlayer().getHorizontalFacing().getOpposite());
 		}
-		if(ctx.getWorld().getBlockState(ctx.getBlockPos().down()).isOf(ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK))
+		if(ctx.getWorld().getBlockState(ctx.getBlockPos().down()).isOf(ThuwumcraftBlocks.BREWING_CAULDRON))
 		{
 			state = state.with(POWERED, true);
 		}

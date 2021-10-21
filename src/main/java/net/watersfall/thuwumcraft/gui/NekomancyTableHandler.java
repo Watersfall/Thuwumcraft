@@ -14,6 +14,7 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.recipe.NekomancyRecipe;
 import net.watersfall.thuwumcraft.gui.slot.CrystalSlot;
 import net.watersfall.thuwumcraft.gui.slot.NekomancyOutputSlot;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 import java.util.Optional;
 
@@ -75,7 +76,7 @@ public class NekomancyTableHandler extends ScreenHandler
 		World world = player.getEntityWorld();
 		if(!world.isClient)
 		{
-			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY_RECIPE, inventory, world);
+			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY, inventory, world);
 			if(optional.isPresent())
 			{
 				this.slots.get(0).setStack(optional.get().getOutput().copy());
@@ -93,7 +94,7 @@ public class NekomancyTableHandler extends ScreenHandler
 		World world = player.getEntityWorld();
 		if(!world.isClient)
 		{
-			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY_RECIPE, inventory, world);
+			Optional<NekomancyRecipe> optional = world.getRecipeManager().getFirstMatch(ThuwumcraftRecipes.NEKOMANCY, inventory, world);
 			if(optional.isPresent())
 			{
 				optional.get().craft(this.inventory);

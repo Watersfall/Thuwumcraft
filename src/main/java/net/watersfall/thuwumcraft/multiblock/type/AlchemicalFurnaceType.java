@@ -94,7 +94,7 @@ public class AlchemicalFurnaceType implements MultiBlockType<AlchemicalFurnaceMu
 		components[AlchemicalFurnaceMultiBlock.TOP_RIGHT] = new AlchemicalFurnaceComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.TOP_RIGHT]);
 		components[AlchemicalFurnaceMultiBlock.INPUT] = new AlchemicalFurnaceInputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.INPUT]);
 		components[AlchemicalFurnaceMultiBlock.OUTPUT] = new AlchemicalFurnaceOutputComponent(world, multiBlock, states[AlchemicalFurnaceMultiBlock.OUTPUT]);
-		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
+		world.setBlockState(states[AlchemicalFurnaceMultiBlock.BOTTOM_LEFT], ThuwumcraftBlocks.ALCHEMICAL_FURNACE.getDefaultState().with(AlchemicalFurnaceBlock.DIRECTION, direction));
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.OUTPUT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.INPUT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());
 		world.setBlockState(states[AlchemicalFurnaceMultiBlock.TOP_RIGHT], ThuwumcraftBlocks.CHILD_BLOCK.getDefaultState());

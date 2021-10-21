@@ -28,12 +28,12 @@ public class WitchySpoonItem extends Item
 		BlockState state = context.getWorld().getBlockState(context.getBlockPos());
 		if(state.getBlock() == Blocks.CAULDRON)
 		{
-			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK.getDefaultState());
+			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.BREWING_CAULDRON.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
 		}
-		else if(state.getBlock() == ThuwumcraftBlocks.BREWING_CAULDRON_BLOCK)
+		else if(state.getBlock() == ThuwumcraftBlocks.BREWING_CAULDRON)
 		{
-			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.CRUCIBLE_BLOCK.getDefaultState());
+			context.getWorld().setBlockState(context.getBlockPos(), ThuwumcraftBlocks.CRUCIBLE.getDefaultState());
 			return ActionResult.success(context.getWorld().isClient);
 		}
 		else

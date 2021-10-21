@@ -80,7 +80,7 @@ public class WandRecipe extends ShapelessRecipe
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ThuwumcraftRecipes.WAND_RECIPE_SERIALIZER;
+		return ThuwumcraftRecipes.WAND_SERIALIZER;
 	}
 
 	@Override

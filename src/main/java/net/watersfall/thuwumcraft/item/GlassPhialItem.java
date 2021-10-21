@@ -59,7 +59,7 @@ public class GlassPhialItem extends Item
 				if((phialStack = container.insert(phialStack, false)).isEmpty())
 				{
 					stack.decrement(1);
-					ItemStack newStack = new ItemStack(ThuwumcraftItems.EMPTY_PHIAL_ITEM, 1);
+					ItemStack newStack = new ItemStack(ThuwumcraftItems.GLASS_PHIAL, 1);
 					if(!player.getInventory().insertStack(newStack))
 					{
 						player.dropItem(newStack, true);

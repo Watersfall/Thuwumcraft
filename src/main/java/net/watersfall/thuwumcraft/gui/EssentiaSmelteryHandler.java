@@ -10,12 +10,13 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.watersfall.thuwumcraft.inventory.BetterAspectInventory;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 public class EssentiaSmelteryHandler extends ScreenHandler
 {
 	private final PropertyDelegate properties;
 
-	protected EssentiaSmelteryHandler(int syncId, PlayerInventory playerInventory)
+	public EssentiaSmelteryHandler(int syncId, PlayerInventory playerInventory)
 	{
 		this(syncId, playerInventory, new SimpleInventory(2), null, new ArrayPropertyDelegate(2));
 	}

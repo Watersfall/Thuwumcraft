@@ -10,6 +10,7 @@ import net.minecraft.screen.slot.FurnaceOutputSlot;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.watersfall.thuwumcraft.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 
 public class AlchemicalFurnaceHandler extends ScreenHandler
 {

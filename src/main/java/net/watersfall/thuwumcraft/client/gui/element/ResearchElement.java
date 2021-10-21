@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.ResearchBookScreen;
 import net.watersfall.thuwumcraft.client.gui.ResearchScreen;
 
@@ -64,7 +64,7 @@ public class ResearchElement extends ItemElement
 			if(research.isAvailable(ability))
 			{
 				MinecraftClient.getInstance().setScreen(new ResearchScreen(screen, research));
-				MinecraftClient.getInstance().player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
+				MinecraftClient.getInstance().player.playSound(ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 				return true;
 			}
 		}

@@ -73,7 +73,7 @@ public class AlchemicalFurnaceComponent implements MultiBlockComponent
 		if(this.multiBlock != null)
 		{
 			BlockState state = this.multiBlock.getWorld().getBlockState(this.multiBlock.getPos());
-			if(state.isOf(ThuwumcraftBlocks.ALCHEMICAL_FURNACE_BLOCK))
+			if(state.isOf(ThuwumcraftBlocks.ALCHEMICAL_FURNACE))
 			{
 				int index = state.get(AlchemicalFurnaceBlock.DIRECTION).getId() - 2;
 				index *= 4;

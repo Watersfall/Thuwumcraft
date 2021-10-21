@@ -31,7 +31,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 
 	public PedestalEntity(BlockPos pos, BlockState state)
 	{
-		super(ThuwumcraftBlockEntities.PEDESTAL_ENTITY, pos, state);
+		super(ThuwumcraftBlockEntities.PEDESTAL, pos, state);
 		stack = ItemStack.EMPTY;
 		craftingFinished = false;
 		neededAspects = new ArrayList<>();

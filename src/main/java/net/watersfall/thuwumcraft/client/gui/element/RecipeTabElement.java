@@ -4,7 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundCategory;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.thuwumcraft.api.sound.AlchemySounds;
+import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.ResearchTab;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
@@ -28,7 +28,7 @@ public class RecipeTabElement extends TabElement
 		{
 			if(MinecraftClient.getInstance().currentScreen != this.tab)
 			{
-				MinecraftClient.getInstance().player.playSound(AlchemySounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
+				MinecraftClient.getInstance().player.playSound(ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 			}
 			this.tab.getParent().childOpen = true;
 			MinecraftClient.getInstance().setScreen(this.tab);
