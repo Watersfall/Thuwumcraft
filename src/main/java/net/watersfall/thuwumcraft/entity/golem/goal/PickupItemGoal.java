@@ -1,9 +1,11 @@
 package net.watersfall.thuwumcraft.entity.golem.goal;
 
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.ItemPickupAnimationS2CPacket;
 import net.minecraft.util.Hand;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 
@@ -84,19 +86,32 @@ public class PickupItemGoal extends GolemGoal
 						break;
 					}
 					ItemStack stack = entity.getStack();
+					int count = Math.min(16, hand.getCount() + stack.getCount());
 					if(hand.isEmpty())
 					{
-						golem.setStackInHand(Hand.MAIN_HAND, stack);
-						entity.setStack(ItemStack.EMPTY);
+						ItemStack newStack = stack.copy();
+						newStack.setCount(count);
+						golem.setStackInHand(Hand.MAIN_HAND, newStack);
+						stack.decrement(count);
 					}
 					else
 					{
 						int original = hand.getCount();
-						int count = Math.min(16, hand.getCount() + stack.getCount());
 						hand.setCount(count);
 						stack.decrement(count - original);
+					}
+					PlayerLookup.tracking(golem).forEach(player -> {
+						player.networkHandler.sendPacket(new ItemPickupAnimationS2CPacket(entity.getId(), golem.getId(), count));
+					});
+					if(stack.isEmpty())
+					{
+						entity.discard();
+					}
+					else
+					{
 						entity.setStack(stack);
 					}
+					break;
 				}
 			}
 		}
