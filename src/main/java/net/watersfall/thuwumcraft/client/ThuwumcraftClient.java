@@ -511,8 +511,12 @@ public class ThuwumcraftClient implements ClientModInitializer
 				ThuwumcraftBlocks.DEEPSLATE_GRASS
 		);
 		ColorProviderRegistry.BLOCK.register(
-				(state, world, pos, tintIndex) -> 0x00AAFF,
+				(state, world, pos, tintIndex) -> 0x4CB7FF,
 				ThuwumcraftBlocks.SILVERWOOD_LEAVES
+		);
+		ColorProviderRegistry.BLOCK.register(
+				(state, world, pos, tintIndex) -> 0x007700,
+				ThuwumcraftBlocks.GREATWOOD_LEAVES
 		);
 		ColorProviderRegistry.BLOCK.register(
 				((state, world, pos, tintIndex) -> ((BlockColorProvider)state.getBlock()).getColor(state, world, pos, tintIndex)),
@@ -525,6 +529,14 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> GrassColors.getColor(0.5D, 1.0D),
 				ThuwumcraftBlocks.DEEPSLATE_GRASS
+		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> 0x4CB7FF,
+				ThuwumcraftBlocks.SILVERWOOD_LEAVES
+		);
+		ColorProviderRegistry.ITEM.register(
+				(stack, tintIndex) -> 0x007700,
+				ThuwumcraftBlocks.GREATWOOD_LEAVES
 		);
 		ColorProviderRegistry.ITEM.register(
 				(stack, tintIndex) -> {

@@ -38,6 +38,26 @@ public class ThuwumcraftItems
 {
 	public static ItemGroup ALCHEMY_MOD_ITEM_GROUP;
 
+	public static BlockItem GREATWOOD_LOG_BLOCK;
+	public static BlockItem STRIPPED_GREATWOOD_LOG_BLOCK;
+	public static BlockItem GREATWOOD_WOOD_BLOCK;
+	public static BlockItem STRIPPED_GREATWOOD_WOOD_BLOCK;
+	public static BlockItem GREATWOOD_PLANKS_BLOCK;
+	public static BlockItem GREATWOOD_SLAB_BLOCK;
+	public static BlockItem GREATWOOD_STAIRS_BLOCK;
+	public static BlockItem GREATWOOD_LEAVES_BLOCK;
+	public static BlockItem SILVERWOOD_LOG_BLOCK;
+	public static BlockItem STRIPPED_SILVERWOOD_LOG_BLOCK;
+	public static BlockItem SILVERWOOD_WOOD_BLOCK;
+	public static BlockItem STRIPPED_SILVERWOOD_WOOD_BLOCK;
+	public static BlockItem SILVERWOOD_PLANKS_BLOCK;
+	public static BlockItem SILVERWOOD_SLAB_BLOCK;
+	public static BlockItem SILVERWOOD_STAIRS_BLOCK;
+	public static BlockItem SILVERWOOD_LEAVES;
+	public static BlockItem SILVERWOOD_SAPLING_BLOCK;
+	public static BlockItem ARCANE_STONE_BLOCK;
+	public static BlockItem ARCANE_STONE_SLAB_BLOCK;
+	public static BlockItem ARCANE_STONE_STAIRS_BLOCK;
 	public static BlockItem PHIAL_SHELF_BLOCK;
 	public static BlockItem JAR_BLOCK;
 	public static BlockItem BRASS_PIPE_BLOCK;
@@ -51,12 +71,7 @@ public class ThuwumcraftItems
 	public static BlockItem ARCANE_LAMP_BLOCK;
 	public static BlockItem DEEPSLATE_GRASS_BLOCK;
 	public static BlockItem GLOWING_DEEPSLATE_BLOCK;
-	public static BlockItem SILVERWOOD_SAPLING_BLOCK;
-	public static BlockItem ARCANE_STONE_BLOCK;
-	public static BlockItem ARCANE_STONE_SLAB_BLOCK;
 	public static BlockItem ARCANE_SEAL_BLOCK;
-	public static BlockItem GREATWOOD_LOG_BLOCK;
-	public static BlockItem SILVERWOOD_LOG_BLOCK;
 	public static BlockItem SPAWNER_FRAME_BLOCK;
 	public static BlockItem WAND_WORKBENCH_BLOCK;
 	public static BlockItem HUNGRY_CHEST_BLOCK;
@@ -159,6 +174,26 @@ public class ThuwumcraftItems
 				.icon(ThuwumcraftItems::getDisplayIcon)
 				.appendItems(ThuwumcraftItems::getStacks)
 				.build();
+
+		GREATWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_LOG, defaultSettings());
+		STRIPPED_GREATWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.STRIPPED_GREATWOOD_LOG, defaultSettings());
+		GREATWOOD_WOOD_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_WOOD, defaultSettings());
+		STRIPPED_GREATWOOD_WOOD_BLOCK = register(ThuwumcraftBlocks.STRIPPED_GREATWOOD_WOOD, defaultSettings());
+		GREATWOOD_PLANKS_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_PLANKS, defaultSettings());
+		GREATWOOD_SLAB_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_SLAB, defaultSettings());
+		GREATWOOD_STAIRS_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_STAIRS, defaultSettings());
+		GREATWOOD_LEAVES_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_LEAVES, defaultSettings());
+		SILVERWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_LOG, defaultSettings());
+		STRIPPED_SILVERWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.STRIPPED_SILVERWOOD_LOG, defaultSettings());
+		SILVERWOOD_WOOD_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_WOOD, defaultSettings());
+		STRIPPED_SILVERWOOD_WOOD_BLOCK = register(ThuwumcraftBlocks.STRIPPED_SILVERWOOD_WOOD, defaultSettings());
+		SILVERWOOD_PLANKS_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_PLANKS, defaultSettings());
+		SILVERWOOD_SLAB_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_SLAB, defaultSettings());
+		SILVERWOOD_STAIRS_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_STAIRS, defaultSettings());
+		SILVERWOOD_LEAVES = register(ThuwumcraftBlocks.SILVERWOOD_LEAVES, defaultSettings());
+		ARCANE_STONE_BLOCK = register(ThuwumcraftBlocks.ARCANE_STONE, defaultSettings());
+		ARCANE_STONE_SLAB_BLOCK = register(ThuwumcraftBlocks.ARCANE_STONE_SLAB, defaultSettings());
+		ARCANE_STONE_STAIRS_BLOCK = register(ThuwumcraftBlocks.ARCANE_STONE_STAIRS, defaultSettings());
 		PEDESTAL = register(ThuwumcraftBlocks.PEDESTAL, defaultSettings());
 		JAR_BLOCK = register(ThuwumcraftBlocks.JAR, defaultSettings());
 		PHIAL_SHELF_BLOCK = register(ThuwumcraftBlocks.PHIAL_SHELF, defaultSettings());
@@ -174,11 +209,7 @@ public class ThuwumcraftItems
 		DEEPSLATE_GRASS_BLOCK = register(ThuwumcraftBlocks.DEEPSLATE_GRASS, defaultSettings());
 		GLOWING_DEEPSLATE_BLOCK = register(ThuwumcraftBlocks.GLOWING_DEEPSLATE, defaultSettings());
 		SILVERWOOD_SAPLING_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_SAPLING, defaultSettings());
-		ARCANE_STONE_BLOCK = register(ThuwumcraftBlocks.ARCANE_STONE, defaultSettings());
-		ARCANE_STONE_SLAB_BLOCK = register(ThuwumcraftBlocks.ARCANE_STONE_SLAB, defaultSettings());
 		ARCANE_SEAL_BLOCK = register(ThuwumcraftBlocks.ARCANE_SEAL, defaultSettings());
-		GREATWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.GREATWOOD_LOG, defaultSettings());
-		SILVERWOOD_LOG_BLOCK = register(ThuwumcraftBlocks.SILVERWOOD_LOG, defaultSettings());
 		SPAWNER_FRAME_BLOCK = register(ThuwumcraftBlocks.SPAWNER_FRAME, defaultSettings());
 		WAND_WORKBENCH_BLOCK = register(ThuwumcraftBlocks.WAND_WORKBENCH, defaultSettings());
 		CUSTOM_SPAWNER_BLOCK = register(ThuwumcraftBlocks.CUSTOM_SPAWNER, defaultSettings());
@@ -189,7 +220,7 @@ public class ThuwumcraftItems
 		LINGERING_BOTTLE = register(Thuwumcraft.getId("lingering_bottle"), new SpecialGlassBottleItem(new FabricItemSettings().maxCount(64).group(ALCHEMY_MOD_ITEM_GROUP), Items.LINGERING_POTION::getDefaultStack));
 		LADLE = register(Thuwumcraft.getId("ladle"), new LadleItem());
 		APOTHECARY_GUIDE = register(Thuwumcraft.getId("apothecary_guide_book"), new ApothecaryGuideItem());
-		MAGICAL_COAL_TIER_0 =  register(Thuwumcraft.getId("magical_coal_0"), new MagicalCoalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), 0));
+		MAGICAL_COAL_TIER_0 =register(Thuwumcraft.getId("magical_coal_0"), new MagicalCoalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), 0));
 		MAGICAL_COAL_TIER_1 =register(Thuwumcraft.getId("magical_coal_1"), new MagicalCoalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), 1));
 		MAGICAL_COAL_TIER_2 =register(Thuwumcraft.getId("magical_coal_2"), new MagicalCoalItem(new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), 2));
 		MAGIC_DUST = register(Thuwumcraft.getId("magic_dust"), new MagicDustItem());
@@ -352,6 +383,6 @@ public class ThuwumcraftItems
 
 	private static ItemStack getDisplayIcon()
 	{
-		return MAGICAL_COAL_TIER_2.getDefaultStack();
+		return GOGGLES.getDefaultStack();
 	}
 }

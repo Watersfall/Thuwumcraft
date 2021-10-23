@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
@@ -541,6 +542,14 @@ public class Thuwumcraft implements ModInitializer
 				GenerationStep.Feature.VEGETAL_DECORATION,
 				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE).get());
 	}
+	
+	private void registerStrippableBlocks()
+	{
+		StrippableBlockRegistry.register(ThuwumcraftBlocks.GREATWOOD_LOG, ThuwumcraftBlocks.STRIPPED_GREATWOOD_LOG);
+		StrippableBlockRegistry.register(ThuwumcraftBlocks.GREATWOOD_WOOD, ThuwumcraftBlocks.STRIPPED_GREATWOOD_WOOD);
+		StrippableBlockRegistry.register(ThuwumcraftBlocks.SILVERWOOD_LOG, ThuwumcraftBlocks.STRIPPED_SILVERWOOD_LOG);
+		StrippableBlockRegistry.register(ThuwumcraftBlocks.SILVERWOOD_WOOD, ThuwumcraftBlocks.STRIPPED_SILVERWOOD_WOOD);
+	}
 
 	private static void registerMultiBlocks()
 	{
@@ -550,7 +559,6 @@ public class Thuwumcraft implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		ThuwumcraftAttributes.register();
 		ThuwumcraftFluids.register();
 		ThuwumcraftBlocks.register();
 		ThuwumcraftItems.register();
@@ -559,6 +567,7 @@ public class Thuwumcraft implements ModInitializer
 		ThuwumcraftEntities.register();
 		ThuwumcraftRecipes.register();
 		ThuwumcraftParticles.register();
+		registerStrippableBlocks();
 		registerEvents();
 		registerAspects();
 		registerSounds();

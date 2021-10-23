@@ -1,0 +1,19 @@
+{
+	"replace": false,
+	"values": [
+		"thuwumcraft:arcane_stone",
+		"thuwumcraft:arcane_stone_slab",
+		"thuwumcraft:arcane_stone_stairs",
+		"thuwumcraft:pedestal",
+		"thuwumcraft:brass_pipe",
+		"thuwumcraft:crafting_hopper",
+		"thuwumcraft:potion_sprayer",
+		"thuwumcraft:essentia_smeltery",
+		"thuwumcraft:essentia_refinery",
+		"thuwumcraft:arcane_lamp",
+		"thuwumcraft:deepslate_grass",
+		"thuwumcraft:glowing_deepslate",
+		"thuwumcraft:spawner_frame",
+		"thuwumcraft:custom_spawner"
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "thuwumcraft:block/greatwood_planks_slab"
+		},
+		"type=double": {
+			"model": "thuwumcraft:block/greatwood_planks"
+		},
+		"type=top": {
+			"model": "thuwumcraft:block/greatwood_planks_slab_top"
+		}
+	}
+}

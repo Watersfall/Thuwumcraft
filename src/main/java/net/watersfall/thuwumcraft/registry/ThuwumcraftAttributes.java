@@ -9,7 +9,7 @@ public class ThuwumcraftAttributes
 {
 	public static EntityAttribute MAGIC_RESISTANCE;
 
-	public static void register()
+	static
 	{
 		MAGIC_RESISTANCE = Registry.register(
 				Registry.ATTRIBUTE,

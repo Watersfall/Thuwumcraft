@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/inner_stairs",
+	"textures": {
+		"bottom": "thuwumcraft:block/arcane_stone",
+		"top": "thuwumcraft:block/arcane_stone",
+		"side": "thuwumcraft:block/arcane_stone"
+	}
+}
