@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"tag": "thuwumcraft:golem_markers"
+		},
+		{
+			"item": "minecraft:blue_dye"
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:golem_marker/blue"
+	}
+}

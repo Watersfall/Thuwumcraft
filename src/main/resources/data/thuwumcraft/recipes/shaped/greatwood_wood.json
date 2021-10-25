@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WW",
+		"WW"
+	],
+	"key": {
+		"W": {
+			"item": "thuwumcraft:greatwood_log"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:greatwood_wood",
+		"count": 3
+	}
+}

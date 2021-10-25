@@ -92,7 +92,6 @@ import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
 import net.watersfall.thuwumcraft.item.wand.WandItem;
 import net.watersfall.thuwumcraft.multiblock.type.AlchemicalFurnaceType;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
 import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;

@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" G ",
+		"GAG",
+		" G "
+	],
+	"key": {
+		"G": {
+			"item": "minecraft:gold_ingot"
+		},
+		"A": {
+			"item": "thuwumcraft:crystal/order"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:order_rune"
+	}
+}

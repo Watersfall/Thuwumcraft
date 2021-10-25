@@ -1,0 +1,29 @@
+{
+	"type": "thuwumcraft:aspect_shaped",
+	"pattern": [
+		"  S",
+		"II ",
+		"QI "
+	],
+	"key": {
+		"S": {
+			"item": "minecraft:stick"
+		},
+		"I": {
+			"item": "minecraft:iron_ingot"
+		},
+		"Q": {
+			"item": "minecraft:quartz"
+		}
+	},
+	"crystals": [
+		{
+			"aspect": "air",
+			"count": 1
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:golemancy_bell"
+	},
+	"vis": 10
+}

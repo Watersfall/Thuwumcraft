@@ -20,6 +20,9 @@
 		],
 		"main": [
 			"net.watersfall.thuwumcraft.Thuwumcraft"
+		],
+		"rei": [
+			"net.watersfall.thuwumcraft.compat.rei.client.ThuwumcraftReiCompatClient"
 		]
 	},
 	"mixins": [

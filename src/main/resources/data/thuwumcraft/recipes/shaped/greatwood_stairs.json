@@ -1,0 +1,17 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"  W",
+		" WW",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"item": "thuwumcraft:greatwood_planks"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:greatwood_planks_stairs",
+		"count": 4
+	}
+}

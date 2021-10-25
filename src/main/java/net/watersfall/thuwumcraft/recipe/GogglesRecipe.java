@@ -5,19 +5,27 @@ import net.fabricmc.fabric.impl.item.ItemExtensions;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GogglesRecipe implements CraftingRecipe
 {
 	private final Identifier id;
+	private DefaultedList<Ingredient> ingredients = null;
 
 	public GogglesRecipe(Identifier id)
 	{
@@ -57,6 +65,26 @@ public class GogglesRecipe implements CraftingRecipe
 			}
 		}
 		return foundGoggles && foundHelmet;
+	}
+
+	@Override
+	public DefaultedList<Ingredient> getIngredients()
+	{
+		if(ingredients == null)
+		{
+			DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(2, Ingredient.EMPTY);
+			List<Item> list = new ArrayList<>();
+			Registry.ITEM.forEach(item -> {
+				if(isValidHelmet(item.getDefaultStack()))
+				{
+					list.add(item);
+				}
+			});
+			ingredients.set(0, Ingredient.ofItems(list.toArray(new Item[0])));
+			ingredients.set(1, Ingredient.ofItems(ThuwumcraftItems.GOGGLES));
+			this.ingredients = ingredients;
+		}
+		return ingredients;
 	}
 
 	@Override

@@ -112,7 +112,7 @@ public class CauldronIngredient implements Recipe<BrewingCauldronInventory>
 	@Override
 	public ItemStack getOutput()
 	{
-		return null;
+		return input;
 	}
 
 	@Override

@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"WW",
+		"WW"
+	],
+	"key": {
+		"W": {
+			"item": "thuwumcraft:silverwood_log"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:silverwood_wood",
+		"count": 3
+	}
+}

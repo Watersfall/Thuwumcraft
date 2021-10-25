@@ -1,0 +1,21 @@
+{
+	"replace": false,
+	"values": [
+		"thuwumcraft:golem_marker/black",
+		"thuwumcraft:golem_marker/blue",
+		"thuwumcraft:golem_marker/brown",
+		"thuwumcraft:golem_marker/cyan",
+		"thuwumcraft:golem_marker/gray",
+		"thuwumcraft:golem_marker/green",
+		"thuwumcraft:golem_marker/light_blue",
+		"thuwumcraft:golem_marker/light_gray",
+		"thuwumcraft:golem_marker/lime",
+		"thuwumcraft:golem_marker/magenta",
+		"thuwumcraft:golem_marker/orange",
+		"thuwumcraft:golem_marker/pink",
+		"thuwumcraft:golem_marker/purple",
+		"thuwumcraft:golem_marker/red",
+		"thuwumcraft:golem_marker/white",
+		"thuwumcraft:golem_marker/yellow"
+	]
+}

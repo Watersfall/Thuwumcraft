@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"tag": "thuwumcraft:silverwood_logs"
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:silverwood_planks",
+		"count": 4
+	}
+}

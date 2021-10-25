@@ -176,6 +176,7 @@
 	"block.thuwumcraft.hungry_chest": "Hungry Chest",
 	"block.thuwumcraft.spawner_frame": "Spawner Frame",
 	"block.thuwumcraft.wand_workbench": "Wand Workbench",
+	"block.thuwumcraft.brewing_crucible": "Crucible",
 	"container.thuwumcraft.alchemical_furnace": "Alchemical Furnace",
 	"container.thuwumcraft.wand_workbench": "Wand Workbench",
 	"research_category.thuwumcraft.starter.name": "Basics",
@@ -236,5 +237,11 @@
 	"sound.thuwumcraft.magic": "Magic happens",
 	"advancements.thuwumcraft.the_unknown.root.title": "The Unknown",
 	"advancements.thuwumcraft.the_unknown.root.description": "Find an Unknown portal, deep underground, and leap into it",
-	"key.thuwumcraft.wand_focus": "Change Wand Focus"
+	"key.thuwumcraft.wand_focus": "Change Wand Focus",
+	"thuwumcraft.rei.category.crafting": "Thuwumic Crafting",
+	"thuwumcraft.rei.category.infusion": "Infusion",
+	"thuwumcraft.rei.category.crucible": "Crucible Alchemy",
+	"thuwumcraft.rei.category.brewing": "Cauldron Brewing",
+	"thuwumcraft.rei.category.cauldron": "Cauldron Brewing",
+	"thuwumcraft.rei.category.aspects": "Aspects"
 }

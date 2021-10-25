@@ -1,0 +1,34 @@
+{
+	"type": "thuwumcraft:aspect_shaped",
+	"pattern": [
+		"WTW",
+		"W W",
+		"WWW"
+	],
+	"key": {
+		"W": {
+			"tag": "minecraft:planks"
+		},
+		"T": {
+			"tag": "minecraft:trapdoors"
+		}
+	},
+	"crystals": [
+		{
+			"aspect": "order",
+			"count": 1
+		},
+		{
+			"aspect": "disorder",
+			"count": 1
+		},
+		{
+			"aspect": "air",
+			"count": 1
+		}
+	],
+	"result": {
+		"item": "thuwumcraft:hungry_chest"
+	},
+	"vis": 25
+}

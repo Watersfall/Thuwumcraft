@@ -1,0 +1,20 @@
+{
+	"type": "thuwumcraft:research_unlocked_shaped_recipe",
+	"pattern": [
+		"  X",
+		" XX",
+		"XXX"
+	],
+	"key": {
+		"X": {
+			"item": "thuwumcraft:arcane_stone"
+		}
+	},
+	"result": {
+		"item": "thuwumcraft:arcane_stone_stairs",
+		"count": 4
+	},
+	"research": [
+		"thuwumcraft:start/infusion"
+	]
+}

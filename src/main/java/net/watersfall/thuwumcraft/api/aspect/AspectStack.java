@@ -1,5 +1,6 @@
 package net.watersfall.thuwumcraft.api.aspect;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
@@ -84,5 +85,10 @@ public class AspectStack
 			}
 		}
 		return false;
+	}
+
+	public ItemStack toItemStack()
+	{
+		return new ItemStack(aspect.getItem(), getCount());
 	}
 }

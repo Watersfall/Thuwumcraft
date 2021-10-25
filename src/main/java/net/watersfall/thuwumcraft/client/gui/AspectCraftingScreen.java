@@ -41,6 +41,7 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 	@Override
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
 	{
+		renderBackground(matrices);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURE);
@@ -54,6 +55,7 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 	{
 		super.render(matrices, mouseX, mouseY, delta);
 		VisAbility ability = provider.getAbility(VisAbility.ID, VisAbility.class).get();
+		matrices.push();
 		matrices.scale(0.5F, 0.5F, 1F);
 		this.textRenderer.draw(matrices, new LiteralText(ability.getVis() + " Vis Available"), (this.x + 116) * 2, (y + 36) * 2, -1);
 		if(handler.currentRecipe != null && handler.currentRecipe instanceof AspectCraftingShapedRecipe && handler.canTakeOutput())
@@ -62,5 +64,7 @@ public class AspectCraftingScreen extends HandledScreen<AspectCraftingHandler>
 			int color = ability.getVis() >= recipe.getVis() ? 0x00FF00 : 0xFF0000;
 			this.textRenderer.draw(matrices, new LiteralText(recipe.getVis() + " Vis Required"), (this.x + 116) * 2, (y + 84) * 2, color);
 		}
+		matrices.pop();
+		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
 }
