@@ -11,12 +11,12 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.watersfall.thuwumcraft.compat.rei.client.ThuwumcraftReiCompatClient;
 import net.watersfall.thuwumcraft.compat.rei.client.display.CauldronEffectDisplay;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class CauldronEffectDisplayCategory implements TransferDisplayCategory<Ca
 	@Override
 	public Renderer getIcon()
 	{
-		return EntryStacks.of(Items.CAULDRON);
+		return EntryStacks.of(ThuwumcraftItems.BREWING_CAULDRON_BLOCK);
 	}
 
 	@Override

@@ -1,14 +1,8 @@
 {
-	"icon": "minecraft:cauldron",
+	"icon": "thuwumcraft:brewing_cauldron",
 	"category": "thuwumcraft:alchemy",
 	"x": 0,
 	"y": -4,
-	"complete_requirements": {
-		"inventory_required": [
-			"minecraft:cauldron",
-			"thuwumcraft:witchy_spoon"
-		]
-	},
 	"tabs": [
 		{
 			"recipes": [

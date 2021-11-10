@@ -1,6 +1,5 @@
 {
-	"credit": "Made with Blockbench",
-	"ambientocclusion": false,
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"top": "thuwumcraft:block/cauldron_top",
 		"bottom": "thuwumcraft:block/cauldron_bottom",

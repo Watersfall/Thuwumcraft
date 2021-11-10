@@ -1,11 +1,14 @@
 package net.watersfall.thuwumcraft.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.OrderedText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
@@ -78,6 +81,12 @@ public class ResearchScreen extends Screen
 			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 195, true));
 		}
 		this.addDrawableChild(researchButton);
+		if(!ability.hasResearch(research) && research.getConsumedItems().isEmpty() && research.getRequiredItems().isEmpty())
+		{
+			PacketByteBuf buf = PacketByteBufs.create();
+			buf.writeIdentifier(research.getId());
+			ClientPlayNetworking.send(Thuwumcraft.getId("research_click"), buf);
+		}
 	}
 
 	@Override

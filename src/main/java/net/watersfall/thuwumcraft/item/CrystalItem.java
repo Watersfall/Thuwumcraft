@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.client.item.AspectTooltipData;
@@ -24,6 +26,12 @@ public class CrystalItem extends Item
 	public Optional<TooltipData> getTooltipData(ItemStack stack)
 	{
 		return Optional.of(new AspectTooltipData(Lists.newArrayList(new AspectStack(this.aspect, 1))));
+	}
+
+	@Override
+	public Text getName(ItemStack stack)
+	{
+		return new TranslatableText(getTranslationKey(), new TranslatableText(aspect.getTranslationKey()));
 	}
 
 	@Override

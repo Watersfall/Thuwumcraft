@@ -1,10 +1,19 @@
 {
   "variants": {
-    "powered=true": {
+    "facing=west": {
       "model": "thuwumcraft:block/brewing_cauldron"
     },
-    "powered=false": {
-      "model": "thuwumcraft:block/brewing_cauldron"
+    "facing=east": {
+      "model": "thuwumcraft:block/brewing_cauldron",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "thuwumcraft:block/brewing_cauldron",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "thuwumcraft:block/brewing_cauldron",
+      "y": 270
     }
   }
 }

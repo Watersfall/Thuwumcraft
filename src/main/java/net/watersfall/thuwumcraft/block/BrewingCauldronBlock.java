@@ -1,5 +1,6 @@
 package net.watersfall.thuwumcraft.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -7,14 +8,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.BrewingCauldronEntity;
@@ -23,14 +29,33 @@ import net.watersfall.thuwumcraft.recipe.CauldronIngredientRecipe;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
 import net.watersfall.thuwumcraft.util.InventoryHelper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class BrewingCauldronBlock extends AbstractCauldronBlock implements BlockEntityProvider
 {
+	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
+
 	public BrewingCauldronBlock(Settings settings)
 	{
 		super(settings);
+		this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
+	}
+
+	@Override
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
+	{
+		super.appendProperties(builder);
+		builder.add(FACING);
+	}
+
+	@Override
+	public @Nullable BlockState getPlacementState(ItemPlacementContext ctx)
+	{
+		BlockState state = super.getPlacementState(ctx);
+		state = state.with(FACING, ctx.getPlayerFacing().getOpposite());
+		return state;
 	}
 
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity)

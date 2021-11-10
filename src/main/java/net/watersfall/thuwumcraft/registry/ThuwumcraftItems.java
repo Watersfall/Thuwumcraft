@@ -76,6 +76,8 @@ public class ThuwumcraftItems
 	public static BlockItem WAND_WORKBENCH_BLOCK;
 	public static BlockItem HUNGRY_CHEST_BLOCK;
 	public static BlockItem CUSTOM_SPAWNER_BLOCK;
+	public static BlockItem BREWING_CAULDRON_BLOCK;
+	public static BlockItem CRUCIBLE_BLOCK;
 
 	public static WitchySpoonItem WITCHY_SPOON;
 	public static Item THROW_BOTTLE;
@@ -214,6 +216,8 @@ public class ThuwumcraftItems
 		WAND_WORKBENCH_BLOCK = register(ThuwumcraftBlocks.WAND_WORKBENCH, defaultSettings());
 		CUSTOM_SPAWNER_BLOCK = register(ThuwumcraftBlocks.CUSTOM_SPAWNER, defaultSettings());
 		HUNGRY_CHEST_BLOCK = register(ThuwumcraftBlocks.HUNGRY_CHEST, defaultSettings());
+		BREWING_CAULDRON_BLOCK = register(ThuwumcraftBlocks.BREWING_CAULDRON);
+		CRUCIBLE_BLOCK = register(ThuwumcraftBlocks.CRUCIBLE);
 
 		WITCHY_SPOON = register(Thuwumcraft.getId("witchy_spoon"), new WitchySpoonItem());
 		THROW_BOTTLE = register(Thuwumcraft.getId("throw_bottle"), new SpecialGlassBottleItem(new FabricItemSettings().maxCount(64).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), Items.SPLASH_POTION::getDefaultStack));
@@ -328,6 +332,15 @@ public class ThuwumcraftItems
 	private static BlockItem register(Block block, FabricItemSettings settings)
 	{
 		BlockItem item = Registry.register(Registry.ITEM, Registry.BLOCK.getId(block), new BlockItem(block, settings));
+		ITEMS.add(item);
+		return item;
+	}
+
+
+
+	private static BlockItem register(Block block)
+	{
+		BlockItem item = Registry.register(Registry.ITEM, Registry.BLOCK.getId(block), new BlockItem(block, defaultSettings()));
 		ITEMS.add(item);
 		return item;
 	}

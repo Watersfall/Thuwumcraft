@@ -13,7 +13,6 @@ import me.shedaniel.rei.plugin.common.BuiltinPlugin;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultShapedDisplay;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultShapelessDisplay;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.recipe.ShapelessRecipe;
@@ -61,11 +60,11 @@ public class ThuwumcraftReiCompatClient implements REIClientPlugin
 		registry.addWorkstations(BuiltinPlugin.CRAFTING, EntryStacks.of(ThuwumcraftItems.ASPECT_CRAFTING_TABLE_BLOCK));
 		registry.addWorkstations(CRYSTAL, EntryStacks.of(ThuwumcraftItems.ASPECT_CRAFTING_TABLE_BLOCK));
 		registry.addWorkstations(INFUSION, EntryStacks.of(ThuwumcraftItems.PEDESTAL));
-		registry.addWorkstations(CRUCIBLE, EntryStacks.of(Items.CAULDRON));
-		registry.addWorkstations(CAULDRON_EFFECT, EntryStacks.of(Items.CAULDRON));
-		registry.addWorkstations(CAULDRON_CRAFTING, EntryStacks.of(Items.CAULDRON));
-		registry.addWorkstations(CAULDRON_ITEM, EntryStacks.of(Items.CAULDRON));
-		registry.addWorkstations(ASPECT, EntryStacks.of(Items.CAULDRON));
+		registry.addWorkstations(CRUCIBLE, EntryStacks.of(ThuwumcraftItems.CRUCIBLE_BLOCK));
+		registry.addWorkstations(CAULDRON_EFFECT, EntryStacks.of(ThuwumcraftItems.BREWING_CAULDRON_BLOCK));
+		registry.addWorkstations(CAULDRON_CRAFTING, EntryStacks.of(ThuwumcraftItems.BREWING_CAULDRON_BLOCK));
+		registry.addWorkstations(CAULDRON_ITEM, EntryStacks.of(ThuwumcraftItems.BREWING_CAULDRON_BLOCK));
+		registry.addWorkstations(ASPECT, EntryStacks.of(ThuwumcraftItems.CRUCIBLE_BLOCK), EntryStacks.of(ThuwumcraftItems.ESSENTIA_SMELTERY_BLOCK));
 	}
 
 	@Override

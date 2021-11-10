@@ -60,7 +60,7 @@ public class ResearchButton implements Element, Drawable, Selectable
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button)
 	{
-		if(enabled && button == 0 && isMouseOver(mouseX, mouseY) && research.hasItems(MinecraftClient.getInstance().player))
+		if(enabled && button == 0 && isMouseOver(mouseX, mouseY)/* && research.hasItems(MinecraftClient.getInstance().player)*/)
 		{
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeIdentifier(research.getId());
