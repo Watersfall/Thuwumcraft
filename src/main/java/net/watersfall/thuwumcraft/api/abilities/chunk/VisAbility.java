@@ -9,11 +9,15 @@ public interface VisAbility extends Ability<Chunk>, AbilityClientSerializable<Ch
 {
 	public static final Identifier ID = new Identifier("thuwumcraft", "vis_ability");
 
-	int getVis();
+	double getVis();
 
-	int getMaxVis();
+	double getMaxVis();
 
-	void setVis(int vis);
+	double getFlux();
 
-	void setMaxVis(int maxVis);
+	void setVis(double vis);
+
+	void setMaxVis(double maxVis);
+
+	void setFlux(double flux);
 }

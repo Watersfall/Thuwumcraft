@@ -51,7 +51,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.Tag;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -67,18 +69,21 @@ import net.watersfall.thuwumcraft.abilities.chunk.GolemMarkersAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
+import net.watersfall.thuwumcraft.abilities.entity.PlayerWarpAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.abilities.item.*;
 import net.watersfall.thuwumcraft.api.abilities.chunk.GolemMarkersAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerWarpAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.BerserkerWeapon;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
+import net.watersfall.thuwumcraft.api.player.PlayerWarpEvents;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
@@ -87,6 +92,7 @@ import net.watersfall.thuwumcraft.api.tag.ThuwumcraftEntityTags;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
+import net.watersfall.thuwumcraft.entity.mind.MindSpider;
 import net.watersfall.thuwumcraft.gui.ThaumatoriumHandler;
 import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
@@ -103,6 +109,8 @@ import net.watersfall.thuwumcraft.world.structure.ThuwumcraftStructurePieceTypes
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 import net.watersfall.wet.api.event.AbilityCreateEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -111,6 +119,7 @@ import java.util.Set;
 public class Thuwumcraft implements ModInitializer
 {
 	public static final String MOD_ID = "thuwumcraft";
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 	private static Tag<Item> INGREDIENT_TAG;
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
@@ -358,6 +367,18 @@ public class Thuwumcraft implements ModInitializer
 						.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
 						.add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5)
 		);
+		FabricDefaultAttributeRegistry.register(ThuwumcraftEntities.MIND_SPIDER,
+				DefaultAttributeContainer.builder()
+						.add(EntityAttributes.GENERIC_MAX_HEALTH, 20)
+						.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25)
+						.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3)
+						.add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5)
+						.add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16)
+						.add(EntityAttributes.GENERIC_ARMOR, 0)
+						.add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 0)
+						.add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0)
+						.add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5)
+		);
 		PlayerBlockBreakEvents.AFTER.register(((world, player, pos, state, blockEntity) -> {
 			Chunk chunk = world.getChunk(pos);
 			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(chunk);
@@ -431,8 +452,9 @@ public class Thuwumcraft implements ModInitializer
 		AbilityProvider.ITEM_REGISTRY.register(BerserkerWeapon.ID, BerserkerWeaponImpl::new);
 		AbilityProvider.ITEM_REGISTRY.register(StatusEffectItem.ID, StatusEffectItemImpl::new);
 		AbilityProvider.CHUNK_REGISTRY.register(GolemMarkersAbility.ID, GolemMarkersAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.register(PlayerWarpAbility.ID, PlayerWarpAbilityImpl::new);
 		AbilityCreateEvent.CHUNK.register((world, pos, provider) -> {
-			provider.addAbility(new VisAbilityImpl());
+			provider.addAbility(new VisAbilityImpl(world, pos, provider));
 			provider.addAbility(new GolemMarkersAbilityImpl());
 		});
 		AbilityCreateEvent.ITEM.register((item, provider) -> {
@@ -452,10 +474,8 @@ public class Thuwumcraft implements ModInitializer
 		AbilityCreateEvent.ENTITY.register((type, world, provider) -> {
 			if(type == EntityType.PLAYER)
 			{
-				if(!world.isClient)
-				{
-					provider.addAbility(new PlayerResearchAbilityImpl());
-				}
+				provider.addAbility(new PlayerResearchAbilityImpl());
+				provider.addAbility(new PlayerWarpAbilityImpl());
 				provider.addAbility(new PlayerUnknownAbilityImpl());
 			}
 		});
@@ -556,6 +576,27 @@ public class Thuwumcraft implements ModInitializer
 		MultiBlockRegistry.TYPES.add(AlchemicalFurnaceType.INSTANCE);
 	}
 
+	private void registerWarpEvents()
+	{
+		PlayerWarpEvents.register(10, (player, warp) -> {
+			if(warp.getTotalWarp() > 0)
+			{
+				player.sendMessage(new TranslatableText("warp_event.thuwumcraft.watching").formatted(Formatting.DARK_PURPLE, Formatting.ITALIC), true);
+			}
+			return ActionResult.PASS;
+		});
+		PlayerWarpEvents.register(10, ((player, warp) -> {
+			if(warp.getTotalWarp() > 0 && !player.world.isClient)
+			{
+				player.sendMessage(new TranslatableText("spiders").formatted(Formatting.DARK_PURPLE, Formatting.ITALIC), true);
+				MindSpider spider = new MindSpider(player.world, player.getGameProfile().getId());
+				spider.setPosition(player.getX(), player.getY(), player.getZ());
+				player.world.spawnEntity(spider);
+			}
+			return ActionResult.PASS;
+		}));
+	}
+
 	@Override
 	public void onInitialize()
 	{
@@ -583,5 +624,6 @@ public class Thuwumcraft implements ModInitializer
 		registerReloadListeners();
 		registerBiomeModifications();
 		VillageAdditions.register();
+		registerWarpEvents();
 	}
 }

@@ -35,6 +35,7 @@ import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.ChestBlockEntityRenderer;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.client.render.entity.SpiderEntityRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
@@ -75,12 +76,14 @@ import net.watersfall.thuwumcraft.abilities.chunk.GolemMarkersAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.chunk.VisAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerResearchAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.entity.PlayerUnknownAbilityImpl;
+import net.watersfall.thuwumcraft.abilities.entity.PlayerWarpAbilityImpl;
 import net.watersfall.thuwumcraft.abilities.item.PhialStorageAbility;
 import net.watersfall.thuwumcraft.api.abilities.chunk.GolemMarkersAbility;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.common.StatusEffectItem;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerUnknownAbility;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerWarpAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
@@ -110,9 +113,8 @@ import net.watersfall.thuwumcraft.client.toast.ResearchToast;
 import net.watersfall.thuwumcraft.client.util.RenderHelper;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.entity.spell.WindEntity;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
+import net.watersfall.thuwumcraft.network.MindMobSpawnS2CPacket;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
@@ -791,6 +793,21 @@ public class ThuwumcraftClient implements ClientModInitializer
 				}
 			});
 		});
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("warp"), ((client, handler, buf, responseSender) -> {
+			if(client.player != null)
+			{
+				Optional<PlayerWarpAbility> optional = AbilityProvider.getAbility(client.player, PlayerWarpAbility.ID, PlayerWarpAbility.class);
+				if(optional.isPresent())
+				{
+					PlayerWarpAbility ability = optional.get();
+					ability.fromPacket(buf);
+				}
+			}
+		}));
+		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("mind_mob"), ((client, handler, buf, responseSender) -> {
+			MindMobSpawnS2CPacket packet = new MindMobSpawnS2CPacket(buf);
+			client.execute(() -> packet.apply(handler));
+		}));
 	}
 
 	private void registerBookRecipeRenderers()
@@ -887,6 +904,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.SAND_PROJECTILE, WaterEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.WIND_PROJECTILE, WindEntityRenderer::new);
 		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.GOLEM, GolemEntityRenderer::new);
+		EntityRendererRegistry.INSTANCE.register(ThuwumcraftEntities.MIND_SPIDER, SpiderEntityRenderer::new);
 	}
 
 	private void registerParticles()
@@ -902,6 +920,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		AbilityProvider.CHUNK_REGISTRY.registerPacket(GolemMarkersAbility.ID, GolemMarkersAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerUnknownAbility.ID, PlayerUnknownAbilityImpl::new);
 		AbilityProvider.ENTITY_REGISTRY.registerPacket(Thuwumcraft.getId("player_research_ability"), PlayerResearchAbilityImpl::new);
+		AbilityProvider.ENTITY_REGISTRY.registerPacket(PlayerWarpAbility.ID, PlayerWarpAbilityImpl::new);
 	}
 
 	private void registerItemModels()

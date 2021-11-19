@@ -8,22 +8,40 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
+import net.watersfall.thuwumcraft.api.tag.ThuwumcraftBiomeTags;
+import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class VisAbilityImpl implements VisAbility
 {
-	private int vis;
-	private int maxVis;
+	private double vis;
+	private double maxVis;
+	private double flux;
 
-	public VisAbilityImpl()
+	public VisAbilityImpl(World world, ChunkPos pos, AbilityProvider<Chunk> provider)
 	{
-		this.vis = (int)(Math.random() * 51);
+		if(!world.isClient)
+		{
+			Chunk chunk = (Chunk)provider;
+			Biome biome = chunk.getBiomeArray().getBiomeForNoiseGen(pos);
+			if(ThuwumcraftBiomeTags.MAGICAL_FORESTS.contains(biome))
+			{
+				this.vis = Math.random() * 200 + 100;
+			}
+			else
+			{
+				this.vis = Math.random() * 50 + 50;
+			}
+		}
 		this.maxVis = vis;
+		this.flux = 0;
 	}
 
 	public VisAbilityImpl(NbtCompound tag, Chunk chunk)
@@ -45,20 +63,20 @@ public class VisAbilityImpl implements VisAbility
 	@Override
 	public NbtCompound toNbt(NbtCompound tag, Chunk chunk)
 	{
-		tag.putInt("vis", this.vis);
+		tag.putDouble("vis", this.vis);
 		if(this.maxVis == 0)
 		{
 			this.maxVis = vis;
 		}
-		tag.putInt("max_vis", this.maxVis);
+		tag.putDouble("max_vis", this.maxVis);
 		return tag;
 	}
 
 	@Override
 	public void fromNbt(NbtCompound tag, Chunk chunk)
 	{
-		this.vis = tag.getInt("vis");
-		this.maxVis = tag.getInt("max_vis");
+		this.vis = tag.getDouble("vis");
+		this.maxVis = tag.getDouble("max_vis");
 		if(this.maxVis == 0)
 		{
 			this.maxVis = vis;
@@ -68,16 +86,16 @@ public class VisAbilityImpl implements VisAbility
 	@Override
 	public PacketByteBuf toPacket(PacketByteBuf buf)
 	{
-		buf.writeInt(vis);
-		buf.writeInt(maxVis);
+		buf.writeDouble(vis);
+		buf.writeDouble(maxVis);
 		return buf;
 	}
 
 	@Override
 	public void fromPacket(PacketByteBuf buf)
 	{
-		this.vis = buf.readInt();
-		this.maxVis = buf.readInt();
+		this.vis = buf.readDouble();
+		this.maxVis = buf.readDouble();
 	}
 
 	@Override
@@ -98,27 +116,39 @@ public class VisAbilityImpl implements VisAbility
 	}
 
 	@Override
-	public int getVis()
+	public double getVis()
 	{
 		return this.vis;
 	}
 
 	@Override
-	public int getMaxVis()
+	public double getMaxVis()
 	{
 		return this.maxVis;
 	}
 
 	@Override
-	public void setVis(int vis)
+	public double getFlux()
+	{
+		return flux;
+	}
+
+	@Override
+	public void setVis(double vis)
 	{
 		this.vis = vis;
 	}
 
 	@Override
-	public void setMaxVis(int maxVis)
+	public void setMaxVis(double maxVis)
 	{
 		this.maxVis = maxVis;
+	}
+
+	@Override
+	public void setFlux(double flux)
+	{
+		this.flux = flux;
 	}
 
 	@Override
@@ -131,7 +161,7 @@ public class VisAbilityImpl implements VisAbility
 			{
 				if(vis < maxVis)
 				{
-					int increase = Math.min(1, world.random.nextInt(maxVis / 20 + 1) + 1);
+					int increase = Math.min(1, world.random.nextInt((int)maxVis / 20 + 1) + 1);
 					vis = MathHelper.clamp(vis + increase, 0, maxVis);
 					this.sync(chunk);
 				}

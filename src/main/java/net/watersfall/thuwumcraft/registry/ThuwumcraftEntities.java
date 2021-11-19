@@ -7,6 +7,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
+import net.watersfall.thuwumcraft.entity.mind.MindSpider;
 import net.watersfall.thuwumcraft.entity.spell.*;
 
 public class ThuwumcraftEntities
@@ -17,6 +18,7 @@ public class ThuwumcraftEntities
 	public static EntityType<SandEntity> SAND_PROJECTILE;
 	public static EntityType<WindEntity> WIND_PROJECTILE;
 	public static EntityType<GolemEntity> GOLEM;
+	public static EntityType<MindSpider> MIND_SPIDER;
 
 	public static void register()
 	{
@@ -70,6 +72,13 @@ public class ThuwumcraftEntities
 				Thuwumcraft.getId("golem"),
 				FabricEntityTypeBuilder.<GolemEntity>create(SpawnGroup.MISC, GolemEntity::new)
 						.dimensions(EntityDimensions.fixed(0.65F, 1))
+						.build()
+		);
+		MIND_SPIDER = Registry.register(
+				Registry.ENTITY_TYPE,
+				Thuwumcraft.getId("mind_spider"),
+				FabricEntityTypeBuilder.<MindSpider>create(SpawnGroup.MISC, MindSpider::new)
+						.dimensions(EntityDimensions.fixed(1, 1))
 						.build()
 		);
 	}
