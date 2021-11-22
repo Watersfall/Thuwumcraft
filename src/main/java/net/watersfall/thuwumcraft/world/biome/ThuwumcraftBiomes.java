@@ -24,7 +24,19 @@ public class ThuwumcraftBiomes
 	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> MAGIC_FOREST_BIOME_CONFIG;
 	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> THE_UNKNOWN_BIOME_CONFIG;
 	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> THE_LOST_FOREST_BIOME_CONFIG;
+
+	/**
+	 * TODO: Unknown Leakage
+	 *
+	 * Magical forests are the result of magic from the Unknown leaking into the overworld.
+	 * Typically, this magic is only enough to encourage plant growth and give the area a
+	 * nice blue and purple glow. This magic also fills the area, and the world, with vis.
+	 * Most vis in the world emanates out of these tears, called nodes. While nodes are
+	 * present in other parts of the world, the most powerful ones are exclusively found
+	 * in magical forests
+	 */
 	public static final Biome MAGIC_FOREST_BIOME;
+
 	public static final Biome THE_UNKNOWN_BIOME;
 	public static final Biome THE_LOST_FOREST_BIOME;
 	public static final RegistryKey<Biome> MAGIC_FOREST_BIOME_KEY = RegistryKey.of(Registry.BIOME_KEY, Thuwumcraft.getId("magic_forest"));

@@ -21,6 +21,21 @@ import net.watersfall.thuwumcraft.world.ThuwumcraftWorlds;
 import net.watersfall.wet.api.abilities.Ability;
 import net.watersfall.wet.api.abilities.AbilityClientSerializable;
 
+/**
+ * TODO: Entering the Unknown
+ *
+ * 		A thaumaturges first arrival in the unknown will be accidental
+ * and temporary. After hopping into newly revealed unknown fluid, they
+ * will wake up in this new strange place, with quickly deteriorating
+ * vision and hearing, before waking back up at home.
+ *
+ * 		Future visits will not come from the same methods, or lead to
+ * the same results. The same structure where unknown fluid is
+ * typically found can be activated to form a stable way back and
+ * forth.
+ *
+ * TODO: Design structure and activation method
+ */
 public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSerializable<Entity>
 {
 	public static final Identifier ID = Thuwumcraft.getId("player_unknown_ability");

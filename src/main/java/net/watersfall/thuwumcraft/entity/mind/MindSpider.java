@@ -13,6 +13,19 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 import java.util.UUID;
 
+/**
+ * TODO: Mind Spider Deep Lore:
+ *
+ * Mind spiders appear to players who have awakened their magical potential
+ * by traveling to the unknown. The spiders believe the player to be an
+ * ancient being originally from the unknown and attempt to attach to the
+ * player the same as they did the ancient beings, by lunging at their heads
+ * and attempting to merge. With low warp, this just resembles an attack, but
+ * with a sufficiently warped, or rather, sufficiently similar to the ancient
+ * beings player, the spider will be able to attempt to merge, but when this fails,
+ * instead high damage will be dealt to the player, and then the spider will fade
+ * away while fleeing.
+ */
 public class MindSpider extends SpiderEntity
 {
 	private UUID owner;

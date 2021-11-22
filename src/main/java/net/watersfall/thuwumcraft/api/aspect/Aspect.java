@@ -3,6 +3,16 @@ package net.watersfall.thuwumcraft.api.aspect;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
 
+/**
+ * TODO: Real Magic
+ *
+ * Aspects and Essentia are the "physical" magic contained in the world.
+ * It is present in all physical things, including living creatures, and
+ * is a bit like a "chemical makeup" in a mundane sense. This essentia is
+ * "flavored" vis, each slightly different from the other physically, but
+ * magically very distinct. More advanced forms of thaumaturgical crafting
+ * are based around this essentia, and it's very distinct properties.
+ */
 public class Aspect
 {
 	public static final Aspect EMPTY = new Aspect(new Identifier("thuwumcraft:empty"), -1, null);
