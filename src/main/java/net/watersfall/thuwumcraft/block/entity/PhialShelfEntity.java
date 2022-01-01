@@ -1,8 +1,6 @@
 package net.watersfall.thuwumcraft.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -11,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.inventory.BasicInventory;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
-public class PhialShelfEntity extends BlockEntity implements BasicInventory, BlockEntityClientSerializable
+public class PhialShelfEntity extends SyncableBlockEntity implements BasicInventory
 {
 	private DefaultedList<ItemStack> contents;
 
@@ -35,11 +33,10 @@ public class PhialShelfEntity extends BlockEntity implements BasicInventory, Blo
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		Inventories.writeNbt(tag, this.contents);
-		return tag;
 	}
 
 

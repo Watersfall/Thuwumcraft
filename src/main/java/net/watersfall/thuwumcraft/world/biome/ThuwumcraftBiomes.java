@@ -1,31 +1,18 @@
 package net.watersfall.thuwumcraft.world.biome;
 
-import net.fabricmc.fabric.api.biome.v1.OverworldBiomes;
-import net.fabricmc.fabric.api.biome.v1.OverworldClimate;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
-import net.minecraft.world.gen.surfacebuilder.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilder.TernarySurfaceConfig;
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
-import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
 
 public class ThuwumcraftBiomes
-{
-	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> MAGIC_FOREST_BIOME_CONFIG;
-	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> THE_UNKNOWN_BIOME_CONFIG;
-	public static final ConfiguredSurfaceBuilder<TernarySurfaceConfig> THE_LOST_FOREST_BIOME_CONFIG;
-
-	/**
+{/**
 	 * TODO: Unknown Leakage
 	 *
 	 * Magical forests are the result of magic from the Unknown leaking into the overworld.
@@ -47,38 +34,33 @@ public class ThuwumcraftBiomes
 	{
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
 		DefaultBiomeFeatures.addFarmAnimals(spawnSettings);
-		DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 100);
+		DefaultBiomeFeatures.addMonsters(spawnSettings, 95, 5, 100, false);
 
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();
-		generationSettings.surfaceBuilder(MAGIC_FOREST_BIOME_CONFIG);
-		DefaultBiomeFeatures.addDefaultUndergroundStructures(generationSettings);
 		DefaultBiomeFeatures.addLandCarvers(generationSettings);
-		DefaultBiomeFeatures.addDefaultLakes(generationSettings);
+		DefaultBiomeFeatures.addAmethystGeodes(generationSettings);
 		DefaultBiomeFeatures.addDungeons(generationSettings);
 		DefaultBiomeFeatures.addMineables(generationSettings);
 		DefaultBiomeFeatures.addDefaultOres(generationSettings);
 		DefaultBiomeFeatures.addDefaultDisks(generationSettings);
 		DefaultBiomeFeatures.addSprings(generationSettings);
-		DefaultBiomeFeatures.addAmethystGeodes(generationSettings);
 		DefaultBiomeFeatures.addForestFlowers(generationSettings);
-		DefaultBiomeFeatures.addDefaultMushrooms(generationSettings);
-		DefaultBiomeFeatures.addSwampVegetation(generationSettings);
-		DefaultBiomeFeatures.addExtraDefaultFlowers(generationSettings);
-		DefaultBiomeFeatures.addSweetBerryBushes(generationSettings);
 		DefaultBiomeFeatures.addPlainsTallGrass(generationSettings);
 		DefaultBiomeFeatures.addPlainsFeatures(generationSettings);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.MAGIC_FOREST_TREES);
-		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ThuwumcraftFeatures.MOSSY_ASPECT_ROCKS);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ConfiguredFeatures.PATCH_WATERLILLY);
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, VegetationPlacedFeatures.PATCH_WATERLILY);
+		DefaultBiomeFeatures.addExtraDefaultFlowers(generationSettings);
+		DefaultBiomeFeatures.addDefaultMushrooms(generationSettings);
+		DefaultBiomeFeatures.addSwampVegetation(generationSettings);
+		DefaultBiomeFeatures.addSweetBerryBushes(generationSettings);
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.MAGIC_FOREST_TREES_PLACED);
+		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ThuwumcraftFeatures.MOSSY_ASPECT_ROCKS_PLACED);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())
 				.precipitation(Biome.Precipitation.RAIN)
 				.category(Biome.Category.FOREST)
-				.depth(0.125F)
-				.scale(0.05F)
 				.temperature(0.8F)
-				.downfall(0.4F)
+				.downfall(0.8F)
 				.temperatureModifier(Biome.TemperatureModifier.NONE)
 				.effects(new BiomeEffects.Builder()
 						.fogColor(0x9E6BCE)
@@ -98,15 +80,12 @@ public class ThuwumcraftBiomes
 	{
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();
-		generationSettings.surfaceBuilder(THE_UNKNOWN_BIOME_CONFIG);
 		DefaultBiomeFeatures.addAmethystGeodes(generationSettings);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())
 				.precipitation(Biome.Precipitation.NONE)
 				.category(Biome.Category.ICY)
-				.depth(0.125F)
-				.scale(0.05F)
 				.temperature(0.0F)
 				.downfall(0.0F)
 				.temperatureModifier(Biome.TemperatureModifier.NONE)
@@ -127,16 +106,13 @@ public class ThuwumcraftBiomes
 	{
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();
-		generationSettings.surfaceBuilder(THE_LOST_FOREST_BIOME_CONFIG);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.THE_LOST_FOREST_TREES);
-		generationSettings.structureFeature(ThuwumcraftStructureFeatures.CONFIGURED_UNKNOWN_PILLAR);
+		ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE_PLACED.getDecoratedFeatures();
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.get(Thuwumcraft.getId("the_lost_forest_trees")));
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())
 				.precipitation(Biome.Precipitation.NONE)
 				.category(Biome.Category.ICY)
-				.depth(0.125F)
-				.scale(0.05F)
 				.temperature(0.0F)
 				.downfall(0.0F)
 				.temperatureModifier(Biome.TemperatureModifier.NONE)
@@ -155,34 +131,15 @@ public class ThuwumcraftBiomes
 
 	static
 	{
-		MAGIC_FOREST_BIOME_CONFIG = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				Blocks.GRASS_BLOCK.getDefaultState(),
-				Blocks.DIRT.getDefaultState(),
-				Blocks.SAND.getDefaultState()
-		));
 		MAGIC_FOREST_BIOME = createMagicForest();
-		THE_UNKNOWN_BIOME_CONFIG = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				Blocks.DEEPSLATE.getDefaultState(),
-				Blocks.DEEPSLATE.getDefaultState(),
-				Blocks.DEEPSLATE.getDefaultState()
-		));
 		THE_UNKNOWN_BIOME = createUnknown();
-		THE_LOST_FOREST_BIOME_CONFIG = SurfaceBuilder.DEFAULT.withConfig(new TernarySurfaceConfig(
-				ThuwumcraftBlocks.DEEPSLATE_GRASS.getDefaultState(),
-				Blocks.DEEPSLATE.getDefaultState(),
-				Blocks.DEEPSLATE.getDefaultState()
-		));
 		THE_LOST_FOREST_BIOME = createLostForest();
 	}
 
 	public static void register()
 	{
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("magic_surface"), MAGIC_FOREST_BIOME_CONFIG);
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("the_unknown_surface"), THE_UNKNOWN_BIOME_CONFIG);
-		Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, Thuwumcraft.getId("the_lost_forest"), THE_LOST_FOREST_BIOME_CONFIG);
 		Registry.register(BuiltinRegistries.BIOME, MAGIC_FOREST_BIOME_KEY.getValue(), MAGIC_FOREST_BIOME);
 		Registry.register(BuiltinRegistries.BIOME, THE_UNKNOWN_BIOME_KEY.getValue(), THE_UNKNOWN_BIOME);
 		Registry.register(BuiltinRegistries.BIOME, THE_LOST_FOREST_BIOME_KEY.getValue(), THE_LOST_FOREST_BIOME);
-		OverworldBiomes.addContinentalBiome(MAGIC_FOREST_BIOME_KEY, OverworldClimate.TEMPERATE, 2D);
 	}
 }

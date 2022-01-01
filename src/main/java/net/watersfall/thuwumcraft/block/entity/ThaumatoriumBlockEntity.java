@@ -1,6 +1,5 @@
 package net.watersfall.thuwumcraft.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -24,7 +23,7 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.*;
 
-public class ThaumatoriumBlockEntity extends BlockEntity implements AspectContainer, BasicInventory, BlockEntityClientSerializable
+public class ThaumatoriumBlockEntity extends SyncableBlockEntity implements AspectContainer, BasicInventory
 {
 	private final List<BlockPos> visited = new ArrayList<>();
 
@@ -178,7 +177,7 @@ public class ThaumatoriumBlockEntity extends BlockEntity implements AspectContai
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt)
+	public void writeNbt(NbtCompound nbt)
 	{
 		super.writeNbt(nbt);
 		BetterAspectInventory.write(requiredAspects, nbt);
@@ -187,7 +186,6 @@ public class ThaumatoriumBlockEntity extends BlockEntity implements AspectContai
 		{
 			nbt.putString("recipe", currentRecipe.getId().toString());
 		}
-		return nbt;
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class PotionSprayerBlock extends Block implements BlockEntityProvider
 		if(world.isReceivingRedstonePower(pos) && !isTriggered)
 		{
 			world.setBlockState(pos, state.with(TRIGGERED, true));
-			world.getBlockTickScheduler().schedule(pos, this, 4);
+			world.createAndScheduleBlockTick(pos, this, 4);
 		}
 		else if(isTriggered)
 		{

@@ -30,7 +30,7 @@ public class VisAbilityImpl implements VisAbility
 		if(!world.isClient)
 		{
 			Chunk chunk = (Chunk)provider;
-			Biome biome = chunk.getBiomeArray().getBiomeForNoiseGen(pos);
+			Biome biome = chunk.getBiomeForNoiseGen(pos.getStartX(), 0, pos.getStartZ());
 			if(ThuwumcraftBiomeTags.MAGICAL_FORESTS.contains(biome))
 			{
 				this.vis = Math.random() * 200 + 100;

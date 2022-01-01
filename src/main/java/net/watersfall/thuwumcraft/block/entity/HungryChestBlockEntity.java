@@ -115,7 +115,7 @@ public class HungryChestBlockEntity extends BlockEntity implements ChestAnimatio
 			this.lidAnimator.setOpen(data > 0);
 			if(data > 0)
 			{
-				world.getBlockTickScheduler().schedule(pos, getCachedState().getBlock(), 2);
+				world.createAndScheduleBlockTick(pos, getCachedState().getBlock(), 2);
 			}
 			return true;
 		}
@@ -133,10 +133,10 @@ public class HungryChestBlockEntity extends BlockEntity implements ChestAnimatio
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt)
+	public void writeNbt(NbtCompound nbt)
 	{
 		Inventories.writeNbt(nbt, contents);
-		return super.writeNbt(nbt);
+		super.writeNbt(nbt);
 	}
 
 	public static void serverTick(World world, BlockPos pos, BlockState state, HungryChestBlockEntity chest)

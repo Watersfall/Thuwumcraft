@@ -81,12 +81,12 @@ public class ArcaneSealRenderer implements BlockEntityRenderer<ArcaneSealBlockEn
 		{
 			matrices.push();
 			matrices.scale(0.01F, 0.01F, 0.01F);
-			matrices.multiply(Quaternion.method_35821(0, 0, -((entity.getWorld().getTime() + tickDelta) / 200F)));
+			matrices.multiply(Quaternion.fromEulerYxz(0, 0, -((entity.getWorld().getTime() + tickDelta) / 200F)));
 			for(int i = 0; i < INNER_RING.length(); i++)
 			{
 				matrices.push();
 				double angle = Math.PI * 2  / (INNER_RING.length()) * i;
-				matrices.multiply(Quaternion.method_35821(0, 0, (float)(angle)));
+				matrices.multiply(Quaternion.fromEulerYxz(0, 0, (float)(angle)));
 				matrices.translate(34, 0, 0);
 				matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90));
 				String character = INNER_RING.substring(i, i + 1);
@@ -99,12 +99,12 @@ public class ArcaneSealRenderer implements BlockEntityRenderer<ArcaneSealBlockEn
 		{
 			matrices.push();
 			matrices.scale(0.01F, 0.01F, 0.01F);
-			matrices.multiply(Quaternion.method_35821(0, 0, ((entity.getWorld().getTime() + tickDelta) / 200F)));
+			matrices.multiply(Quaternion.fromEulerYxz(0, 0, ((entity.getWorld().getTime() + tickDelta) / 200F)));
 			for(int i = 0; i < OUTER_RING.length(); i++)
 			{
 				matrices.push();
 				double angle = Math.PI * 2  / (OUTER_RING.length()) * i;
-				matrices.multiply(Quaternion.method_35821(0, 0, (float)(angle)));
+				matrices.multiply(Quaternion.fromEulerYxz(0, 0, (float)(angle)));
 				matrices.translate(47, 0, 0);
 				matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90));
 				String character = OUTER_RING.substring(i, i + 1);

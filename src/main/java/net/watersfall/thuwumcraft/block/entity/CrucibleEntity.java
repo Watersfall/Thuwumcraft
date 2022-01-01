@@ -97,11 +97,10 @@ public class CrucibleEntity extends AbstractCauldronEntity implements AspectInve
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		this.toInventoryTag(tag);
-		return tag;
 	}
 
 	@Override

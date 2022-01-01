@@ -5,10 +5,9 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockComponent;
-import net.minecraft.block.entity.BlockEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
-public class ChildBlockEntity extends BlockEntity
+public class ChildBlockEntity extends SyncableBlockEntity
 {
 	private MultiBlockComponent component;
 
@@ -39,9 +38,20 @@ public class ChildBlockEntity extends BlockEntity
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
-		return tag;
+	}
+
+	@Override
+	public NbtCompound toClientTag(NbtCompound nbt)
+	{
+		return nbt;
+	}
+
+	@Override
+	public void fromClientTag(NbtCompound nbt)
+	{
+
 	}
 }

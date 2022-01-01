@@ -46,7 +46,7 @@ public class AspectCraftingEntity extends BlockEntity
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		DefaultedList<ItemStack> writeList = DefaultedList.ofSize(15, ItemStack.EMPTY);
 		for(int i = 0; i < 15; i++)
@@ -55,6 +55,5 @@ public class AspectCraftingEntity extends BlockEntity
 		}
 		super.writeNbt(tag);
 		Inventories.writeNbt(tag, writeList);
-		return tag;
 	}
 }

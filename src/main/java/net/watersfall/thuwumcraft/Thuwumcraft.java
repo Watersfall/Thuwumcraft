@@ -104,8 +104,6 @@ import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
-import net.watersfall.thuwumcraft.world.feature.structure.ThuwumcraftStructureFeatures;
-import net.watersfall.thuwumcraft.world.structure.ThuwumcraftStructurePieceTypes;
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 import net.watersfall.wet.api.event.AbilityCreateEvent;
@@ -166,7 +164,7 @@ public class Thuwumcraft implements ModInitializer
 		}));
 		ServerPlayNetworking.registerGlobalReceiver(getId("chunk_packet"), (server, player, handler, buf, responseSender) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
-			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(player.getServerWorld().getChunk(pos.getStartPos()));
+			AbilityProvider<Chunk> provider = AbilityProvider.getProvider(player.getWorld().getChunk(pos.getStartPos()));
 			PacketByteBuf buf2 = PacketByteBufs.create();
 			buf2.writeInt(pos.x);
 			buf2.writeInt(pos.z);
@@ -548,19 +546,16 @@ public class Thuwumcraft implements ModInitializer
 	{
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE).get());
+				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE_PLACED).get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.NETHER_GEODE).get());
+				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.NETHER_GEODE_PLACED).get());
 		BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.BASALT_DELTA_GEODE).get());
-		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
-				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.DIMENSIONAL_LAKE).get());
+				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.BASALT_DELTA_GEODE_PLACED).get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.VEGETAL_DECORATION,
-				BuiltinRegistries.CONFIGURED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE).get());
+				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE_PLACED).get());
 	}
 	
 	private void registerStrippableBlocks()
@@ -582,6 +577,7 @@ public class Thuwumcraft implements ModInitializer
 			if(warp.getTotalWarp() > 0)
 			{
 				player.sendMessage(new TranslatableText("warp_event.thuwumcraft.watching").formatted(Formatting.DARK_PURPLE, Formatting.ITALIC), true);
+				return ActionResult.SUCCESS;
 			}
 			return ActionResult.PASS;
 		});
@@ -592,6 +588,7 @@ public class Thuwumcraft implements ModInitializer
 				MindSpider spider = new MindSpider(player.world, player.getGameProfile().getId());
 				spider.setPosition(player.getX(), player.getY(), player.getZ());
 				player.world.spawnEntity(spider);
+				return ActionResult.SUCCESS;
 			}
 			return ActionResult.PASS;
 		}));
@@ -618,8 +615,8 @@ public class Thuwumcraft implements ModInitializer
 		ThuwumcraftFeatures.register();
 		ThuwumcraftEntityTags.register();
 		ThuwumcraftBiomes.register();
-		ThuwumcraftStructurePieceTypes.register();
-		ThuwumcraftStructureFeatures.register();
+//		ThuwumcraftStructurePieceTypes.register();
+//		ThuwumcraftStructureFeatures.register();
 		registerLookup();
 		registerReloadListeners();
 		registerBiomeModifications();

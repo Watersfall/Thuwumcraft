@@ -68,7 +68,7 @@ public class RenderHelper
 
 	private static void add(VertexConsumer renderer, MatrixStack stack, float x, float y, float z, float u, float v, int color, int light, int overlay)
 	{
-		renderer.vertex(stack.peek().getModel(), x, y, z)
+		renderer.vertex(stack.peek().getPositionMatrix(), x, y, z)
 				.color((((color >> 16) & 0xFF) / 255F), (((color >> 8) & 0xFF) / 255F), (color & 0xFF) / 255F, 1.0f)
 				.texture(u, v)
 				.light(light)
@@ -191,7 +191,7 @@ public class RenderHelper
 						}
 						matrices.scale(0.0625F, 0.0625F, 0.0625F);
 						matrices.scale(-1F, -1F, -1F);
-						textRenderer.draw("" + aspectStack.getCount(), 0, 0, 16777215, false, matrices.peek().getModel(), vertexConsumers, true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+						textRenderer.draw("" + aspectStack.getCount(), 0, 0, 16777215, false, matrices.peek().getPositionMatrix(), vertexConsumers, true, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 						matrices.pop();
 					}
 					matrices.translate(1F, 0F, 0F);

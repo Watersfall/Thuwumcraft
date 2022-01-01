@@ -1,6 +1,5 @@
 package net.watersfall.thuwumcraft.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -12,7 +11,7 @@ import net.watersfall.thuwumcraft.multiblock.component.AlchemicalFurnaceComponen
 import net.watersfall.thuwumcraft.multiblock.multiblock.AlchemicalFurnaceMultiBlock;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
-public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEntityClientSerializable
+public class AlchemicalFurnaceEntity extends ChildBlockEntity
 {
 
 	private MultiBlockComponent component;
@@ -32,14 +31,13 @@ public class AlchemicalFurnaceEntity extends ChildBlockEntity implements BlockEn
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		if(this.component != null && this.component.getMultiBlock() != null)
 		{
 			this.component.getMultiBlock().write(tag);
 		}
-		return tag;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package net.watersfall.thuwumcraft.multiblock.inventory;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.watersfall.thuwumcraft.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;

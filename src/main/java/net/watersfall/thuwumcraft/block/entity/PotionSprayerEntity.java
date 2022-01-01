@@ -86,11 +86,10 @@ public class PotionSprayerEntity extends BlockEntity implements BrewingCauldronI
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		Inventories.writeNbt(tag, contents);
 		tag.put("potion", potion.toNbtList());
-		return tag;
 	}
 }

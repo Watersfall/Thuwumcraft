@@ -42,7 +42,10 @@
 						"temperature": 0,
 						"humidity": 0,
 						"weirdness": 1,
-						"offset": 0
+						"offset": 0,
+						"erosion": 1,
+						"continentalness": 0,
+						"depth": 0
 					}
 				},
 				{
@@ -52,7 +55,10 @@
 						"temperature": 0.1,
 						"humidity": 0.1,
 						"weirdness": 1,
-						"offset": 0
+						"offset": 0,
+						"erosion": 1,
+						"continentalness": 0,
+						"depth": 0
 					}
 				}
 			],

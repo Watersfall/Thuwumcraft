@@ -3,9 +3,7 @@ package net.watersfall.thuwumcraft.block.entity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvironmentInterface;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -24,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 @EnvironmentInterface(value = EnvType.CLIENT, itf = AspectRenderer.class)
-public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectContainer, BlockEntityClientSerializable, AspectRenderer
+public class EssentiaRefineryBlockEntity extends SyncableBlockEntity implements AspectContainer, AspectRenderer
 {
 	private AspectStack stack;
 	private static final int MAX_COUNT = 64;
@@ -110,10 +108,10 @@ public class EssentiaRefineryBlockEntity extends BlockEntity implements AspectCo
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt)
+	public void writeNbt(NbtCompound nbt)
 	{
 		nbt.put("aspect", stack.toNbt());
-		return super.writeNbt(nbt);
+		super.writeNbt(nbt);
 	}
 
 	@Override

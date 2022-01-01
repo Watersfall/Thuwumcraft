@@ -7,7 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
@@ -20,7 +19,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
 import net.minecraft.network.packet.s2c.play.RemoveEntityStatusEffectS2CPacket;
 import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
@@ -37,7 +35,6 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.SingleStateFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.watersfall.thuwumcraft.abilities.entity.RunedShieldAbilityEntity;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.block.AbstractCauldronBlock;
@@ -175,30 +172,6 @@ public class Hooks
 		{
 			ServerChunkManager manager = serverWorld.getChunkManager();
 			manager.sendToNearbyPlayers(entity, new RemoveEntityStatusEffectS2CPacket(entity.getId(), effect.getEffectType()));
-		}
-	}
-
-	public static void livingEntityOnEquipmentChange(LivingEntity entity, EquipmentSlot slot, ItemStack currentStack, ItemStack newStack)
-	{
-		if(slot == EquipmentSlot.CHEST)
-		{
-			if(newStack.getItem() == Items.NETHERITE_CHESTPLATE)
-			{
-				if(entity instanceof AbilityProvider)
-				{
-					AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
-					Optional<RunedShieldAbilityEntity> optional = provider.getAbility(RunedShieldAbilityEntity.ID, RunedShieldAbilityEntity.class);
-					if(!optional.isPresent())
-					{
-						provider.addAbility(new RunedShieldAbilityEntity());
-					}
-				}
-			}
-			else if(currentStack.getItem() == Items.NETHERITE_CHESTPLATE)
-			{
-				AbilityProvider<Entity> provider = AbilityProvider.getProvider(entity);
-				provider.removeAbility(RunedShieldAbilityEntity.ID);
-			}
 		}
 	}
 

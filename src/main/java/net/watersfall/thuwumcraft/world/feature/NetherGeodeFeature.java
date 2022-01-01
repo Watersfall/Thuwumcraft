@@ -14,9 +14,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.noise.DoublePerlinNoiseSampler;
 import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.ChunkRandom;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.GeodeCrackConfig;
+import net.minecraft.world.gen.feature.GeodeLayerThicknessConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.world.gen.random.AtomicSimpleRandom;
+import net.minecraft.world.gen.random.ChunkRandom;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeConfig;
 import net.watersfall.thuwumcraft.world.config.NetherGeodeLayersConfig;
 
@@ -42,7 +45,7 @@ public class NetherGeodeFeature extends Feature<NetherGeodeConfig>
 		int max = config.sizeConfig.maxGenOffset;
 		List<Pair<BlockPos, Integer>> list = Lists.newLinkedList();
 		int size = config.sizeConfig.minDistributionPoints + random.nextInt(config.sizeConfig.maxDistributionPoints - config.sizeConfig.minDistributionPoints);
-		ChunkRandom chunkRandom = new ChunkRandom(world.getSeed());
+		ChunkRandom chunkRandom = new ChunkRandom(new AtomicSimpleRandom(0L));
 		DoublePerlinNoiseSampler doublePerlinNoiseSampler = DoublePerlinNoiseSampler.create(chunkRandom, -4, 1.0D);
 		List<BlockPos> list2 = Lists.newLinkedList();
 		double d = (double) size / (double) config.sizeConfig.maxOuterWallDistance;

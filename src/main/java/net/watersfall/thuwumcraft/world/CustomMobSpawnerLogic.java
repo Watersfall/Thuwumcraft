@@ -55,7 +55,7 @@ public class CustomMobSpawnerLogic
 					int spawns = (maxSpawnCount > minSpawnCount) ? this.minSpawnCount + random.nextInt(maxSpawnCount - minSpawnCount) : minSpawnCount;
 					for(int i = 0; i < spawns; ++i)
 					{
-						NbtCompound nbtCompound = entry.getEntityNbt();
+						NbtCompound nbtCompound = entry.getNbt();
 						Optional<EntityType<?>> optional = EntityType.fromNbt(nbtCompound);
 						if (!optional.isPresent())
 						{
@@ -139,7 +139,7 @@ public class CustomMobSpawnerLogic
 		if(tag.contains("spawn_range"))
 			spawnRange = tag.getInt("spawn_range");
 		if(tag.contains("mob"))
-			entry = new MobSpawnerEntry(tag.getCompound("mob"));
+			entry = new MobSpawnerEntry(tag.getCompound("mob"), Optional.empty());
 	}
 
 	public NbtCompound writeNbt(World world, BlockPos pos, NbtCompound tag)
@@ -154,7 +154,7 @@ public class CustomMobSpawnerLogic
 		tag.putInt("max_nearby_entites", maxNearbyEntities);
 		tag.putInt("spawn_range", spawnRange);
 		if(this.entry != null)
-			tag.put("mob", entry.toNbt());
+			tag.put("mob", entry.getNbt());
 		return tag;
 	}
 

@@ -1,16 +1,14 @@
 package net.watersfall.thuwumcraft.compat.rei.client.category;
 
-import it.unimi.dsi.fastutil.ints.IntList;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.client.registry.display.TransferDisplayCategory;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.watersfall.thuwumcraft.compat.rei.client.ThuwumcraftReiCompatClient;
@@ -20,15 +18,9 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CauldronItemDisplayCategory implements TransferDisplayCategory<CauldronItemCraftingDisplay>
+public class CauldronItemDisplayCategory implements DisplayCategory<CauldronItemCraftingDisplay>
 {
 	private static final Text name = new TranslatableText("thuwumcraft.rei.category.cauldron");
-
-	@Override
-	public void renderRedSlots(MatrixStack matrices, List<Widget> widgets, Rectangle bounds, CauldronItemCraftingDisplay display, IntList redSlots)
-	{
-
-	}
 
 	@Override
 	public Renderer getIcon()
@@ -52,7 +44,7 @@ public class CauldronItemDisplayCategory implements TransferDisplayCategory<Caul
 	public List<Widget> setupDisplay(CauldronItemCraftingDisplay display, Rectangle bounds)
 	{
 		List<Widget> widgets = new ArrayList<>();
-		widgets.addAll(TransferDisplayCategory.super.setupDisplay(display, bounds));
+		widgets.addAll(DisplayCategory.super.setupDisplay(display, bounds));
 		Point origin = new Point(bounds.getCenterX() - 9, bounds.getCenterY() - 9);
 		int start = origin.x + 9 - (display.getInputEntries().size() * 9);
 		for(int i = 0; i < display.getInputEntries().size(); i++)

@@ -1,4 +1,5 @@
 {
+	"legacy_random_source": true,
 	"noodle_caves_enabled": false,
 	"ore_veins_enabled": false,
 	"min_surface_level": 0,
@@ -23,14 +24,21 @@
 	},
 	"structures": {
 		"structures": {
-			"thuwumcraft:unknown_pillar": {
-				"spacing": 4,
-				"separation": 2,
-				"salt": 12
-			}
+
 		}
 	},
+	"surface_rule": {
+		"result_state": {
+			"Name": "thuwumcraft:deepslate_grass"
+		},
+		"type": "minecraft:block"
+	},
 	"noise": {
+		"terrain_shaper": {
+			"offset": 0.0,
+			"factor": 0.0,
+			"jaggedness": 0.0
+		},
 		"min_y": -128,
 		"height": 256,
 		"size_horizontal": 1,

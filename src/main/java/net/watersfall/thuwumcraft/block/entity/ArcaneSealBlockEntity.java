@@ -1,8 +1,6 @@
 package net.watersfall.thuwumcraft.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ArcaneSealBlockEntity extends BlockEntity implements BasicInventory, BlockEntityClientSerializable
+public class ArcaneSealBlockEntity extends SyncableBlockEntity implements BasicInventory
 {
 	public static final Map<Triple<Item, Item, Item>, SealAction> actions = new HashMap<>();
 
@@ -126,7 +124,7 @@ public class ArcaneSealBlockEntity extends BlockEntity implements BasicInventory
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt)
+	public void writeNbt(NbtCompound nbt)
 	{
 		super.writeNbt(nbt);
 		if(ownerId != null)
@@ -134,7 +132,6 @@ public class ArcaneSealBlockEntity extends BlockEntity implements BasicInventory
 			nbt.putUuid("owner", ownerId);
 		}
 		Inventories.writeNbt(nbt, inventory);
-		return nbt;
 	}
 
 	public int getColor(int index)

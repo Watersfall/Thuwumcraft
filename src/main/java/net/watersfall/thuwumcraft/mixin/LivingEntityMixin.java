@@ -2,7 +2,6 @@ package net.watersfall.thuwumcraft.mixin;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,9 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
@@ -49,20 +45,6 @@ public abstract class LivingEntityMixin extends Entity
 	public void thuwumcraft$removeStatusEffectModifier(StatusEffectInstance effect, CallbackInfo info)
 	{
 		Hooks.livingEntityRemoveStatusEffect((LivingEntity)(Object)this, effect);
-	}
-
-	@Inject(method = "getEquipment", at = @At(value = "JUMP", opcode = 199), locals = LocalCapture.CAPTURE_FAILHARD)
-	public void thuwumcraft$checkRunedShield(
-			CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> info,
-			Map<EquipmentSlot, ItemStack> map,
-			EquipmentSlot[] slots,
-			int size,
-			int index,
-			EquipmentSlot slot,
-			ItemStack currentStack,
-			ItemStack newStack)
-	{
-		Hooks.livingEntityOnEquipmentChange((LivingEntity)(Object)this, slot, currentStack, newStack);
 	}
 
 	@Inject(method = "createLivingAttributes", at = @At("RETURN"))

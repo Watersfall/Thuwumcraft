@@ -26,11 +26,10 @@ public class CustomSpawnerEntity extends BlockEntity
 		this.logic.readNbt(this.world, this.pos, tag);
 	}
 
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		this.logic.writeNbt(this.world, this.pos, tag);
-		return tag;
 	}
 
 	public static void clientTick(World world, BlockPos pos, BlockState state, CustomSpawnerEntity blockEntity)
@@ -46,12 +45,13 @@ public class CustomSpawnerEntity extends BlockEntity
 	@Nullable
 	public BlockEntityUpdateS2CPacket toUpdatePacket()
 	{
-		return new BlockEntityUpdateS2CPacket(this.pos, 1, this.toInitialChunkDataNbt());
+		return BlockEntityUpdateS2CPacket.create(this);
 	}
 
 	public NbtCompound toInitialChunkDataNbt()
 	{
-		NbtCompound nbtCompound = this.writeNbt(new NbtCompound());
+		NbtCompound nbtCompound = new NbtCompound();
+		this.writeNbt(nbtCompound);
 		nbtCompound.remove("SpawnPotentials");
 		return nbtCompound;
 	}

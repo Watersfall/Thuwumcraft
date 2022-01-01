@@ -1,26 +1,24 @@
 package net.watersfall.thuwumcraft.block.entity;
 
 import net.fabricmc.fabric.api.util.NbtType;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.AspectStack;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.inventory.PedestalInventory;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.util.math.Direction;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PedestalEntity extends BlockEntity implements BlockEntityClientSerializable, PedestalInventory
+public class PedestalEntity extends SyncableBlockEntity implements PedestalInventory
 {
 	private ItemStack stack;
 	private boolean main;
@@ -79,7 +77,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.put("pedestal_item", this.stack.writeNbt(new NbtCompound()));
@@ -92,7 +90,6 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 			this.recipe.toTag(recipeTag);
 			tag.put("recipe", recipeTag);
 		}
-		return tag;
 	}
 
 	@Override
@@ -135,7 +132,7 @@ public class PedestalEntity extends BlockEntity implements BlockEntityClientSeri
 	public void sync()
 	{
 		this.markDirty();
-		BlockEntityClientSerializable.super.sync();
+		super.sync();
 	}
 
 	public ItemStack getStack()

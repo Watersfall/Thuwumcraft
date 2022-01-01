@@ -44,10 +44,9 @@ public class ArcaneLampEntity extends BlockEntity
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.put("lights", new NbtLongArray(lights.stream().mapToLong(BlockPos::asLong).toArray()));
-		return tag;
 	}
 }

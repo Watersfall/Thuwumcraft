@@ -5,7 +5,6 @@ import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Matrix4f;
@@ -42,7 +41,7 @@ public class AspectTooltipComponent implements TooltipComponent
 	}
 
 	@Override
-	public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z, TextureManager textureManager)
+	public void drawItems(TextRenderer textRenderer, int x, int y, MatrixStack matrices, ItemRenderer itemRenderer, int z)
 	{
 		for(int i = 0; i  < aspects.size(); i++)
 		{
@@ -61,7 +60,7 @@ public class AspectTooltipComponent implements TooltipComponent
 						(float)(y + 6 + 3),
 						16777215,
 						true,
-						matrices.peek().getModel().copy(),
+						matrices.peek().getPositionMatrix().copy(),
 						immediate,
 						false,
 						0,

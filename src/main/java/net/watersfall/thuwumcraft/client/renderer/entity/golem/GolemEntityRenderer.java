@@ -63,11 +63,11 @@ public class GolemEntityRenderer extends BipedEntityRenderer<GolemEntity, GolemE
 			Vec3d camera = dispatcher.camera.getPos();
 			Vec3d center = new Vec3d(pos.getX() + 0.5 + dir.getOffsetX(), pos.getY() + 0.5 + dir.getOffsetY(), pos.getZ() + 0.5 + dir.getOffsetZ());
 			float angle = (float)MathHelper.atan2(camera.x - center.x, camera.z - center.z);
-			matrices.multiply(Quaternion.method_35821(-angle + MathHelper.PI, 0, 0));
+			matrices.multiply(Quaternion.fromEulerYxz(-angle + MathHelper.PI, 0, 0));
 			//matrices.translate(golem.getCustomName().getString().length() / 2F * -4F, 0, 0);
 			TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 			float width = -textRenderer.getWidth(text) / 2F;
-			textRenderer.draw(text, width, 0F, -1, false, matrices.peek().getModel(), vertexConsumers, false, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
+			textRenderer.draw(text, width, 0F, -1, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0, LightmapTextureManager.MAX_LIGHT_COORDINATE);
 			matrices.pop();
 		}
 		else
@@ -97,7 +97,7 @@ public class GolemEntityRenderer extends BipedEntityRenderer<GolemEntity, GolemE
 			{
 				matrices.push();
 				matrices.scale(1, 1, 2);
-				matrices.multiply(Quaternion.method_35821((float)Math.PI, (float)Math.PI, 0));
+				matrices.multiply(Quaternion.fromEulerYxz((float)Math.PI, (float)Math.PI, 0));
 				matrices.scale(0.85F, 0.85F, 0.85F);
 				matrices.translate(0, -0.6425, 0.1625);
 				MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
@@ -142,7 +142,7 @@ public class GolemEntityRenderer extends BipedEntityRenderer<GolemEntity, GolemE
 				{
 					matrices.push();
 					matrices.translate(0, -0.75, 0);
-					matrices.multiply(Quaternion.method_35821(0, MathHelper.PI, 0));
+					matrices.multiply(Quaternion.fromEulerYxz(0, MathHelper.PI, 0));
 					MinecraftClient.getInstance().getItemRenderer().renderItem(entity.getWhitelist(), ModelTransformation.Mode.GROUND, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
 					matrices.pop();
 				}

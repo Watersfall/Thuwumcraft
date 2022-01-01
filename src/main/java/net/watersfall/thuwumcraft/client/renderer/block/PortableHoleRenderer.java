@@ -25,7 +25,7 @@ public class PortableHoleRenderer implements BlockEntityRenderer<PortableHoleBlo
 	@Override
 	public void render(PortableHoleBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
 	{
-		this.renderSides(entity, matrices.peek().getModel(), vertexConsumers.getBuffer(RenderLayer.getEndPortal()));
+		this.renderSides(entity, matrices.peek().getPositionMatrix(), vertexConsumers.getBuffer(RenderLayer.getEndPortal()));
 	}
 
 	private void renderSides(PortableHoleBlockEntity entity, Matrix4f matrix4f, VertexConsumer vertexConsumer)

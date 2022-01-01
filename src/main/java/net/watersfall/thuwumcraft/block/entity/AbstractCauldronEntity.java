@@ -1,8 +1,6 @@
 package net.watersfall.thuwumcraft.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.nbt.NbtCompound;
@@ -11,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.thuwumcraft.api.fluid.ColoredWaterContainer;
 
-public abstract class AbstractCauldronEntity extends BlockEntity implements BlockEntityClientSerializable, ColoredWaterContainer, Clearable
+public abstract class AbstractCauldronEntity extends SyncableBlockEntity implements ColoredWaterContainer, Clearable
 {
 	public static final String WATER_LEVEL = "water_level";
 	public static final String INGREDIENT_COUNT = "ingredient_count";
@@ -35,11 +33,10 @@ public abstract class AbstractCauldronEntity extends BlockEntity implements Bloc
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.putShort(WATER_LEVEL, waterLevel);
-		return tag;
 	}
 
 	@Override

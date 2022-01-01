@@ -241,12 +241,12 @@ public class EssentiaSmelteryEntity extends BlockEntity implements BetterAspectI
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound nbt)
+	public void writeNbt(NbtCompound nbt)
 	{
 		BetterAspectInventory.write(aspects, nbt);
 		Inventories.writeNbt(nbt, items);
 		nbt.putInt("fuel", fuelAmount);
 		nbt.putInt("aspect_count", aspectCount);
-		return super.writeNbt(nbt);
+		super.writeNbt(nbt);
 	}
 }

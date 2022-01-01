@@ -49,12 +49,11 @@ public class BrewingCauldronEntity extends AbstractCauldronEntity implements Bre
 	}
 
 	@Override
-	public NbtCompound writeNbt(NbtCompound tag)
+	public void writeNbt(NbtCompound tag)
 	{
 		super.writeNbt(tag);
 		tag.putByte(INGREDIENT_COUNT, ingredientCount);
 		Inventories.writeNbt(tag, this.contents);
-		return tag;
 	}
 
 	@Override
