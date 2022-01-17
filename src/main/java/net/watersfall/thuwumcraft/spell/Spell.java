@@ -1,47 +1,90 @@
 package net.watersfall.thuwumcraft.spell;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
-import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 
-import java.util.Collection;
-import java.util.HashMap;
-
-public record Spell(SpellAction action, CastingType type, int castingTime, int cooldown, double visCost, int color)
+public abstract class Spell<T extends SpellModifierData>
 {
-	public static final Registry REGISTRY = new Registry();
-	public static final Spell FIRE = REGISTRY.register(Thuwumcraft.getId("fire"), new Spell(SpellAction.FIRE, CastingType.CONTINUOUS, 10, 1, 0.1, 0xFF0000));
-	public static final Spell SAND = REGISTRY.register(Thuwumcraft.getId("sand"), new Spell(SpellAction.SAND, CastingType.SINGLE, 5, 5, 0.5, 0xFFFF00));
-	public static final Spell SNOW = REGISTRY.register(Thuwumcraft.getId("snow"), new Spell(SpellAction.SNOW, CastingType.SINGLE, 5, 5, 0.25, 0xCCCCCC));
-	public static final Spell WATER = REGISTRY.register(Thuwumcraft.getId("water"), new Spell(SpellAction.WATER, CastingType.CONTINUOUS, 10, 1, 0.05, 0x0000FF));
-	public static final Spell ICE = REGISTRY.register(Thuwumcraft.getId("ice"), new Spell(SpellAction.ICE, CastingType.SINGLE, 10, 10, 1, 0x7FD2FF));
+	protected final SpellType<? extends Spell<T>> type;
+	protected final int cooldown;
+	protected final int castingTime;
+	protected final double cost;
+	protected final CastingType castingType;
+	protected final T modifiers;
+	protected final int color;
 
-	public static class Registry
+	public Spell(SpellType<? extends Spell<T>> type, NbtCompound nbt)
 	{
-		private final HashMap<Identifier, Spell> map = new HashMap<>();
-		private final HashMap<Spell, Identifier> map2 = new HashMap<>();
+		this.type = type;
+		this.cooldown = nbt.getInt("cooldown");
+		this.castingTime = nbt.getInt("casting_time");
+		this.cost = nbt.getDouble("cost");
+		this.castingType = CastingType.valueOf(nbt.getString("casting_type"));
+		this.color = nbt.getInt("color");
+		NbtCompound dataTag = nbt.getCompound("data");
+		this.modifiers = (T)ThuwumcraftRegistry.SPELL_DATA.get(new Identifier(dataTag.getString("id"))).create(dataTag);
+	}
 
-		private Registry(){}
+	public Spell(SpellType<? extends Spell<T>> type, int cooldown, int castingTime, double cost, CastingType castingType, int color, T modifiers)
+	{
+		this.type = type;
+		this.cooldown = cooldown;
+		this.castingTime = castingTime;
+		this.cost = cost;
+		this.castingType = castingType;
+		this.modifiers = modifiers;
+		this.color = color;
+	}
 
-		public final Spell register(Identifier id, Spell spell)
-		{
-			map.put(id, spell);
-			map2.put(spell, id);
-			return spell;
-		}
+	public int getCooldown()
+	{
+		return cooldown;
+	}
 
-		public final Spell get(Identifier id)
-		{
-			return map.get(id);
-		}
+	public int getCastingTime()
+	{
+		return castingTime;
+	}
 
-		public final Identifier getId(Spell spell)
-		{
-			return map2.get(spell);
-		}
+	public double getCost()
+	{
+		return cost;
+	}
 
-		public final Collection<Spell> getSpells()
-		{
-			return map.values();
-		}
+	public CastingType getCastingType()
+	{
+		return castingType;
+	}
+
+	public T getModifiers()
+	{
+		return modifiers;
+	}
+
+	public SpellType<? extends Spell<T>> getType()
+	{
+		return type;
+	}
+
+	public abstract TypedActionResult<ItemStack> cast(ItemStack stack, World world, PlayerEntity player);
+
+	public int getColor()
+	{
+		return color;
+	}
+
+	public void toNbt(NbtCompound nbt)
+	{
+		nbt.putInt("cooldown", cooldown);
+		nbt.putInt("casting_time", castingTime);
+		nbt.putDouble("cost", cost);
+		nbt.putString("casting_type", castingType.name());
+		nbt.put("data", modifiers.toNbt(new NbtCompound()));
+		nbt.putInt("color", color);
 	}
 }

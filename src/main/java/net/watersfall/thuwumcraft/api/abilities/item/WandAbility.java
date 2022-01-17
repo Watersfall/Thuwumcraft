@@ -5,7 +5,7 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.item.wand.CapRechargeType;
 import net.watersfall.thuwumcraft.item.wand.WandCapMaterial;
 import net.watersfall.thuwumcraft.item.wand.WandCoreMaterial;
-import net.watersfall.thuwumcraft.spell.SpellActionInstance;
+import net.watersfall.thuwumcraft.spell.Spell;
 import net.watersfall.wet.api.abilities.Ability;
 
 /**
@@ -30,7 +30,7 @@ public interface WandAbility extends Ability<ItemStack>
 
 	WandCoreMaterial getWandCore();
 
-	SpellActionInstance getSpell();
+	Spell<?> getSpell();
 
 	double getVis();
 
@@ -38,7 +38,7 @@ public interface WandAbility extends Ability<ItemStack>
 
 	void setWandCore(WandCoreMaterial core);
 
-	void setSpell(SpellActionInstance spell);
+	void setSpell(Spell<?> spell);
 
 	void setVis(double vis);
 

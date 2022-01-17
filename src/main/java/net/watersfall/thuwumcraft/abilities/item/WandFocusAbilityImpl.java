@@ -4,16 +4,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.spell.Spell;
-import net.watersfall.thuwumcraft.spell.SpellActionInstance;
 
 public class WandFocusAbilityImpl implements WandFocusAbility
 {
-	private SpellActionInstance spell;
+	private Spell<?> spell;
 
-	public WandFocusAbilityImpl(Spell spell, ItemStack stack)
+	public WandFocusAbilityImpl(Spell<?> spell, ItemStack stack)
 	{
-		setSpell(new SpellActionInstance(spell, 0, 0));
+		setSpell(spell);
 	}
 
 	public WandFocusAbilityImpl(NbtCompound tag, ItemStack stack)
@@ -30,9 +30,12 @@ public class WandFocusAbilityImpl implements WandFocusAbility
 	@Override
 	public NbtCompound toNbt(NbtCompound tag, ItemStack stack)
 	{
-		if(spell != null && spell.spell() != null)
+		if(spell != null)
 		{
-			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+			NbtCompound nbt = new NbtCompound();
+			nbt.putString("id", ThuwumcraftRegistry.SPELL.getId(spell.getType()).toString());
+			spell.toNbt(nbt);
+			tag.put("spell", nbt);
 		}
 		return tag;
 	}
@@ -42,19 +45,20 @@ public class WandFocusAbilityImpl implements WandFocusAbility
 	{
 		if(tag.contains("spell"))
 		{
-			Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
-			setSpell(new SpellActionInstance(action, 0, 0));
+			NbtCompound nbt = tag.getCompound("spell");
+			Spell<?> action = ThuwumcraftRegistry.SPELL.get(new Identifier(nbt.getString("id"))).create(nbt);
+			setSpell(action);
 		}
 	}
 
 	@Override
-	public SpellActionInstance getSpell()
+	public Spell<?> getSpell()
 	{
 		return this.spell;
 	}
 
 	@Override
-	public void setSpell(SpellActionInstance spell)
+	public void setSpell(Spell<?> spell)
 	{
 		this.spell = spell;
 	}

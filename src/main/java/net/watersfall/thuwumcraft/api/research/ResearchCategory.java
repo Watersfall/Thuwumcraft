@@ -9,13 +9,12 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 
 import java.util.*;
 
 public class ResearchCategory
 {
-	public static final Registry REGISTRY = new Registry();
-
 	private Identifier id;
 	private Text name;
 	private ItemStack icon;
@@ -44,7 +43,7 @@ public class ResearchCategory
 	public List<Research> getResearch()
 	{
 		List<Research> list = new ArrayList<>();
-		Research.REGISTRY.getAll().forEach((research -> {
+		ThuwumcraftRegistry.RESEARCH.values().forEach((research -> {
 			if(research.getCategory() == this)
 			{
 				list.add(research);
@@ -112,53 +111,23 @@ public class ResearchCategory
 		}
 	}
 
-	public static class Registry
+	public static PacketByteBuf toFullPacket(PacketByteBuf buf)
 	{
-		private final Map<Identifier, ResearchCategory> categories;
+		buf.writeInt(ThuwumcraftRegistry.RESEARCH_CATEGORY.values().size());
+		ThuwumcraftRegistry.RESEARCH_CATEGORY.values().forEach((category -> {
+			category.toPacket(buf);
+		}));
+		return buf;
+	}
 
-		private Registry()
+	public static void fromFullPacket(PacketByteBuf buf)
+	{
+		ThuwumcraftRegistry.RESEARCH_CATEGORY.clear();
+		int size = buf.readInt();
+		for(int i = 0; i < size; i++)
 		{
-			this.categories = new HashMap<>();
-		}
-
-		public void register(Identifier id, ResearchCategory category)
-		{
-			this.categories.put(id, category);
-		}
-
-		public ResearchCategory get(Identifier id)
-		{
-			return this.categories.get(id);
-		}
-
-		public ResearchCategory getFirst()
-		{
-			return this.categories.values().stream().findFirst().get();
-		}
-
-		public Collection<ResearchCategory> getAll()
-		{
-			return this.categories.values();
-		}
-
-		public PacketByteBuf toPacket(PacketByteBuf buf)
-		{
-			buf.writeInt(this.categories.size());
-			this.categories.values().forEach((category -> {
-				category.toPacket(buf);
-			}));
-			return buf;
-		}
-
-		public void fromPacket(PacketByteBuf buf)
-		{
-			this.categories.clear();
-			int size = buf.readInt();
-			for(int i = 0; i < size; i++)
-			{
-				ResearchCategory category = new ResearchCategory(buf);
-				this.register(category.getId(), category);
-			}
+			ResearchCategory category = new ResearchCategory(buf);
+			ThuwumcraftRegistry.RESEARCH_CATEGORY.register(category.getId(), category);
 		}
 	}
 }

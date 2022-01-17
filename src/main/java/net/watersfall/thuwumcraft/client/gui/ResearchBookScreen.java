@@ -18,7 +18,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
-import net.watersfall.thuwumcraft.api.research.Research;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
@@ -54,14 +54,14 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 		Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 		ability = optional.get();
-		this.currentCategory = ResearchCategory.REGISTRY.get(ability.getLastCategory());
+		this.currentCategory = ThuwumcraftRegistry.RESEARCH_CATEGORY.get(ability.getLastCategory());
 		if(currentCategory == null)
 		{
-			this.currentCategory = ResearchCategory.REGISTRY.get(Thuwumcraft.getId("starter"));
+			this.currentCategory = ThuwumcraftRegistry.RESEARCH_CATEGORY.get(Thuwumcraft.getId("starter"));
 		}
 		if(this.currentCategory == null)
 		{
-			this.currentCategory = ResearchCategory.REGISTRY.getFirst();
+			this.currentCategory = ThuwumcraftRegistry.RESEARCH_CATEGORY.values().stream().findFirst().get();
 		}
 	}
 
@@ -78,7 +78,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		this.scale = ability.getScale();
 		int total = 0;
 		List<ResearchCategory> tempCat = new ArrayList<>();
-		for(ResearchCategory category : ResearchCategory.REGISTRY.getAll())
+		for(ResearchCategory category : ThuwumcraftRegistry.RESEARCH_CATEGORY.values())
 		{
 			if(category.isVisible(ability))
 			{
@@ -92,7 +92,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		{
 			categories[i] = new CategoryTabElement(this, tempCat.get(i), x - 24, y + 12 +  i * 24, false);
 		}
-		Research.REGISTRY.getAll().forEach((research -> {
+		ThuwumcraftRegistry.RESEARCH.values().forEach((research -> {
 			this.addDrawableChild(new ResearchElement(this, research));
 		}));
 		for(int i = 0; i < this.categories.length; i++)

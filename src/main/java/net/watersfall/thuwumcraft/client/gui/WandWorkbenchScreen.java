@@ -13,8 +13,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.gui.WandWorkbenchHandler;
-import net.watersfall.thuwumcraft.spell.Spell;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
@@ -81,13 +81,13 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 				text.draw(matrices, WAND_CAP.copy().append(": ").append(wand.getWandCap().getId().toString()), this.x + 90, this.y + 29, 0);
 				text.draw(matrices, WAND_RECHARGE_TYPE.copy().append(": " + wand.getWandCap().getRechargeType().name()), this.x + 90, this.y + 47, 0);
 			}
-			if(wand.getSpell() == null || wand.getSpell().spell() == null)
+			if(wand.getSpell() == null || wand.getSpell() == null)
 			{
 				text.draw(matrices, WAND_SPELL.copy().append(": ").append(WAND_SPELL_NONE), this.x + 90, this.y + 56, 0);
 			}
 			else
 			{
-				text.draw(matrices, WAND_SPELL.copy().append(": " + Spell.REGISTRY.getId(wand.getSpell().spell())), this.x + 90, this.y + 56, 0);
+				text.draw(matrices, WAND_SPELL.copy().append(": " + ThuwumcraftRegistry.SPELL.getId(wand.getSpell().getType())), this.x + 90, this.y + 56, 0);
 			}
 		});
 	}

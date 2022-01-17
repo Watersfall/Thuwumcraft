@@ -8,18 +8,18 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.spell.SpellAction;
+import net.watersfall.thuwumcraft.spell.Spell;
 
 public class CastingStaffItem extends Item
 {
-	protected final SpellAction action;
+	protected final Spell<?> spell;
 	protected final int castingTime;
 	protected final int cooldown;
 
-	public CastingStaffItem(Settings settings, SpellAction action, int castingTime, int cooldown)
+	public CastingStaffItem(Settings settings, Spell<?> spell, int castingTime, int cooldown)
 	{
 		super(settings);
-		this.action = action;
+		this.spell = spell;
 		this.castingTime = castingTime;
 		this.cooldown = cooldown;
 	}
@@ -40,11 +40,10 @@ public class CastingStaffItem extends Item
 	@Override
 	public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user)
 	{
-		if(user instanceof PlayerEntity)
+		if(user instanceof PlayerEntity player)
 		{
-			PlayerEntity player = (PlayerEntity)user;
-			action.use(stack, world, player);
-			player.getItemCooldownManager().set(this, cooldown);
+			spell.cast(stack, world, player);
+			player.getItemCooldownManager().set(this, spell.getCooldown());
 		}
 		return stack;
 	}

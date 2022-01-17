@@ -84,6 +84,7 @@ import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.lookup.AspectContainer;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.player.PlayerWarpEvents;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
@@ -151,7 +152,7 @@ public class Thuwumcraft implements ModInitializer
 			AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 			optional.ifPresent((ability) -> {
-				Research research = Research.REGISTRY.get(buf.readIdentifier());
+				Research research = ThuwumcraftRegistry.RESEARCH.get(buf.readIdentifier());
 				if(!ability.hasResearch(research)/* && research.isAvailable(ability) && research.hasItems(player)*/)
 				{
 					ability.addResearch(research.getId());
@@ -179,11 +180,11 @@ public class Thuwumcraft implements ModInitializer
 			AbilityProvider<ItemStack> otherProvider = AbilityProvider.getProvider(other);
 			handProvider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
 				otherProvider.getAbility(WandFocusAbility.ID, WandFocusAbility.class).ifPresent(focus -> {
-					if(wand.getSpell() != null && wand.getSpell().spell() != null)
+					if(wand.getSpell() != null)
 					{
 						ItemStack newFocus = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
 						AbilityProvider<ItemStack> newFocusProvider = AbilityProvider.getProvider(newFocus);
-						newFocusProvider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), newFocus));
+						newFocusProvider.addAbility(new WandFocusAbilityImpl(wand.getSpell(), newFocus));
 						player.getInventory().setStack(index, newFocus);
 					}
 					else
@@ -198,11 +199,11 @@ public class Thuwumcraft implements ModInitializer
 			ItemStack hand = player.getMainHandStack();
 			AbilityProvider<ItemStack> handProvider = AbilityProvider.getProvider(hand);
 			handProvider.getAbility(WandAbility.ID, WandAbility.class).ifPresent(wand -> {
-				if(wand.getSpell() != null && wand.getSpell().spell() != null)
+				if(wand.getSpell() != null)
 				{
 					ItemStack stack = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
 					AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(stack);
-					provider.addAbility(new WandFocusAbilityImpl(wand.getSpell().spell(), stack));
+					provider.addAbility(new WandFocusAbilityImpl(wand.getSpell(), stack));
 					if(!player.giveItemStack(stack))
 					{
 						player.dropItem(stack, true);
@@ -284,8 +285,8 @@ public class Thuwumcraft implements ModInitializer
 			if(entity.getType() == EntityType.PLAYER && FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
 			{
 				PacketByteBuf research = PacketByteBufs.create();
-				ResearchCategory.REGISTRY.toPacket(research);
-				Research.REGISTRY.toPacket(research);
+				ResearchCategory.toFullPacket(research);
+				Research.toFullPacket(research);
 				ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
 			}
 		});
@@ -295,8 +296,8 @@ public class Thuwumcraft implements ModInitializer
 				for(ServerPlayerEntity player : PlayerLookup.all(server))
 				{
 					PacketByteBuf research = PacketByteBufs.create();
-					ResearchCategory.REGISTRY.toPacket(research);
-					Research.REGISTRY.toPacket(research);
+					ResearchCategory.toFullPacket(research);
+					Research.toFullPacket(research);
 					ServerPlayNetworking.send(player, getId("research_packet"), research);
 					AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 					provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability) -> {
@@ -622,5 +623,7 @@ public class Thuwumcraft implements ModInitializer
 		registerBiomeModifications();
 		VillageAdditions.register();
 		registerWarpEvents();
+		ThuwumcraftSpells.register();
+		ThuwumcraftSpellData.register();
 	}
 }

@@ -3,6 +3,7 @@ package net.watersfall.thuwumcraft.item.wand;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 import java.util.function.Supplier;
@@ -24,7 +25,7 @@ public enum WandCoreMaterials implements WandCoreMaterial
 		this.maxVis = maxVis;
 		this.color = color;
 		this.stack = stack;
-		WandCoreMaterial.REGISTRY.register(id, this);
+		ThuwumcraftRegistry.WAND_CORE.register(id, stack.get().getItem(), this);
 	}
 
 	@Override

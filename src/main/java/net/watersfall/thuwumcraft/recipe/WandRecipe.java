@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.abilities.item.WandAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.item.wand.WandCapMaterial;
 import net.watersfall.thuwumcraft.item.wand.WandCoreMaterial;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRecipes;
@@ -44,13 +45,13 @@ public class WandRecipe extends ShapelessRecipe
 		WandCoreMaterial core = null;
 		for(int i = 0; i < inventory.size(); i++)
 		{
-			if(cap == null && WandCapMaterial.REGISTRY.getByItem(inventory.getStack(i).getItem()) != null)
+			if(cap == null && ThuwumcraftRegistry.WAND_CAP.getByOtherId(inventory.getStack(i).getItem()) != null)
 			{
-				cap = WandCapMaterial.REGISTRY.getByItem(inventory.getStack(i).getItem());
+				cap = ThuwumcraftRegistry.WAND_CAP.getByOtherId(inventory.getStack(i).getItem());
 			}
-			if(core == null && WandCoreMaterial.REGISTRY.getByItem(inventory.getStack(i).getItem()) != null)
+			if(core == null && ThuwumcraftRegistry.WAND_CORE.getByOtherId(inventory.getStack(i).getItem()) != null)
 			{
-				core = WandCoreMaterial.REGISTRY.getByItem(inventory.getStack(i).getItem());
+				core = ThuwumcraftRegistry.WAND_CORE.getByOtherId(inventory.getStack(i).getItem());
 			}
 		}
 		ability.setWandCore(core);

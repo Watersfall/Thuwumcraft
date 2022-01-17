@@ -9,16 +9,13 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 public class Research
 {
-	public static Registry REGISTRY = new Registry();
-
 	private Identifier id;
 	private Text name;
 	private Text description;
@@ -106,7 +103,7 @@ public class Research
 		{
 			this.stack = Ingredient.ofItems(net.minecraft.util.registry.Registry.ITEM.get(Identifier.tryParse(json.get("icon").getAsString())));
 		}
-		this.category = ResearchCategory.REGISTRY.get(Identifier.tryParse(json.get("category").getAsString()));
+		this.category = ThuwumcraftRegistry.RESEARCH_CATEGORY.get(Identifier.tryParse(json.get("category").getAsString()));
 		JsonArray tabsArray = json.getAsJsonArray("tabs");
 		if(tabsArray != null)
 		{
@@ -279,7 +276,7 @@ public class Research
 		List<Research> list = new ArrayList<>();
 		for(int i = 0; i < researchResearch.size(); i++)
 		{
-			list.add(Research.REGISTRY.get(researchResearch.get(i)));
+			list.add(ThuwumcraftRegistry.RESEARCH.get(researchResearch.get(i)));
 		}
 		return list;
 	}
@@ -344,7 +341,7 @@ public class Research
 		this.description = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc");
 		this.completedDescription = new TranslatableText("research." + this.id.getNamespace() + "." + this.id.getPath().replace("/", ".") + ".desc.completed");
 		this.stack = Ingredient.fromPacket(buf);
-		this.category = ResearchCategory.REGISTRY.get(buf.readIdentifier());
+		this.category = ThuwumcraftRegistry.RESEARCH_CATEGORY.get(buf.readIdentifier());
 		this.tabs = new RecipeGroup[buf.readInt()];
 		for(int i = 0; i < tabs.length; i++)
 		{
@@ -377,65 +374,32 @@ public class Research
 		{
 			return true;
 		}
-		else if(obj instanceof Research)
+		else if(obj instanceof Research research)
 		{
-			Research research = (Research)obj;
 			return research.getId().equals(this.id);
 		}
 		return false;
 	}
 
-	public static class Registry
+	public static PacketByteBuf toFullPacket(PacketByteBuf buf)
 	{
-		private final HashMap<Identifier, Research> research;
-
-		private Registry()
-		{
-			research = new HashMap<>();
-		}
-
-		public Research get(Identifier id)
-		{
-			return this.research.get(id);
-		}
-
-		public Research register(Identifier id, Research research)
-		{
-			this.research.put(id, research);
-			return research;
-		}
-
-		public Collection<Research> getAll()
-		{
-			return research.values();
-		}
-
-		public PacketByteBuf toPacket(PacketByteBuf buf)
-		{
-			buf.writeInt(research.size());
-			this.research.values().forEach((value) -> {
-				value.toPacket(buf);
-			});
-			return buf;
-		}
-
-		public void fromPacket(PacketByteBuf buf)
-		{
-			research.clear();
-			int size = buf.readInt();
-			for(int i = 0; i < size; i++)
-			{
-				Research research = new Research(buf);
-				this.research.put(research.getId(), research);
-			}
-		}
-
-		public void clear()
-		{
-			research.clear();
-		}
+		buf.writeInt(ThuwumcraftRegistry.RESEARCH.values().size());
+		ThuwumcraftRegistry.RESEARCH.values().forEach((value) -> {
+			value.toPacket(buf);
+		});
+		return buf;
 	}
 
+	public static void fromFullPacket(PacketByteBuf buf)
+	{
+		ThuwumcraftRegistry.RESEARCH.clear();
+		int size = buf.readInt();
+		for(int i = 0; i < size; i++)
+		{
+			Research research = new Research(buf);
+			ThuwumcraftRegistry.RESEARCH.register(research.getId(), research);
+		}
+	}
 	public static class RecipeGroup
 	{
 		private final Identifier[] recipes;

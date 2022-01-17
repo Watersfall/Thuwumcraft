@@ -87,11 +87,12 @@ import net.watersfall.thuwumcraft.api.abilities.entity.PlayerWarpAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.client.gui.BookRecipeTypes;
-import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.item.MultiTooltipComponent;
+import net.watersfall.thuwumcraft.api.client.registry.ThuwumcraftClientRegistry;
 import net.watersfall.thuwumcraft.api.client.render.AspectRenderer;
 import net.watersfall.thuwumcraft.api.golem.GolemMarker;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.block.entity.HungryChestBlockEntity;
@@ -477,7 +478,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			if(optional.isPresent())
 			{
 				WandAbility ability = optional.get();
-				if(ability.getSpell() != null && ability.getSpell().spell() != null)
+				if(ability.getSpell() != null)
 				{
 					return 1;
 				}
@@ -557,9 +558,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 						}
 						else
 						{
-							if(ability.getSpell() != null && ability.getSpell().spell() != null)
+							if(ability.getSpell() != null )
 							{
-								return ability.getSpell().spell().color();
+								return ability.getSpell().getColor();
 							}
 							return 0xFFFFFF;
 						}
@@ -575,9 +576,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 					if(optional.isPresent())
 					{
 						WandFocusAbility ability = optional.get();
-						if(ability.getSpell() != null && ability.getSpell().spell() != null)
+						if(ability.getSpell() != null)
 						{
-							return ability.getSpell().spell().color();
+							return ability.getSpell().getColor();
 						}
 					}
 					return 0xFFFFFF;
@@ -676,7 +677,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("research_click"), ((client, handler, buf, responseSender) -> {
 			Identifier id = buf.readIdentifier();
-			client.getToastManager().add(new ResearchToast(Research.REGISTRY.get(id)));
+			client.getToastManager().add(new ResearchToast(ThuwumcraftRegistry.RESEARCH.get(id)));
 			AbilityProvider<Entity> provider = AbilityProvider.getProvider(client.player);
 			Optional<PlayerResearchAbility> optional = provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class);
 			optional.ifPresent((ability) -> {
@@ -685,8 +686,8 @@ public class ThuwumcraftClient implements ClientModInitializer
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("research_packet"), (client, handler, buf, responseSender) -> {
-			ResearchCategory.REGISTRY.fromPacket(buf);
-			Research.REGISTRY.fromPacket(buf);
+			ResearchCategory.fromFullPacket(buf);
+			Research.fromFullPacket(buf);
 		});
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("chunk_packet"), (client, handler, buf, responseSender) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());
@@ -812,7 +813,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 
 	private void registerBookRecipeRenderers()
 	{
-		RecipeTabType.REGISTRY.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
+		ThuwumcraftClientRegistry.RECIPE_TAB_TYPE.register(BookRecipeTypes.CRAFTING, ((recipe, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 48, y + 80, 96, 96, CRAFTING_TEXTURE);
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1];
 			int offsetX = x + 48 + 8;
@@ -850,7 +851,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, x + 88, y + 32);
 			return new RecipeElement(items, background);
 		}));
-		RecipeTabType.REGISTRY.register(BookRecipeTypes.INFUSION, ((recipe2, x, y, width, height) -> {
+		ThuwumcraftClientRegistry.RECIPE_TAB_TYPE.register(BookRecipeTypes.INFUSION, ((recipe2, x, y, width, height) -> {
 			PedestalRecipe recipe = (PedestalRecipe) recipe2;
 			ItemElement[] items = new ItemElement[recipe.getIngredients().size() + 1 + recipe.getAspects().size()];
 			Point origin = new Point(x + width / 2 - 8, y + height / 2 - 12);
@@ -875,7 +876,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 			items[items.length - 1] = new ItemElement(new ItemStack[]{recipe.getOutput()}, origin.x, origin.y - 108);
 			return new RecipeElement(items, RecipeElement.Background.EMPTY);
 		}));
-		RecipeTabType.REGISTRY.register(BookRecipeTypes.CAULDRON, ((recipe2, x, y, width, height) -> {
+		ThuwumcraftClientRegistry.RECIPE_TAB_TYPE.register(BookRecipeTypes.CAULDRON, ((recipe2, x, y, width, height) -> {
 			RecipeElement.Background background = new RecipeElement.Background(x + 12, y + 32, 128, 128, ThuwumcraftClient.ALCHEMY_TEXTURE);
 			CauldronItemRecipe recipe = (CauldronItemRecipe)recipe2;
 			ItemElement[] items = new ItemElement[recipe.getInputs().size() + 2];

@@ -8,6 +8,7 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 
 import java.io.IOException;
@@ -25,14 +26,14 @@ public class ResearchLoader implements IdentifiableResourceReloadListener
 			return manager.findResources("research", (string) -> string.endsWith(".json"));
 		});
 		return resourceFuture.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((collection) -> {
-			Research.REGISTRY.clear();
+			ThuwumcraftRegistry.RESEARCH.clear();
 			collection.forEach((id) -> {
 				try
 				{
 					Resource resource = manager.getResource(id);
 					JsonElement json = new JsonParser().parse(new InputStreamReader(resource.getInputStream()));
 					Research research = new Research(id, json.getAsJsonObject());
-					Research.REGISTRY.register(research.getId(), research);
+					ThuwumcraftRegistry.RESEARCH.register(research.getId(), research);
 				}
 				catch(IOException e)
 				{

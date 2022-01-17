@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.wet.api.abilities.Ability;
 import net.watersfall.wet.api.abilities.AbilityClientSerializable;
@@ -77,7 +78,7 @@ public interface PlayerResearchAbility extends Ability<Entity>, AbilityClientSer
 		this.getResearch().clear();
 		NbtList list = tag.getList("research_list", NbtType.STRING);
 		list.forEach(research -> {
-			Research check = Research.REGISTRY.get(Identifier.tryParse(research.asString()));
+			Research check = ThuwumcraftRegistry.RESEARCH.get(Identifier.tryParse(research.asString()));
 			if(check != null)
 			{
 				addResearch(check);

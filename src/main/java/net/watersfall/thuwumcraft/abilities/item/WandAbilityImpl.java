@@ -4,15 +4,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.item.wand.*;
 import net.watersfall.thuwumcraft.spell.Spell;
-import net.watersfall.thuwumcraft.spell.SpellActionInstance;
 
 public class WandAbilityImpl implements WandAbility
 {
 	private WandCapMaterial cap;
 	private WandCoreMaterial core;
-	private SpellActionInstance spell;
+	private Spell<?> spell;
 	private double vis;
 
 	public WandAbilityImpl()
@@ -41,7 +41,7 @@ public class WandAbilityImpl implements WandAbility
 	}
 
 	@Override
-	public SpellActionInstance getSpell()
+	public Spell<?> getSpell()
 	{
 		return spell;
 	}
@@ -65,7 +65,7 @@ public class WandAbilityImpl implements WandAbility
 	}
 
 	@Override
-	public void setSpell(SpellActionInstance spell)
+	public void setSpell(Spell<?> spell)
 	{
 		this.spell = spell;
 	}
@@ -81,9 +81,7 @@ public class WandAbilityImpl implements WandAbility
 	{
 		return this.getWandCore() != null
 				&& this.getWandCap() != null
-				&& this.getSpell() != null
-				&& this.getSpell().spell() != null
-				&& this.getVis() >= this.getSpell().spell().visCost();
+				&& this.getSpell() != null;
 	}
 
 	@Override
@@ -103,9 +101,12 @@ public class WandAbilityImpl implements WandAbility
 		{
 			tag.putString("core", core.getId().toString());
 		}
-		if(spell != null && spell.spell() != null)
+		if(spell != null)
 		{
-			tag.putString("spell", Spell.REGISTRY.getId(spell.spell()).toString());
+			NbtCompound nbt = new NbtCompound();
+			nbt.putString("id", ThuwumcraftRegistry.SPELL.getId(spell.getType()).toString());
+			spell.toNbt(nbt);
+			tag.put("spell", nbt);
 		}
 		tag.putDouble("vis", vis);
 		return tag;
@@ -116,16 +117,16 @@ public class WandAbilityImpl implements WandAbility
 	{
 		if(tag.contains("cap"))
 		{
-			this.cap = WandCapMaterial.REGISTRY.get(new Identifier(tag.getString("cap")));
+			this.cap = ThuwumcraftRegistry.WAND_CAP.get(new Identifier(tag.getString("cap")));
 		}
 		if(tag.contains("core"))
 		{
-			this.core = WandCoreMaterial.REGISTRY.get(new Identifier(tag.getString("core")));
+			this.core = ThuwumcraftRegistry.WAND_CORE.get(new Identifier(tag.getString("core")));
 		}
 		if(tag.contains("spell"))
 		{
-			Spell action = Spell.REGISTRY.get(new Identifier(tag.getString("spell")));
-			this.spell = new SpellActionInstance(action, 0, 0);
+			NbtCompound nbt = tag.getCompound("spell");
+			this.spell = ThuwumcraftRegistry.SPELL.get(new Identifier(nbt.getString("id"))).create(nbt);
 		}
 		this.vis = tag.getDouble("vis");
 	}

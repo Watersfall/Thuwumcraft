@@ -12,8 +12,8 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.api.client.gui.RecipeTabType;
 import net.watersfall.thuwumcraft.api.client.recipe.BookRenderableRecipe;
+import net.watersfall.thuwumcraft.api.client.registry.ThuwumcraftClientRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipePage;
@@ -83,7 +83,7 @@ public class ResearchTab extends Screen
 		for(int i = 0; i < recipeIds.length; i++)
 		{
 			BookRenderableRecipe recipe = (BookRenderableRecipe)recipes[i];
-			recipeElements[i] = RecipeTabType.REGISTRY.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
+			recipeElements[i] = ThuwumcraftClientRegistry.RECIPE_TAB_TYPE.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
 			count++;
 		}
 		this.addDrawableChild(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));

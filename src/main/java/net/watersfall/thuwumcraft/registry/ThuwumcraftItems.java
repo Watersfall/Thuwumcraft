@@ -14,6 +14,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.aspect.Aspects;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.entity.golem.goal.ExtractFromInventoryGoal;
 import net.watersfall.thuwumcraft.entity.golem.goal.InsertIntoInventoryGoal;
 import net.watersfall.thuwumcraft.entity.golem.goal.PickupItemGoal;
@@ -27,8 +28,7 @@ import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.golem.GolemSealItem;
 import net.watersfall.thuwumcraft.item.tool.*;
 import net.watersfall.thuwumcraft.item.wand.*;
-import net.watersfall.thuwumcraft.spell.Spell;
-import net.watersfall.thuwumcraft.spell.SpellAction;
+import net.watersfall.thuwumcraft.spell.*;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
@@ -267,12 +267,12 @@ public class ThuwumcraftItems
 		BOOTS_OF_BLINDING_SPEED = register(Thuwumcraft.getId("boots_of_blinding_speed"), new SpeedBootsItem(AlchemyArmorMaterials.MAGIC, 0.5F));
 		DIMENSIONAL_FLUID_BUCKET = register(Thuwumcraft.getId("dimensional_fluid_bucket"), new BucketItem(ThuwumcraftFluids.DIMENSIONAL_STILL, defaultSettings().maxCount(1)));
 		EYE_OF_THE_UNKNOWN = register(Thuwumcraft.getId("eye_of_the_unknown"), new EyeOfTheUnknownItem(defaultSettings().rarity(Rarity.EPIC)));
-		ICE_STAFF = register(Thuwumcraft.getId("ice_staff"), new CastingStaffItem(defaultSettings().maxCount(1), SpellAction.ICE, 10, 20));
-		SNOW_STAFF = register(Thuwumcraft.getId("snow_staff"), new CastingStaffItem(defaultSettings().maxCount(1), SpellAction.SNOW, 5, 10));
-		WATER_STAFF = register(Thuwumcraft.getId("water_staff"), new ContinuousCastingStaffItem(defaultSettings().maxCount(1), SpellAction.WATER, 10, 1));
-		FIRE_STAFF = register(Thuwumcraft.getId("fire_staff"), new ContinuousCastingStaffItem(defaultSettings().maxCount(1), SpellAction.FIRE, 10, 1));
+		ICE_STAFF = register(Thuwumcraft.getId("ice_staff"), new CastingStaffItem(defaultSettings().maxCount(1), new IceSpell(), 10, 20));
+		SNOW_STAFF = register(Thuwumcraft.getId("snow_staff"), new CastingStaffItem(defaultSettings().maxCount(1), new SnowSpell(), 5, 10));
+		WATER_STAFF = register(Thuwumcraft.getId("water_staff"), new ContinuousCastingStaffItem(defaultSettings().maxCount(1), new WaterSpell(), 10, 1));
+		FIRE_STAFF = register(Thuwumcraft.getId("fire_staff"), new ContinuousCastingStaffItem(defaultSettings().maxCount(1), new FireSpell(), 10, 1));
 		ICE_PROJECTILE = register(Thuwumcraft.getId("ice_projectile"), new Item(new FabricItemSettings()));
-		SAND_STAFF = register(Thuwumcraft.getId("sand_staff"), new CastingStaffItem(defaultSettings().maxCount(1), SpellAction.SAND, 10, 10));
+		SAND_STAFF = register(Thuwumcraft.getId("sand_staff"), new CastingStaffItem(defaultSettings().maxCount(1), new SandSpell(), 10, 10));
 		WAND_OF_HOLES = register(Thuwumcraft.getId("wand_of_holes"), new PortableHoleWand(defaultSettings().maxCount(1)));
 		WAND = register(Thuwumcraft.getId("wand"), new WandItem(defaultSettings().maxCount(1)));
 		WAND_FOCUS = register(Thuwumcraft.getId("wand_focus"), new WandFocusItem(defaultSettings().maxCount(1)));
@@ -364,10 +364,10 @@ public class ThuwumcraftItems
 				item.appendStacks(ALCHEMY_MOD_ITEM_GROUP, (DefaultedList<ItemStack>)stack);
 			}
 		});
-		Spell.REGISTRY.getSpells().forEach(spell -> {
+		ThuwumcraftRegistry.SPELL.values().forEach(spell -> {
 			ItemStack focus = new ItemStack(WAND_FOCUS, 1);
 			AbilityProvider<ItemStack> provider = AbilityProvider.getProvider(focus);
-			provider.addAbility(new WandFocusAbilityImpl(spell, focus));
+			provider.addAbility(new WandFocusAbilityImpl(spell.create(), focus));
 			stack.add(focus);
 		});
 		Aspects.ASPECT_TO_CLUSTER_BLOCK.values().forEach((item) -> {

@@ -14,7 +14,7 @@
 	"abilities": [
 		{
 			"id": "thuwumcraft:wand_focus_ability",
-			"nbt": "{spell:\"thuwumcraft:fire\"}"
+			"nbt": "{spell:{id:\"thuwumcraft:fire\"}}"
 		}
 	]
 }

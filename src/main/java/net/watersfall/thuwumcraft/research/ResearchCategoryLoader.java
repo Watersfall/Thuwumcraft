@@ -8,6 +8,7 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.watersfall.thuwumcraft.Thuwumcraft;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class ResearchCategoryLoader implements IdentifiableResourceReloadListene
 					Resource resource = manager.getResource(id);
 					JsonElement json = new JsonParser().parse(new InputStreamReader(resource.getInputStream()));
 					ResearchCategory category = new ResearchCategory(id, json.getAsJsonObject());
-					ResearchCategory.REGISTRY.register(category.getId(), category);
+					ThuwumcraftRegistry.RESEARCH_CATEGORY.register(category.getId(), category);
 				}
 				catch(IOException e)
 				{

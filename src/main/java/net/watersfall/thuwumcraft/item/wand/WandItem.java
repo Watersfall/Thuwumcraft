@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.spell.CastingType;
-import net.watersfall.thuwumcraft.spell.Spell;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,9 +48,9 @@ public class WandItem extends Item
 			WandAbility ability = optional.get();
 			if(ability.canCast())
 			{
-				if(ability.getSpell().spell().type() == CastingType.SINGLE)
+				if(ability.getSpell().getCastingType() == CastingType.SINGLE)
 				{
-					return ability.getSpell().spell().castingTime();
+					return ability.getSpell().getCastingTime();
 				}
 				else
 				{
@@ -86,10 +86,10 @@ public class WandItem extends Item
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
 			if(ability.canCast())
 			{
-				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
+				if(ability.getSpell().getCastingType() == CastingType.CONTINUOUS)
 				{
-					int castingTime = ability.getSpell().spell().castingTime();
-					int cooldown = ability.getSpell().spell().cooldown();
+					int castingTime = ability.getSpell().getCastingTime();
+					int cooldown = ability.getSpell().getCooldown();
 					if(currentTick >= castingTime && currentTick % cooldown == 0)
 					{
 						if(user instanceof PlayerEntity)
@@ -97,7 +97,7 @@ public class WandItem extends Item
 							ability.getSpell().cast(stack, world, (PlayerEntity)user);
 							if(!world.isClient)
 							{
-								ability.setVis(ability.getVis() - ability.getSpell().spell().visCost());
+								ability.setVis(ability.getVis() - ability.getSpell().getCost());
 							}
 						}
 					}
@@ -116,16 +116,16 @@ public class WandItem extends Item
 			WandAbility ability = optional.get();
 			if(ability.canCast())
 			{
-				if(ability.getSpell().spell().type() == CastingType.SINGLE)
+				if(ability.getSpell().getCastingType() == CastingType.SINGLE)
 				{
 					ability.getSpell().cast(stack, world, (PlayerEntity)user);
 					if(!world.isClient)
 					{
-						ability.setVis(ability.getVis() - ability.getSpell().spell().visCost());
+						ability.setVis(ability.getVis() - ability.getSpell().getCost());
 					}
 				}
 			}
-			((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().cooldown());
+			((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().getCooldown());
 		}
 		return stack;
 	}
@@ -141,14 +141,14 @@ public class WandItem extends Item
 			int currentTick = getMaxUseTime(stack) - remainingUseTicks;
 			if(ability.canCast())
 			{
-				if(ability.getSpell().spell().type() == CastingType.CONTINUOUS)
+				if(ability.getSpell().getCastingType() == CastingType.CONTINUOUS)
 				{
-					int castingTime = ability.getSpell().spell().castingTime();
+					int castingTime = ability.getSpell().getCastingTime();
 					if(currentTick >= castingTime)
 					{
 						if(user instanceof PlayerEntity)
 						{
-							((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().spell().castingTime());
+							((PlayerEntity)user).getItemCooldownManager().set(this, ability.getSpell().getCastingTime());
 						}
 					}
 				}
@@ -183,13 +183,13 @@ public class WandItem extends Item
 			{
 				tooltip.add(new TranslatableText("item.thuwumcraft.wand.cap").append(": ").append(new TranslatableText("item.thuwumcraft.wand.cap.none")));
 			}
-			if(ability.getSpell() == null || ability.getSpell().spell() == null)
+			if(ability.getSpell() == null)
 			{
 				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new TranslatableText("item.thuwumcraft.wand.spell.none")));
 			}
 			else
 			{
-				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new LiteralText(Spell.REGISTRY.getId(ability.getSpell().spell()).toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new LiteralText(ThuwumcraftRegistry.SPELL.getId(ability.getSpell().getType()).toString())));
 			}
 		});
 	}

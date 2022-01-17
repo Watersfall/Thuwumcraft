@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.spell.SpellAction;
+import net.watersfall.thuwumcraft.spell.Spell;
 
 public class ContinuousCastingStaffItem extends CastingStaffItem
 {
-	public ContinuousCastingStaffItem(Settings settings, SpellAction action, int castingTime, int cooldown)
+	public ContinuousCastingStaffItem(Settings settings, Spell<?> spell, int castingTime, int cooldown)
 	{
-		super(settings, action, castingTime, cooldown);
+		super(settings, spell, castingTime, cooldown);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ContinuousCastingStaffItem extends CastingStaffItem
 		{
 			if(user instanceof PlayerEntity)
 			{
-				this.action.use(stack, world, (PlayerEntity)user);
+				this.spell.cast(stack, world, (PlayerEntity)user);
 			}
 		}
 	}
