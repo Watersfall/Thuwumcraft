@@ -26,6 +26,7 @@ public class ResearchCategoryLoader implements IdentifiableResourceReloadListene
 			return manager.findResources("research_category", (string) -> string.endsWith(".json"));
 		});
 		return resourceFuture.thenCompose(synchronizer::whenPrepared).thenAcceptAsync((collection) -> {
+			ThuwumcraftRegistry.RESEARCH_CATEGORY.clear();
 			collection.forEach((id) -> {
 				try
 				{
