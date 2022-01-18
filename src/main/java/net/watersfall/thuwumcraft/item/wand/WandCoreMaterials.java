@@ -1,7 +1,9 @@
 package net.watersfall.thuwumcraft.item.wand;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
@@ -18,6 +20,7 @@ public enum WandCoreMaterials implements WandCoreMaterial
 	private final Identifier id;
 	private final int color;
 	private final Supplier<ItemStack> stack;
+	private String translationKey;
 
 	WandCoreMaterials(Identifier id, double maxVis, int color, Supplier<ItemStack> stack)
 	{
@@ -50,5 +53,21 @@ public enum WandCoreMaterials implements WandCoreMaterial
 	public ItemStack getItemStack()
 	{
 		return stack.get().copy();
+	}
+
+	@Override
+	public String getTranslationKey()
+	{
+		if(translationKey == null)
+		{
+			translationKey = Util.createTranslationKey("wand_core", ThuwumcraftRegistry.WAND_CORE.getId(this));
+		}
+		return translationKey;
+	}
+
+	@Override
+	public TranslatableText getName()
+	{
+		return new TranslatableText(getTranslationKey());
 	}
 }

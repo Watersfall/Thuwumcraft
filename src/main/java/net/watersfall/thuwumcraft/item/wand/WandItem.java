@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
-import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.spell.CastingType;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 import org.jetbrains.annotations.Nullable;
@@ -169,7 +168,7 @@ public class WandItem extends Item
 			}
 			if(ability.getWandCore() != null)
 			{
-				tooltip.add(new TranslatableText("item.thuwumcraft.wand.core").append(": ").append(new LiteralText(ability.getWandCore().getId().toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.core").append(": ").append(ability.getWandCore().getName()));
 			}
 			else
 			{
@@ -177,7 +176,7 @@ public class WandItem extends Item
 			}
 			if(ability.getWandCap() != null)
 			{
-				tooltip.add(new TranslatableText("item.thuwumcraft.wand.cap").append(": ").append(new LiteralText(ability.getWandCap().getId().toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.cap").append(": ").append(ability.getWandCap().getName()));
 			}
 			else
 			{
@@ -189,7 +188,7 @@ public class WandItem extends Item
 			}
 			else
 			{
-				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(new LiteralText(ThuwumcraftRegistry.SPELL.getId(ability.getSpell().getType()).toString())));
+				tooltip.add(new TranslatableText("item.thuwumcraft.wand.spell").append(": ").append(ability.getSpell().getName()));
 			}
 		});
 	}

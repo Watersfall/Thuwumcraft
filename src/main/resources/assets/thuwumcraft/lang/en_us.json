@@ -245,5 +245,16 @@
 	"thuwumcraft.rei.category.brewing": "Cauldron Brewing",
 	"thuwumcraft.rei.category.cauldron": "Cauldron Brewing",
 	"thuwumcraft.rei.category.aspects": "Aspects",
-	"warp_event.thuwumcraft.watching": "I am being watched..."
+	"warp_event.thuwumcraft.watching": "I am being watched...",
+	"spell.thuwumcraft.fire": "Fire",
+	"spell.thuwumcraft.water": "Water",
+	"spell.thuwumcraft.ice": "Ice",
+	"spell.thuwumcraft.snow": "Snow",
+	"spell.thuwumcraft.sand": "Sand",
+	"wand_core.thuwumcraft.wood": "Mundane Wood",
+	"wand_core.thuwumcraft.greatwood": "Greatwood",
+	"wand_core.thuwumcraft.silverwood": "Silverwood",
+	"wand_cap.thuwumcraft.iron": "Iron",
+	"wand_cap.thuwumcraft.brass": "Brass",
+	"wand_cap.thuwumcraft.thuwumium": "Thuwumium"
 }

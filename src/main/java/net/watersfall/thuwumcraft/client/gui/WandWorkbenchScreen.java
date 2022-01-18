@@ -13,7 +13,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
-import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.gui.WandWorkbenchHandler;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
@@ -87,7 +86,7 @@ public class WandWorkbenchScreen extends HandledScreen<WandWorkbenchHandler>
 			}
 			else
 			{
-				text.draw(matrices, WAND_SPELL.copy().append(": " + ThuwumcraftRegistry.SPELL.getId(wand.getSpell().getType())), this.x + 90, this.y + 56, 0);
+				text.draw(matrices, WAND_SPELL.copy().append(": ").append(wand.getSpell().getName()), this.x + 90, this.y + 56, 0);
 			}
 		});
 	}
