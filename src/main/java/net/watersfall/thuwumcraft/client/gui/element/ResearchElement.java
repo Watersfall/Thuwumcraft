@@ -15,9 +15,9 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.research.Research;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
-import net.watersfall.thuwumcraft.client.gui.ResearchBookScreen;
-import net.watersfall.thuwumcraft.client.gui.ResearchScreen;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.client.gui.screen.ResearchBookScreen;
+import net.watersfall.thuwumcraft.client.gui.screen.ResearchScreen;
 
 import java.awt.*;
 import java.util.Collections;

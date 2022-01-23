@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.gui;
+package net.watersfall.thuwumcraft.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -23,9 +23,9 @@ import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.client.gui.button.ItemStackButton;
 import net.watersfall.thuwumcraft.gui.FocalManipulatorHandler;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
-import net.watersfall.thuwumcraft.spell.Spell;
-import net.watersfall.thuwumcraft.spell.SpellType;
-import net.watersfall.thuwumcraft.spell.modifier.SpellModifier;
+import net.watersfall.thuwumcraft.api.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
+import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;

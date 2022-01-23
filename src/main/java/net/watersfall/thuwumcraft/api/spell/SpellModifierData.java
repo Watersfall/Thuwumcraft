@@ -1,8 +1,8 @@
-package net.watersfall.thuwumcraft.spell;
+package net.watersfall.thuwumcraft.api.spell;
 
 import net.minecraft.nbt.NbtCompound;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
-import net.watersfall.thuwumcraft.spell.modifier.SpellModifier;
+import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
 
 import java.util.List;
 

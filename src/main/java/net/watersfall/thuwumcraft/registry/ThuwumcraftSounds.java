@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.api.sound;
+package net.watersfall.thuwumcraft.registry;
 
 import net.minecraft.sound.SoundEvent;
 import net.watersfall.thuwumcraft.Thuwumcraft;

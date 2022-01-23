@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.CrucibleEntity;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CrucibleRecipe;

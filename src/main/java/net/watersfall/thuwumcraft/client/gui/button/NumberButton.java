@@ -7,7 +7,7 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.PressableWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
-import net.watersfall.thuwumcraft.spell.modifier.ValueGetter;
+import net.watersfall.thuwumcraft.api.spell.modifier.ValueGetter;
 
 public class NumberButton extends PressableWidget
 {

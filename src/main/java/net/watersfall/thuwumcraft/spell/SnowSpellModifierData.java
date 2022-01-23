@@ -1,9 +1,11 @@
 package net.watersfall.thuwumcraft.spell;
 
 import net.minecraft.nbt.NbtCompound;
+import net.watersfall.thuwumcraft.api.spell.SpellModifierData;
+import net.watersfall.thuwumcraft.api.spell.SpellModifierDataType;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpellData;
-import net.watersfall.thuwumcraft.spell.modifier.IntegerSpellModifier;
-import net.watersfall.thuwumcraft.spell.modifier.SpellModifier;
+import net.watersfall.thuwumcraft.api.spell.modifier.IntegerSpellModifier;
+import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Rarity;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlocks;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 

@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.item.WandAbility;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.item.wand.*;
-import net.watersfall.thuwumcraft.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.Spell;
 
 public class WandAbilityImpl implements WandAbility
 {

@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.gui;
+package net.watersfall.thuwumcraft.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -20,7 +20,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;

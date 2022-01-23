@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.Spell;
 
 public class ContinuousCastingStaffItem extends CastingStaffItem
 {

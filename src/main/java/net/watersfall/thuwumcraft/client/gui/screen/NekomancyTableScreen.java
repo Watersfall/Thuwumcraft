@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.gui;
+package net.watersfall.thuwumcraft.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;

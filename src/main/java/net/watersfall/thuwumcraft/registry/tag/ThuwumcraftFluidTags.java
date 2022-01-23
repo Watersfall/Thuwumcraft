@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.api.tag;
+package net.watersfall.thuwumcraft.registry.tag;
 
 import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.fluid.Fluid;

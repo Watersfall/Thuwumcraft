@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.spell;
+package net.watersfall.thuwumcraft.api.spell;
 
 public enum CastingType
 {

@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.registry;
 
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.spell.*;
 
 public class ThuwumcraftSpells

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.client.gui.ResearchBookScreen;
+import net.watersfall.thuwumcraft.client.gui.screen.ResearchBookScreen;
 
 import java.util.List;
 

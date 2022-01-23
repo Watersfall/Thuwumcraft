@@ -7,7 +7,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.api.spell.CastingType;
+import net.watersfall.thuwumcraft.api.spell.EmptySpellModifierData;
+import net.watersfall.thuwumcraft.api.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.entity.spell.SandEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpells;
 

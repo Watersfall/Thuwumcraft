@@ -16,7 +16,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.chunk.VisAbility;
-import net.watersfall.thuwumcraft.api.tag.ThuwumcraftBiomeTags;
+import net.watersfall.thuwumcraft.registry.tag.ThuwumcraftBiomeTags;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 public class VisAbilityImpl implements VisAbility

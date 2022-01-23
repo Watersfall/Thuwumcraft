@@ -8,6 +8,10 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.spell.CastingType;
+import net.watersfall.thuwumcraft.api.spell.EmptySpellModifierData;
+import net.watersfall.thuwumcraft.api.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.entity.spell.WaterEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpells;
 

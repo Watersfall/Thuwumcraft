@@ -8,8 +8,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.spell.CastingType;
+import net.watersfall.thuwumcraft.api.spell.Spell;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpells;
-import net.watersfall.thuwumcraft.spell.modifier.IntegerSpellModifier;
+import net.watersfall.thuwumcraft.api.spell.modifier.IntegerSpellModifier;
 
 public class SnowSpell extends Spell<SnowSpellModifierData>
 {

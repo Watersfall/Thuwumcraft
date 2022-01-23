@@ -8,8 +8,8 @@ import net.watersfall.thuwumcraft.item.wand.WandCapMaterial;
 import net.watersfall.thuwumcraft.item.wand.WandCoreMaterial;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftDoubleIdRegistryImpl;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftRegistryImpl;
-import net.watersfall.thuwumcraft.spell.SpellModifierDataType;
-import net.watersfall.thuwumcraft.spell.SpellType;
+import net.watersfall.thuwumcraft.api.spell.SpellModifierDataType;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 
 import java.util.Set;
 

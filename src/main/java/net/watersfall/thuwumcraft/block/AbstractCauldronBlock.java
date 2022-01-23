@@ -38,7 +38,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.watersfall.thuwumcraft.api.fluid.ColoredWaterContainer;
 import net.watersfall.thuwumcraft.api.fluid.WaterContainer;
-import net.watersfall.thuwumcraft.api.sound.ThuwumcraftSounds;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.block.entity.AbstractCauldronEntity;
 import net.watersfall.thuwumcraft.util.InventoryHelper;
 import org.jetbrains.annotations.Nullable;

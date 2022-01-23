@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.spell;
+package net.watersfall.thuwumcraft.api.spell;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

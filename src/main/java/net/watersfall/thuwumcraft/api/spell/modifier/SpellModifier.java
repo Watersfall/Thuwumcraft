@@ -1,10 +1,10 @@
-package net.watersfall.thuwumcraft.spell.modifier;
+package net.watersfall.thuwumcraft.api.spell.modifier;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.nbt.NbtCompound;
-import net.watersfall.thuwumcraft.client.gui.FocalManipulatorScreen;
+import net.watersfall.thuwumcraft.client.gui.screen.FocalManipulatorScreen;
 
 import java.util.List;
 

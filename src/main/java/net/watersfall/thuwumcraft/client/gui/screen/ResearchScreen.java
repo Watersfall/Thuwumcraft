@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.client.gui;
+package net.watersfall.thuwumcraft.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
