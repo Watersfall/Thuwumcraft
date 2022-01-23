@@ -31,6 +31,7 @@ public class ThuwumcraftBlockEntities
 	public static BlockEntityType<ArcaneSealBlockEntity> ARCANE_SEAL;
 	public static BlockEntityType<ThaumatoriumBlockEntity> THAUMATORIUM;
 	public static BlockEntityType<HungryChestBlockEntity> HUNGRY_CHEST;
+	public static BlockEntityType<FocalManipulatorBlockEntity> FOCAL_MANIPULATOR;
 
 	public static void register()
 	{
@@ -55,6 +56,7 @@ public class ThuwumcraftBlockEntities
 		ARCANE_SEAL = register("arcane_seal", ArcaneSealBlockEntity::new, ThuwumcraftBlocks.ARCANE_SEAL);
 		THAUMATORIUM = register("thaumatorium", ThaumatoriumBlockEntity::new, ThuwumcraftBlocks.THAUMATORIUM);
 		HUNGRY_CHEST = register("hungry_chest", HungryChestBlockEntity::new, ThuwumcraftBlocks.HUNGRY_CHEST);
+		FOCAL_MANIPULATOR = register("focal_manipulator", FocalManipulatorBlockEntity::new, ThuwumcraftBlocks.FOCAL_MANIPULATOR);
 	}
 
 	public static <T extends BlockEntity> BlockEntityType<T> register(String id, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks)

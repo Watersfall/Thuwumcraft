@@ -18,7 +18,9 @@ public abstract class SpellModifierData
 	public NbtCompound toNbt(NbtCompound nbt)
 	{
 		nbt.putString("id", ThuwumcraftRegistry.SPELL_DATA.getId(type).toString());
-		getModifiers().forEach(modifier -> modifier.toNbt(nbt));
+		getModifiers().forEach(modifier -> {
+			nbt.put(modifier.getName(), modifier.toNbt(new NbtCompound()));
+		});
 		return nbt;
 	}
 

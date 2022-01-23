@@ -10,22 +10,25 @@ import java.util.List;
 public class IceSpellModifierData extends SpellModifierData
 {
 	public final IntegerSpellModifier velocityModifier;
+	public final IntegerSpellModifier otherModifier;
 
 	public IceSpellModifierData(SpellModifierDataType<? extends IceSpellModifierData> type, NbtCompound tag)
 	{
 		super(type, tag);
-		this.velocityModifier = new IntegerSpellModifier(tag);
+		this.velocityModifier = new IntegerSpellModifier(tag.getCompound("velocity"));
+		this.otherModifier = new IntegerSpellModifier(tag.getCompound("other"));
 	}
 
 	public IceSpellModifierData(IntegerSpellModifier velocityModifier)
 	{
 		super(ThuwumcraftSpellData.ICE, new NbtCompound());
 		this.velocityModifier = velocityModifier;
+		this.otherModifier = new IntegerSpellModifier("other", 0, 10, 2);
 	}
 
 	@Override
 	public List<SpellModifier> getModifiers()
 	{
-		return List.of(velocityModifier);
+		return List.of(velocityModifier, otherModifier);
 	}
 }

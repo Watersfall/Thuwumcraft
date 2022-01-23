@@ -15,7 +15,7 @@ public class IceSpell extends Spell<IceSpellModifierData>
 {
 	public IceSpell()
 	{
-		super(ThuwumcraftSpells.ICE, 20, 10, 1, CastingType.SINGLE, 0x7FD2FF, new IceSpellModifierData(new IntegerSpellModifier(0, 10, 4)));
+		super(ThuwumcraftSpells.ICE, 20, 10, 1, CastingType.SINGLE, 0x7FD2FF, new IceSpellModifierData(new IntegerSpellModifier("velocity", 0, 10, 4)));
 	}
 
 	public IceSpell(SpellType<IceSpell> type, NbtCompound tag)
@@ -28,7 +28,7 @@ public class IceSpell extends Spell<IceSpellModifierData>
 	{
 		double modifier = getModifiers().velocityModifier.getValue() / 4F;
 		IceProjectileEntity entity = new IceProjectileEntity(world, player);
-		entity.setVelocity(player.getRotationVector().multiply(1));
+		entity.setVelocity(player.getRotationVector().multiply(modifier));
 		world.playSoundFromEntity(player, player, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		world.spawnEntity(entity);
 		return TypedActionResult.success(stack);

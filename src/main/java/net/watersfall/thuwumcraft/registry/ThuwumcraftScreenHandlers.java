@@ -17,6 +17,7 @@ public class ThuwumcraftScreenHandlers
 	public static final ScreenHandlerType<EssentiaSmelteryHandler> ESSENTIA_SMELTERY_HANDLER;
 	public static final ScreenHandlerType<WandWorkbenchHandler> WAND_WORKBENCH;
 	public static final ScreenHandlerType<ThaumatoriumHandler> THAUMATORIUM;
+	public static final ScreenHandlerType<FocalManipulatorHandler> FOCAL_MANIPULATOR;
 
 	static
 	{
@@ -29,5 +30,6 @@ public class ThuwumcraftScreenHandlers
 		ESSENTIA_SMELTERY_HANDLER = ScreenHandlerRegistry.registerSimple(getId("essentia_smeltery_handler"), EssentiaSmelteryHandler::new);
 		WAND_WORKBENCH = ScreenHandlerRegistry.registerSimple(getId("wand_workbench"), WandWorkbenchHandler::new);
 		THAUMATORIUM = ScreenHandlerRegistry.registerExtended(getId("thaumatorium"), ThaumatoriumHandler::new);
+		FOCAL_MANIPULATOR = ScreenHandlerRegistry.registerSimple(getId("focal_manipulator"), FocalManipulatorHandler::new);
 	}
 }

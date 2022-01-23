@@ -633,6 +633,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.ESSENTIA_SMELTERY_HANDLER, EssentiaSmelterScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.WAND_WORKBENCH, WandWorkbenchScreen::new);
 		ScreenRegistry.register(ThuwumcraftScreenHandlers.THAUMATORIUM, ThaumatoriumScreen::new);
+		ScreenRegistry.register(ThuwumcraftScreenHandlers.FOCAL_MANIPULATOR, FocalManipulatorScreen::new);
 	}
 
 	private void registerBlockRenderLayers()

@@ -1,17 +1,43 @@
 package net.watersfall.thuwumcraft.spell.modifier;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.nbt.NbtCompound;
+import net.watersfall.thuwumcraft.client.gui.FocalManipulatorScreen;
+
+import java.util.List;
 
 public abstract class SpellModifier
 {
-	public SpellModifier() { }
+	private String name;
+
+	public SpellModifier(String name)
+	{
+		this.name = name;
+	}
 
 	public SpellModifier(NbtCompound nbt)
 	{
 		fromNbt(nbt);
 	}
 
-	public abstract void fromNbt(NbtCompound nbt);
+	public void fromNbt(NbtCompound nbt)
+	{
+		this.name = nbt.getString("name");
+	}
 
-	public abstract NbtCompound toNbt(NbtCompound nbt);
+	public NbtCompound toNbt(NbtCompound nbt)
+	{
+		nbt.putString("name", this.name);
+		return nbt;
+	}
+
+	@Environment(EnvType.CLIENT)
+	public abstract List<ClickableWidget> getGuiElements(FocalManipulatorScreen screen);
+
+	public String getName()
+	{
+		return name;
+	}
 }

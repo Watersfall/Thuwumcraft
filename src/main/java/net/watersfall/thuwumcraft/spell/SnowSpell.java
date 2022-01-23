@@ -15,7 +15,7 @@ public class SnowSpell extends Spell<SnowSpellModifierData>
 {
 	public SnowSpell()
 	{
-		super(ThuwumcraftSpells.SNOW, 10, 5, 1, CastingType.SINGLE, 0xCCCCCC, new SnowSpellModifierData(new IntegerSpellModifier(0, 10, 5)));
+		super(ThuwumcraftSpells.SNOW, 10, 5, 1, CastingType.SINGLE, 0xCCCCCC, new SnowSpellModifierData(new IntegerSpellModifier("velocity", 0, 10, 5)));
 	}
 
 	public SnowSpell(SpellType<SnowSpell> type, NbtCompound tag)

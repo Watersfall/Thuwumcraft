@@ -94,6 +94,7 @@ import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
 import net.watersfall.thuwumcraft.entity.mind.MindSpider;
+import net.watersfall.thuwumcraft.gui.FocalManipulatorHandler;
 import net.watersfall.thuwumcraft.gui.ThaumatoriumHandler;
 import net.watersfall.thuwumcraft.item.golem.GolemMarkerItem;
 import net.watersfall.thuwumcraft.item.tool.SpecialBattleaxeItem;
@@ -232,6 +233,18 @@ public class Thuwumcraft implements ModInitializer
 					screen.getEntity().setCurrentRecipe(recipeId);
 				}
 			});
+		}));
+		ServerPlayNetworking.registerGlobalReceiver(getId("spell_create"), ((server, player, handler, buf, responseSender) -> {
+			WandFocusAbility ability = new WandFocusAbilityImpl(buf.readNbt(), new ItemStack(ThuwumcraftItems.WAND_FOCUS));
+			if(player.currentScreenHandler instanceof FocalManipulatorHandler gui)
+			{
+				ItemStack stack = gui.getSlot(0).getStack();
+				if(stack.isOf(ThuwumcraftItems.WAND_FOCUS))
+				{
+					AbilityProvider.getProvider(stack).addAbility(ability);
+					gui.getSlot(0).markDirty();
+				}
+			}
 		}));
 	}
 

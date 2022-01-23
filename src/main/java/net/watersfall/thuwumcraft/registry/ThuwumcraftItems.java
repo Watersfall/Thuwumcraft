@@ -78,6 +78,7 @@ public class ThuwumcraftItems
 	public static BlockItem CUSTOM_SPAWNER_BLOCK;
 	public static BlockItem BREWING_CAULDRON_BLOCK;
 	public static BlockItem CRUCIBLE_BLOCK;
+	public static BlockItem FOCAL_MANIPULATOR_BLOCK;
 
 	public static WitchySpoonItem WITCHY_SPOON;
 	public static Item THROW_BOTTLE;
@@ -218,6 +219,7 @@ public class ThuwumcraftItems
 		HUNGRY_CHEST_BLOCK = register(ThuwumcraftBlocks.HUNGRY_CHEST, defaultSettings());
 		BREWING_CAULDRON_BLOCK = register(ThuwumcraftBlocks.BREWING_CAULDRON);
 		CRUCIBLE_BLOCK = register(ThuwumcraftBlocks.CRUCIBLE);
+		FOCAL_MANIPULATOR_BLOCK = register(ThuwumcraftBlocks.FOCAL_MANIPULATOR);
 
 		WITCHY_SPOON = register(Thuwumcraft.getId("witchy_spoon"), new WitchySpoonItem());
 		THROW_BOTTLE = register(Thuwumcraft.getId("throw_bottle"), new SpecialGlassBottleItem(new FabricItemSettings().maxCount(64).group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP), Items.SPLASH_POTION::getDefaultStack));

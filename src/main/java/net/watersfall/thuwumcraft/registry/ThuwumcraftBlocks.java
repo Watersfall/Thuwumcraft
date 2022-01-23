@@ -60,6 +60,7 @@ public class ThuwumcraftBlocks
 	public static ArcaneSealBlock ARCANE_SEAL;
 	public static ThaumatoriumBlock THAUMATORIUM;
 	public static HungryChestBlock HUNGRY_CHEST;
+	public static FocalManipulatorBlock FOCAL_MANIPULATOR;
 
 	public static void register()
 	{
@@ -110,6 +111,7 @@ public class ThuwumcraftBlocks
 		ARCANE_SEAL = register("arcane_seal", new ArcaneSealBlock(FabricBlockSettings.of(Material.STONE).breakInstantly().nonOpaque().emissiveLighting(ThuwumcraftBlocks::always).luminance(5)));
 		THAUMATORIUM = register("thaumatorium", new ThaumatoriumBlock(FabricBlockSettings.of(Material.METAL)));
 		HUNGRY_CHEST = register("hungry_chest", new HungryChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST)));
+		FOCAL_MANIPULATOR = register("focal_manipulator", new FocalManipulatorBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)));
 	}
 
 	private static StairsBlock registerStairs(String id, Block copy)
