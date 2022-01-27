@@ -42,6 +42,20 @@ public class FocalManipulatorBlockEntity extends SyncableBlockEntity implements 
 	}
 
 	@Override
+	public void readNbt(NbtCompound nbt)
+	{
+		super.readNbt(nbt);
+		Inventories.readNbt(nbt, inventory);
+	}
+
+	@Override
+	protected void writeNbt(NbtCompound nbt)
+	{
+		super.writeNbt(nbt);
+		Inventories.writeNbt(nbt, inventory);
+	}
+
+	@Override
 	public DefaultedList<ItemStack> getContents()
 	{
 		return inventory;
@@ -57,6 +71,6 @@ public class FocalManipulatorBlockEntity extends SyncableBlockEntity implements 
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
-		return new FocalManipulatorHandler(syncId, inv);
+		return new FocalManipulatorHandler(syncId, inv, this);
 	}
 }

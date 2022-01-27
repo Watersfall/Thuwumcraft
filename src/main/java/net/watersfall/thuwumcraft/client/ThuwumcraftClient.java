@@ -620,6 +620,7 @@ public class ThuwumcraftClient implements ClientModInitializer
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ARCANE_SEAL, ArcaneSealRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.ESSENTIA_REFINERY, EssentiaRefineryRenderer::new);
 		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.HUNGRY_CHEST, ChestBlockEntityRenderer::new);
+		BlockEntityRendererRegistry.INSTANCE.register(ThuwumcraftBlockEntities.FOCAL_MANIPULATOR, FocalManipulatorRenderer::new);
 	}
 
 	private void registerGuis()
@@ -965,7 +966,6 @@ public class ThuwumcraftClient implements ClientModInitializer
 		registerItemColors();
 		registerBlockEntityRenderers();
 		registerGuis();
-		registerBlockEntityRenderers();
 		registerEvents();
 		registerNetworking();
 		registerBookRecipeRenderers();
