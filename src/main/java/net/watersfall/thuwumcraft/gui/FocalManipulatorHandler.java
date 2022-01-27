@@ -26,12 +26,12 @@ public class FocalManipulatorHandler extends ScreenHandler
 		{
 			for (int x = 0; x < 9; ++x)
 			{
-				this.addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 140 + y * 18));
+				this.addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 142 + y * 18));
 			}
 		}
 		for (int y = 0; y < 9; ++y)
 		{
-			this.addSlot(new Slot(playerInventory, y, 8 + y * 18, 198));
+			this.addSlot(new Slot(playerInventory, y, 8 + y * 18, 200));
 		}
 	}
 

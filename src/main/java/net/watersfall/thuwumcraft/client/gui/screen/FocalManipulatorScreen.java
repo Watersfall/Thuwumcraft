@@ -20,12 +20,13 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
-import net.watersfall.thuwumcraft.client.gui.button.ItemStackButton;
-import net.watersfall.thuwumcraft.gui.FocalManipulatorHandler;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.api.spell.Spell;
 import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
+import net.watersfall.thuwumcraft.client.gui.button.ItemStackButton;
+import net.watersfall.thuwumcraft.client.gui.button.ScrollButton;
+import net.watersfall.thuwumcraft.gui.FocalManipulatorHandler;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 	private boolean addedItem;
 	private final Set<ItemStackButton> spellList;
 	private ItemStack currentSpell;
+	private int spellIndex = 0;
+	private int maxSpellIndex = 0;
 
 	private final ButtonWidget.PressAction CREATE = button -> {
 		AbilityProvider.getAbility(currentSpell, WandFocusAbility.ID, WandFocusAbility.class).ifPresent(ability -> {
@@ -55,6 +58,9 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 	private ButtonWidget createButton;
 	private ButtonWidget nextModifier;
 	private ButtonWidget previousModifier;
+	private ScrollButton scroll;
+	private boolean scrolled = false;
+
 
 	private final ButtonWidget.PressAction SPELL_CLICK = check -> {
 		if(check instanceof ItemStackButton button)
@@ -78,9 +84,15 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 						}
 					}
 					setCurrentSpell(button.getStack());
+					remove(createButton);
 					addDrawableChild(createButton);
-					addDrawableChild(nextModifier);
-					addDrawableChild(previousModifier);
+					remove(nextModifier);
+					remove(previousModifier);
+					if(currentSpellModifiers.size() > 1)
+					{
+						addDrawableChild(nextModifier);
+						addDrawableChild(previousModifier);
+					}
 				}
 			});
 		}
@@ -139,13 +151,15 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 	protected void init()
 	{
 		this.backgroundWidth = 176;
-		this.backgroundHeight = 224;
-		this.playerInventoryTitleY = 130;
+		this.backgroundHeight = 226;
+		this.playerInventoryTitleY = 132;
 		super.init();
 		TranslatableText text = new TranslatableText("create");
 		createButton = new ButtonWidget(x - 12 + (backgroundWidth / 2), y + playerInventoryTitleY - 24, textRenderer.getWidth(text) + 12, 20, text, CREATE);
 		nextModifier = new ButtonWidget(x + backgroundWidth - 24, y + playerInventoryTitleY - 24, 20, 20, new LiteralText(">"), NEXT_MODIFIER);
 		previousModifier = new ButtonWidget(x + 36, y + playerInventoryTitleY - 24, 20, 20, new LiteralText("<"), PREVIOUS_MODIFIER);
+		scroll = new ScrollButton(x + 26, y + 31, y + 122, this);
+		addDrawableChild(scroll);
 	}
 
 	@Override
@@ -186,34 +200,102 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 				{
 					this.remove(element);
 				}
-				currentModifierPage.clear();
-				currentSpellModifiers.clear();
-				currentSpellModifiersIndex = 0;
-				this.remove(createButton);
-				this.remove(nextModifier);
-				this.remove(previousModifier);
 			}
+			spellList.clear();
+			currentModifierPage.clear();
+			currentSpellModifiers.clear();
+			currentSpellModifiersIndex = 0;
+			remove(createButton);
 		}
 		if(!addedItem && !stack.isEmpty())
 		{
 			addedItem = true;
 			int y = 32 + this.y;
 			int x = 8 + this.x;
-			for(SpellType<?> type : ThuwumcraftRegistry.SPELL.values())
+			Set<SpellType<?>> spells = ThuwumcraftRegistry.SPELL.values();
+			maxSpellIndex = Math.max(0, spells.size() - 6);
+			int start = 0;
+			if(maxSpellIndex > 0)
 			{
-				Spell<?> spell = type.create();
-				ItemStack focus = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
-				WandFocusAbility ability = new WandFocusAbilityImpl(spell, focus);
-				AbilityProvider.getProvider(focus).addAbility(ability);
-				ItemStackButton button = new ItemStackButton(x, y, 16, 16, focus, SPELL_CLICK, ((button1, matrices, mouseX, mouseY) -> {
-					ItemStack tooltip = ((ItemStackButton)button1).getStack();
-					renderTooltip(matrices, tooltip, mouseX, mouseY);
-				}));
-				this.addDrawableChild(button);
-				spellList.add(button);
-				y += 16;
+				int scrollY = scroll.getCurrentY() - this.y;
+				start = (int)((float)scrollY / ((float)scroll.getMaxY() - (float)scrollY) * maxSpellIndex) - 1;
+			}
+			int i = 0;
+			for(SpellType<?> type : spells)
+			{
+				if(i >= start)
+				{
+					Spell<?> spell = type.create();
+					ItemStack focus = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
+					WandFocusAbility ability = new WandFocusAbilityImpl(spell, focus);
+					AbilityProvider.getProvider(focus).addAbility(ability);
+					ItemStackButton button = new ItemStackButton(x, y, 16, 16, focus, SPELL_CLICK, ((button1, matrices, mouseX, mouseY) -> {
+						ItemStack tooltip = ((ItemStackButton)button1).getStack();
+						renderTooltip(matrices, tooltip, mouseX, mouseY);
+					}));
+					this.addDrawableChild(button);
+					spellList.add(button);
+					y += 16;
+					if(i >= 5 + start)
+					{
+						break;
+					}
+				}
+				i++;
 			}
 		}
+		if(scrolled && !stack.isEmpty())
+		{
+			int y = 32 + this.y;
+			int x = 8 + this.x;
+			Set<SpellType<?>> spells = ThuwumcraftRegistry.SPELL.values();
+			maxSpellIndex = Math.max(0, spells.size() - 6);
+			int start = 0;
+			if(maxSpellIndex > 0)
+			{
+				int scrollY = scroll.getCurrentY() - this.y;
+				start = (int)((float)scrollY / ((float)scroll.getMaxY() - (float)scroll.y) * maxSpellIndex) - 1;
+			}
+			int i = 0;
+			for(ItemStackButton button : spellList)
+			{
+				remove(button);
+			}
+			spellList.clear();
+			for(SpellType<?> type : spells)
+			{
+				if(i >= start)
+				{
+					Spell<?> spell = type.create();
+					ItemStack focus = new ItemStack(ThuwumcraftItems.WAND_FOCUS);
+					WandFocusAbility ability = new WandFocusAbilityImpl(spell, focus);
+					AbilityProvider.getProvider(focus).addAbility(ability);
+					ItemStackButton button = new ItemStackButton(x, y, 16, 16, focus, SPELL_CLICK, ((button1, matrices, mouseX, mouseY) -> {
+						ItemStack tooltip = ((ItemStackButton)button1).getStack();
+						renderTooltip(matrices, tooltip, mouseX, mouseY);
+					}));
+					this.addDrawableChild(button);
+					spellList.add(button);
+					y += 16;
+					if(i >= 5 + start)
+					{
+						break;
+					}
+				}
+				i++;
+			}
+			scrolled = false;
+		}
+	}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double amount)
+	{
+		if(mouseX > x && mouseX < x + backgroundWidth && mouseY > y && mouseY < y + backgroundHeight)
+		{
+			scroll.mouseScrolled(mouseX, mouseY, amount);
+		}
+		return super.mouseScrolled(mouseX, mouseY, amount);
 	}
 
 	public int getX()
@@ -239,5 +321,22 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 	public void setCurrentSpellModifiersIndex(int index)
 	{
 		currentSpellModifiersIndex = index;
+	}
+
+	public void spellListScrolled()
+	{
+		scrolled = true;
+	}
+
+	@Override
+	public boolean mouseReleased(double mouseX, double mouseY, int button)
+	{
+		scroll.scrolling = false;
+		return super.mouseReleased(mouseX, mouseY, button);
+	}
+
+	public int getSpellListSize()
+	{
+		return ThuwumcraftRegistry.SPELL.values().size();
 	}
 }
