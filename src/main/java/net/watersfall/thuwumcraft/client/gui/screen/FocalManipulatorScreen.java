@@ -49,9 +49,13 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 
 	private final ButtonWidget.PressAction CREATE = button -> {
 		AbilityProvider.getAbility(currentSpell, WandFocusAbility.ID, WandFocusAbility.class).ifPresent(ability -> {
-			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeNbt(ability.toNbt(new NbtCompound(), currentSpell));
-			ClientPlayNetworking.send(Thuwumcraft.getId("spell_create"), buf);
+			ItemStack stack = handler.getSlot(0).getStack();
+			if(stack.isOf(ThuwumcraftItems.WAND_FOCUS) && stack.getAbility(WandFocusAbility.ID, WandFocusAbility.class).isEmpty())
+			{
+				PacketByteBuf buf = PacketByteBufs.create();
+				buf.writeNbt(ability.toNbt(new NbtCompound(), currentSpell));
+				ClientPlayNetworking.send(Thuwumcraft.getId("spell_create"), buf);
+			}
 		});
 	};
 

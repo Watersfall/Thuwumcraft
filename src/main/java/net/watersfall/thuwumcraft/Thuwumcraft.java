@@ -234,12 +234,14 @@ public class Thuwumcraft implements ModInitializer
 				}
 			});
 		}));
+
+		//TODO: Make this... better
 		ServerPlayNetworking.registerGlobalReceiver(getId("spell_create"), ((server, player, handler, buf, responseSender) -> {
 			WandFocusAbility ability = new WandFocusAbilityImpl(buf.readNbt(), new ItemStack(ThuwumcraftItems.WAND_FOCUS));
 			if(player.currentScreenHandler instanceof FocalManipulatorHandler gui)
 			{
 				ItemStack stack = gui.getSlot(0).getStack();
-				if(stack.isOf(ThuwumcraftItems.WAND_FOCUS))
+				if(stack.isOf(ThuwumcraftItems.WAND_FOCUS) && stack.getAbility(WandFocusAbility.ID, WandFocusAbility.class).isEmpty())
 				{
 					AbilityProvider.getProvider(stack).addAbility(ability);
 					gui.getSlot(0).markDirty();
