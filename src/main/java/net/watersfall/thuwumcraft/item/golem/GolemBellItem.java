@@ -63,10 +63,4 @@ public class GolemBellItem extends Item implements BeforeActions, RendersGolemOu
 		}
 		return super.useOnEntity(stack, user, entity, hand);
 	}
-
-	@Override
-	public boolean beforeHit(ItemStack stack, LivingEntity target, LivingEntity attacker)
-	{
-		return BeforeActions.super.beforeHit(stack, target, attacker);
-	}
 }
