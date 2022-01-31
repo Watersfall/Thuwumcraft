@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.spell;
+package net.watersfall.thuwumcraft.spell.data;
 
 import net.minecraft.nbt.NbtCompound;
 import net.watersfall.thuwumcraft.api.spell.SpellModifierData;
@@ -9,19 +9,19 @@ import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
 
 import java.util.List;
 
-public class SnowSpellModifierData extends SpellModifierData
+public class IceSpellModifierData extends SpellModifierData
 {
 	public final IntegerSpellModifier velocityModifier;
 
-	public SnowSpellModifierData(SpellModifierDataType<? extends SnowSpellModifierData> type, NbtCompound tag)
+	public IceSpellModifierData(SpellModifierDataType<? extends IceSpellModifierData> type, NbtCompound tag)
 	{
 		super(type, tag);
-		this.velocityModifier = new IntegerSpellModifier(tag);
+		this.velocityModifier = new IntegerSpellModifier(tag.getCompound("spell_modifier.thuwumcraft.velocity"));
 	}
 
-	public SnowSpellModifierData(IntegerSpellModifier velocityModifier)
+	public IceSpellModifierData(IntegerSpellModifier velocityModifier)
 	{
-		super(ThuwumcraftSpellData.SNOW, new NbtCompound());
+		super(ThuwumcraftSpellData.ICE, new NbtCompound());
 		this.velocityModifier = velocityModifier;
 	}
 

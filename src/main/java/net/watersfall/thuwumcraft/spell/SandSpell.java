@@ -7,19 +7,19 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.api.spell.CastingType;
-import net.watersfall.thuwumcraft.api.spell.EmptySpellModifierData;
 import net.watersfall.thuwumcraft.api.spell.Spell;
 import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.entity.spell.SandEntity;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpells;
+import net.watersfall.thuwumcraft.spell.data.SandSpellData;
 
-public class SandSpell extends Spell<EmptySpellModifierData>
+public class SandSpell extends Spell<SandSpellData>
 {
 	public SandSpell()
 	{
-		super(ThuwumcraftSpells.SAND, 10, 5, 1, CastingType.SINGLE, 0xFFFF00, new EmptySpellModifierData());
+		super(ThuwumcraftSpells.SAND, 10, 5, 1, CastingType.SINGLE, 0xFFFF00, new SandSpellData());
 	}
 
 	public SandSpell(SpellType<SandSpell> type, NbtCompound tag)
@@ -36,6 +36,7 @@ public class SandSpell extends Spell<EmptySpellModifierData>
 		entity.setPos(pos.x, pos.y, pos.z);
 		entity.updateTrackedPosition(pos.x, pos.y, pos.z);
 		entity.setVelocity(player.getRotationVector());
+		entity.setBlindnessTime(modifiers.getBlindingTime());
 		world.playSoundFromEntity(player, player, ThuwumcraftSounds.POCKET_SAND, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		world.spawnEntity(entity);
 		return TypedActionResult.success(stack);

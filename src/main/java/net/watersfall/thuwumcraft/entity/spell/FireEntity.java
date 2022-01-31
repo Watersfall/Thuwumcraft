@@ -10,6 +10,9 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 public class FireEntity extends WaterEntity
 {
+	private int damage = 1;
+	private int fireTime = 1;
+
 	public FireEntity(World world, Entity owner)
 	{
 		super(ThuwumcraftEntities.FIRE_PROJECTILE, world);
@@ -22,6 +25,16 @@ public class FireEntity extends WaterEntity
 	public FireEntity(EntityType<? extends WaterEntity> type, World world)
 	{
 		super(type, world);
+	}
+
+	public void setDamage(int damage)
+	{
+		this.damage = damage;
+	}
+
+	public void setFireTime(int fireTime)
+	{
+		this.fireTime = fireTime;
 	}
 
 	@Override
@@ -48,8 +61,8 @@ public class FireEntity extends WaterEntity
 			world.getOtherEntities(this, this.getBoundingBox(), (entity) -> !entity.isSpectator() && !entity.getUuid().equals(this.ownerUUID)).forEach(entity -> {
 				if(!entity.isFireImmune())
 				{
-					entity.setFireTicks(30);
-					entity.damage(DamageSource.IN_FIRE, 2.0F);
+					entity.setFireTicks(fireTime * 20);
+					entity.damage(DamageSource.IN_FIRE, damage);
 				}
 			});
 		}

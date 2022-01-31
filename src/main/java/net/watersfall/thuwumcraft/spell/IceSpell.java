@@ -13,12 +13,13 @@ import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.entity.spell.IceProjectileEntity;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftSpells;
 import net.watersfall.thuwumcraft.api.spell.modifier.IntegerSpellModifier;
+import net.watersfall.thuwumcraft.spell.data.IceSpellModifierData;
 
 public class IceSpell extends Spell<IceSpellModifierData>
 {
 	public IceSpell()
 	{
-		super(ThuwumcraftSpells.ICE, 20, 10, 1, CastingType.SINGLE, 0x7FD2FF, new IceSpellModifierData(new IntegerSpellModifier("velocity", 0, 10, 4)));
+		super(ThuwumcraftSpells.ICE, 20, 10, 1, CastingType.SINGLE, 0x7FD2FF, new IceSpellModifierData(new IntegerSpellModifier("spell_modifier.thuwumcraft.velocity", 3, 7, 4)));
 	}
 
 	public IceSpell(SpellType<IceSpell> type, NbtCompound tag)

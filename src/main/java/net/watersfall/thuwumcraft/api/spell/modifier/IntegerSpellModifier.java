@@ -6,8 +6,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
-import net.watersfall.thuwumcraft.client.gui.screen.FocalManipulatorScreen;
 import net.watersfall.thuwumcraft.client.gui.button.NumberButton;
+import net.watersfall.thuwumcraft.client.gui.screen.FocalManipulatorScreen;
 
 import java.util.List;
 
@@ -90,15 +90,15 @@ public class IntegerSpellModifier extends SpellModifier implements ValueGetter<I
 		int y = screen.getY();
 		int width = screen.getWidth();
 		int centerX = x + (width / 2);
-		NumberButton numberButton = new NumberButton(centerX, y + 24, 24, 24, this::getValue);
-		ButtonWidget next = new ButtonWidget(centerX + 24, y + 24, 20, 20, new LiteralText(">"), button -> {
+		NumberButton numberButton = new NumberButton(centerX - 12, y + 22, 24, 24, this::getValue);
+		ButtonWidget next = new ButtonWidget(centerX + 12, y + 24, 20, 20, new LiteralText(">"), button -> {
 			this.setValue(this.getValue() + 1);
 			if(value >= this.getMax())
 			{
 				this.setValue(this.getMax());
 			}
 		});
-		ButtonWidget previous = new ButtonWidget(centerX - 24, y + 24, 20, 20, new LiteralText("<"), button -> {
+		ButtonWidget previous = new ButtonWidget(centerX - 36, y + 24, 20, 20, new LiteralText("<"), button -> {
 			this.setValue(this.getValue() - 1);
 			if(value <= this.getMin())
 			{

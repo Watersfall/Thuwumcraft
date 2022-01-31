@@ -44,8 +44,10 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 	private boolean addedItem;
 	private final Set<ItemStackButton> spellList;
 	private ItemStack currentSpell;
-	private int spellIndex = 0;
-	private int maxSpellIndex = 0;
+	private int modifiersX = 33;
+	private int modifiersY = 3;
+	private int modifiersWidth = 140;
+	private int modifiersHeight = 126;
 
 	private final ButtonWidget.PressAction CREATE = button -> {
 		AbilityProvider.getAbility(currentSpell, WandFocusAbility.ID, WandFocusAbility.class).ifPresent(ability -> {
@@ -97,6 +99,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 						addDrawableChild(nextModifier);
 						addDrawableChild(previousModifier);
 					}
+					currentSpellModifiersIndex = 0;
 				}
 			});
 		}
@@ -125,7 +128,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 
 	private final ButtonWidget.PressAction PREVIOUS_MODIFIER = check -> {
 		setCurrentSpellModifiersIndex(currentSpellModifiersIndex - 1);
-		if(currentSpellModifiersIndex <= 0)
+		if(currentSpellModifiersIndex < 0)
 		{
 			setCurrentSpellModifiersIndex(currentSpellModifiers.size() - 1);
 		}
@@ -158,10 +161,13 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 		this.backgroundHeight = 226;
 		this.playerInventoryTitleY = 132;
 		super.init();
-		TranslatableText text = new TranslatableText("create");
-		createButton = new ButtonWidget(x - 12 + (backgroundWidth / 2), y + playerInventoryTitleY - 24, textRenderer.getWidth(text) + 12, 20, text, CREATE);
-		nextModifier = new ButtonWidget(x + backgroundWidth - 24, y + playerInventoryTitleY - 24, 20, 20, new LiteralText(">"), NEXT_MODIFIER);
-		previousModifier = new ButtonWidget(x + 36, y + playerInventoryTitleY - 24, 20, 20, new LiteralText("<"), PREVIOUS_MODIFIER);
+		modifiersX += x;
+		modifiersY += y;
+		TranslatableText text = new TranslatableText("screen.thuwumcraft.focal_manipulator.create");
+		int textWidth = textRenderer.getWidth(text) + 12;
+		createButton = new ButtonWidget(modifiersX + modifiersWidth / 2 - textWidth / 2, modifiersHeight + modifiersY - 20, textWidth, 20, text, CREATE);
+		nextModifier = new ButtonWidget(modifiersX + modifiersWidth - 24, modifiersHeight + modifiersY - 20, 20, 20, new LiteralText(">"), NEXT_MODIFIER);
+		previousModifier = new ButtonWidget(modifiersX + 4, modifiersHeight + modifiersY - 20, 20, 20, new LiteralText("<"), PREVIOUS_MODIFIER);
 		scroll = new ScrollButton(x + 26, y + 31, y + 122, this);
 		addDrawableChild(scroll);
 	}
@@ -184,7 +190,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 		if(!this.currentSpellModifiers.isEmpty())
 		{
 			TranslatableText text = new TranslatableText(this.currentSpellModifiers.get(currentSpellModifiersIndex).getName());
-			drawCenteredText(matrices, textRenderer, text, x + (backgroundWidth / 2) + 12, y + 12, 0xFFFFFF);
+			drawCenteredText(matrices, textRenderer, text, modifiersX + modifiersWidth / 2, y + 12, 0xFFFFFF);
 		}
 		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 	}
@@ -211,6 +217,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 			currentSpellModifiersIndex = 0;
 			remove(createButton);
 		}
+		int maxSpellIndex = 0;
 		if(!addedItem && !stack.isEmpty())
 		{
 			addedItem = true;
@@ -304,17 +311,22 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 
 	public int getX()
 	{
-		return x;
+		return modifiersX;
 	}
 
 	public int getY()
 	{
-		return y;
+		return modifiersY;
 	}
 
 	public int getWidth()
 	{
-		return backgroundWidth;
+		return modifiersWidth;
+	}
+
+	public int getHeight()
+	{
+		return modifiersHeight;
 	}
 
 	public void setCurrentSpell(ItemStack currentSpell)

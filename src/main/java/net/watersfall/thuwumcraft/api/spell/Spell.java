@@ -10,6 +10,14 @@ import net.minecraft.util.Util;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 
+/**
+ * TODO: Arbitrary Spell Data
+ *
+ * 		Arbitrary spell data should be attachable to spells.
+ * An example would be applying penalties to any spell with too
+ * high of a power, or other random effects when casting
+ */
+
 public abstract class Spell<T extends SpellModifierData>
 {
 	protected final SpellType<? extends Spell<T>> type;

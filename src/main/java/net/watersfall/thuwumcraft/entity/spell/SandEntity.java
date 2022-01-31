@@ -16,6 +16,8 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 public class SandEntity extends WaterEntity
 {
+	private int blindnessTime = 0;
+
 	public SandEntity(World world, Entity owner)
 	{
 		super(ThuwumcraftEntities.SAND_PROJECTILE, world);
@@ -49,7 +51,7 @@ public class SandEntity extends WaterEntity
 		}
 		if(!world.isClient)
 		{
-			StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.BLINDNESS, 100);
+			StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.BLINDNESS, blindnessTime * 20);
 			world.getOtherEntities(this, this.getBoundingBox(), (entity) -> !entity.isSpectator() && entity.getId() != owner.getId()).forEach((entity -> {
 				if(entity instanceof LivingEntity)
 				{
@@ -65,5 +67,10 @@ public class SandEntity extends WaterEntity
 		{
 			this.remove(RemovalReason.DISCARDED);
 		}
+	}
+
+	public void setBlindnessTime(int blindnessTime)
+	{
+		this.blindnessTime = blindnessTime;
 	}
 }

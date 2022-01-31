@@ -13,6 +13,33 @@ import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
+/**
+ * TODO: Potential Spell Systems
+ *
+ * 		Spells are created by piecing together pieces of magic in a
+ * special workbench called a Focal Manipulator. This apparatus allows
+ * a thaumaturge to fit together bits of magic inside of a crystal ball
+ * that, when magic is forced through, can manifest as various magical
+ * effects in the world. Beginner thaumaturges beware, magic is not
+ * meant to be contained in such ways, and it fights back.
+ *
+ * Basically quark matrix enchanting or blokus, but with spells.
+ * Potential Ideas:
+ * 		- An AI will play against you, which limits what you can place.
+ * 		  However, the more pieces the AI places down, the cheaper the
+ * 		  spell is to cast. Maximizing how many pieces you place down,
+ * 		  as well as how many the AI does is key to maximizing efficiency
+ * 		- An AI will play against you, and the pieces it placed down will
+ * 		  weaken your spell. Whether by cost or reducing stats. You can
+ * 		  place more pieces at the risk of the AI placing more negative
+ * 		  pieces.
+ * 		- More advanced spell creation tools reduce the chance of negative
+ * 		  pieces being present
+ * 		- The AI will only be present in lower tier focus creation. More
+ * 		  advanced focus creation will not have this present, and will
+ * 		  just be about fitting pieces onto the board by yourself. However,
+ * 		  the board will be smaller so not all pieces can be used
+*/
 public class FocalManipulatorHandler extends ScreenHandler
 {
 	public FocalManipulatorHandler(int syncId, PlayerInventory playerInventory)
