@@ -41,8 +41,7 @@
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1792": ["net/watersfall/wet/api/item/BeforeActions"],
 			"net/minecraft/class_1799": ["net/watersfall/wet/api/abilities/ItemStackAbilityProvider"],
-			"net/minecraft/class_2821": ["net/watersfall/wet/api/abilities/ChunkAbilityProvider"],
-			"net/minecraft/class_2818": ["net/watersfall/wet/api/abilities/ChunkAbilityProvider"],
+			"net/minecraft/class_2791": ["net/watersfall/wet/api/abilities/ChunkAbilityProvider"],
 			"net/minecraft/class_1297": ["net/watersfall/wet/api/abilities/EntityAbilityProvider"]
 		}
 	}
