@@ -19,7 +19,6 @@ import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.abilities.item.WandFocusAbilityImpl;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
-import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.spell.Spell;
 import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.api.spell.modifier.SpellModifier;
@@ -223,7 +222,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 			addedItem = true;
 			int y = 32 + this.y;
 			int x = 8 + this.x;
-			Set<SpellType<?>> spells = ThuwumcraftRegistry.SPELL.values();
+			List<SpellType<?>> spells = handler.getUnlockedSpells();
 			maxSpellIndex = Math.max(0, spells.size() - 6);
 			int start = 0;
 			if(maxSpellIndex > 0)
@@ -259,7 +258,7 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 		{
 			int y = 32 + this.y;
 			int x = 8 + this.x;
-			Set<SpellType<?>> spells = ThuwumcraftRegistry.SPELL.values();
+			List<SpellType<?>> spells = handler.getUnlockedSpells();
 			maxSpellIndex = Math.max(0, spells.size() - 6);
 			int start = 0;
 			if(maxSpellIndex > 0)
@@ -353,6 +352,6 @@ public class FocalManipulatorScreen extends HandledScreen<FocalManipulatorHandle
 
 	public int getSpellListSize()
 	{
-		return ThuwumcraftRegistry.SPELL.values().size();
+		return handler.getUnlockedSpells().size();
 	}
 }

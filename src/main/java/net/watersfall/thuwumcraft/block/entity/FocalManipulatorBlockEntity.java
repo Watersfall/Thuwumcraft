@@ -8,14 +8,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.gui.FocalManipulatorHandler;
 import net.watersfall.thuwumcraft.inventory.FocalManipulatorInventory;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftBlockEntities;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FocalManipulatorBlockEntity extends SyncableBlockEntity implements FocalManipulatorInventory, NamedScreenHandlerFactory
 {
@@ -71,6 +78,14 @@ public class FocalManipulatorBlockEntity extends SyncableBlockEntity implements 
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player)
 	{
-		return new FocalManipulatorHandler(syncId, inv, this);
+		List<SpellType<?>> spells = new ArrayList<>();
+		for(SpellType<?> type : ThuwumcraftRegistry.SPELL.values())
+		{
+			if(type.create().isAvailable((ServerPlayerEntity)player, this, player.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get()))
+			{
+				spells.add(type);
+			}
+		}
+		return new FocalManipulatorHandler(syncId, inv, this, spells);
 	}
 }

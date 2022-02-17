@@ -3,12 +3,15 @@ package net.watersfall.thuwumcraft.api.spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.Util;
 import net.minecraft.world.World;
+import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
+import net.watersfall.thuwumcraft.block.entity.FocalManipulatorBlockEntity;
 
 /**
  * TODO: Arbitrary Spell Data
@@ -106,6 +109,11 @@ public abstract class Spell<T extends SpellModifierData>
 			translationKey = Util.createTranslationKey("spell", ThuwumcraftRegistry.SPELL.getId(this.getType()));
 		}
 		return translationKey;
+	}
+
+	public boolean isAvailable(ServerPlayerEntity player, FocalManipulatorBlockEntity blockEntity, PlayerResearchAbility research)
+	{
+		return true;
 	}
 
 	public TranslatableText getName()

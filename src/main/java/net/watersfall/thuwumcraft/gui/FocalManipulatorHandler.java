@@ -5,13 +5,20 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.api.abilities.item.WandFocusAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
+import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.block.entity.BlockEntityClientSerializable;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftScreenHandlers;
 import net.watersfall.wet.api.abilities.AbilityProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: Potential Spell Systems
@@ -42,14 +49,31 @@ import net.watersfall.wet.api.abilities.AbilityProvider;
 */
 public class FocalManipulatorHandler extends ScreenHandler
 {
-	public FocalManipulatorHandler(int syncId, PlayerInventory playerInventory)
+	private static final List<SpellType<?>> readSpells(PacketByteBuf buf)
 	{
-		this(syncId, playerInventory, new SimpleInventory(1));
+		int size = buf.readInt();
+		List<SpellType<?>> spells = new ArrayList<>(size);
+		for(int i = 0; i < size; i++)
+		{
+			Identifier id = buf.readIdentifier();
+			SpellType<?> spell = ThuwumcraftRegistry.SPELL.get(id);
+			spells.add(spell);
+		}
+		return spells;
 	}
 
-	public FocalManipulatorHandler(int syncId, PlayerInventory playerInventory, Inventory inventory)
+	private final List<SpellType<?>> unlockedSpells;
+
+	public FocalManipulatorHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf)
+	{
+		this(syncId, playerInventory, new SimpleInventory(1), readSpells(buf));
+	}
+
+	public FocalManipulatorHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, List<SpellType<?>> unlockedSpells)
 	{
 		super(ThuwumcraftScreenHandlers.FOCAL_MANIPULATOR, syncId);
+
+		this.unlockedSpells = unlockedSpells;
 
 		this.addSlot(new Slot(inventory, 0, 8, 14){
 			@Override
@@ -85,6 +109,11 @@ public class FocalManipulatorHandler extends ScreenHandler
 		{
 			this.addSlot(new Slot(playerInventory, y, 8 + y * 18, 200));
 		}
+	}
+
+	public List<SpellType<?>> getUnlockedSpells()
+	{
+		return unlockedSpells;
 	}
 
 	@Override
