@@ -6,11 +6,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.api.aspect.Aspect;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
-import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
+import net.watersfall.thuwumcraft.registry.tag.ThuwumcraftBiomeTags;
 
 import java.util.Random;
 
@@ -34,7 +33,7 @@ public class ElementalClusterBlock extends AmethystClusterBlock
 	{
 		if(random.nextInt(7) == 0)
 		{
-			if(world.getRegistryManager().get(Registry.BIOME_KEY).getKey(world.getBiome(pos)).get() == ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY)
+			if(world.getBiome(pos).isIn(ThuwumcraftBiomeTags.MAGICAL_FORESTS))
 			{
 				Particle particle =  MinecraftClient.getInstance().particleManager.addParticle(ThuwumcraftParticles.MAGIC_FOREST, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0, 0);
 				if(particle != null)

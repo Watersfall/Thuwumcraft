@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftParticles;
-import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
+import net.watersfall.thuwumcraft.world.feature.ThuwumcraftPlacedFeatures;
 
 public class ThuwumcraftBiomes
 {/**
@@ -52,8 +52,8 @@ public class ThuwumcraftBiomes
 		DefaultBiomeFeatures.addDefaultMushrooms(generationSettings);
 		DefaultBiomeFeatures.addSwampVegetation(generationSettings);
 		DefaultBiomeFeatures.addSweetBerryBushes(generationSettings);
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftFeatures.MAGIC_FOREST_TREES_PLACED);
-		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ThuwumcraftFeatures.MOSSY_ASPECT_ROCKS_PLACED);
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftPlacedFeatures.MAGIC_FOREST_TREES_PLACED);
+		generationSettings.feature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ThuwumcraftPlacedFeatures.MOSSY_ASPECT_ROCKS_PLACED);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())
@@ -106,8 +106,7 @@ public class ThuwumcraftBiomes
 	{
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
 		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();
-		ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE_PLACED.getDecoratedFeatures();
-		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, BuiltinRegistries.PLACED_FEATURE.get(Thuwumcraft.getId("the_lost_forest_trees")));
+		generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, ThuwumcraftPlacedFeatures.THE_LOST_FOREST_TREES_PLACED);
 		return new Biome.Builder()
 				.generationSettings(generationSettings.build())
 				.spawnSettings(spawnSettings.build())

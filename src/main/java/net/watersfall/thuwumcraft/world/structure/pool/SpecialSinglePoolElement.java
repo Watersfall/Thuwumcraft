@@ -6,16 +6,16 @@ import net.minecraft.structure.pool.LegacySinglePoolElement;
 import net.minecraft.structure.pool.StructurePool;
 import net.minecraft.structure.processor.StructureProcessorList;
 import net.minecraft.util.Identifier;
-
-import java.util.function.Supplier;
+import net.minecraft.util.registry.RegistryEntry;
 
 /**
  * The constructor for LegacySinglePoolElement is protected
  */
 public class SpecialSinglePoolElement extends LegacySinglePoolElement
 {
-	public SpecialSinglePoolElement(Either<Identifier, Structure> either, Supplier<StructureProcessorList> supplier, StructurePool.Projection projection)
+
+	public SpecialSinglePoolElement(Either<Identifier, Structure> either, RegistryEntry<StructureProcessorList> registryEntry, StructurePool.Projection projection)
 	{
-		super(either, supplier, projection);
+		super(either, registryEntry, projection);
 	}
 }

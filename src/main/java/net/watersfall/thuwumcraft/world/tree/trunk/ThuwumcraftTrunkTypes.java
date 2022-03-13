@@ -6,9 +6,9 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class ThuwumcraftTrunkTypes
 {
-	public static final TrunkPlacerType<SilverwoodTrunkPlacer> SILVERWOOD_TRUNK;
+	public static TrunkPlacerType<SilverwoodTrunkPlacer> SILVERWOOD_TRUNK;
 
-	static
+	public static void register()
 	{
 		SILVERWOOD_TRUNK = Registry.register(Registry.TRUNK_PLACER_TYPE, Thuwumcraft.getId("silverwood_trunk"), new TrunkPlacerType(SilverwoodTrunkPlacer.CODEC));
 	}

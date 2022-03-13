@@ -118,7 +118,7 @@ public class FocusChangeScreen extends Screen
 				element.mouseClicked(mouseX, mouseY, button);
 			}
 		});
-		this.onClose();
+		this.close();
 		return true;
 	}
 
@@ -129,7 +129,7 @@ public class FocusChangeScreen extends Screen
 		{
 			if(ThuwumcraftClient.WAND_FOCUS_KEY.matchesKey(keyCode, scanCode))
 			{
-				this.onClose();
+				this.close();
 				ThuwumcraftClient.wandFocusKeyPressed = true;
 			}
 		}

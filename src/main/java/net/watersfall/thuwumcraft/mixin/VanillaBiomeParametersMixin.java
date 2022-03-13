@@ -20,15 +20,15 @@ public abstract class VanillaBiomeParametersMixin
 {
 	@Shadow protected abstract void writeBiomeParameters(Consumer<Pair<MultiNoiseUtil.NoiseHypercube, RegistryKey<Biome>>> parameters, MultiNoiseUtil.ParameterRange temperature, MultiNoiseUtil.ParameterRange humidity, MultiNoiseUtil.ParameterRange continentalness, MultiNoiseUtil.ParameterRange erosion, MultiNoiseUtil.ParameterRange weirdness, float offset, RegistryKey<Biome> biome);
 
-	@Shadow @Final private MultiNoiseUtil.ParameterRange[] EROSION_PARAMETERS;
+	@Shadow @Final private MultiNoiseUtil.ParameterRange[] temperatureParameters;
 
-	@Shadow @Final private MultiNoiseUtil.ParameterRange[] HUMIDITY_PARAMETERS;
+	@Shadow @Final private MultiNoiseUtil.ParameterRange[] humidityParameters;
 
-	@Shadow @Final private MultiNoiseUtil.ParameterRange MID_INLAND_CONTINENTALNESS;
+	@Shadow @Final private MultiNoiseUtil.ParameterRange midInlandContinentalness;
 
-	@Shadow @Final private MultiNoiseUtil.ParameterRange NEAR_INLAND_CONTINENTALNESS;
+	@Shadow @Final private MultiNoiseUtil.ParameterRange nearInlandContinentalness;
 
-	@Shadow @Final private MultiNoiseUtil.ParameterRange[] TEMPERATURE_PARAMETERS;
+	@Shadow @Final private MultiNoiseUtil.ParameterRange[] erosionParameters;
 
 	@Inject(method = "writeVanillaBiomeParameters", at = @At("TAIL"))
 	public void thuwumcraft$addBiome(Consumer<Pair<MultiNoiseUtil.NoiseHypercube, RegistryKey<Biome>>> parameters, CallbackInfo info)
@@ -38,7 +38,7 @@ public abstract class VanillaBiomeParametersMixin
 
 	private void writeMagicForest(Consumer<Pair<MultiNoiseUtil.NoiseHypercube, RegistryKey<Biome>>> parameters, MultiNoiseUtil.ParameterRange weirdness)
 	{
-		writeBiomeParameters(parameters, TEMPERATURE_PARAMETERS[3], HUMIDITY_PARAMETERS[2], MID_INLAND_CONTINENTALNESS, EROSION_PARAMETERS[5], weirdness, 0, ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY);
-		writeBiomeParameters(parameters, TEMPERATURE_PARAMETERS[3], HUMIDITY_PARAMETERS[3], NEAR_INLAND_CONTINENTALNESS, EROSION_PARAMETERS[4], weirdness, 0, ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY);
+		writeBiomeParameters(parameters, temperatureParameters[3], humidityParameters[2], midInlandContinentalness, erosionParameters[5], weirdness, 0, ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY);
+		writeBiomeParameters(parameters, temperatureParameters[3], humidityParameters[3], nearInlandContinentalness, erosionParameters[4], weirdness, 0, ThuwumcraftBiomes.MAGIC_FOREST_BIOME_KEY);
 	}
 }

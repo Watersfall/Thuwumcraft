@@ -1,16 +1,16 @@
 package net.watersfall.thuwumcraft.registry.tag;
 
-import net.fabricmc.fabric.api.tag.TagFactory;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class ThuwumcraftBiomeTags
 {
-	public static final Tag<Biome> MAGICAL_FORESTS;
+	public static final TagKey<Biome> MAGICAL_FORESTS;
 
 	static
 	{
-		MAGICAL_FORESTS = TagFactory.BIOME.create(Thuwumcraft.getId("magical_forests"));
+		MAGICAL_FORESTS = TagKey.of(Registry.BIOME_KEY, Thuwumcraft.getId("magical_forests"));
 	}
 }

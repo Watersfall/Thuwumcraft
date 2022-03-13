@@ -80,7 +80,7 @@ public interface PlayerUnknownAbility extends Ability<Entity>, AbilityClientSeri
 	{
 		if(entity.getEntityWorld().getRegistryKey() == World.OVERWORLD)
 		{
-			if(entity.getEntityWorld().getFluidState(entity.getBlockPos()).isIn(ThuwumcraftFluidTags.DIMENSIONAL_FLUID))
+			if(entity.getEntityWorld().getFluidState(entity.getBlockPos()).getRegistryEntry().isIn(ThuwumcraftFluidTags.DIMENSIONAL_FLUID))
 			{
 				if(!entity.getEntityWorld().isClient && this.getTicksInUnknown() == 0)
 				{

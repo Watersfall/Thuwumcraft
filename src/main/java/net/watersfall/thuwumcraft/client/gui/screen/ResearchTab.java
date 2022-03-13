@@ -126,7 +126,7 @@ public class ResearchTab extends Screen
 	}
 
 	@Override
-	public void onClose()
+	public void close()
 	{
 		this.parent.childOpen = false;
 		if(researchButtonOriginalState)

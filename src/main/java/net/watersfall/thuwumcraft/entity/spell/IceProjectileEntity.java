@@ -16,15 +16,15 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftItems;
 
 public class IceProjectileEntity extends ThrownItemEntity
 {
@@ -83,7 +83,7 @@ public class IceProjectileEntity extends ThrownItemEntity
 	}
 
 	@Override
-	public boolean updateMovementInFluid(Tag<Fluid> tag, double d)
+	public boolean updateMovementInFluid(TagKey<Fluid> tag, double d)
 	{
 		boolean bool;
 		if((bool = super.updateMovementInFluid(tag, d)))

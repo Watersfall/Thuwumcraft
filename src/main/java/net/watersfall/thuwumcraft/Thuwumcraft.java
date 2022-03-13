@@ -50,7 +50,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -59,7 +59,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
@@ -104,7 +103,10 @@ import net.watersfall.thuwumcraft.registry.tag.ThuwumcraftEntityTags;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
+import net.watersfall.thuwumcraft.world.feature.ThuwumcraftConfiguredFeatures;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftFeatures;
+import net.watersfall.thuwumcraft.world.feature.ThuwumcraftPlacedFeatures;
+import net.watersfall.thuwumcraft.world.tree.trunk.ThuwumcraftTrunkTypes;
 import net.watersfall.thuwumcraft.world.village.VillageAdditions;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 import net.watersfall.wet.api.event.AbilityCreateEvent;
@@ -119,7 +121,7 @@ public class Thuwumcraft implements ModInitializer
 {
 	public static final String MOD_ID = "thuwumcraft";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
-	private static Tag<Item> INGREDIENT_TAG;
+	private static TagKey<Item> INGREDIENT_TAG;
 
 	private static Set<Item> getAllIngredients(MinecraftServer server)
 	{
@@ -133,12 +135,12 @@ public class Thuwumcraft implements ModInitializer
 		return new Identifier(MOD_ID, id);
 	}
 
-	public static Tag<Item> getIngredientTag()
+	public static TagKey<Item> getIngredientTag()
 	{
 		return INGREDIENT_TAG;
 	}
 
-	private static void setIngredientTag(Tag<Item> ingredientTag)
+	private static void setIngredientTag(TagKey<Item> ingredientTag)
 	{
 		INGREDIENT_TAG = ingredientTag;
 	}
@@ -264,12 +266,7 @@ public class Thuwumcraft implements ModInitializer
 			}
 			return ActionResult.PASS;
 		});
-		ServerLifecycleEvents.SERVER_STARTED.register((server -> setIngredientTag(Tag.of(getAllIngredients(server)))));
 		ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, manager, success) -> {
-			if(success)
-			{
-				setIngredientTag(Tag.of(getAllIngredients(server)));
-			}
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeBoolean(success);
 			server.getPlayerManager().getPlayerList().forEach(player -> {
@@ -411,7 +408,7 @@ public class Thuwumcraft implements ModInitializer
 		}));
 	}
 
-	private static void generateNecromancyDrop(Item item, FabricLootSupplierBuilder supplier, Tag<EntityType<?>> tag)
+	private static void generateNecromancyDrop(Item item, FabricLootSupplierBuilder supplier, TagKey<EntityType<?>> tag)
 	{
 		FabricLootPoolBuilder pool = FabricLootPoolBuilder.builder()
 				.rolls(ConstantLootNumberProvider.create(1))
@@ -556,21 +553,20 @@ public class Thuwumcraft implements ModInitializer
 	/**
 	 * Biome Modifications
 	 */
-	@SuppressWarnings("deprecation")
 	private static void registerBiomeModifications()
 	{
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.EARTH_CRYSTAL_GEODE_PLACED).get());
+				ThuwumcraftPlacedFeatures.EARTH_CRYSTAL_GEODE_PLACED.getKey().get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.NETHER_GEODE_PLACED).get());
+				ThuwumcraftPlacedFeatures.NETHER_GEODE_PLACED.getKey().get());
 		BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
 				GenerationStep.Feature.UNDERGROUND_DECORATION,
-				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.BASALT_DELTA_GEODE_PLACED).get());
+				ThuwumcraftPlacedFeatures.BASALT_DELTA_GEODE_PLACED.getKey().get());
 		BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(),
 				GenerationStep.Feature.VEGETAL_DECORATION,
-				BuiltinRegistries.PLACED_FEATURE.getKey(ThuwumcraftFeatures.SILVERWOOD_TREE_PLACED).get());
+				ThuwumcraftPlacedFeatures.SILVERWOOD_TREE_PLACED.getKey().get());
 	}
 	
 	private void registerStrippableBlocks()
@@ -622,12 +618,16 @@ public class Thuwumcraft implements ModInitializer
 		ThuwumcraftParticles.register();
 		registerStrippableBlocks();
 		registerEvents();
+		Aspects.register();
 		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();
 		registerNetwork();
+		ThuwumcraftTrunkTypes.register();
 		ThuwumcraftFeatures.register();
+		ThuwumcraftConfiguredFeatures.register();
+		ThuwumcraftPlacedFeatures.register();
 		ThuwumcraftEntityTags.register();
 		ThuwumcraftBiomes.register();
 //		ThuwumcraftStructurePieceTypes.register();

@@ -209,9 +209,9 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	}
 
 	@Override
-	public void onClose()
+	public void close()
 	{
-		super.onClose();
+		super.close();
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeFloat(mapX);
 		buf.writeFloat(mapY);

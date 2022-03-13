@@ -13,6 +13,6 @@
 	"logical_height": 256,
 	"min_y": -128,
 	"height": 256,
-	"infiniburn": "minecraft:infiniburn_end",
+	"infiniburn": "#minecraft:infiniburn_end",
 	"effects": "the_end"
 }

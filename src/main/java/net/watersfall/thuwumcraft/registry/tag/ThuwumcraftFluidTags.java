@@ -1,11 +1,11 @@
 package net.watersfall.thuwumcraft.registry.tag;
 
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 
 public class ThuwumcraftFluidTags
 {
-	public static final Tag<Fluid> DIMENSIONAL_FLUID = TagRegistry.fluid(Thuwumcraft.getId("dimensional_fluids"));
+	public static final TagKey<Fluid> DIMENSIONAL_FLUID = TagKey.of(Registry.FLUID_KEY, Thuwumcraft.getId("dimensional_fluids"));
 }

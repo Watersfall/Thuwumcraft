@@ -10,6 +10,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
@@ -30,8 +31,8 @@ public class VisAbilityImpl implements VisAbility
 		if(!world.isClient)
 		{
 			Chunk chunk = (Chunk)provider;
-			Biome biome = chunk.getBiomeForNoiseGen(pos.getStartX(), 0, pos.getStartZ());
-			if(ThuwumcraftBiomeTags.MAGICAL_FORESTS.contains(biome))
+			RegistryEntry<Biome> biome = chunk.getBiomeForNoiseGen(pos.getStartX(), 0, pos.getStartZ());
+			if(biome.isIn(ThuwumcraftBiomeTags.MAGICAL_FORESTS))
 			{
 				this.vis = Math.random() * 200 + 100;
 			}

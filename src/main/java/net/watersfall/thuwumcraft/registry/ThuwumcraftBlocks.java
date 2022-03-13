@@ -1,7 +1,6 @@
 package net.watersfall.thuwumcraft.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -80,15 +79,15 @@ public class ThuwumcraftBlocks
 		SILVERWOOD_SLAB = registerSlab("silverwood_planks_slab", SILVERWOOD_PLANKS);
 		SILVERWOOD_STAIRS = registerStairs("silverwood_planks_stairs", SILVERWOOD_PLANKS);
 		SILVERWOOD_LEAVES = register("silverwood_leaves", new SilverwoodLeavesBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
-		ARCANE_STONE = register("arcane_stone", new Block(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
-		ARCANE_STONE_SLAB = register("arcane_stone_slab", new SlabBlock(FabricBlockSettings.of(Material.STONE).breakByTool(FabricToolTags.PICKAXES).requiresTool()));
+		ARCANE_STONE = register("arcane_stone", new Block(FabricBlockSettings.of(Material.STONE).requiresTool()));
+		ARCANE_STONE_SLAB = register("arcane_stone_slab", new SlabBlock(FabricBlockSettings.of(Material.STONE).requiresTool()));
 		ARCANE_STONE_STAIRS = registerStairs("arcane_stone_stairs", ARCANE_STONE);
 		BREWING_CAULDRON = register("brewing_cauldron", new BrewingCauldronBlock(FabricBlockSettings.copy(Blocks.CAULDRON).ticksRandomly()));
 		PEDESTAL = register("pedestal", new PedestalBlock(FabricBlockSettings.copyOf(Blocks.STONE).luminance(7).nonOpaque()));
 		ALCHEMICAL_FURNACE = register("alchemical_furnace", new AlchemicalFurnaceBlock(FabricBlockSettings.copyOf(Blocks.STONE)));
 		CHILD_BLOCK = register("child_block", new ChildBlock(FabricBlockSettings.copyOf(Blocks.GLASS)));
 		CRUCIBLE = register("brewing_crucible", new CrucibleBlock(FabricBlockSettings.copyOf(BREWING_CAULDRON)));
-		JAR = register("jar", new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque().breakByHand(true)));
+		JAR = register("jar", new JarBlock(FabricBlockSettings.of(Material.GLASS).nonOpaque()));
 		PHIAL_SHELF = register("phial_shelf", new PhialShelfBlock(FabricBlockSettings.copyOf(Blocks.BIRCH_PLANKS).nonOpaque()));
 		BRASS_PIPE = register("brass_pipe", new PipeBlock(FabricBlockSettings.of(Material.METAL).nonOpaque()));
 		SPAWNER_FRAME = register("spawner_frame", new Block(FabricBlockSettings.copyOf(Blocks.SPAWNER)));

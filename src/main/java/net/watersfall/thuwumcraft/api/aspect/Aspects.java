@@ -38,13 +38,13 @@ public class Aspects
 	public static final HashMap<Aspect, DecorativeStaffBlock> DECORATIVE_STAFF_BLOCKS = new HashMap<>();
 	public static final HashMap<Aspect, DecorativeStaffBlockItem> DECORATIVE_STAFF_ITEMS = new HashMap<>();
 
-	public static final Aspect AIR = new Aspect(Thuwumcraft.getId("air"), 0xEAE249);
-	public static final Aspect EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x4E3C00);
-	public static final Aspect WATER = new Aspect(Thuwumcraft.getId("water"), 0x4BAFF6);
-	public static final Aspect FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xFF7D00);
-	public static final Aspect ORDER = new Aspect(Thuwumcraft.getId("order"), 0xFFF200);
-	public static final Aspect DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x55457A);
-	public static final Aspect METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, new Aspect[]{EARTH, ORDER});
+	public static Aspect AIR;
+	public static Aspect EARTH;
+	public static Aspect WATER;
+	public static Aspect FIRE;
+	public static Aspect ORDER;
+	public static Aspect DISORDER;
+	public static Aspect METAL;
 
 	public static Aspect register(Identifier id, Aspect aspect)
 	{
@@ -55,7 +55,6 @@ public class Aspects
 		DECORATIVE_STAFF_BLOCKS.put(aspect, staff);
 		DecorativeStaffBlockItem staffItem = new DecorativeStaffBlockItem(aspect, staff, new FabricItemSettings().group(ThuwumcraftItems.ALCHEMY_MOD_ITEM_GROUP));
 		DECORATIVE_STAFF_ITEMS.put(aspect, staffItem);
-		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "aspect/" + aspect.getId().getPath()), aspect.getItem());
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "crystal/" + aspect.getId().getPath()), crystal);
 		Registry.register(Registry.BLOCK, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staff);
 		Registry.register(Registry.ITEM, new Identifier(aspect.getId().getNamespace(), "staff/decorative/" + aspect.getId().getPath()), staffItem);
@@ -124,5 +123,16 @@ public class Aspects
 	public static Aspect getAspectById(Identifier id)
 	{
 		return ASPECTS.getOrDefault(id, Aspect.EMPTY);
+	}
+
+	public static void register()
+	{
+		AIR = new Aspect(Thuwumcraft.getId("air"), 0xEAE249);
+		EARTH = new Aspect(Thuwumcraft.getId("earth"), 0x4E3C00);
+		WATER = new Aspect(Thuwumcraft.getId("water"), 0x4BAFF6);
+		FIRE = new Aspect(Thuwumcraft.getId("fire"), 0xFF7D00);
+		ORDER = new Aspect(Thuwumcraft.getId("order"), 0xFFF200);
+		DISORDER = new Aspect(Thuwumcraft.getId("disorder"), 0x55457A);
+		METAL = new Aspect(Thuwumcraft.getId("metal"), 0xdddddd, new Aspect[]{EARTH, ORDER});
 	}
 }

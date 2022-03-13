@@ -12,10 +12,7 @@ import net.minecraft.util.registry.MutableRegistry;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.world.structure.pool.SpecialSinglePoolElement;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class VillageAdditions
@@ -39,7 +36,7 @@ public class VillageAdditions
 				.stream()
 				.map((entry) -> Pair.of(entry.getKey(), entry.getValue()))
 				.collect(Collectors.toList());
-		newList.add(Pair.of(new SpecialSinglePoolElement(Either.left(addId), () -> StructureProcessorLists.MOSSIFY_20_PERCENT, StructurePool.Projection.RIGID), weight));
-		((MutableRegistry)BuiltinRegistries.STRUCTURE_POOL).set(BuiltinRegistries.STRUCTURE_POOL.getRawId(pool), BuiltinRegistries.STRUCTURE_POOL.getKey(pool).get(),new StructurePool(new Identifier("village/plains/houses"), new Identifier("village/plains/terminators"), newList), Lifecycle.stable());
+		newList.add(Pair.of(new SpecialSinglePoolElement(Either.left(addId), StructureProcessorLists.MOSSIFY_20_PERCENT, StructurePool.Projection.RIGID), weight));
+		((MutableRegistry)BuiltinRegistries.STRUCTURE_POOL).replace(OptionalInt.of(BuiltinRegistries.STRUCTURE_POOL.getRawId(pool)), BuiltinRegistries.STRUCTURE_POOL.getKey(pool).get(),new StructurePool(new Identifier("village/plains/houses"), new Identifier("village/plains/terminators"), newList), Lifecycle.stable());
 	}
 }

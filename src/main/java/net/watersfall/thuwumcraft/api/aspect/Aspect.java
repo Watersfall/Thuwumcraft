@@ -1,6 +1,7 @@
 package net.watersfall.thuwumcraft.api.aspect;
 
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.watersfall.thuwumcraft.api.item.AspectItem;
 
 /**
@@ -29,16 +30,16 @@ public class Aspect
 		this.color = color;
 		this.primitive = false;
 		this.components = components;
-		this.item = new AspectItem(this);
+		this.item = Registry.register(Registry.ITEM, new Identifier(name.getNamespace(), "aspect/" + name.getPath()), new AspectItem(this));
 	}
 
-	protected Aspect(Identifier name, int color)
+	public Aspect(Identifier name, int color)
 	{
 		this.name = name;
 		this.color = color;
 		this.primitive = true;
 		this.components = new Aspect[]{};
-		this.item = new AspectItem(this);
+		this.item = Registry.register(Registry.ITEM, new Identifier(name.getNamespace(), "aspect/" + name.getPath()), new AspectItem(this));
 	}
 
 	/**
