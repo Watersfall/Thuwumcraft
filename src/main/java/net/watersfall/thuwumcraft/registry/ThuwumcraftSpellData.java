@@ -4,10 +4,7 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.spell.EmptySpellModifierData;
 import net.watersfall.thuwumcraft.api.spell.SpellModifierData;
-import net.watersfall.thuwumcraft.spell.data.FireSpellData;
-import net.watersfall.thuwumcraft.spell.data.IceSpellModifierData;
-import net.watersfall.thuwumcraft.spell.data.SandSpellData;
-import net.watersfall.thuwumcraft.spell.data.SnowSpellModifierData;
+import net.watersfall.thuwumcraft.spell.data.*;
 import net.watersfall.thuwumcraft.api.spell.SpellModifierDataType;
 
 public class ThuwumcraftSpellData
@@ -17,6 +14,7 @@ public class ThuwumcraftSpellData
 	public static SpellModifierDataType<SnowSpellModifierData> SNOW;
 	public static SpellModifierDataType<FireSpellData> FIRE;
 	public static SpellModifierDataType<SandSpellData> SAND;
+	public static SpellModifierDataType<LifeSpellData> LIFE;
 
 	public static void register()
 	{
@@ -25,6 +23,7 @@ public class ThuwumcraftSpellData
 		SNOW = register("snow", SnowSpellModifierData::new);
 		FIRE = register("fire", FireSpellData::new);
 		SAND = register("sand", SandSpellData::new);
+		LIFE = register("life", LifeSpellData::new);
 	}
 
 	private static <T extends SpellModifierData> SpellModifierDataType<T> register(String id, SpellModifierDataType.SpellFactory<T> factory)

@@ -115,7 +115,8 @@ import net.watersfall.thuwumcraft.client.util.RenderHelper;
 import net.watersfall.thuwumcraft.entity.golem.GolemEntity;
 import net.watersfall.thuwumcraft.entity.spell.WindEntity;
 import net.watersfall.thuwumcraft.item.armor.AlchemyArmorMaterials;
-import net.watersfall.thuwumcraft.network.MindMobSpawnS2CPacket;
+import net.watersfall.thuwumcraft.network.s2c.HealingParticleS2CPacket;
+import net.watersfall.thuwumcraft.network.s2c.MindMobSpawnS2CPacket;
 import net.watersfall.thuwumcraft.recipe.AspectIngredient;
 import net.watersfall.thuwumcraft.recipe.CauldronItemRecipe;
 import net.watersfall.thuwumcraft.recipe.PedestalRecipe;
@@ -657,6 +658,9 @@ public class ThuwumcraftClient implements ClientModInitializer
 
 	private void registerNetworking()
 	{
+		ClientPlayNetworking.registerGlobalReceiver(HealingParticleS2CPacket.ID, ((client, handler, buf, responseSender) -> {
+			new HealingParticleS2CPacket(buf).apply(handler);
+		}));
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("abilities_packet"), ((client, handler, buf, responseSender) -> {
 			PacketByteBuf buf2 = PacketByteBufs.copy(buf);
 			client.execute(() -> {

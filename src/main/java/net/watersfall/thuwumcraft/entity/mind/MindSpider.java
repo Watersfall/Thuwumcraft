@@ -8,7 +8,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.World;
 import net.watersfall.thuwumcraft.Thuwumcraft;
-import net.watersfall.thuwumcraft.network.MindMobSpawnS2CPacket;
+import net.watersfall.thuwumcraft.network.s2c.MindMobSpawnS2CPacket;
 import net.watersfall.thuwumcraft.registry.ThuwumcraftEntities;
 
 import java.util.UUID;

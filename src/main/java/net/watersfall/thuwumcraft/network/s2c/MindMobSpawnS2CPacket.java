@@ -1,4 +1,4 @@
-package net.watersfall.thuwumcraft.network;
+package net.watersfall.thuwumcraft.network.s2c;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;

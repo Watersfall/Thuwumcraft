@@ -608,6 +608,8 @@ public class Thuwumcraft implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
+		Aspects.register();
+		registerAspects();
 		ThuwumcraftFluids.register();
 		ThuwumcraftBlocks.register();
 		ThuwumcraftItems.register();
@@ -618,8 +620,6 @@ public class Thuwumcraft implements ModInitializer
 		ThuwumcraftParticles.register();
 		registerStrippableBlocks();
 		registerEvents();
-		Aspects.register();
-		registerAspects();
 		registerSounds();
 		registerMultiBlocks();
 		registerAbilities();

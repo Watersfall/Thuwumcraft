@@ -2,6 +2,7 @@ package net.watersfall.thuwumcraft.registry;
 
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
+import net.watersfall.thuwumcraft.api.spell.Spell;
 import net.watersfall.thuwumcraft.api.spell.SpellType;
 import net.watersfall.thuwumcraft.spell.*;
 
@@ -12,6 +13,7 @@ public class ThuwumcraftSpells
 	public static SpellType<WaterSpell> WATER;
 	public static SpellType<SandSpell> SAND;
 	public static SpellType<SnowSpell> SNOW;
+	public static SpellType<LifeSpell> LIFE;
 
 	public static void register()
 	{
@@ -20,5 +22,11 @@ public class ThuwumcraftSpells
 		WATER = (SpellType<WaterSpell>)ThuwumcraftRegistry.SPELL.register(Thuwumcraft.getId("water"), new SpellType<>(WaterSpell::new, WaterSpell::new));
 		SAND = (SpellType<SandSpell>)ThuwumcraftRegistry.SPELL.register(Thuwumcraft.getId("sand"), new SpellType<>(SandSpell::new, SandSpell::new));
 		SNOW = (SpellType<SnowSpell>)ThuwumcraftRegistry.SPELL.register(Thuwumcraft.getId("snow"), new SpellType<>(SnowSpell::new, SnowSpell::new));
+		LIFE = register("life", LifeSpell::new, LifeSpell::new);
+	}
+
+	private static <T extends Spell<?>> SpellType<T> register(String id, SpellType.SpellFactory<T> factory, SpellType.DefaultSpellFactory<T> defaultFactory)
+	{
+		return (SpellType<T>)ThuwumcraftRegistry.SPELL.register(Thuwumcraft.getId(id), new SpellType<>(factory, defaultFactory));
 	}
 }
