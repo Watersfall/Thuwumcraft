@@ -1,11 +1,12 @@
 package net.watersfall.thuwumcraft.client.gui.screen;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +36,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 {
 	private static final Identifier BORDER = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_background.png");
-	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier VIGNETTE_TEXTURE = new Identifier("textures/misc/vignette.png");
 	private PlayerResearchAbility ability;
 	private float mapX;
 	private float mapY;
@@ -43,6 +44,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private CategoryTabElement[] categories;
 	public float scale = 0.7F;
 	public int bottomY = 0;
+	private int vignetteX, vignetteY, vignetteWidth, vignetteHeight;
 
 	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
@@ -98,6 +100,10 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 			this.addDrawableChild(categories[i]);
 		}
 		this.bottomY = height * (int)scale - (backgroundHeight * (int)scale) - this.y * (int)scale;
+		vignetteX = this.x + 8;
+		vignetteY = this.y + 9;
+		vignetteWidth = backgroundWidth + 13;
+		vignetteHeight = backgroundHeight - 11;
 	}
 
 	@Override
@@ -127,12 +133,36 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		});
 		RenderSystem.setShaderTexture(0, BORDER);
 		drawTexture(matrices, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+		renderVignette();
 		this.children().forEach(child -> {
 			if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
 			{
 				this.renderTooltip(matrices, ((TooltipElement)child).getTooltip(mouseX, mouseY), mouseX, mouseY);
 			}
 		});
+	}
+
+	private void renderVignette()
+	{
+		RenderSystem.disableDepthTest();
+		RenderSystem.depthMask(false);
+		RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, VIGNETTE_TEXTURE);
+		RenderSystem.enableBlend();
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+		bufferBuilder.vertex(vignetteX, vignetteHeight, -90.0).texture(0.0f, 1.0f).next();
+		bufferBuilder.vertex(vignetteWidth, vignetteHeight, -90.0).texture(1.0f, 1.0f).next();
+		bufferBuilder.vertex(vignetteWidth, vignetteY, -90.0).texture(1.0f, 0.0f).next();
+		bufferBuilder.vertex(vignetteX, vignetteY, -90.0).texture(0.0f, 0.0f).next();
+		tessellator.draw();
+		RenderSystem.depthMask(true);
+		RenderSystem.enableDepthTest();
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.defaultBlendFunc();
 	}
 
 	@Override

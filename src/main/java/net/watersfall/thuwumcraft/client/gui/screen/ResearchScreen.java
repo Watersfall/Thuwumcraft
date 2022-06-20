@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.PageTurnWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
@@ -18,6 +19,7 @@ import net.watersfall.thuwumcraft.client.gui.element.ItemRequirementElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchButton;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
+import net.watersfall.thuwumcraft.client.util.PageCounter;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.List;
@@ -38,7 +40,10 @@ public class ResearchScreen extends Screen
 	private ResearchButton researchButton;
 	private List<OrderedText> lines;
 	private List<OrderedText> completedLines;
+	private PageCounter pageCounter;
 	public boolean childOpen = false;
+	private PageTurnWidget pageTurnForward;
+	private PageTurnWidget pageTurnBack;
 
 	public ResearchScreen(ResearchBookScreen parent, Research research)
 	{
@@ -85,6 +90,10 @@ public class ResearchScreen extends Screen
 			buf.writeIdentifier(research.getId());
 			ClientPlayNetworking.send(Thuwumcraft.getId("research_click"), buf);
 		}
+		pageTurnBack = new PageTurnWidget(this.x + 16 + 12, this.y + this.screenHeight - 28, false, button -> previousPage(), true);
+		pageTurnForward = new PageTurnWidget(this.x + this.screenWidth - 28 - 23, this.y + this.screenHeight - 28, true, button -> nextPage(), true);
+		this.addDrawableChild(pageTurnForward);
+		this.addDrawableChild(pageTurnBack);
 	}
 
 	@Override
@@ -117,12 +126,24 @@ public class ResearchScreen extends Screen
 		}
 		if(ability.hasResearch(this.research))
 		{
-			completedLines = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 149);
+			if(completedLines == null)
+			{
+				completedLines = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 144);
+				pageCounter = new PageCounter(0, 0, completedLines.size() / 32);
+				nextPage();
+				previousPage();
+			}
 			drawText(matrices, completedLines);
 		}
 		else
 		{
-			lines = this.textRenderer.wrapLines(this.research.getDescription(), 149);
+			if(lines == null)
+			{
+				lines = this.textRenderer.wrapLines(this.research.getDescription(), 144);
+				pageCounter = new PageCounter(0, 0, lines.size() / 32);
+				nextPage();
+				previousPage();
+			}
 			drawText(matrices, lines);
 		}
 		for(int i = 0; i < this.children().size(); i++)
@@ -158,9 +179,18 @@ public class ResearchScreen extends Screen
 	{
 		textRenderer.draw(matrices, this.title, this.x + this.screenWidth / 4F - (textRenderer.getWidth(this.title.asOrderedText()) / 2F), this.y + 24, 4210752);
 		int offset = 40;
-		for(int i = 0; i < text.size(); i++, offset += 9)
+		int start = pageCounter.getValue() * 32;
+		int end = start + 16;
+		for(; start < end && start < text.size(); offset += 9, start++)
 		{
-			this.textRenderer.draw(matrices, text.get(i), this.x + 18, this.y + offset, 4210752);
+			this.textRenderer.draw(matrices, text.get(start), this.x + 20, this.y + offset, 0);
+		}
+		offset = 40;
+		start = pageCounter.getValue() * 32 + 16;
+		end = start + 16;
+		for(; start < end && start < text.size(); offset += 9, start++)
+		{
+			this.textRenderer.draw(matrices, text.get(start), this.x + 20 + 183, this.y + offset, 0);
 		}
 	}
 
@@ -184,5 +214,35 @@ public class ResearchScreen extends Screen
 	public ResearchButton getResearchButton()
 	{
 		return this.researchButton;
+	}
+
+	public void nextPage()
+	{
+		pageCounter.increment();
+		if(pageCounter.getValue() >= pageCounter.getMax())
+		{
+			pageTurnForward.active = false;
+			pageTurnForward.visible = false;
+		}
+		if(pageCounter.getValue() > pageCounter.getMin())
+		{
+			pageTurnBack.active = true;
+			pageTurnBack.visible = true;
+		}
+	}
+
+	public void previousPage()
+	{
+		pageCounter.decrement();
+		if(pageCounter.getValue() < pageCounter.getMax())
+		{
+			pageTurnForward.active = true;
+			pageTurnForward.visible = true;
+		}
+		if(pageCounter.getValue() <= pageCounter.getMin())
+		{
+			pageTurnBack.active = false;
+			pageTurnBack.visible = false;
+		}
 	}
 }

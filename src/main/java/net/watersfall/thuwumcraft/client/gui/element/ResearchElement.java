@@ -89,11 +89,11 @@ public class ResearchElement extends ItemElement
 			int x = (int)(this.x + screen.getMapX() / screen.scale);
 			int y = (int)(this.y + screen.getMapY() / screen.scale);
 			RenderSystem.setShaderTexture(0, ICONS);
-			DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
-			matrices.translate(0, 0, -1F);
+			matrices.translate(0, 0, -1);
 			this.research.getRequirements().forEach((requirement) -> {
 				drawArrow(matrices, requirement.getX() + (int)(screen.getMapX() / screen.scale), requirement.getY() + (int)(screen.getMapY() / screen.scale), x, y);
 			});
+			DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
 			matrices.translate(0, 0, 1F);
 			RenderSystem.getModelViewStack().push();
 			RenderSystem.getModelViewStack().scale(screen.scale, screen.scale, 1F);
