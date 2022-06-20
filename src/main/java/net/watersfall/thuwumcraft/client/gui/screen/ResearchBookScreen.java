@@ -20,10 +20,10 @@ import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.ResearchCategory;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.element.CategoryTabElement;
 import net.watersfall.thuwumcraft.client.gui.element.ResearchElement;
 import net.watersfall.thuwumcraft.client.gui.element.TooltipElement;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.wet.api.abilities.AbilityProvider;
 
 import java.util.ArrayList;
@@ -36,8 +36,6 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Identifier BORDER = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_background.png");
 	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
-	private final int textureWidth = 431;
-	private final int textureHeight = 256;
 	private PlayerResearchAbility ability;
 	private float mapX;
 	private float mapY;
@@ -68,8 +66,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	@Override
 	protected void init()
 	{
-		this.backgroundWidth = textureWidth;
-		this.backgroundHeight = textureHeight;
+		this.backgroundWidth = 432;
+		this.backgroundHeight = 252;
 		super.init();
 		this.children().clear();
 		float scale = (float)client.getWindow().getScaleFactor();
@@ -99,25 +97,18 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		{
 			this.addDrawableChild(categories[i]);
 		}
-		this.bottomY = height * (int)scale - (textureHeight * (int)scale) - this.y * (int)scale;
+		this.bottomY = height * (int)scale - (backgroundHeight * (int)scale) - this.y * (int)scale;
 	}
 
 	@Override
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
 	{
 		matrices.push();
-		matrices.translate(0, 0, -2F);
 		super.renderBackground(matrices);
-		matrices.pop();
-		matrices.push();
-		matrices.translate(0, 0, -1F);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, BACKGROUND);
-		drawTexture(matrices, this.x + 12, this.y + 12, 0, 0, backgroundWidth - 24, backgroundHeight - 24, backgroundWidth - 24, backgroundHeight - 24);
-		matrices.translate(0, 0, 201F);
-		RenderSystem.setShaderTexture(0, BORDER);
-		drawTexture(matrices, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+		drawTexture(matrices, this.x + 6, this.y + 7, 0, 0, backgroundWidth - 13, backgroundHeight - 15, backgroundWidth - 13, backgroundHeight - 15);
 		matrices.pop();
 	}
 
@@ -134,6 +125,8 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 				((Drawable)child).render(matrices, mouseX, mouseY, delta);
 			}
 		});
+		RenderSystem.setShaderTexture(0, BORDER);
+		drawTexture(matrices, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 		this.children().forEach(child -> {
 			if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
 			{
@@ -206,6 +199,16 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public int getY()
 	{
 		return y;
+	}
+
+	public int getBackgroundWidth()
+	{
+		return backgroundWidth;
+	}
+
+	public int getBackgroundHeight()
+	{
+		return backgroundHeight;
 	}
 
 	@Override

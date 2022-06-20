@@ -40,7 +40,7 @@ public class ItemRequirementElement extends ItemElement
 	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
 		List<Text> list = super.getTooltip(mouseX, mouseY);
-		if(consumed)
+		if(consumed && !added)
 		{
 			((MutableText)list.get(0)).append(CONSUMED_TEXT);
 			this.added = true;

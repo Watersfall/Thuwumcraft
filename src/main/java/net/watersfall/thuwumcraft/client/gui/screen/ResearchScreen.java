@@ -24,16 +24,14 @@ import java.util.List;
 
 public class ResearchScreen extends Screen
 {
-	public static final Identifier BACKGROUND = Thuwumcraft.getId("textures/gui/research/research_page.png");
+	public static final Identifier BACKGROUND = new Identifier("textures/gui/book.png");
 
 	private final PlayerResearchAbility ability = AbilityProvider.getProvider(MinecraftClient.getInstance().player)
 			.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).get();
 	private final ResearchBookScreen parent;
 	private final Research research;
-	private final int textureWidth = 384;
-	private final int textureHeight = 272;
-	private final int screenWidth = 384;
-	private final int screenHeight = 256;
+	private final int screenWidth = 365;
+	private final int screenHeight = 225;
 	private int x;
 	private int y;
 	private final ResearchTab[] tabs;
@@ -61,24 +59,24 @@ public class ResearchScreen extends Screen
 	{
 		super.init();
 		int startX = 378;
-		int startY = 20;
+		int startY = 16;
 		x = (width - screenWidth) / 2;
 		y = (height - screenHeight) / 2;
-		this.researchButton = new ResearchButton(this.research, this.x + 227, this.y + 217);
+		this.researchButton = new ResearchButton(this.research, this.x + 218, this.y + 191);
 		for(int i = 0; i < this.tabs.length; i++)
 		{
-			this.addDrawableChild(new RecipeTabElement(tabs[i], this.x + startX, this.y + startY +  i * 24, true));
+			this.addDrawableChild(new RecipeTabElement(tabs[i], x + screenWidth - 12, this.y + startY +  i * 20, true));
 		}
-		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size());
+		startX = this.x + 274 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size());
 		int i;
 		for(i = 0; i < this.research.getRequiredItems().size(); i++)
 		{
-			this.addDrawableChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 195, false));
+			this.addDrawableChild(new ItemRequirementElement(research.getRequiredItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 171, false));
 		}
-		startX = this.x + 283 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
+		startX = this.x + 274 - (10 * research.getRequiredItems().size() + 10 * research.getConsumedItems().size()) + i * 20;
 		for(i = 0; i < this.research.getConsumedItems().size(); i++)
 		{
-			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 195, true));
+			this.addDrawableChild(new ItemRequirementElement(research.getConsumedItems().get(i).getMatchingStacks(), startX + i * 20, this.y + 171, true));
 		}
 		this.addDrawableChild(researchButton);
 		if(!ability.hasResearch(research) && research.getConsumedItems().isEmpty() && research.getRequiredItems().isEmpty())
@@ -96,7 +94,13 @@ public class ResearchScreen extends Screen
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, BACKGROUND);
-		drawTexture(matrices, x, y, 0, 0, screenWidth, screenHeight, textureWidth, textureHeight);
+		matrices.push();
+		matrices.translate(x, y, 0);
+		matrices.scale(1.25f, 1.25f, 1.25f);
+		matrices.translate(-x, -y, 0);
+		drawTexture(matrices, this.x, this.y, 90, 1, 146, 181, -256, 256);
+		drawTexture(matrices, this.x + 146, this.y, 20, 1, 146, 181, 256, 256);
+		matrices.pop();
 	}
 
 	@Override
@@ -113,18 +117,12 @@ public class ResearchScreen extends Screen
 		}
 		if(ability.hasResearch(this.research))
 		{
-			if(completedLines == null)
-			{
-				completedLines = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 160);
-			}
+			completedLines = this.textRenderer.wrapLines(this.research.getCompletedDescription(), 149);
 			drawText(matrices, completedLines);
 		}
 		else
 		{
-			if(lines == null)
-			{
-				lines = this.textRenderer.wrapLines(this.research.getDescription(), 160);
-			}
+			lines = this.textRenderer.wrapLines(this.research.getDescription(), 149);
 			drawText(matrices, lines);
 		}
 		for(int i = 0; i < this.children().size(); i++)
@@ -162,7 +160,7 @@ public class ResearchScreen extends Screen
 		int offset = 40;
 		for(int i = 0; i < text.size(); i++, offset += 9)
 		{
-			this.textRenderer.draw(matrices, text.get(i), this.x + 16F, this.y + offset, 4210752);
+			this.textRenderer.draw(matrices, text.get(i), this.x + 18, this.y + offset, 4210752);
 		}
 	}
 

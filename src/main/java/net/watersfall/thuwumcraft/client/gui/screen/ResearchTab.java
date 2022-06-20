@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.TexturedButtonWidget;
+import net.minecraft.client.gui.widget.PageTurnWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ import net.watersfall.thuwumcraft.client.util.PageCounter;
 public class ResearchTab extends Screen
 {
 	private static final Identifier BACKGROUND_TEXTURE = Thuwumcraft.getId("textures/gui/research/research_tab.png");
-	private static final Identifier ICONS = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_icons.png");
+	private static final Identifier ICONS = new Identifier("textures/gui/book.png");
 
 	private int x;
 	private int y;
@@ -86,8 +86,8 @@ public class ResearchTab extends Screen
 			recipeElements[i] = ThuwumcraftClientRegistry.RECIPE_TAB_TYPE.get(recipe.getBookType()).generateRecipeLayout(recipes[i], x, offsetY, textureWidth, textureHeight);
 			count++;
 		}
-		this.addDrawableChild(new TexturedButtonWidget(this.x + 16, this.y + this.textureHeight - 24, 16, 16, 208, 0, 0, ICONS, (button -> page.decrement())));
-		this.addDrawableChild(new TexturedButtonWidget(this.x + this.textureWidth - 32, this.y + this.textureHeight - 24, 16, 16, 192, 0, 0, ICONS, (button -> page.increment())));
+		this.addDrawableChild(new PageTurnWidget(this.x + 16, this.y + this.textureHeight - 24, false, button -> page.decrement(), true));
+		this.addDrawableChild(new PageTurnWidget(this.x + this.textureWidth - 24 - 23, this.y + this.textureHeight - 24, true, button -> page.increment(), true));
 		this.recipePages = new RecipePage[count];
 		count = 0;
 		for(int i = 0; i < recipeElements.length; i++)

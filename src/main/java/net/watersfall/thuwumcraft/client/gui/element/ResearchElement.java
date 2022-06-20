@@ -78,8 +78,13 @@ public class ResearchElement extends ItemElement
 		{
 			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
 			int scale = (int)MinecraftClient.getInstance().getWindow().getScaleFactor();
-			int mod = scale % 2 == 0 ? -1 * scale + 1 : 0;
-			RenderSystem.enableScissor(screen.getX() * scale + 12 * scale, screen.bottomY + (12 * scale) + mod, 431 * scale - (24 * scale), 256 * scale - (24 * scale));
+			int modX = 8 * scale;
+			int modY = 12 * scale;
+			int scissorX = screen.getX() * scale + modX;
+			int scissorY = MinecraftClient.getInstance().getWindow().getHeight() - (screen.getY() * scale + screen.getBackgroundHeight() * scale) + modY;
+			int scissorWidth = screen.getBackgroundWidth() * scale - modX * 2 - scale * 3;
+			int scissorHeight = screen.getBackgroundHeight() * scale - modY - scale * 9;
+			RenderSystem.enableScissor(scissorX, scissorY, scissorWidth, scissorHeight);
 			matrices.scale(screen.scale, screen.scale, 1F);
 			int x = (int)(this.x + screen.getMapX() / screen.scale);
 			int y = (int)(this.y + screen.getMapY() / screen.scale);
