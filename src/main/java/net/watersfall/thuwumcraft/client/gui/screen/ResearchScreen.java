@@ -92,6 +92,8 @@ public class ResearchScreen extends Screen
 		}
 		pageTurnBack = new PageTurnWidget(this.x + 16 + 12, this.y + this.screenHeight - 28, false, button -> previousPage(), true);
 		pageTurnForward = new PageTurnWidget(this.x + this.screenWidth - 28 - 23, this.y + this.screenHeight - 28, true, button -> nextPage(), true);
+		pageTurnForward.visible = false;
+		pageTurnBack.visible = false;
 		this.addDrawableChild(pageTurnForward);
 		this.addDrawableChild(pageTurnBack);
 	}
@@ -115,6 +117,14 @@ public class ResearchScreen extends Screen
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		matrices.push();
+		matrices.translate(0, 0, -50);
+		MinecraftClient.getInstance().getItemRenderer().zOffset -= 100;
+		RenderSystem.enableDepthTest();
+		this.parent.render(matrices, mouseX, mouseY, delta);
+		RenderSystem.disableDepthTest();
+		MinecraftClient.getInstance().getItemRenderer().zOffset += 100;
+		matrices.pop();
 		this.renderBackground(matrices);
 		if(!ability.hasResearch(this.research) && this.research.isResearchable(parent.player, ability))
 		{
@@ -197,6 +207,7 @@ public class ResearchScreen extends Screen
 	@Override
 	public void close()
 	{
+		parent.childOpen = false;
 		this.client.setScreen(parent);
 	}
 

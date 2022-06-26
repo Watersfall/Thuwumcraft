@@ -26,7 +26,7 @@ public class ResearchCategoryImpl implements ResearchCategory
 	public ResearchCategoryImpl(Identifier id, JsonObject json)
 	{
 		this.id = new Identifier(id.getNamespace(), id.getPath().replace("research_category/", "").replace(".json", "").replace("/", "."));
-		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
+		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath());
 		this.icon = new ItemStack(JsonHelper.getItem(json, "icon", Items.PORKCHOP), 1);
 		this.index = JsonHelper.getInt(json, "index", Integer.MAX_VALUE);
 		JsonArray array = JsonHelper.getArray(json, "required_research", new JsonArray());
@@ -103,7 +103,7 @@ public class ResearchCategoryImpl implements ResearchCategory
 	public void fromPacket(Identifier id, PacketByteBuf buf)
 	{
 		this.id = id;
-		this.name = new TranslatableText("research_category." + this.id.getNamespace() + "." + this.id.getPath() + ".name");
+		this.name = buf.readText();
 		this.icon = buf.readItemStack();
 		this.index = buf.readInt();
 		int size = buf.readInt();

@@ -46,6 +46,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public float scale = 0.7F;
 	public int bottomY = 0;
 	private int vignetteX, vignetteY, vignetteWidth, vignetteHeight;
+	public boolean childOpen = false;
 
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
@@ -134,12 +135,15 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 		RenderSystem.setShaderTexture(0, BORDER);
 		drawTexture(matrices, this.x, this.y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
 		renderVignette();
-		this.children().forEach(child -> {
-			if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
-			{
-				this.renderTooltip(matrices, ((TooltipElement)child).getTooltip(mouseX, mouseY), mouseX, mouseY);
-			}
-		});
+		if(!childOpen)
+		{
+			this.children().forEach(child -> {
+				if(child.isMouseOver(mouseX, mouseY) && child instanceof TooltipElement)
+				{
+					this.renderTooltip(matrices, ((TooltipElement)child).getTooltip(mouseX, mouseY), mouseX, mouseY);
+				}
+			});
+		}
 	}
 
 	private void renderVignette()

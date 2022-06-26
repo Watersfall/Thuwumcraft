@@ -61,7 +61,6 @@ public class ResearchTab extends Screen
 
 	public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY)
 	{
-		this.parent.render(matrices, mouseX, mouseY, delta);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, BACKGROUND_TEXTURE);
@@ -104,14 +103,18 @@ public class ResearchTab extends Screen
 	@Override
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
+		matrices.push();
+		matrices.translate(0, 0, -50);
+		this.parent.render(matrices, mouseX, mouseY, delta);
+		matrices.pop();
+		matrices.push();
+		matrices.translate(0, 0, 100);
 		this.drawBackground(matrices, delta, mouseX, mouseY);
 		this.recipePages[page.getValue()].render(matrices, mouseX, mouseY, delta);
 		if(recipePages[page.getValue()].isMouseOver(mouseX, mouseY))
 		{
 			this.renderTooltip(matrices, this.recipePages[page.getValue()].getTooltip(mouseX, mouseY), mouseX, mouseY);
 		}
-		matrices.push();
-		matrices.translate(0, 0, 51F);
 		((ButtonWidget)(this.children().get(0))).visible = true;
 		((ButtonWidget)(this.children().get(1))).visible = true;
 		if(page.getValue() <= page.getMin())
@@ -122,7 +125,6 @@ public class ResearchTab extends Screen
 		{
 			((ButtonWidget)(this.children().get(1))).visible = false;
 		}
-		super.render(matrices, mouseX, mouseY, delta);
 		matrices.pop();
 	}
 
@@ -133,6 +135,12 @@ public class ResearchTab extends Screen
 		if(researchButtonOriginalState)
 			this.parent.getResearchButton().enable();
 		this.client.setScreen(parent);
+	}
+
+	@Override
+	public boolean isMouseOver(double mouseX, double mouseY)
+	{
+		return true;
 	}
 
 	@Override

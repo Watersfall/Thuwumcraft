@@ -64,6 +64,7 @@ public class ResearchElement extends ItemElement
 		{
 			if(research.isClickable(ability))
 			{
+				screen.childOpen = true;
 				MinecraftClient.getInstance().setScreen(new ResearchScreen(screen, research));
 				MinecraftClient.getInstance().player.playSound(ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
 				return true;
