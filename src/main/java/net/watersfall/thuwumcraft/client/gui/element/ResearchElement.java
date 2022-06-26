@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -14,12 +14,13 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.abilities.entity.PlayerResearchAbility;
+import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
-import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 import net.watersfall.thuwumcraft.client.gui.screen.ResearchBookScreen;
 import net.watersfall.thuwumcraft.client.gui.screen.ResearchScreen;
+import net.watersfall.thuwumcraft.client.util.RenderHelper;
+import net.watersfall.thuwumcraft.registry.ThuwumcraftSounds;
 
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -39,13 +40,13 @@ public class ResearchElement extends ItemElement
 
 	public ResearchElement(ResearchBookScreen screen, Research research)
 	{
-		super(research.getStack().getMatchingStacks(), research.getX(), research.getY());
+		super(research.getDisplayStack().getMatchingStacks(), research.getX(), research.getY());
 		this.research = research;
 		this.screen = screen;
 		this.ability = screen.getAbility();
 		this.readableTooltip = Lists.newArrayList(research.getName());
 		this.hiddenTooltip = Lists.newArrayList(generateSecretText(research));
-		this.stacks = research.getStack().getMatchingStacks();
+		this.stacks = research.getDisplayStack().getMatchingStacks();
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class ResearchElement extends ItemElement
 	{
 		float x = this.x * screen.scale + screen.getMapX();
 		float y = this.y * screen.scale + screen.getMapY();
-		return mouseX > x && mouseX < x + 16 * screen.scale && mouseY > y && mouseY < y + 16 * screen.scale;
+		return mouseX > x - 13 && mouseX < x + 13 * screen.scale && mouseY > y - 13 && mouseY < y + 13 * screen.scale;
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class ResearchElement extends ItemElement
 	{
 		if(isMouseOver(mouseX, mouseY) && this.research.getCategory() == screen.getCurrentCategory())
 		{
-			if(research.isAvailable(ability))
+			if(research.isClickable(ability))
 			{
 				MinecraftClient.getInstance().setScreen(new ResearchScreen(screen, research));
 				MinecraftClient.getInstance().player.playSound(ThuwumcraftSounds.BOOK_OPEN_SOUND, SoundCategory.PLAYERS, 1.0F, (float)Math.random() * 0.2F + 1.1F);
@@ -76,6 +77,7 @@ public class ResearchElement extends ItemElement
 	{
 		if(research.getCategory() == screen.getCurrentCategory() && this.research.isVisible(ability))
 		{
+			matrices.push();
 			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
 			int scale = (int)MinecraftClient.getInstance().getWindow().getScaleFactor();
 			int modX = 8 * scale;
@@ -89,42 +91,37 @@ public class ResearchElement extends ItemElement
 			int x = (int)(this.x + screen.getMapX() / screen.scale);
 			int y = (int)(this.y + screen.getMapY() / screen.scale);
 			RenderSystem.setShaderTexture(0, ICONS);
-			matrices.translate(0, 0, -1);
-			this.research.getRequirements().forEach((requirement) -> {
+			RenderSystem.enableDepthTest();
+			this.research.getPrerequisiteResearch().forEach((requirementId) -> {
+				Research requirement = ThuwumcraftRegistry.RESEARCH.get(requirementId);
 				drawArrow(matrices, requirement.getX() + (int)(screen.getMapX() / screen.scale), requirement.getY() + (int)(screen.getMapY() / screen.scale), x, y);
 			});
-			DrawableHelper.drawTexture(matrices, x, y, 0, 0, 16, 16, 256, 256);
+			DiffuseLighting.disableGuiDepthLighting();
+			if(!research.isClickable(ability))
+			{
+				DiffuseLighting.method_34742();
+				RenderSystem.setShaderColor(0.5F, 0.5F, 0.5F, 1.0F);
+			}
+			int vOffset = 26;
+			if(ability.hasResearch(research))
+			{
+				vOffset = 0;
+			}
 			matrices.translate(0, 0, 1F);
+			Research.Icon icon = research.getIcon();
+			RenderSystem.setShaderTexture(0, icon.texture());
+			DrawableHelper.drawTexture(matrices, x - 13, y - 13, icon.u(), icon.v() + vOffset, 26, 26, 256, 256);
+			matrices.push();
 			RenderSystem.getModelViewStack().push();
 			RenderSystem.getModelViewStack().scale(screen.scale, screen.scale, 1F);
-			MinecraftClient.getInstance().getItemRenderer().renderInGui(stacks[index], x, y);
+			RenderHelper.drawItemInGui(stacks[index], matrices, x - 8, y - 8);
 			RenderSystem.getModelViewStack().pop();
 			RenderSystem.applyModelViewMatrix();
-			if(ability.hasResearch(this.research))
-			{
-				Screen.fill(matrices, x, y, x + 16, y + 16, -2130706433);
-			}
-			else if(research.isAvailable(ability))
-			{
-				if(isMouseOver(mouseX, mouseY))
-				{
-					Screen.fill(matrices, x, y, x + 16, y + 16, -2130706433);
-				}
-				else
-				{
-					int shift = (int)(Math.sin((MinecraftClient.getInstance().world.getTime() + delta) / 10F) * 64 + 64);
-					Color color = new Color(255, 255, 255, shift);
-					Screen.fill(matrices, x, y, x + 16, y + 16, color.hashCode());
-				}
-			}
-			else
-			{
-				matrices.translate(0, 0, 199F);
-				Screen.fill(matrices, x, y, x + 16, y + 16, -1072689136);
-				matrices.translate(0, 0, -199F);
-			}
+			matrices.pop();
 			matrices.scale(1F / screen.scale, 1F / screen.scale, 1F);
+			RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderSystem.disableScissor();
+			matrices.pop();
 		}
 	}
 
@@ -155,73 +152,62 @@ public class ResearchElement extends ItemElement
 
 	protected void drawArrow(MatrixStack matrices, int startX, int startY, int endX, int endY)
 	{
-		int horizontal = (endX - startX) / 16;
-		int vertical = (endY - startY) / 16;
-		boolean positiveHorizontal = horizontal > 0;
+		startY -= 13;
+		int horizontal = (endX - startX) / 13;
+		float vertical2 = (endY - startY - 13) / 13f;
+		int vertical = (int)vertical2;
 		if(horizontal > 0)
 		{
-			DrawableHelper.drawTexture(matrices, endX - 16, endY, 16 * 9, -0.001F, 16, 16, 256, 256);
+			DrawableHelper.drawTexture(matrices, endX - 26, endY - 7, 13 * 3, 128, 13, 13, 256, 256);
 		}
 		else if(horizontal < 0)
 		{
-			DrawableHelper.drawTexture(matrices, endX + 16, endY, 16 * 8, -0.001F, 16, 16, 256, 256);
+			DrawableHelper.drawTexture(matrices, endX + 13, endY - 7, 13 * 2, 128, 13, 13, 256, 256);
 		}
-		else
+		else if(vertical > 0)
 		{
-			if(vertical > 0)
-			{
-				DrawableHelper.drawTexture(matrices, endX, endY - 16, 16 * 11, -0.001F, 16, 16, 256, 256);
-			}
-			else
-			{
-				DrawableHelper.drawTexture(matrices, endX, endY + 16, 16 * 10, -0.001F, 16, 16, 256, 256);
-			}
+			DrawableHelper.drawTexture(matrices, endX - 7, endY - 26, 13 * 5, 128, 13, 13, 256, 256);
+		}
+		else if(vertical < 0)
+		{
+			DrawableHelper.drawTexture(matrices, endX - 7, endY + 13, 13 * 4, 128, 13, 13, 256, 256);
 		}
 		if(horizontal > 0)
 		{
-			for(; horizontal > 0; horizontal--)
+			horizontal--;
+			for(; horizontal > -1; horizontal--)
 			{
-				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, -0.001F, 16, 16, 256, 256);
+				drawLine(matrices, startX + (13 * horizontal), endY - 7, false);
 			}
 		}
 		else
 		{
 			for(; horizontal < 0; horizontal++)
 			{
-				DrawableHelper.drawTexture(matrices, startX + horizontal * 16, startY + vertical * 16, 16, -0.001F, 16, 16, 256, 256);
+				drawLine(matrices, startX + (13 * horizontal), endY - 7, false);
 			}
 		}
 		if(vertical > 0)
 		{
-			if(!positiveHorizontal)
-			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 112, -0.001F, 16, 16, 256, 256);
-			}
-			else
-			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 6, -0.001F, 16, 16, 256, 256);
-			}
-			vertical--;
 			for(; vertical > 0; vertical--)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, -0.001F, 16, 16, 256, 256);
+				drawLine(matrices, startX - 7, startY + (13 * vertical), true);
 			}
 		}
 		else
 		{
-			if(!positiveHorizontal)
-			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 5, -0.001F, 16, 16, 256, 256);
-			}
-			else
-			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 16 * 4, -0.001F, 16, 16, 256, 256);
-			}
 			vertical++;
-			for(; vertical < 0; vertical++)
+			for(; vertical < 1; vertical++)
 			{
-				DrawableHelper.drawTexture(matrices, startX, startY + vertical * 16, 32, -0.001F, 16, 16, 256, 256);
+				drawLine(matrices, startX - 7, startY + (13 * vertical), true);
 			}
 		}
+	}
+
+	private void drawLine(MatrixStack matrices, int x, int y, boolean vertical)
+	{
+		int u = vertical ? 13 : 0;
+		int v = 128;
+		DrawableHelper.drawTexture(matrices, x, y, u, v, 13, 13, 256, 256);
 	}
 }

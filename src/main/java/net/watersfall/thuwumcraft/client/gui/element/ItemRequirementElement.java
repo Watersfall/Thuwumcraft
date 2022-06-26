@@ -21,7 +21,6 @@ public class ItemRequirementElement extends ItemElement
 	private static final TranslatableText CONSUMED_TEXT = new TranslatableText("consumed");
 
 	private final boolean consumed;
-	private boolean added;
 	private Item[] items;
 
 	public ItemRequirementElement(ItemStack[] stacks, int x, int y, boolean consumed)
@@ -33,17 +32,15 @@ public class ItemRequirementElement extends ItemElement
 		{
 			this.items[i] = stacks[i].getItem();
 		}
-		added = false;
 	}
 
 	@Override
 	public List<Text> getTooltip(int mouseX, int mouseY)
 	{
 		List<Text> list = super.getTooltip(mouseX, mouseY);
-		if(consumed && !added)
+		if(consumed)
 		{
 			((MutableText)list.get(0)).append(CONSUMED_TEXT);
-			this.added = true;
 		}
 		return list;
 	}

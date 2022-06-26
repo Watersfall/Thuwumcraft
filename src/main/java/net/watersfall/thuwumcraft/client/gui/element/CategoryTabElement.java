@@ -16,7 +16,7 @@ public class CategoryTabElement extends TabElement
 	public CategoryTabElement(ResearchBookScreen screen, ResearchCategory category, int x, int y, boolean inverted)
 	{
 		super(null, x, y, inverted);
-		this.items = new ItemElement(new ItemStack[]{category.getIcon()}, x + 8, y, inverted ? x + 12 : x + 4, y, this);
+		this.items = new ItemElement(new ItemStack[]{category.getIconStack()}, x + 8, y, inverted ? x + 12 : x + 4, y, this);
 		this.category = category;
 		this.screen = screen;
 	}

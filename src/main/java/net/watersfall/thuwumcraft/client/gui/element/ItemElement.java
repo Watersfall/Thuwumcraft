@@ -21,7 +21,6 @@ public class ItemElement implements Element, Drawable, TooltipElement, Selectabl
 	protected final int offsetX;
 	protected final int offsetY;
 	protected final Element parent;
-	protected final List<List<Text>> tooltips;
 
 	public ItemElement(ItemStack[] stacks, int x, int y)
 	{
@@ -41,11 +40,6 @@ public class ItemElement implements Element, Drawable, TooltipElement, Selectabl
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
 		this.parent = parent;
-		this.tooltips = new ArrayList<>(stacks.length);
-		for(int i = 0; i < stacks.length; i++)
-		{
-			tooltips.add(null);
-		}
 	}
 
 	@Override
@@ -82,12 +76,8 @@ public class ItemElement implements Element, Drawable, TooltipElement, Selectabl
 	{
 		if(stacks.length > 0)
 		{
-			int index = (int) (MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
-			if(this.tooltips.get(index) == null)
-			{
-				this.tooltips.set(index, stacks[index].getTooltip(MinecraftClient.getInstance().player, TooltipContext.Default.NORMAL));
-			}
-			return this.tooltips.get(index);
+			int index = (int)(MinecraftClient.getInstance().world.getTime() / (20F) % stacks.length);
+			return stacks[index].getTooltip(MinecraftClient.getInstance().player, TooltipContext.Default.NORMAL);
 		}
 		return new ArrayList<>();
 	}

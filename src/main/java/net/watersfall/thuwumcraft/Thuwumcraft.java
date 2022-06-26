@@ -85,7 +85,6 @@ import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.player.PlayerWarpEvents;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
 import net.watersfall.thuwumcraft.api.research.Research;
-import net.watersfall.thuwumcraft.api.research.ResearchCategory;
 import net.watersfall.thuwumcraft.block.EssentiaSmeltery;
 import net.watersfall.thuwumcraft.block.ThaumatoriumBlock;
 import net.watersfall.thuwumcraft.block.entity.PedestalEntity;
@@ -101,6 +100,7 @@ import net.watersfall.thuwumcraft.registry.*;
 import net.watersfall.thuwumcraft.registry.tag.ThuwumcraftBlockTags;
 import net.watersfall.thuwumcraft.registry.tag.ThuwumcraftEntityTags;
 import net.watersfall.thuwumcraft.research.ResearchCategoryLoader;
+import net.watersfall.thuwumcraft.research.ResearchHelper;
 import net.watersfall.thuwumcraft.research.ResearchLoader;
 import net.watersfall.thuwumcraft.world.biome.ThuwumcraftBiomes;
 import net.watersfall.thuwumcraft.world.feature.ThuwumcraftConfiguredFeatures;
@@ -296,8 +296,8 @@ public class Thuwumcraft implements ModInitializer
 			if(entity.getType() == EntityType.PLAYER && FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER)
 			{
 				PacketByteBuf research = PacketByteBufs.create();
-				ResearchCategory.toFullPacket(research);
-				Research.toFullPacket(research);
+				ResearchHelper.writeCategoriesToPacket(research);
+				ResearchHelper.writeRegistryToPacket(research);
 				ServerPlayNetworking.send((ServerPlayerEntity)entity, getId("research_packet"), research);
 			}
 		});
@@ -307,8 +307,8 @@ public class Thuwumcraft implements ModInitializer
 				for(ServerPlayerEntity player : PlayerLookup.all(server))
 				{
 					PacketByteBuf research = PacketByteBufs.create();
-					ResearchCategory.toFullPacket(research);
-					Research.toFullPacket(research);
+					ResearchHelper.writeCategoriesToPacket(research);
+					ResearchHelper.writeRegistryToPacket(research);
 					ServerPlayNetworking.send(player, getId("research_packet"), research);
 					AbilityProvider<Entity> provider = AbilityProvider.getProvider(player);
 					provider.getAbility(PlayerResearchAbility.ID, PlayerResearchAbility.class).ifPresent((ability) -> {

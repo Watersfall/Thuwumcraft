@@ -1,7 +1,0 @@
-{
-	"icon": "thuwumcraft:spawn_egg_base",
-	"index": 4,
-	"required_research": [
-		"thuwumcraft:start/infusion"
-	]
-}

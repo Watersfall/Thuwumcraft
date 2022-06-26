@@ -50,10 +50,10 @@ public class ResearchScreen extends Screen
 		super(research.getName());
 		this.parent = parent;
 		this.research = research;
-		this.tabs = new ResearchTab[research.getTabs().length];
+		this.tabs = new ResearchTab[research.getRecipeTabs().size()];
 		for(int i = 0; i < tabs.length; i++)
 		{
-			this.tabs[i] = new ResearchTab(research.getTabs()[i], this);
+			this.tabs[i] = new ResearchTab(research.getRecipeTabs().get(i), this);
 		}
 		lines = null;
 		completedLines = null;
@@ -116,7 +116,7 @@ public class ResearchScreen extends Screen
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta)
 	{
 		this.renderBackground(matrices);
-		if(!ability.hasResearch(this.research) && this.research.isAvailable(ability))
+		if(!ability.hasResearch(this.research) && this.research.isResearchable(parent.player, ability))
 		{
 			this.researchButton.enable();
 		}

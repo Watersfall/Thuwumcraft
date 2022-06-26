@@ -1,5 +1,6 @@
 package net.watersfall.thuwumcraft.client.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -7,6 +8,8 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
@@ -289,5 +292,21 @@ public class RenderHelper
 			}
 		}
 		return false;
+	}
+
+	public static void drawItemInGui(ItemStack stack, MatrixStack matrices, int x, int y)
+	{
+		matrices.push();
+		matrices.translate(x, y, 200);
+		matrices.translate(8.0, 8.0, 0.0);
+		matrices.scale(1.0f, -1.0f, 1.0f);
+		matrices.scale(16.0f, 16.0f, 16.0f);
+		RenderSystem.enableBlend();
+		RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+		ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+		itemRenderer.renderItem(stack, ModelTransformation.Mode.GUI, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, matrices, immediate, 0);
+		immediate.draw();
+		matrices.pop();
 	}
 }

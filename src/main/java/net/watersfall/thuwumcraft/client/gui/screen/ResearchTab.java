@@ -18,6 +18,7 @@ import net.watersfall.thuwumcraft.api.research.Research;
 import net.watersfall.thuwumcraft.client.gui.element.RecipeElement;
 import net.watersfall.thuwumcraft.client.gui.element.RecipePage;
 import net.watersfall.thuwumcraft.client.util.PageCounter;
+import net.watersfall.thuwumcraft.research.ResearchImpl;
 
 public class ResearchTab extends Screen
 {
@@ -38,10 +39,10 @@ public class ResearchTab extends Screen
 	private RecipePage[] recipePages;
 	private boolean researchButtonOriginalState;
 
-	protected ResearchTab(Research.RecipeGroup group, ResearchScreen parent)
+	protected ResearchTab(ResearchImpl.RecipeGroup group, ResearchScreen parent)
 	{
 		super(new TranslatableText(""));
-		this.recipeIds = group.getRecipes();
+		this.recipeIds = group.recipes().toArray(new Identifier[0]);
 		this.recipes = new Recipe[recipeIds.length];
 		this.recipeElements = new RecipeElement[recipeIds.length];
 		this.parent = parent;
@@ -50,7 +51,7 @@ public class ResearchTab extends Screen
 			Recipe<?> recipe = MinecraftClient.getInstance().world.getRecipeManager().get(recipeIds[i]).get();
 			recipes[i] = recipe;
 		}
-		this.requiresComplete = group.requiresComplete();
+		this.requiresComplete = group.isResearchRequired();
 		this.items = new ItemStack[recipes.length];
 		for(int i = 0; i < items.length; i++)
 		{

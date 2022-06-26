@@ -1,5 +1,5 @@
 {
-	"icon": [
+	"icon_stack": [
 		{
 			"item": "thuwumcraft:cluster/fire_crystal_cluster"
 		},
@@ -19,33 +19,36 @@
 			"item": "thuwumcraft:cluster/disorder_crystal_cluster"
 		}
 	],
+	"icon": {
+		"texture": "textures/gui/advancements/widgets.png",
+		"u": 0,
+		"v": 128
+	},
 	"category": "thuwumcraft:starter",
 	"x": 4,
 	"y": -4,
-	"complete_requirements": {
-		"inventory_consumed": [
-			[
-				{
-					"item": "thuwumcraft:crystal/air"
-				},
-				{
-					"item": "thuwumcraft:crystal/water"
-				},
-				{
-					"item": "thuwumcraft:crystal/fire"
-				},
-				{
-					"item": "thuwumcraft:crystal/earth"
-				},
-				{
-					"item": "thuwumcraft:crystal/order"
-				},
-				{
-					"item": "thuwumcraft:crystal/disorder"
-				}
-			]
+	"consumed_items": [
+		[
+			{
+				"item": "thuwumcraft:crystal/air"
+			},
+			{
+				"item": "thuwumcraft:crystal/water"
+			},
+			{
+				"item": "thuwumcraft:crystal/fire"
+			},
+			{
+				"item": "thuwumcraft:crystal/earth"
+			},
+			{
+				"item": "thuwumcraft:crystal/order"
+			},
+			{
+				"item": "thuwumcraft:crystal/disorder"
+			}
 		]
-	},
+	],
 	"tabs": [
 		{
 			"recipes": [

@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import net.watersfall.thuwumcraft.Thuwumcraft;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
-import net.watersfall.thuwumcraft.api.research.Research;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +18,9 @@ import java.util.concurrent.Executor;
 
 public class ResearchLoader implements IdentifiableResourceReloadListener
 {
+	private static final int PREFIX_LENGTH = 9;
+	private static final int SUFFIX_LENGTH = 5;
+
 	@Override
 	public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor)
 	{
@@ -32,7 +34,8 @@ public class ResearchLoader implements IdentifiableResourceReloadListener
 				{
 					Resource resource = manager.getResource(id);
 					JsonElement json = new JsonParser().parse(new InputStreamReader(resource.getInputStream()));
-					Research research = new Research(id, json.getAsJsonObject());
+					id = new Identifier(id.getNamespace(), id.getPath().substring(PREFIX_LENGTH, id.getPath().length() - SUFFIX_LENGTH));
+					ResearchImpl research = new ResearchImpl(id, json.getAsJsonObject());
 					ThuwumcraftRegistry.RESEARCH.register(research.getId(), research);
 				}
 				catch(IOException e)

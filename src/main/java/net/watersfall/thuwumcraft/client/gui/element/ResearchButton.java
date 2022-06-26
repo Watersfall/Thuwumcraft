@@ -45,7 +45,7 @@ public class ResearchButton implements Element, Drawable, Selectable
 		if(enabled)
 		{
 			RenderSystem.setShaderTexture(0, TEXTURE);
-			if(isMouseOver(mouseX, mouseY) && research.hasItems(MinecraftClient.getInstance().player))
+			if(isMouseOver(mouseX, mouseY) && research.hasRequiredItems(MinecraftClient.getInstance().player))
 			{
 				DrawableHelper.drawTexture(matrices, this.x, this.y, this.hoverU, this.hoverV, this.width, this.height, 384, 272);
 			}

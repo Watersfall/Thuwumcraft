@@ -1,7 +1,0 @@
-{
-	"icon": "thuwumcraft:pedestal",
-	"index": 3,
-	"required_research": [
-		"thuwumcraft:start/infusion"
-	]
-}

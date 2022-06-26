@@ -93,8 +93,9 @@ import net.watersfall.thuwumcraft.api.client.render.AspectRenderer;
 import net.watersfall.thuwumcraft.api.golem.GolemMarker;
 import net.watersfall.thuwumcraft.api.multiblock.MultiBlockRegistry;
 import net.watersfall.thuwumcraft.api.registry.ThuwumcraftRegistry;
-import net.watersfall.thuwumcraft.api.research.Research;
-import net.watersfall.thuwumcraft.api.research.ResearchCategory;
+import net.watersfall.thuwumcraft.research.ResearchHelper;
+import net.watersfall.thuwumcraft.research.ResearchImpl;
+import net.watersfall.thuwumcraft.research.ResearchCategoryImpl;
 import net.watersfall.thuwumcraft.block.entity.HungryChestBlockEntity;
 import net.watersfall.thuwumcraft.client.accessor.ArmorFeatureRendererAccessor;
 import net.watersfall.thuwumcraft.client.gui.element.ItemElement;
@@ -692,8 +693,8 @@ public class ThuwumcraftClient implements ClientModInitializer
 		}));
 
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("research_packet"), (client, handler, buf, responseSender) -> {
-			ResearchCategory.fromFullPacket(buf);
-			Research.fromFullPacket(buf);
+			ResearchHelper.readCategoriesFromPacket(buf);
+			ResearchHelper.readRegistryFromPacket(buf);
 		});
 		ClientPlayNetworking.registerGlobalReceiver(Thuwumcraft.getId("chunk_packet"), (client, handler, buf, responseSender) -> {
 			ChunkPos pos = new ChunkPos(buf.readInt(), buf.readInt());

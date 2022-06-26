@@ -37,6 +37,7 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	private static final Identifier BORDER = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_screen.png");
 	private static final Identifier BACKGROUND = new Identifier(Thuwumcraft.MOD_ID, "textures/gui/research/research_background.png");
 	private static final Identifier VIGNETTE_TEXTURE = new Identifier("textures/misc/vignette.png");
+	public PlayerEntity player;
 	private PlayerResearchAbility ability;
 	private float mapX;
 	private float mapY;
@@ -46,7 +47,6 @@ public class ResearchBookScreen extends HandledScreen<ScreenHandler>
 	public int bottomY = 0;
 	private int vignetteX, vignetteY, vignetteWidth, vignetteHeight;
 
-	PlayerEntity player;
 	public ResearchBookScreen(ScreenHandler handler, PlayerInventory inventory, Text title)
 	{
 		super(handler, inventory, title);
